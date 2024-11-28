@@ -1,5 +1,4 @@
 
-
 <template>
   <div class="card-grid">
     <!-- Hier wird für jede Karte ein FlippedCard erstellt -->
