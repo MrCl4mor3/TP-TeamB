@@ -1,14 +1,6 @@
 
 
 <template>
-  <div>
-    <!--Nur zum testen-->
-    <p>{{store.numberOfFlippedCards}}</p>
-    <p> {{firstCard}}</p>
-    <p> {{secondCard}}</p>
-    <p> {{store.startingCards}}</p>
-    <p> {{store.correctCards}}</p>
-  </div>
   <div class="card-grid">
     <!-- Hier wird für jede Karte ein FlippedCard erstellt -->
     <div v-for="(card, index) in store.cards" :key="card.id">
@@ -54,16 +46,10 @@ export default {
     SwapCards() {
       if (this.selectedCards.length === 2) {
         const [firstIndex, secondIndex] = this.selectedCards;
-
-
         const temp = store.cards[firstIndex];
         store.cards[firstIndex] = store.cards[secondIndex];
         store.cards[secondIndex] = temp;
 
-        // Leere die Auswahl nach dem Tausch hier bin ich mir nicht sicher wie wir das machen wollen
-        //habe dass jetzt so gemacht dass die getauschten Karten aufgedeckt bleiben
-        //this.selectedCards = [];
-        //store.numberOfFlippedCards = 0;
       } else {
         alert("Wähle genau zwei Karten zum Tauschen aus.");
       }
@@ -78,10 +64,21 @@ export default {
       }
     },
     startOver() {
-      store.cards = store.startingCards;
+      if(this.selectedCards.length === 0) {
+        store.cards = store.startingCards.slice();
+      }
+      else {
+        alert("du darfst keine Karten ausgewählt haben wenn du mischst")
+      }
     },
     shuffel() {
-      store.cards = store.cards.sort(() => Math.random() - 0.5);
+      if (this.selectedCards.length === 0) {
+        store.cards = store.cards.sort(() => Math.random() - 0.5);
+        store.startingCards = store.cards.slice();
+      }
+      else {
+        alert("du darfst keine Karten ausgewählt haben wenn du mischst")
+      }
     },
     //Kontrolliert ob die Karten grade gleich angeordent sind wie die korrekten Karten
     checkIfCorrect() {
