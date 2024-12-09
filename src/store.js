@@ -7,5 +7,7 @@ export const store = reactive({
   cards: [],
   startingCards: [],
   correctCards: [],
-
+  score: 0,
+  selectedCategory: null,
+  selectedMode: null,
 });

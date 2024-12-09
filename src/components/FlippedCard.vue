@@ -46,7 +46,7 @@ export default {
 /*Container für die Karte*/
 .card-container {
   perspective: 1000px;
-  width: 200px;
+  width: 200px;         /*200px, 300px*/
   height: 300px;
 }
 

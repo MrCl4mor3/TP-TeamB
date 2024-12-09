@@ -1,15 +1,36 @@
+<script setup>
+/*import {bubbleSortWithScore} from "@/algorithms.js";
 
+const bubbleSortResult = bubbleSortWithScore(store.cards)
+
+ */
+</script>
 <template>
+   <!--<p>bubblesort {{bubbleSortResult}}</p> -->
+  <FieldSet :legend="`${store.selectedCategory} mit ${store.selectedMode}`" :toggleable="true" :collapsed="true">
+    <template #toggleicon>
+      <span>{{isExpanded ? "?" : "❓"}}</span>
+    </template>
+    <p class="m-0">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      {{this.descriptionToAlgorithm[store.selectedCategory]}}
+    </p>
+  </FieldSet>
+
+
+  <div>
+    <p>Score: {{ store.score }}</p>
+  </div>
   <div class="card-grid">
     <!-- Hier wird für jede Karte ein FlippedCard erstellt -->
     <div v-for="(card, index) in store.cards" :key="card.id">
       <FlippedCard @click="SelectCard(index)">
         <template #front>
-          <!--<h1>Vorderseite {{ card.value }}</h1> -->  <!-- zum testen wird VOrderseite beschriftet-->
           <h1></h1>
         </template>
         <template #back>
-          <h1>Rückseite {{ card.value }}</h1>
+          <img :src="`/images/${card.id}.png`"/>
         </template>
       </FlippedCard>
     </div>
@@ -24,72 +45,73 @@
 </template>
 
 <script>
-import FlippedCard from "@/components/FlippedCard.vue";
-import { store } from '../store';
+import FlippedCard from '@/components/FlippedCard.vue'
+import { store } from '../store'
 export default {
   data() {
     return {
       selectedCards: [],
       firstCard: null,
       secondCard: null,
-    };
+      descriptionToAlgorithm: {
+        "Bubble Sort" : "jaksdhflkasjdhflaksjghsaldkfjghsdlkjfghdlkjfghldkjfghkj BUBBLESORT JDHFKSJDFHLJ"
+
+      }
+    }
   },
   components: {
     FlippedCard,
   },
   setup() {
-    return {store};
+    return { store }
   },
   methods: {
     // Tausche die Positionen der beiden Karten im Store wenn zwei Karten ausgewählt wurden
     SwapCards() {
       if (this.selectedCards.length === 2) {
-        const [firstIndex, secondIndex] = this.selectedCards;
-        const temp = store.cards[firstIndex];
-        store.cards[firstIndex] = store.cards[secondIndex];
-        store.cards[secondIndex] = temp;
-
+        const [firstIndex, secondIndex] = this.selectedCards
+        const temp = store.cards[firstIndex]
+        store.cards[firstIndex] = store.cards[secondIndex]
+        store.cards[secondIndex] = temp
       } else {
-        alert("Wähle genau zwei Karten zum Tauschen aus.");
+        alert('Wähle genau zwei Karten zum Tauschen aus.')
       }
     },
     // Methode um die Karte auszuwählen, heirbei wird die Karte aus dem Array der ausgewählten
     // Karten entfernt wenn sie schon ausgewählt wurde, ansonsten wird sie hinzugefügt
     SelectCard(index) {
       if (this.selectedCards.includes(index)) {
-        this.selectedCards = this.selectedCards.filter((card) => card !== index);
+        this.selectedCards = this.selectedCards.filter((card) => card !== index)
       } else if (this.selectedCards.length < 2) {
-        this.selectedCards.push(index);
+        this.selectedCards.push(index)
+        store.score++
       }
     },
     startOver() {
-      if(this.selectedCards.length === 0) {
-        store.cards = store.startingCards.slice();
-      }
-      else {
-        alert("du darfst keine Karten ausgewählt haben wenn du mischst")
+      if (this.selectedCards.length === 0) {
+        store.cards = store.startingCards.slice()
+      } else {
+        alert('du darfst keine Karten ausgewählt haben wenn du mischst')
       }
     },
     shuffel() {
       if (this.selectedCards.length === 0) {
-        store.cards = store.cards.sort(() => Math.random() - 0.5);
-        store.startingCards = store.cards.slice();
-      }
-      else {
-        alert("du darfst keine Karten ausgewählt haben wenn du mischst")
+        store.cards = store.cards.sort(() => Math.random() - 0.5)
+        store.startingCards = store.cards.slice()
+      } else {
+        alert('du darfst keine Karten ausgewählt haben wenn du mischst')
       }
     },
     //Kontrolliert ob die Karten grade gleich angeordent sind wie die korrekten Karten
     checkIfCorrect() {
       if (store.cards.every((card, index) => card.id === store.correctCards[index].id)) {
-        alert("Korrekt sortiert!");
+        this.$router.push('/finishPage')
       } else {
-        alert("Falsch sortiert!");
+        alert('Falsch sortiert!')
       }
     },
-  }
-
-};
+  },
+}
 </script>
 <style>
 /*Hier wird definiert wie die Karten angeordnet werden sollen*/
