@@ -1,9 +1,13 @@
+<script setup>
+import { resetStore } from '@/store.js'
+
+resetStore()
+</script>
 <template>
   <div>
     <h1>Sortieralgorithmen</h1>
     <ButtonPress label="Start" @click="goToSortingPage" />
   </div>
-  {{ selectedCategory }}
 
   <div class="chekbox">
     <div class="checkBox-algorithms">
@@ -35,7 +39,7 @@
 
   <div>
     <h2>Anzahl Karten</h2>
-    <InputNumber v-model="numberOfCards" inputId="AnzahlKarten" showButtons :min="0" :max="20" />
+    <InputNumber v-model="numberOfCards" inputId="AnzahlKarten" showButtons :min="4" :max="20" />
   </div>
 </template>
 

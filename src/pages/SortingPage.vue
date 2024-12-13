@@ -1,23 +1,19 @@
 <script setup>
-/*import {bubbleSortWithScore} from "@/algorithms.js";
-
-const bubbleSortResult = bubbleSortWithScore(store.cards)
-
- */
+store.numberOfFlippedCards= 0;
+store.score = 0;
+store.cards = store.startingCards.slice();
 </script>
 <template>
+  <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage"/>
    <!--<p>bubblesort {{bubbleSortResult}}</p> -->
   <FieldSet :legend="`${store.selectedCategory} mit ${store.selectedMode}`" :toggleable="true" :collapsed="true">
     <template #toggleicon>
       <span>{{isExpanded ? "?" : "❓"}}</span>
     </template>
     <p class="m-0">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
       {{this.descriptionToAlgorithm[store.selectedCategory]}}
     </p>
   </FieldSet>
-
 
   <div>
     <p>Score: {{ store.score }}</p>
@@ -47,12 +43,11 @@ const bubbleSortResult = bubbleSortWithScore(store.cards)
 <script>
 import FlippedCard from '@/components/FlippedCard.vue'
 import { store } from '../store'
+import 'primeicons/primeicons.css';
 export default {
   data() {
     return {
       selectedCards: [],
-      firstCard: null,
-      secondCard: null,
       descriptionToAlgorithm: {
         "Bubble Sort" : "jaksdhflkasjdhflaksjghsaldkfjghsdlkjfghdlkjfghldkjfghkj BUBBLESORT JDHFKSJDFHLJ"
 
@@ -90,6 +85,7 @@ export default {
     startOver() {
       if (this.selectedCards.length === 0) {
         store.cards = store.startingCards.slice()
+        store.score = 0;
       } else {
         alert('du darfst keine Karten ausgewählt haben wenn du mischst')
       }
@@ -98,6 +94,7 @@ export default {
       if (this.selectedCards.length === 0) {
         store.cards = store.cards.sort(() => Math.random() - 0.5)
         store.startingCards = store.cards.slice()
+        store.score = 0;
       } else {
         alert('du darfst keine Karten ausgewählt haben wenn du mischst')
       }
@@ -109,6 +106,10 @@ export default {
       } else {
         alert('Falsch sortiert!')
       }
+    },
+    goToHomePage() {
+      this.$router.push('/')
+      this.selectedCards = [];
     },
   },
 }

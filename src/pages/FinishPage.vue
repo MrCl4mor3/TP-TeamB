@@ -1,7 +1,10 @@
 <script setup>
 import { store } from '../store';
-import { bubbleSortWithScore, selectionSortWithScore, insertionSortWithScore, quickSortWithScore, mergeSortWithScore } from "@/algorithms.js";
-
+import { bubbleSortWithScore,
+  selectionSortWithScore,
+  insertionSortWithScore,
+  quickSortWithScore,
+  mergeSortWithScore } from "@/algorithms.js";
 
 const bubbleSortResult = bubbleSortWithScore(store.startingCards)
 const selectionSortResult = selectionSortWithScore(store.startingCards)
@@ -11,6 +14,8 @@ const mergeSortResult = mergeSortWithScore(store.startingCards)
 </script>
 
 <template>
+  <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage"/>
+
   Bravo
 <p>Score: {{store.score}}</p>
   <p>bubblesort {{bubbleSortResult}}</p>
@@ -19,6 +24,20 @@ const mergeSortResult = mergeSortWithScore(store.startingCards)
   <p>quickSort {{quickSortResult}}</p>
   <p>mergeSort {{mergeSortResult}}</p>
   </template>
+
+<script>
+import 'primeicons/primeicons.css';
+export default {
+  setup() {
+    return { store }
+  },
+  methods: {
+    goToHomePage() {
+      this.$router.push('/')
+    }
+  }
+}
+</script>
 
 
 
