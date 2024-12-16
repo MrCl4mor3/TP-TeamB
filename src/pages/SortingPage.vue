@@ -6,7 +6,7 @@ store.cards = store.startingCards.slice();
 <template>
   <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage"/>
    <!--<p>bubblesort {{bubbleSortResult}}</p> -->
-  <FieldSet :legend="`${store.selectedCategory} mit ${store.selectedMode}`" :toggleable="true" :collapsed="true">
+  <FieldSet :legend="`${store.selectedCategory} , ${store.selectedMode}`" :toggleable="true" :collapsed="true">
     <template #toggleicon>
       <span>{{isExpanded ? "?" : "❓"}}</span>
     </template>
@@ -50,7 +50,7 @@ export default {
       selectedCards: [],
       descriptionToAlgorithm: {
         'Bubble Sort':
-          '1. Vergleiche die zwei benachbarte Elemente und tausche sie, wenn das linke Element kleiner ist las das Rechte.' +
+          '1. Vergleiche die zwei benachbarte Elemente und tausche sie, wenn das linke Element größer ist als das Rechte.' +
           ' Angefangen wird mit den ersten beiden Elementen. ' +
           '2. Wiederhole Schritt 1 mit dem zweiten und dritten Element. Dies wird solange wiederholt, bis man beim ' +
           'letzten Element angekommen ist, d.h. das größte Element befindet sich nun ganz am Ende. ' +
