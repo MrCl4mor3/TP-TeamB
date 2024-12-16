@@ -22,7 +22,7 @@ const routes = [
 ];
 //erstellt den router
 const router = createRouter({
-  history: createWebHistory(), //muss zum navigieren definiert werden.
+  history: createWebHistory(import.meta.env.BASE_URL), //muss zum navigieren definiert werden.
   routes,
 });
 
