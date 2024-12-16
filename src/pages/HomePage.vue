@@ -38,7 +38,7 @@ resetStore()
   </div>
 
   <div>
-    <h2>Anzahl Karten</h2>
+    <h2>Anzahl Karten (zwischen 4 und 20)</h2>
     <InputNumber v-model="numberOfCards" inputId="AnzahlKarten" showButtons :min="4" :max="20" />
   </div>
 </template>
