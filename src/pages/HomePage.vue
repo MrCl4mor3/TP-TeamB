@@ -57,8 +57,8 @@ export default {
         { key: 'merge-sort', name: 'Merge Sort' },
       ],
       modes: [
-        { key: 'free-sort', name: 'Freiem Sortieren' },
-        { key: 'unfree-sort', name: 'Vorgegebenem Sortieren' },
+        { key: 'free-sort', name: 'Freies Sortieren' },
+        { key: 'unfree-sort', name: 'Vorgegebenes Sortieren' },
       ],
       selectedCategory: null,
       selectedMode: null,
