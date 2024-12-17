@@ -10,7 +10,7 @@ store.cards = store.startingCards.slice();
     <template #toggleicon>
       <span>{{isExpanded ? "?" : "❓"}}</span>
     </template>
-    <p class="m-0">
+    <p class="m-0" style="white-space: pre-wrap;">
       {{this.descriptionToAlgorithm[store.selectedCategory]}}
     </p>
   </FieldSet>
@@ -26,7 +26,7 @@ store.cards = store.startingCards.slice();
           <h1></h1>
         </template>
         <template #back>
-          <img :src="`/images/${card.id}.png`"/>
+          <img :src="`./images/${card.id}.png`"/>
         </template>
       </FlippedCard>
     </div>
@@ -51,9 +51,9 @@ export default {
       descriptionToAlgorithm: {
         'Bubble Sort':
           '1. Vergleiche die zwei benachbarte Elemente und tausche sie, wenn das linke Element größer ist als das Rechte.' +
-          ' Angefangen wird mit den ersten beiden Elementen. ' +
+          ' Angefangen wird mit den ersten beiden Elementen.\n' +
           '2. Wiederhole Schritt 1 mit dem zweiten und dritten Element. Dies wird solange wiederholt, bis man beim ' +
-          'letzten Element angekommen ist, d.h. das größte Element befindet sich nun ganz am Ende. ' +
+          'letzten Element angekommen ist, d.h. das größte Element befindet sich nun ganz am Ende.\n' +
           '3. Wiederhole Schritt 1 und 2 solange, bis keine Elemente mehr getauscht werden müssen.',
         'Insertion Sort':
           '1. Wähle das erste Element als sortiertes Element aus. ' +
