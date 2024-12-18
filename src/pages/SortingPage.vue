@@ -32,11 +32,11 @@ store.cards = store.startingCards.slice();
     </div>
   </div>
   <!-- Hier werden die Buttons für die Funktionen des Spiels erstellt -->
-  <div>
-    <ButtonPress style="margin: 10px;" label="Vertausch" @click="SwapCards" />
-    <ButtonPress style="margin: 10px;" label="Starte neu" @click="startOver" />
-    <ButtonPress style="margin: 10px;" label="misch erneut" @click="shuffel" />
-    <ButtonPress style="margin: 10px;" label="Beende Spiel" @click="checkIfCorrect" />
+  <div class="button-container">
+    <ButtonPress label="Vertausch" @click="SwapCards" />
+    <ButtonPress label="Starte neu" @click="startOver" />
+    <ButtonPress label="misch erneut" @click="shuffel" />
+    <ButtonPress label="Beende Spiel" @click="checkIfCorrect" />
   </div>
 </template>
 
@@ -119,6 +119,7 @@ export default {
   },
 }
 </script>
+
 <style>
 /*Hier wird definiert wie die Karten angeordnet werden sollen*/
 .card-grid {
@@ -126,5 +127,15 @@ export default {
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 16px;
   justify-items: center;
+}
+</style>
+
+<style scoped>
+/*Styling für die Buttons*/
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+
 }
 </style>
