@@ -45,6 +45,7 @@ resetStore()
 
 <script>
 import { store } from '../store'
+import errorMessages from '../descriptions/errorMessages.json'
 export default {
   data() {
     return {
@@ -68,22 +69,20 @@ export default {
     // Methode um zur Sortierseite zu navigieren, dabei wird die Anzahl der Karten im Store gespeichert
     // und die Karten werden in einem Array gespeiert und gemischt.
     goToSortingPage() {
-      let errorMessage = "Du musst noch "
       let errors = []
       if(this.selectedCategory === null) {
-        errors.push("einen Algorithmus auswählen")
+        errors.push(errorMessages["noAlgorithmSelected"])
       }
       if(this.selectedMode === null) {
-        errors.push("einen Modus Auswählen")
+        errors.push(errorMessages["noModeSelected"])
 
       }
       if(this.numberOfCards < 4 || this.numberOfCards > 20 || this.numberOfCards === undefined) {
-        errors.push("eine Anzahl an Karten zwischen 4 und 20 angeben")
+        errors.push(errorMessages["outOfRange"])
 
       }
       if(errors.length > 0) {
-        errorMessage += errors.join(", ")
-        alert(errorMessage)
+        alert(errors.join("\n"))
         return
       }
       store.selectedMode = this.selectedMode

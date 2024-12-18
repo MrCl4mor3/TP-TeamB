@@ -2,5 +2,8 @@
   "selectTwoCards": "Wähle genau zwei Karten aus, um sie zu tauschen.",
   "shuffleError": "Du darfst keine Karten ausgewählt haben, um sie zu mischen.",
   "restartError": "Du darfst keine Karten ausgewählt haben, um das Spiel neu zu starten.",
-  "wrongOrder": "Die Karten sind nicht in der richtigen Reihenfolge."
+  "wrongOrder": "Die Karten sind nicht in der richtigen Reihenfolge.",
+  "noAlgorithmSelected": "Du musst einen Algorithmus auswählen, um das Spiel zu starten.",
+  "noModeSelected": "Du musst einen Modus auswählen, um das Spiel zu starten.",
+  "outOfRange": "Die Anzahl der Karten muss zwischen 4 und 20 liegen."
 }
