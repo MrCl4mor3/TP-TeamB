@@ -44,36 +44,17 @@ store.cards = store.startingCards.slice();
 import FlippedCard from '@/components/FlippedCard.vue'
 import { store } from '../store'
 import 'primeicons/primeicons.css';
+import bubbleSortDescription from '../descriptions/algorithmDescriptions.json'
 export default {
   data() {
     return {
       selectedCards: [],
       descriptionToAlgorithm: {
-        'Bubble Sort':
-          '1. Vergleiche die zwei benachbarte Elemente und tausche sie, wenn das linke Element größer ist als das Rechte.' +
-          ' Angefangen wird mit den ersten beiden Elementen.\n' +
-          '2. Wiederhole Schritt 1 mit dem zweiten und dritten Element. Dies wird solange wiederholt, bis man beim ' +
-          'letzten Element angekommen ist, d.h. das größte Element befindet sich nun ganz am Ende.\n' +
-          '3. Wiederhole Schritt 1 und 2 solange, bis keine Elemente mehr getauscht werden müssen.',
-        'Insertion Sort':
-          '1. Wähle das erste Element als sortiertes Element aus. ' +
-          '2. Wähle das nächste Element aus und füge es an der richtigen Stelle in das sortierte Element ein, d.h. vergleiche' +
-          ' es mit den schon sortierten Elementen und füge es passend ein. ' +
-          '3. Wiederhole Schritt 2 für alle Elemente.',
-        'Selection Sort':
-          '1. Wähle das kleinste Element aus und tausche es mit dem ersten Element. ' +
-          '2. Wähle das zweitkleinste Element aus und tausche es mit dem zweiten Element. ' +
-          '3. Wiederhole Schritt 2 für alle Elemente.',
-        'Quick Sort':
-          '1. Wähle das letzte Element als Pivot-Element aus. ' +
-          '2. Teile die Liste in zwei Teile (linke & rechte Teilliste), sodass alle Elemente kleiner als das Pivot-Element ' +
-          'in der Linken und alle Elemente größer in der Rechten stehen. ' +
-          '3. Wiederhole Schritt 2 für die beiden Teillisten solange, bis die neu erzeugten Teillisten nur noch ein Element enthalten.',
-        'Merge Sort':
-          '1. Teile die Liste in zwei Teile. Diese Teilung wird solange fortgesetzt, bis jede Teilung nur noch ein' +
-          ' Element enthält. ' +
-          '2. Sortiere die Teillisten alle für sich. ' +
-          '3. Füge die sortierten Teillisten wieder zusammen.',
+        'Bubble Sort': bubbleSortDescription['Bubble Sort'],
+        'Selection Sort': bubbleSortDescription['Selection Sort'],
+        'Insertion Sort': bubbleSortDescription['Insertion Sort'],
+        'Merge Sort': bubbleSortDescription['Merge Sort'],
+        'Quick Sort': bubbleSortDescription['Quick Sort'],
       }
     }
   },
