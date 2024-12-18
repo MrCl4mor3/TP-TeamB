@@ -1,0 +1,6 @@
+{
+  "selectTwoCards": "Wähle genau zwei Karten aus, um sie zu tauschen.",
+  "shuffleError": "Du darfst keine Karten ausgewählt haben, um sie zu mischen.",
+  "restartError": "Du darfst keine Karten ausgewählt haben, um das Spiel neu zu starten.",
+  "wrongOrder": "Die Karten sind nicht in der richtigen Reihenfolge."
+}

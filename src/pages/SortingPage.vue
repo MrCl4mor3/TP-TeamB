@@ -45,6 +45,7 @@ import FlippedCard from '@/components/FlippedCard.vue'
 import { store } from '../store'
 import 'primeicons/primeicons.css';
 import bubbleSortDescription from '../descriptions/algorithmDescriptions.json'
+import errorMessages from '../descriptions/ErrorMessages.json'
 export default {
   data() {
     return {
@@ -73,7 +74,7 @@ export default {
         store.cards[firstIndex] = store.cards[secondIndex]
         store.cards[secondIndex] = temp
       } else {
-        alert('Wähle genau zwei Karten zum Tauschen aus.')
+        alert(errorMessages['selectTwoCards'])
       }
     },
     // Methode um die Karte auszuwählen, heirbei wird die Karte aus dem Array der ausgewählten
@@ -91,7 +92,7 @@ export default {
         store.cards = store.startingCards.slice()
         store.score = 0;
       } else {
-        alert('du darfst keine Karten ausgewählt haben wenn du mischst')
+        alert(errorMessages['restartError'])
       }
     },
     shuffel() {
@@ -100,7 +101,7 @@ export default {
         store.startingCards = store.cards.slice()
         store.score = 0;
       } else {
-        alert('du darfst keine Karten ausgewählt haben wenn du mischst')
+        alert(errorMessages['shuffleError'])
       }
     },
     //Kontrolliert ob die Karten grade gleich angeordent sind wie die korrekten Karten
@@ -108,7 +109,7 @@ export default {
       if (store.cards.every((card, index) => card.id === store.correctCards[index].id)) {
         this.$router.push('/finishPage')
       } else {
-        alert('Falsch sortiert!')
+        alert(errorMessages['wrongOrder'])
       }
     },
     goToHomePage() {
