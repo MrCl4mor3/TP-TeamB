@@ -33,10 +33,10 @@ store.cards = store.startingCards.slice();
   </div>
   <!-- Hier werden die Buttons für die Funktionen des Spiels erstellt -->
   <div>
-    <ButtonPress label="Vertausch" @click="SwapCards" />
-    <ButtonPress label="Starte neu" @click="startOver" />
-    <ButtonPress label="misch erneut" @click="shuffel" />
-    <ButtonPress label="Beende Spiel" @click="checkIfCorrect" />
+    <ButtonPress style="margin: 10px;" label="Vertausch" @click="SwapCards" />
+    <ButtonPress style="margin: 10px;" label="Starte neu" @click="startOver" />
+    <ButtonPress style="margin: 10px;" label="misch erneut" @click="shuffel" />
+    <ButtonPress style="margin: 10px;" label="Beende Spiel" @click="checkIfCorrect" />
   </div>
 </template>
 
