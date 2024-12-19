@@ -9,11 +9,11 @@ resetStore()
     <ButtonPress label="Start" @click="goToSortingPage" />
   </div>
 
-  <div class="chekbox">
-    <div class="checkBox-algorithms">
+  <div class="radio-group">
+    <div class="radio-group-algorithms">
       <h2>Algorithmen</h2>
       <div v-for="category in algorithms" :key="category.key" class="flex items-center gap-2">
-        <input type="checkbox"
+        <input type="radio"
           :checked="selectedCategory === category.name"
           name="category"
           :value="category.name"
@@ -23,12 +23,12 @@ resetStore()
       </div>
     </div>
 
-    <div class="checkBox-modes">
+    <div class="radio-group-modes">
       <h2>Modi</h2>
       <div v-for="category in modes" :key="category.key" class="flex items-center gap-2">
-        <input type="checkbox"
+        <input type="radio"
                :checked="selectedMode === category.name"
-               name="category"
+               name="radio"
                :value="category.name"
                @change="updateMode(category.name)"
         />
