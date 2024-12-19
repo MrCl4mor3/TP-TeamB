@@ -9,20 +9,25 @@ resetStore()
     <ButtonPress label="Start" @click="goToSortingPage" />
   </div>
 
-  <div class="radio-group">
+  <!-- Box für Algorithmen -->
+  <fieldset class="radio-box">
+    <legend>Wähle einen Algorithmus</legend>
     <div class="radio-group-algorithms">
       <h2>Algorithmen</h2>
       <div v-for="category in algorithms" :key="category.key" class="flex items-center gap-2">
         <input type="radio"
-          :checked="selectedCategory === category.name"
-          name="category"
-          :value="category.name"
-          @change="updateAlgorithm(category.name)"
+               :checked="selectedCategory === category.name"
+               name="category"
+               :value="category.name"
+               @change="updateAlgorithm(category.name)"
         />
         <label :for="category.key">{{ category.name }}</label>
       </div>
     </div>
-
+  </fieldset>
+  <!-- Box für Modi -->
+  <fieldset class="radio-box">
+    <legend>Wähle einen Modus</legend>
     <div class="radio-group-modes">
       <h2>Modi</h2>
       <div v-for="category in modes" :key="category.key" class="flex items-center gap-2">
@@ -35,7 +40,7 @@ resetStore()
         <label :for="category.key">{{ category.name }}</label>
       </div>
     </div>
-  </div>
+  </fieldset>
 
   <div>
     <h2>Anzahl Karten (zwischen 4 und 20)</h2>
@@ -126,7 +131,7 @@ h1 {
 }
 .checkBox-algorithms {
   position: relative;
-width: 50%;
+  width: 50%;
 }
 .checkBox-modes {
   position: relative;
