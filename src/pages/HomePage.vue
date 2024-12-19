@@ -4,12 +4,12 @@ import { resetStore } from '@/store.js'
 resetStore()
 </script>
 <template>
-  <h1>Sortieralgorithmen</h1>
+  <h1>{{description.headline}}</h1>
   <!-- Flexbox für die Auswahl von Algorithmen und Modi -->
   <div class="modi-algo-container">
     <!-- Box für Algorithmen -->
     <fieldset class="radio-box">
-      <legend>Wähle einen Algorithmus</legend>
+      <legend>{{descriptions.selectAlgorithm}}</legend>
       <div class="radio-group-algorithms">
         <div v-for="category in algorithms" :key="category.key" class="flex items-center gap-2">
           <input type="radio"
@@ -24,7 +24,7 @@ resetStore()
     </fieldset>
     <!-- Box für Modi -->
     <fieldset class="radio-box">
-      <legend>Wähle einen Modus</legend>
+      <legend>{{description.selectMode}}</legend>
       <div class="radio-group-modes">
         <div v-for="category in modes" :key="category.key" class="flex items-center gap-2">
           <input type="radio"
@@ -40,7 +40,7 @@ resetStore()
   </div>
 
   <div class="cards-container">
-    <h2>Anzahl Karten (zwischen 4 und 20)</h2>
+    <h2>{{descriptions.selectNumber}}</h2>
     <InputNumber v-model="numberOfCards" inputId="AnzahlKarten" showButtons :min="4" :max="20" />
   </div>
 
@@ -52,9 +52,11 @@ resetStore()
 <script>
 import { store } from '../store'
 import errorMessages from '../descriptions/errorMessages.json'
+import descriptions from '../descriptions/homePageDescriptions.json'
 export default {
   data() {
     return {
+      description: descriptions,
       cards: [],
       algorithms: [
         { key: 'bubble-sort', name: 'Bubble Sort' },
