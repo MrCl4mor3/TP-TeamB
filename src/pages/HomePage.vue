@@ -139,12 +139,34 @@ h1 {
 }
 
 .radio-box {
-  flex: 1; /* Lässt beide Boxen gleich groß werden */
-  max-width: 30%; /* Optionale Begrenzung der Breite */
+  display: flex; /* Macht die Box zur Flexbox */
+  max-width: 30%; /* Maximale Breite der Box */
+  flex: 1; /* Füllt den verfügbaren Platz aus */
+  flex-direction: column; /* Anordnung der Elemente */
+  justify-content: space-evenly;
+  align-items: flex-start; /* Links ausgerichtet */
   padding: 10px; /* Innenabstand */
-  border: 1px solid black; /* Rahmen um die Box */
-  border-radius: 5px; /* Abgerundete Ecken */
-  margin: 20px;
+  border: 1px solid black; /* Rahmen */
+  border-radius: 8px; /* Abrundung der Ecken */
+  margin: 20px; /* Außenabstand */
+}
+.radio-label {
+  position: relative;
+  z-index: 10; /* Stellt sicher, dass der Text immer vor anderen Elementen angezeigt wird */
+  cursor: pointer;
+  padding-left: 30px;
+}
+
+.radio-group-algorithms {
+  display: flex; /* Macht die Gruppe zur Flexbox */
+  flex-direction: column; /* Anordnung der Elemente */
+  gap: 10px; /* Abstand zwischen den Elementen */
+}
+
+.radio-group-modes {
+  display: flex; /* Macht die Gruppe zur Flexbox */
+  flex-direction: column; /* Anordnung der Elemente */
+  gap: 10px; /* Abstand zwischen den Elementen */
 }
 
 legend {
