@@ -13,12 +13,13 @@ resetStore()
       <div class="radio-group-algorithms">
         <div v-for="category in algorithms" :key="category.key" class="flex items-center gap-2">
           <input type="radio"
+                 :id = "category.key"
                  :checked="selectedCategory === category.name"
                  name="category"
                  :value="category.name"
                  @change="updateAlgorithm(category.name)"
           />
-          <label :for="category.key">{{ category.name }}</label>
+          <label :for="category.key" class="radio-label">{{ category.name }}</label>
         </div>
       </div>
     </fieldset>
@@ -28,12 +29,13 @@ resetStore()
       <div class="radio-group-modes">
         <div v-for="category in modes" :key="category.key" class="flex items-center gap-2">
           <input type="radio"
+                 :id = "category.key"
                  :checked="selectedMode === category.name"
                  name="radio"
                  :value="category.name"
                  @change="updateMode(category.name)"
           />
-          <label :for="category.key">{{ category.name }}</label>
+          <label :for="category.key" class="radio-label">{{ category.name }}</label>
         </div>
       </div>
     </fieldset>
@@ -150,6 +152,7 @@ h1 {
   border-radius: 8px; /* Abrundung der Ecken */
   margin: 20px; /* Außenabstand */
 }
+
 .radio-label {
   position: relative;
   z-index: 10; /* Stellt sicher, dass der Text immer vor anderen Elementen angezeigt wird */
