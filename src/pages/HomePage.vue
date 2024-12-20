@@ -82,6 +82,17 @@ export default {
     }
 
   },
+
+
+  mounted() {
+  // Event-Listener hinzufügen, um die Enter-Taste zu überwachen**
+    window.addEventListener('keyup', this.handleEnterPress);
+  },
+  beforeUnmount() {
+  // Event-Listener entfernen**
+    window.removeEventListener('keyup', this.handleEnterPress);
+  },
+
   watch: {
     selectedCategory(newValue) {
       console.log("Selected Category updated:", newValue);
@@ -90,7 +101,18 @@ export default {
       console.log("Selected Mode updated:", newValue);
     },
   },
+
+
+
+
   methods: {
+    // Taste "Enter" drücken um zur Sortierseite zu navigieren
+    handleEnterPress(event) {
+      if (event.key === 'Enter') {
+        this.goToSortingPage()
+      }
+    },
+
     // Methode um zur Sortierseite zu navigieren, dabei wird die Anzahl der Karten im Store gespeichert
     // und die Karten werden in einem Array gespeiert und gemischt.
     goToSortingPage() {
