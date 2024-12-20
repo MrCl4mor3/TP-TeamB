@@ -59,7 +59,7 @@ resetStore()
 import { store } from '../store'
 import errorMessages from '../descriptions/errorMessages.json'
 import descriptions from '../descriptions/homePageDescriptions.json'
-import startConfig from '../descriptions/startConfig.json'
+import startConfig from '../configs/startConfig.json'
 export default {
   data() {
     return {
