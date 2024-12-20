@@ -137,6 +137,7 @@ export default {
   justify-content: center;
   gap: 10px;
   font-family: Arial, sans-serif;
+  margin-top: 20px;
 
 }
 </style>
