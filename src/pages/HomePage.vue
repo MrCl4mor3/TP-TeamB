@@ -4,50 +4,69 @@ import { resetStore } from '@/store.js'
 resetStore()
 </script>
 <template>
-  <div>
-    <h1>Sortieralgorithmen</h1>
-    <ButtonPress label="Start" @click="goToSortingPage" />
+  <h1>{{description.headline}}</h1>
+  <div class="description-container">
+    <details>
+      <summary>{{description.instructionHeader}}</summary>
+      <p>{{description.instructions}}</p>
+    </details>
+  </div>
+  <!-- Flexbox für die Auswahl von Algorithmen und Modi -->
+  <div class="modi-algo-container">
+    <!-- Box für Algorithmen -->
+    <fieldset class="radio-box">
+      <legend>{{descriptions.selectAlgorithm}}</legend>
+      <div class="radio-group-algorithms">
+        <div v-for="category in algorithms" :key="category.key" class="flex items-center gap-2">
+          <input type="radio"
+                 :id = "category.key"
+                 v-model="selectedCategory"
+                 name="category"
+                 :value="category.name"
+          />
+          <label :for="category.key" class="radio-label">{{ category.name }}</label>
+        </div>
+      </div>
+    </fieldset>
+    <!-- Box für Modi -->
+    <fieldset class="radio-box">
+      <legend>{{description.selectMode}}</legend>
+      <div class="radio-group-modes">
+        <div v-for="category in modes" :key="category.key" class="flex items-center gap-2">
+          <input type="radio"
+                 :id = "category.key"
+                 v-model="selectedMode"
+                 name="mode"
+                 :value="category.name"
+          />
+          <label :for="category.key" class="radio-label">{{ category.name }}</label>
+        </div>
+      </div>
+    </fieldset>
   </div>
 
-  <div class="chekbox">
-    <div class="checkBox-algorithms">
-      <h2>Algorithmen</h2>
-      <div v-for="category in algorithms" :key="category.key" class="flex items-center gap-2">
-        <input type="checkbox"
-          :checked="selectedCategory === category.name"
-          name="category"
-          :value="category.name"
-          @change="updateAlgorithm(category.name)"
-        />
-        <label :for="category.key">{{ category.name }}</label>
-      </div>
-    </div>
-
-    <div class="checkBox-modes">
-      <h2>Modi</h2>
-      <div v-for="category in modes" :key="category.key" class="flex items-center gap-2">
-        <input type="checkbox"
-               :checked="selectedMode === category.name"
-               name="category"
-               :value="category.name"
-               @change="updateMode(category.name)"
-        />
-        <label :for="category.key">{{ category.name }}</label>
-      </div>
-    </div>
-  </div>
-
-  <div>
-    <h2>Anzahl Karten (zwischen 4 und 20)</h2>
+  <div class="cards-container">
+    <h2>{{descriptions.selectNumber}}</h2>
     <InputNumber v-model="numberOfCards" inputId="AnzahlKarten" showButtons :min="4" :max="20" />
+  </div>
+
+  <div class="start-container">
+    <ButtonPress label="Start" @click="goToSortingPage"/>
   </div>
 </template>
 
 <script>
 import { store } from '../store'
+import errorMessages from '../descriptions/errorMessages.json'
+import descriptions from '../descriptions/homePageDescriptions.json'
+import startConfig from '../configs/startConfig.json'
 export default {
   data() {
     return {
+      selectedCategory: startConfig.startAlgorithm,
+      selectedMode: startConfig.startMode,
+      numberOfCards: startConfig.startNumberOfCards,
+      description: descriptions,
       cards: [],
       algorithms: [
         { key: 'bubble-sort', name: 'Bubble Sort' },
@@ -60,30 +79,57 @@ export default {
         { key: 'free-sort', name: 'Freies Sortieren' },
         { key: 'unfree-sort', name: 'Vorgegebenes Sortieren' },
       ],
-      selectedCategory: null,
-      selectedMode: null,
     }
+
   },
+
+
+  mounted() {
+  // Event-Listener hinzufügen, um die Enter-Taste zu überwachen**
+    window.addEventListener('keyup', this.handleEnterPress);
+  },
+  beforeUnmount() {
+  // Event-Listener entfernen**
+    window.removeEventListener('keyup', this.handleEnterPress);
+  },
+
+  watch: {
+    selectedCategory(newValue) {
+      console.log("Selected Category updated:", newValue);
+    },
+    selectedMode(newValue) {
+      console.log("Selected Mode updated:", newValue);
+    },
+  },
+
+
+
+
   methods: {
+    // Taste "Enter" drücken um zur Sortierseite zu navigieren
+    handleEnterPress(event) {
+      if (event.key === 'Enter') {
+        this.goToSortingPage()
+      }
+    },
+
     // Methode um zur Sortierseite zu navigieren, dabei wird die Anzahl der Karten im Store gespeichert
     // und die Karten werden in einem Array gespeiert und gemischt.
     goToSortingPage() {
-      let errorMessage = "Du musst noch "
       let errors = []
       if(this.selectedCategory === null) {
-        errors.push("einen Algorithmus auswählen")
+        errors.push(errorMessages["noAlgorithmSelected"])
       }
       if(this.selectedMode === null) {
-        errors.push("einen Modus Auswählen")
+        errors.push(errorMessages["noModeSelected"])
 
       }
       if(this.numberOfCards < 4 || this.numberOfCards > 20 || this.numberOfCards === undefined) {
-        errors.push("eine Anzahl an Karten zwischen 4 und 20 angeben")
+        errors.push(errorMessages["outOfRange"])
 
       }
       if(errors.length > 0) {
-        errorMessage += errors.join(", ")
-        alert(errorMessage)
+        alert(errors.join("\n"))
         return
       }
       store.selectedMode = this.selectedMode
@@ -100,21 +146,6 @@ export default {
       store.startingCards = cards.slice()
       this.$router.push('/sortingPage')
     },
-    updateAlgorithm(categoryName) {
-      // Setzt die aktuelle Auswahl zurück und wählt die neue
-      if (this.selectedCategory === categoryName) {
-        this.selectedCategory = null // Auswahl entfernen
-      } else {
-        this.selectedCategory = categoryName // Neue Kategorie auswählen
-      }
-    },
-    updateMode(categoryName) {
-      if (this.selectedMode === categoryName) {
-        this.selectedMode = null
-      } else {
-        this.selectedMode = categoryName
-      }
-    }
   },
 }
 </script>
@@ -122,21 +153,96 @@ export default {
 <style scoped>
 /*Styling für die Überschrift*/
 h1 {
-  font-size: 80px;
-  text-align: center;
+  font-size: 80px; /* Größe der Überschrift */
+  text-align: center; /* Zentriert den Text */
+  font-family: Arial, sans-serif; /* Schriftart */
 }
-.checkBox-algorithms {
+.modi-algo-container {
+  display: flex; /* Macht den Container zur Flexbox */
+  justify-content: center; /* Zentriert die Boxen */
+  gap: 1px; /* Abstand zwischen den Boxen */
+  font-family: Arial, sans-serif;
+}
+
+.radio-box {
+  display: flex; /* Macht die Box zur Flexbox */
+  max-width: 30%; /* Maximale Breite der Box */
+  flex: 1; /* Füllt den verfügbaren Platz aus */
+  flex-direction: column; /* Anordnung der Elemente */
+  justify-content: space-evenly;
+  align-items: flex-start; /* Links ausgerichtet */
+  padding: 10px; /* Innenabstand */
+  border: 1px solid black; /* Rahmen */
+  border-radius: 8px; /* Abrundung der Ecken */
+  margin: 20px; /* Außenabstand */
+  font-family: Arial, sans-serif;
+}
+
+.radio-label {
   position: relative;
-width: 50%;
-}
-.checkBox-modes {
-  position: relative;
-
-
-}
-.chekbox {
-  display: flex;
-  gap: 20px;
+  cursor: pointer;
+  padding-left: 30px;
+  font-family: Arial, sans-serif;
 }
 
+.radio-group-algorithms {
+  display: flex; /* Macht die Gruppe zur Flexbox */
+  flex-direction: column; /* Anordnung der Elemente */
+  gap: 10px; /* Abstand zwischen den Elementen */
+  font-family: Arial, sans-serif;
+}
+
+.radio-group-modes {
+  display: flex; /* Macht die Gruppe zur Flexbox */
+  flex-direction: column; /* Anordnung der Elemente */
+  gap: 10px; /* Abstand zwischen den Elementen */
+  font-family: Arial, sans-serif;
+}
+
+legend {
+  font-size: 1.7em; /* Größe der Überschrift */
+  font-weight: bold; /* Fett gedruckt */
+  margin-bottom: 8px; /* Abstand nach unten */
+  text-align: center; /* Zentriert den Text */
+  font-family: Arial, sans-serif;
+}
+
+.start-container {
+  display: flex; /* Macht den Container zur Flexbox */
+  flex-direction: column; /* Anordnung der Elemente */
+  justify-content: center; /* Zentriert die Elemente */
+  align-items: center; /* Zentriert die Elemente */
+  gap: 20px; /* Abstand zwischen den Elementen */
+  font-family: Arial, sans-serif;
+}
+
+.start-container button {
+  width: 200px; /* Breite des Buttons */
+  height: 50px; /* Höhe des Buttons */
+  font-size: 1.7em; /* Größe des Textes */
+  font-family: Arial, sans-serif;
+}
+
+.cards-container {
+  text-align: center; /* Zentriert den gesamten Inhalt horizontal */
+  margin-top: 24px; /* Optional: Abstand nach oben */
+  margin-bottom: 24px; /* Optional: Abstand nach unten */
+  font-family: Arial, sans-serif;
+}
+
+.cards-container h2 {
+  margin-bottom: 8px; /* Abstand zwischen Überschrift und Input-Feld */
+  font-size: 1.7em; /* Größe der Überschrift */
+  font-family: Arial, sans-serif;
+}
+.description-container {
+  display: flex; /* Macht den Container zur Flexbox */
+  justify-content: center; /* Zentriert den Inhalt */
+  text-align: center; /* Zentriert den gesamten Inhalt horizontal */
+  margin-top: 24px; /* Optional: Abstand nach oben */
+  margin-bottom: 24px; /* Optional: Abstand nach unten */
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+}
 </style>

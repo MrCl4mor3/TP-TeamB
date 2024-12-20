@@ -5,7 +5,6 @@ store.cards = store.startingCards.slice();
 </script>
 <template>
   <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage"/>
-   <!--<p>bubblesort {{bubbleSortResult}}</p> -->
   <FieldSet :legend="`${store.selectedCategory} , ${store.selectedMode}`" :toggleable="true" :collapsed="true">
     <template #toggleicon>
       <span>{{isExpanded ? "?" : "❓"}}</span>
@@ -32,7 +31,7 @@ store.cards = store.startingCards.slice();
     </div>
   </div>
   <!-- Hier werden die Buttons für die Funktionen des Spiels erstellt -->
-  <div>
+  <div class="button-container">
     <ButtonPress label="Vertausch" @click="SwapCards" />
     <ButtonPress label="Starte neu" @click="startOver" />
     <ButtonPress label="misch erneut" @click="shuffel" />
@@ -45,6 +44,7 @@ import FlippedCard from '@/components/FlippedCard.vue'
 import { store } from '../store'
 import 'primeicons/primeicons.css';
 import bubbleSortDescription from '../descriptions/algorithmDescriptions.json'
+import errorMessages from '../descriptions/ErrorMessages.json'
 export default {
   data() {
     return {
@@ -73,7 +73,7 @@ export default {
         store.cards[firstIndex] = store.cards[secondIndex]
         store.cards[secondIndex] = temp
       } else {
-        alert('Wähle genau zwei Karten zum Tauschen aus.')
+        alert(errorMessages['selectTwoCards'])
       }
     },
     // Methode um die Karte auszuwählen, heirbei wird die Karte aus dem Array der ausgewählten
@@ -91,7 +91,7 @@ export default {
         store.cards = store.startingCards.slice()
         store.score = 0;
       } else {
-        alert('du darfst keine Karten ausgewählt haben wenn du mischst')
+        alert(errorMessages['restartError'])
       }
     },
     shuffel() {
@@ -100,7 +100,7 @@ export default {
         store.startingCards = store.cards.slice()
         store.score = 0;
       } else {
-        alert('du darfst keine Karten ausgewählt haben wenn du mischst')
+        alert(errorMessages['shuffleError'])
       }
     },
     //Kontrolliert ob die Karten grade gleich angeordent sind wie die korrekten Karten
@@ -108,7 +108,7 @@ export default {
       if (store.cards.every((card, index) => card.id === store.correctCards[index].id)) {
         this.$router.push('/finishPage')
       } else {
-        alert('Falsch sortiert!')
+        alert(errorMessages['wrongOrder'])
       }
     },
     goToHomePage() {
@@ -118,6 +118,7 @@ export default {
   },
 }
 </script>
+
 <style>
 /*Hier wird definiert wie die Karten angeordnet werden sollen*/
 .card-grid {
@@ -125,5 +126,18 @@ export default {
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 16px;
   justify-items: center;
+  font-family: Arial, sans-serif;
+}
+</style>
+
+<style scoped>
+/*Styling für die Buttons*/
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  font-family: Arial, sans-serif;
+  margin-top: 20px;
+
 }
 </style>
