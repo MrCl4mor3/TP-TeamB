@@ -5,6 +5,12 @@ resetStore()
 </script>
 <template>
   <h1>{{description.headline}}</h1>
+  <div class="description-container">
+    <details>
+      <summary>{{description.instructionHeader}}</summary>
+      <p>{{description.instructions}}</p>
+    </details>
+  </div>
   <!-- Flexbox für die Auswahl von Algorithmen und Modi -->
   <div class="modi-algo-container">
     <!-- Box für Algorithmen -->
@@ -46,7 +52,7 @@ resetStore()
 
   <div class="start-container">
     <ButtonPress label="Start" @click="goToSortingPage"/>
-  </div>q
+  </div>
 </template>
 
 <script>
@@ -206,5 +212,15 @@ legend {
   margin-bottom: 8px; /* Abstand zwischen Überschrift und Input-Feld */
   font-size: 1.7em; /* Größe der Überschrift */
   font-family: Arial, sans-serif;
+}
+.description-container {
+  display: flex; /* Macht den Container zur Flexbox */
+  justify-content: center; /* Zentriert den Inhalt */
+  text-align: center; /* Zentriert den gesamten Inhalt horizontal */
+  margin-top: 24px; /* Optional: Abstand nach oben */
+  margin-bottom: 24px; /* Optional: Abstand nach unten */
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  font-size: 20px;
 }
 </style>
