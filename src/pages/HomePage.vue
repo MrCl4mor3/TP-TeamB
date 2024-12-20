@@ -127,11 +127,13 @@ export default {
 h1 {
   font-size: 80px; /* Größe der Überschrift */
   text-align: center; /* Zentriert den Text */
+  font-family: Arial, sans-serif; /* Schriftart */
 }
 .modi-algo-container {
   display: flex; /* Macht den Container zur Flexbox */
   justify-content: center; /* Zentriert die Boxen */
   gap: 1px; /* Abstand zwischen den Boxen */
+  font-family: Arial, sans-serif;
 }
 
 .radio-box {
@@ -145,24 +147,28 @@ h1 {
   border: 1px solid black; /* Rahmen */
   border-radius: 8px; /* Abrundung der Ecken */
   margin: 20px; /* Außenabstand */
+  font-family: Arial, sans-serif;
 }
 
 .radio-label {
   position: relative;
   cursor: pointer;
   padding-left: 30px;
+  font-family: Arial, sans-serif;
 }
 
 .radio-group-algorithms {
   display: flex; /* Macht die Gruppe zur Flexbox */
   flex-direction: column; /* Anordnung der Elemente */
   gap: 10px; /* Abstand zwischen den Elementen */
+  font-family: Arial, sans-serif;
 }
 
 .radio-group-modes {
   display: flex; /* Macht die Gruppe zur Flexbox */
   flex-direction: column; /* Anordnung der Elemente */
   gap: 10px; /* Abstand zwischen den Elementen */
+  font-family: Arial, sans-serif;
 }
 
 legend {
@@ -170,6 +176,7 @@ legend {
   font-weight: bold; /* Fett gedruckt */
   margin-bottom: 8px; /* Abstand nach unten */
   text-align: center; /* Zentriert den Text */
+  font-family: Arial, sans-serif;
 }
 
 .start-container {
@@ -178,23 +185,26 @@ legend {
   justify-content: center; /* Zentriert die Elemente */
   align-items: center; /* Zentriert die Elemente */
   gap: 20px; /* Abstand zwischen den Elementen */
+  font-family: Arial, sans-serif;
 }
 
 .start-container button {
   width: 200px; /* Breite des Buttons */
   height: 50px; /* Höhe des Buttons */
   font-size: 1.7em; /* Größe des Textes */
+  font-family: Arial, sans-serif;
 }
 
 .cards-container {
   text-align: center; /* Zentriert den gesamten Inhalt horizontal */
   margin-top: 24px; /* Optional: Abstand nach oben */
   margin-bottom: 24px; /* Optional: Abstand nach unten */
+  font-family: Arial, sans-serif;
 }
 
 .cards-container h2 {
   margin-bottom: 8px; /* Abstand zwischen Überschrift und Input-Feld */
   font-size: 1.7em; /* Größe der Überschrift */
+  font-family: Arial, sans-serif;
 }
-
 </style>

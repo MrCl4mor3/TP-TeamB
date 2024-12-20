@@ -5,7 +5,6 @@ store.cards = store.startingCards.slice();
 </script>
 <template>
   <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage"/>
-   <!--<p>bubblesort {{bubbleSortResult}}</p> -->
   <FieldSet :legend="`${store.selectedCategory} , ${store.selectedMode}`" :toggleable="true" :collapsed="true">
     <template #toggleicon>
       <span>{{isExpanded ? "?" : "❓"}}</span>
@@ -127,6 +126,7 @@ export default {
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 16px;
   justify-items: center;
+  font-family: Arial, sans-serif;
 }
 </style>
 
@@ -136,6 +136,7 @@ export default {
   display: flex;
   justify-content: center;
   gap: 10px;
+  font-family: Arial, sans-serif;
 
 }
 </style>
