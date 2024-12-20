@@ -14,10 +14,9 @@ resetStore()
         <div v-for="category in algorithms" :key="category.key" class="flex items-center gap-2">
           <input type="radio"
                  :id = "category.key"
-                 :checked="selectedCategory === category.name"
+                 v-model="selectedCategory"
                  name="category"
                  :value="category.name"
-                 @change="updateAlgorithm(category.name)"
           />
           <label :for="category.key" class="radio-label">{{ category.name }}</label>
         </div>
@@ -30,10 +29,9 @@ resetStore()
         <div v-for="category in modes" :key="category.key" class="flex items-center gap-2">
           <input type="radio"
                  :id = "category.key"
-                 :checked="selectedMode === category.name"
-                 name="radio"
+                 v-model="selectedMode"
+                 name="mode"
                  :value="category.name"
-                 @change="updateMode(category.name)"
           />
           <label :for="category.key" class="radio-label">{{ category.name }}</label>
         </div>
@@ -48,16 +46,20 @@ resetStore()
 
   <div class="start-container">
     <ButtonPress label="Start" @click="goToSortingPage"/>
-  </div>
+  </div>q
 </template>
 
 <script>
 import { store } from '../store'
 import errorMessages from '../descriptions/errorMessages.json'
 import descriptions from '../descriptions/homePageDescriptions.json'
+import startConfig from '../descriptions/startConfig.json'
 export default {
   data() {
     return {
+      selectedCategory: startConfig.startAlgorithm,
+      selectedMode: startConfig.startMode,
+      numberOfCards: startConfig.startNumberOfCards,
       description: descriptions,
       cards: [],
       algorithms: [
@@ -71,9 +73,16 @@ export default {
         { key: 'free-sort', name: 'Freies Sortieren' },
         { key: 'unfree-sort', name: 'Vorgegebenes Sortieren' },
       ],
-      selectedCategory: null,
-      selectedMode: null,
     }
+
+  },
+  watch: {
+    selectedCategory(newValue) {
+      console.log("Selected Category updated:", newValue);
+    },
+    selectedMode(newValue) {
+      console.log("Selected Mode updated:", newValue);
+    },
   },
   methods: {
     // Methode um zur Sortierseite zu navigieren, dabei wird die Anzahl der Karten im Store gespeichert
@@ -109,21 +118,6 @@ export default {
       store.startingCards = cards.slice()
       this.$router.push('/sortingPage')
     },
-    updateAlgorithm(categoryName) {
-      // Setzt die aktuelle Auswahl zurück und wählt die neue
-      if (this.selectedCategory === categoryName) {
-        this.selectedCategory = null // Auswahl entfernen
-      } else {
-        this.selectedCategory = categoryName // Neue Kategorie auswählen
-      }
-    },
-    updateMode(categoryName) {
-      if (this.selectedMode === categoryName) {
-        this.selectedMode = null
-      } else {
-        this.selectedMode = categoryName
-      }
-    }
   },
 }
 </script>
@@ -155,7 +149,6 @@ h1 {
 
 .radio-label {
   position: relative;
-  z-index: 10; /* Stellt sicher, dass der Text immer vor anderen Elementen angezeigt wird */
   cursor: pointer;
   padding-left: 30px;
 }
@@ -202,10 +195,6 @@ legend {
 .cards-container h2 {
   margin-bottom: 8px; /* Abstand zwischen Überschrift und Input-Feld */
   font-size: 1.7em; /* Größe der Überschrift */
-}
-
-.cards-container InputNumber {
-  display: inline-block; /* Stellt sicher, dass das Input-Feld korrekt zentriert wird */
 }
 
 </style>
