@@ -56,7 +56,7 @@ resetStore()
 </template>
 
 <script>
-import { store } from '../store'
+import {generateCards} from "@/setupCards.js";
 import errorMessages from '../descriptions/errorMessages.json'
 import descriptions from '../descriptions/homePageDescriptions.json'
 import startConfig from '../configs/startConfig.json'
@@ -132,18 +132,8 @@ export default {
         alert(errors.join("\n"))
         return
       }
-      store.selectedMode = this.selectedMode
-      store.selectedCategory = this.selectedCategory
-      store.numberOfCards = this.numberOfCards
-      const cards = Array.from({ length: this.numberOfCards }, (_, index) => ({
-        id: index, //Identifikator der Karte
-        value: `Karte ${index + 1}`, //Wert der Karte hier müsste man dann das Bild einfügen
-      }))
-      //die Karten werden gemischt und sowohl die korrekte als auch die start Reihenfolge wird gespeichert
-      store.correctCards = cards.slice()
-      store.cards = cards
-      store.cards = store.cards.sort(() => Math.random() - 0.5)
-      store.startingCards = cards.slice()
+      // Karten generieren und in den Store speichern
+      generateCards(this.selectedCategory, this.selectedMode, this.numberOfCards)
       this.$router.push('/sortingPage')
     },
   },
