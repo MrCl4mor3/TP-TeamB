@@ -10,7 +10,7 @@ store.cards = store.startingCards.slice();
       <span>{{isExpanded ? "?" : "❓"}}</span>
     </template>
     <p class="m-0" style="white-space: pre-wrap;">
-      {{this.descriptionToAlgorithm[store.selectedCategory]}}
+      {{descriptionToAlgorithm[store.selectedCategory]}}
     </p>
   </FieldSet>
 
