@@ -18,3 +18,9 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
   store.cards = store.cards.sort(() => Math.random() - 0.5)
   store.startingCards = cards.slice()
 }
+
+export function generateCards2(selectedCategory, selectedMode, numberOfCards) {
+  store.selectedMode = selectedMode;
+  store.selectedCategory = selectedCategory;
+  store.numberOfCards = numberOfCards;
+}

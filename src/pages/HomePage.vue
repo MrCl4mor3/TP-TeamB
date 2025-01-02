@@ -86,11 +86,11 @@ export default {
 
   mounted() {
   // Event-Listener hinzufügen, um die Enter-Taste zu überwachen**
-    window.addEventListener('keyup', this.handleEnterPress);
+    window.addEventListener('keyup', this.handleKeyPress);
   },
   beforeUnmount() {
   // Event-Listener entfernen**
-    window.removeEventListener('keyup', this.handleEnterPress);
+    window.removeEventListener('keyup', this.handleKeyPress);
   },
 
   watch: {
@@ -107,10 +107,17 @@ export default {
 
   methods: {
     // Taste "Enter" drücken um zur Sortierseite zu navigieren
-    handleEnterPress(event) {
+    handleKeyPress(event) {
       if (event.key === 'Enter') {
         this.goToSortingPage()
       }
+      if (event.key === 't') {
+        this.goToTestPage()
+      }
+    },
+
+    goToTestPage() {
+      this.$router.push('/testPage')
     },
 
     // Methode um zur Sortierseite zu navigieren, dabei wird die Anzahl der Karten im Store gespeichert
