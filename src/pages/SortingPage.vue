@@ -1,16 +1,20 @@
 <script setup>
-store.numberOfFlippedCards= 0;
-store.score = 0;
-store.cards = store.startingCards.slice();
+store.numberOfFlippedCards = 0
+store.score = 0
+store.cards = store.startingCards.slice()
 </script>
 <template>
-  <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage"/>
-  <FieldSet :legend="`${store.selectedCategory} , ${store.selectedMode}`" :toggleable="true" :collapsed="true">
+  <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage" />
+  <FieldSet
+    :legend="`${store.selectedCategory} , ${store.selectedMode}`"
+    :toggleable="true"
+    :collapsed="true"
+  >
     <template #toggleicon>
-      <span>{{isExpanded ? "?" : "❓"}}</span>
+      <span>{{ isExpanded ? '?' : '❓' }}</span>
     </template>
-    <p class="m-0" style="white-space: pre-wrap;">
-      {{this.descriptionToAlgorithm[store.selectedCategory]}}
+    <p class="m-0" style="white-space: pre-wrap">
+      {{ descriptionToAlgorithm[store.selectedCategory] }}
     </p>
   </FieldSet>
 
@@ -25,7 +29,7 @@ store.cards = store.startingCards.slice();
           <h1></h1>
         </template>
         <template #back>
-          <img :src="`./images/${card.id}.png`"/>
+          <img :src="`./images/${card.id}.png`" />
         </template>
       </FlippedCard>
     </div>
@@ -42,7 +46,7 @@ store.cards = store.startingCards.slice();
 <script>
 import FlippedCard from '@/components/FlippedCard.vue'
 import { store } from '../store'
-import 'primeicons/primeicons.css';
+import 'primeicons/primeicons.css'
 import bubbleSortDescription from '../descriptions/algorithmDescriptions.json'
 import errorMessages from '../descriptions/ErrorMessages.json'
 export default {
@@ -55,7 +59,7 @@ export default {
         'Insertion Sort': bubbleSortDescription['Insertion Sort'],
         'Merge Sort': bubbleSortDescription['Merge Sort'],
         'Quick Sort': bubbleSortDescription['Quick Sort'],
-      }
+      },
     }
   },
   components: {
@@ -89,7 +93,7 @@ export default {
     startOver() {
       if (this.selectedCards.length === 0) {
         store.cards = store.startingCards.slice()
-        store.score = 0;
+        store.score = 0
       } else {
         alert(errorMessages['restartError'])
       }
@@ -98,7 +102,7 @@ export default {
       if (this.selectedCards.length === 0) {
         store.cards = store.cards.sort(() => Math.random() - 0.5)
         store.startingCards = store.cards.slice()
-        store.score = 0;
+        store.score = 0
       } else {
         alert(errorMessages['shuffleError'])
       }
@@ -113,7 +117,7 @@ export default {
     },
     goToHomePage() {
       this.$router.push('/')
-      this.selectedCards = [];
+      this.selectedCards = []
     },
   },
 }
@@ -138,6 +142,5 @@ export default {
   gap: 10px;
   font-family: Arial, sans-serif;
   margin-top: 20px;
-
 }
 </style>

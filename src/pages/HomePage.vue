@@ -4,25 +4,26 @@ import { resetStore } from '@/store.js'
 resetStore()
 </script>
 <template>
-  <h1>{{description.headline}}</h1>
+  <h1>{{ description.headline }}</h1>
   <div class="description-container">
     <details>
-      <summary>{{description.instructionHeader}}</summary>
-      <p>{{description.instructions}}</p>
+      <summary>{{ description.instructionHeader }}</summary>
+      <p>{{ description.instructions }}</p>
     </details>
   </div>
   <!-- Flexbox für die Auswahl von Algorithmen und Modi -->
   <div class="modi-algo-container">
     <!-- Box für Algorithmen -->
     <fieldset class="radio-box">
-      <legend>{{descriptions.selectAlgorithm}}</legend>
+      <legend>{{ descriptions.selectAlgorithm }}</legend>
       <div class="radio-group-algorithms">
         <div v-for="category in algorithms" :key="category.key" class="flex items-center gap-2">
-          <input type="radio"
-                 :id = "category.key"
-                 v-model="selectedCategory"
-                 name="category"
-                 :value="category.name"
+          <input
+            type="radio"
+            :id="category.key"
+            v-model="selectedCategory"
+            name="category"
+            :value="category.name"
           />
           <label :for="category.key" class="radio-label">{{ category.name }}</label>
         </div>
@@ -30,14 +31,15 @@ resetStore()
     </fieldset>
     <!-- Box für Modi -->
     <fieldset class="radio-box">
-      <legend>{{description.selectMode}}</legend>
+      <legend>{{ description.selectMode }}</legend>
       <div class="radio-group-modes">
         <div v-for="category in modes" :key="category.key" class="flex items-center gap-2">
-          <input type="radio"
-                 :id = "category.key"
-                 v-model="selectedMode"
-                 name="mode"
-                 :value="category.name"
+          <input
+            type="radio"
+            :id="category.key"
+            v-model="selectedMode"
+            name="mode"
+            :value="category.name"
           />
           <label :for="category.key" class="radio-label">{{ category.name }}</label>
         </div>
@@ -46,17 +48,17 @@ resetStore()
   </div>
 
   <div class="cards-container">
-    <h2>{{descriptions.selectNumber}}</h2>
+    <h2>{{ descriptions.selectNumber }}</h2>
     <InputNumber v-model="numberOfCards" inputId="AnzahlKarten" showButtons :min="4" :max="20" />
   </div>
 
   <div class="start-container">
-    <ButtonPress label="Start" @click="goToSortingPage"/>
+    <ButtonPress label="Start" @click="goToSortingPage" />
   </div>
 </template>
 
 <script>
-import {generateCards} from "@/setupCards.js";
+import { generateCards } from '@/setupCards.js'
 import errorMessages from '../descriptions/errorMessages.json'
 import descriptions from '../descriptions/homePageDescriptions.json'
 import startConfig from '../configs/startConfig.json'
@@ -80,56 +82,56 @@ export default {
         { key: 'unfree-sort', name: 'Vorgegebenes Sortieren' },
       ],
     }
-
   },
-
 
   mounted() {
-  // Event-Listener hinzufügen, um die Enter-Taste zu überwachen**
-    window.addEventListener('keyup', this.handleEnterPress);
+    // Event-Listener hinzufügen, um die Enter-Taste zu überwachen**
+    window.addEventListener('keyup', this.handleKeyPress)
   },
   beforeUnmount() {
-  // Event-Listener entfernen**
-    window.removeEventListener('keyup', this.handleEnterPress);
+    // Event-Listener entfernen**
+    window.removeEventListener('keyup', this.handleKeyPress)
   },
 
   watch: {
     selectedCategory(newValue) {
-      console.log("Selected Category updated:", newValue);
+      console.log('Selected Category updated:', newValue)
     },
     selectedMode(newValue) {
-      console.log("Selected Mode updated:", newValue);
+      console.log('Selected Mode updated:', newValue)
     },
   },
 
-
-
-
   methods: {
     // Taste "Enter" drücken um zur Sortierseite zu navigieren
-    handleEnterPress(event) {
+    handleKeyPress(event) {
       if (event.key === 'Enter') {
         this.goToSortingPage()
       }
+      if (event.key === 't') {
+        this.goToTestPage()
+      }
+    },
+
+    goToTestPage() {
+      this.$router.push('/testPage')
     },
 
     // Methode um zur Sortierseite zu navigieren, dabei wird die Anzahl der Karten im Store gespeichert
     // und die Karten werden in einem Array gespeiert und gemischt.
     goToSortingPage() {
       let errors = []
-      if(this.selectedCategory === null) {
-        errors.push(errorMessages["noAlgorithmSelected"])
+      if (this.selectedCategory === null) {
+        errors.push(errorMessages['noAlgorithmSelected'])
       }
-      if(this.selectedMode === null) {
-        errors.push(errorMessages["noModeSelected"])
-
+      if (this.selectedMode === null) {
+        errors.push(errorMessages['noModeSelected'])
       }
-      if(this.numberOfCards < 4 || this.numberOfCards > 20 || this.numberOfCards === undefined) {
-        errors.push(errorMessages["outOfRange"])
-
+      if (this.numberOfCards < 4 || this.numberOfCards > 20 || this.numberOfCards === undefined) {
+        errors.push(errorMessages['outOfRange'])
       }
-      if(errors.length > 0) {
-        alert(errors.join("\n"))
+      if (errors.length > 0) {
+        alert(errors.join('\n'))
         return
       }
       // Karten generieren und in den Store speichern
