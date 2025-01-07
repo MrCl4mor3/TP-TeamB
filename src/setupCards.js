@@ -1,11 +1,9 @@
-import { store } from './store';
+import { store } from './store'
 
 export function generateCards(selectedCategory, selectedMode, numberOfCards) {
-
   store.selectedMode = selectedMode
   store.selectedCategory = selectedCategory
   store.numberOfCards = numberOfCards
-
 
   const cards = Array.from({ length: numberOfCards }, (_, index) => ({
     id: index, //Identifikator der Karte
@@ -20,7 +18,7 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
 }
 
 export function generateCards2(selectedCategory, selectedMode, numberOfCards) {
-  store.selectedMode = selectedMode;
-  store.selectedCategory = selectedCategory;
-  store.numberOfCards = numberOfCards;
+  store.selectedMode = selectedMode
+  store.selectedCategory = selectedCategory
+  store.numberOfCards = numberOfCards
 }

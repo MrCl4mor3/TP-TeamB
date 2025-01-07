@@ -1,131 +1,129 @@
-
 export function bubbleSortWithScore(cards) {
   let sortingCards = cards.slice()
-  let score = 0; // Score-Variable, um die Anzahl der Betrachtungen zu zählen
-  let swapped;
+  let score = 0 // Score-Variable, um die Anzahl der Betrachtungen zu zählen
+  let swapped
 
   do {
-    swapped = false;
+    swapped = false
     for (let i = 0; i < sortingCards.length - 1; i++) {
-      score++; // Ein Element wird betrachtet
+      score++ // Ein Element wird betrachtet
       console.log(score)
       if (sortingCards[i].id > sortingCards[i + 1].id) {
         // Elemente vertauschen
-        const temp = sortingCards[i];
-        sortingCards[i] = sortingCards[i + 1];
-        sortingCards[i + 1] = temp;
-        swapped = true;
+        const temp = sortingCards[i]
+        sortingCards[i] = sortingCards[i + 1]
+        sortingCards[i + 1] = temp
+        swapped = true
       }
     }
-  } while (swapped);
+  } while (swapped)
 
-  return { score };
+  return { score }
 }
 export function selectionSortWithScore(cards) {
-  let sortingCards = cards.slice();
-  let score = 0;
+  let sortingCards = cards.slice()
+  let score = 0
 
   for (let i = 0; i < sortingCards.length; i++) {
-    let minIndex = i;
+    let minIndex = i
     for (let j = i + 1; j < sortingCards.length; j++) {
-      score++; // Ein Element wird betrachtet
-      console.log(score);
+      score++ // Ein Element wird betrachtet
+      console.log(score)
       if (sortingCards[j].id < sortingCards[minIndex].id) {
-        minIndex = j;
+        minIndex = j
       }
     }
     if (minIndex !== i) {
-      const temp = sortingCards[i];
-      sortingCards[i] = sortingCards[minIndex];
-      sortingCards[minIndex] = temp;
+      const temp = sortingCards[i]
+      sortingCards[i] = sortingCards[minIndex]
+      sortingCards[minIndex] = temp
     }
   }
 
-  return { score };
+  return { score }
 }
 
 export function insertionSortWithScore(cards) {
-  let sortingCards = cards.slice();
-  let score = 0;
+  let sortingCards = cards.slice()
+  let score = 0
 
   for (let i = 1; i < sortingCards.length; i++) {
-    let current = sortingCards[i];
-    let j = i - 1;
+    let current = sortingCards[i]
+    let j = i - 1
     while (j >= 0 && sortingCards[j].id > current.id) {
-      score++; // Ein Element wird betrachtet
-      console.log(score);
-      sortingCards[j + 1] = sortingCards[j];
-      j--;
+      score++ // Ein Element wird betrachtet
+      console.log(score)
+      sortingCards[j + 1] = sortingCards[j]
+      j--
     }
-    score++; // Auch wenn die Schleife abbricht, wird ein Element betrachtet
-    sortingCards[j + 1] = current;
+    score++ // Auch wenn die Schleife abbricht, wird ein Element betrachtet
+    sortingCards[j + 1] = current
   }
 
-  return { score };
+  return { score }
 }
 
 export function quickSortWithScore(cards) {
-  let score = 0;
+  let score = 0
 
   function quickSort(array) {
     if (array.length <= 1) {
-      return array;
+      return array
     }
 
-    const pivot = array[array.length - 1];
-    const left = [];
-    const right = [];
+    const pivot = array[array.length - 1]
+    const left = []
+    const right = []
 
     for (let i = 0; i < array.length - 1; i++) {
-      score++; // Ein Element wird betrachtet
-      console.log(score);
+      score++ // Ein Element wird betrachtet
+      console.log(score)
       if (array[i].id < pivot.id) {
-        left.push(array[i]);
+        left.push(array[i])
       } else {
-        right.push(array[i]);
+        right.push(array[i])
       }
     }
 
-    return [...quickSort(left), pivot, ...quickSort(right)];
+    return [...quickSort(left), pivot, ...quickSort(right)]
   }
 
-  quickSort(cards.slice());
-  return { score };
+  quickSort(cards.slice())
+  return { score }
 }
 
 export function mergeSortWithScore(cards) {
-  let score = 0;
+  let score = 0
 
   function merge(left, right) {
-    const result = [];
+    const result = []
 
     while (left.length && right.length) {
-      score++; // Ein Element wird betrachtet
-      console.log(score);
+      score++ // Ein Element wird betrachtet
+      console.log(score)
       if (left[0].id <= right[0].id) {
-        result.push(left.shift());
+        result.push(left.shift())
       } else {
-        result.push(right.shift());
+        result.push(right.shift())
       }
     }
 
-    return [...result, ...left, ...right];
+    return [...result, ...left, ...right]
   }
 
   function mergeSort(array) {
     if (array.length <= 1) {
-      return array;
+      return array
     }
 
-    const middle = Math.floor(array.length / 2);
-    const left = mergeSort(array.slice(0, middle));
-    const right = mergeSort(array.slice(middle));
+    const middle = Math.floor(array.length / 2)
+    const left = mergeSort(array.slice(0, middle))
+    const right = mergeSort(array.slice(middle))
 
-    return merge(left, right);
+    return merge(left, right)
   }
 
-  mergeSort(cards.slice());
+  mergeSort(cards.slice())
 
-  return { score };
+  return { score }
 }
-

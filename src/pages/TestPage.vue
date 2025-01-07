@@ -1,9 +1,7 @@
-<script setup>
-
-</script>
+<script setup></script>
 
 <template>
-  <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage"/>
+  <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage" />
   <div class="header">
     <h1>TestPage</h1>
   </div>
@@ -14,11 +12,10 @@ export default {
   methods: {
     goToHomePage() {
       this.$router.push('/')
-    }
-  }
+    },
+  },
 }
 </script>
-
 
 <style scoped>
 .header {

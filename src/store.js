@@ -1,4 +1,4 @@
-import { reactive } from 'vue';
+import { reactive } from 'vue'
 
 // Funktion, die den initialen Zustand zurückgibt
 function getDefaultStore() {
@@ -11,12 +11,12 @@ function getDefaultStore() {
     score: 0,
     selectedCategory: null,
     selectedMode: null,
-  };
+  }
 }
 
 // Den Store mit dem initialen Zustand initialisieren
-export const store = reactive(getDefaultStore());
+export const store = reactive(getDefaultStore())
 
 export function resetStore() {
-  Object.assign(store, getDefaultStore());
+  Object.assign(store, getDefaultStore())
 }
