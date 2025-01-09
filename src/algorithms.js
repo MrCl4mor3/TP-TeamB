@@ -1,5 +1,9 @@
+import { store } from './store'
+
+
 export function bubbleSortWithScore(cards) {
   let sortingCards = cards.slice()
+  console.log(sortingCards)
   let score = 0 // Score-Variable, um die Anzahl der Betrachtungen zu zählen
   let swapped
 
@@ -9,6 +13,8 @@ export function bubbleSortWithScore(cards) {
       score++ // Ein Element wird betrachtet
       console.log(score)
       if (sortingCards[i].id > sortingCards[i + 1].id) {
+        store.correctSortingOrder.push([i,i+1])
+
         // Elemente vertauschen
         const temp = sortingCards[i]
         sortingCards[i] = sortingCards[i + 1]
@@ -34,6 +40,8 @@ export function selectionSortWithScore(cards) {
       }
     }
     if (minIndex !== i) {
+      store.correctSortingOrder.push([i, minIndex])
+
       const temp = sortingCards[i]
       sortingCards[i] = sortingCards[minIndex]
       sortingCards[minIndex] = temp
@@ -53,6 +61,7 @@ export function insertionSortWithScore(cards) {
     while (j >= 0 && sortingCards[j].id > current.id) {
       score++ // Ein Element wird betrachtet
       console.log(score)
+      store.correctSortingOrder.push([j, j + 1])
       sortingCards[j + 1] = sortingCards[j]
       j--
     }
@@ -127,3 +136,5 @@ export function mergeSortWithScore(cards) {
 
   return { score }
 }
+
+

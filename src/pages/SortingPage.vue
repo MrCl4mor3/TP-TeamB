@@ -1,7 +1,24 @@
 <script setup>
+
+import {
+  bubbleSortWithScore,
+  insertionSortWithScore,
+  mergeSortWithScore, quickSortWithScore,
+  selectionSortWithScore
+} from '@/algorithms.js'
+
+const algorithmMap = {
+  'Bubble Sort': bubbleSortWithScore,
+    'Selection Sort': selectionSortWithScore,
+    'Insertion Sort': insertionSortWithScore,
+    'Merge Sort': mergeSortWithScore,
+    'Quick Sort': quickSortWithScore,
+}
 store.numberOfFlippedCards = 0
 store.score = 0
 store.cards = store.startingCards.slice()
+algorithmMap[store.selectedCategory](store.startingCards)
+console.log(store.correctSortingOrder)
 </script>
 <template>
   <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage" />
@@ -49,9 +66,11 @@ import { store } from '../store'
 import 'primeicons/primeicons.css'
 import bubbleSortDescription from '../descriptions/algorithmDescriptions.json'
 import errorMessages from '../descriptions/ErrorMessages.json'
+
 export default {
   data() {
     return {
+      numberOfSwaps: 0,
       selectedCards: [],
       descriptionToAlgorithm: {
         'Bubble Sort': bubbleSortDescription['Bubble Sort'],
@@ -71,14 +90,25 @@ export default {
   methods: {
     // Tausche die Positionen der beiden Karten im Store wenn zwei Karten ausgewählt wurden
     SwapCards() {
-      if (this.selectedCards.length === 2) {
-        const [firstIndex, secondIndex] = this.selectedCards
-        const temp = store.cards[firstIndex]
-        store.cards[firstIndex] = store.cards[secondIndex]
-        store.cards[secondIndex] = temp
-      } else {
-        alert(errorMessages['selectTwoCards'])
+      let canSort = true
+
+      if(store.selectedMode === "Vorgegebenes Sortieren") {
+        if (store.correctSortingOrder[this.numberOfSwaps].includes(this.selectedCards[0]) &&
+          store.correctSortingOrder[this.numberOfSwaps].includes(this.selectedCards[1])) {
+          canSort = true
+        } else {
+          canSort = false
+        }
       }
+        if (this.selectedCards.length === 2 && canSort) {
+          const [firstIndex, secondIndex] = this.selectedCards
+          const temp = store.cards[firstIndex]
+          store.cards[firstIndex] = store.cards[secondIndex]
+          store.cards[secondIndex] = temp
+          this.numberOfSwaps++;
+        } else {
+          alert(errorMessages['selectTwoCards'])
+        }
     },
     // Methode um die Karte auszuwählen, heirbei wird die Karte aus dem Array der ausgewählten
     // Karten entfernt wenn sie schon ausgewählt wurde, ansonsten wird sie hinzugefügt
