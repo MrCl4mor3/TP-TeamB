@@ -18,3 +18,30 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
 }
 
 
+import { ref } from 'vue'
+import cardSVG from './assets/card.svg'
+
+export function svgLoader() {
+  const svgContent = ref('')
+
+  const loadSvg = async () => {
+    try {
+      const response = await fetch(cardSVG)
+      if (!response.ok) {
+        throw new Error('SVG konnte nicht geladen werden')
+      }
+      const svgText = await response.text()
+      svgContent.value = svgText
+    } catch (error) {
+      console.error('Fehler beim Laden der SVG:', error)
+    }
+  }
+
+  return {
+    svgContent,
+    loadSvg
+  }
+}
+
+
+

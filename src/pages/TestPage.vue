@@ -12,35 +12,16 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import cardSVG from '@/assets/card.svg'
+import { onMounted } from 'vue'
+import { svgLoader} from "@/setupCards.js";
 
-const svgContainer = ref(null)
-const svgContent = ref('')
-
-onMounted(async () => {
-  try {
-    // SVG-Datei laden
-    const response = await fetch(cardSVG)
-    if (!response.ok) {
-      throw new Error('SVG konnte nicht geladen werden')
-    }
-    const svgText = await response.text()
-
-    // SVG-Inhalt in die ref speichern
-    svgContent.value = svgText
-  } catch (error) {
-    console.error('Fehler beim Laden der SVG:', error)
-  }
-})
+const { svgContent, loadSvg } = svgLoader()
+onMounted(async () => { loadSvg() })
 </script>
 
 <script>
-import 'primeicons/primeicons.css'
 export default {
-  setup() {
-    return { store }
-  },
+
   methods: {
     goToHomePage() {
       this.$router.push('/')
