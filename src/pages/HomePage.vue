@@ -62,6 +62,7 @@ import { generateCards } from '@/setupCards.js'
 import errorMessages from '../descriptions/errorMessages.json'
 import descriptions from '../descriptions/homePageDescriptions.json'
 import startConfig from '../configs/startConfig.json'
+import { store } from '@/store.js'
 export default {
   data() {
     return {
@@ -109,6 +110,9 @@ export default {
         this.goToSortingPage()
       }
       if (event.key === 't') {
+        store.numberOfCards = this.numberOfCards
+        store.selectedMode = this.selectedMode
+        store.selectedCategory = this.selectedCategory
         this.goToTestPage()
       }
     },
