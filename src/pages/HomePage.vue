@@ -13,22 +13,6 @@ resetStore()
   </div>
   <!-- Flexbox für die Auswahl von Algorithmen und Modi -->
   <div class="modi-algo-container">
-    <!-- Box für Algorithmen -->
-    <fieldset class="radio-box">
-      <legend>{{ descriptions.selectAlgorithm }}</legend>
-      <div class="radio-group-algorithms">
-        <div v-for="category in algorithms" :key="category.key" class="flex items-center gap-2">
-          <input
-            type="radio"
-            :id="category.key"
-            v-model="selectedCategory"
-            name="category"
-            :value="category.name"
-          />
-          <label :for="category.key" class="radio-label">{{ category.name }}</label>
-        </div>
-      </div>
-    </fieldset>
     <!-- Box für Modi -->
     <fieldset class="radio-box">
       <legend>{{ description.selectMode }}</legend>
@@ -39,6 +23,22 @@ resetStore()
             :id="category.key"
             v-model="selectedMode"
             name="mode"
+            :value="category.name"
+          />
+          <label :for="category.key" class="radio-label">{{ category.name }}</label>
+        </div>
+      </div>
+    </fieldset>
+    <!-- Box für Algorithmen -->
+    <fieldset class="radio-box">
+      <legend>{{ descriptions.selectAlgorithm }}</legend>
+      <div class="radio-group-algorithms">
+        <div v-for="category in algorithms" :key="category.key" class="flex items-center gap-2">
+          <input
+            type="radio"
+            :id="category.key"
+            v-model="selectedCategory"
+            name="category"
             :value="category.name"
           />
           <label :for="category.key" class="radio-label">{{ category.name }}</label>
