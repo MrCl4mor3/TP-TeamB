@@ -109,7 +109,7 @@ export default {
       if (event.key === 'Enter') {
         this.goToSortingPage()
       }
-      if (event.key === 't') // Nur vorübergehend!!!! Eigentlich in SetupCards gedacht!!!!!!!!!
+      if (event.key === 't') {// Nur vorübergehend!!!! Eigentlich in SetupCards gedacht!!!!!!!!!
         store.numberOfCards = this.numberOfCards
         store.selectedMode = this.selectedMode
         store.selectedCategory = this.selectedCategory
@@ -144,6 +144,7 @@ export default {
     },
   },
 }
+
 </script>
 
 <style scoped>
