@@ -8,6 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test:unit": "vitest",
+    "test": "vitest",
     "lint": "eslint . --fix",
     "format": "prettier --write src/"
   },

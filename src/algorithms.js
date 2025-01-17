@@ -1,4 +1,4 @@
-export function bubbleSortWithScore(cards) {
+export function bubbleSortWithScore(cards, returnSorted = false) {
   let sortingCards = cards.slice()
   let score = 0 // Score-Variable, um die Anzahl der Betrachtungen zu zählen
   let swapped
@@ -17,6 +17,10 @@ export function bubbleSortWithScore(cards) {
       }
     }
   } while (swapped)
+
+  if (returnSorted) {
+    return { score, sortedArray: sortingCards }
+  }
 
   return { score }
 }
