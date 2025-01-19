@@ -111,10 +111,17 @@ export default {
       if (event.key === 't') {
         this.goToTestPage()
       }
+      if (event.key === 'p') {
+        this.goToPageLayout()
+      }
     },
 
     goToTestPage() {
+      generateCards(this.selectedCategory, this.selectedMode, this.numberOfCards)
       this.$router.push('/testPage')
+    },
+    goToPageLayout() {
+      this.$router.push('/pageLayout')
     },
 
     // Methode um zur Sortierseite zu navigieren, dabei wird die Anzahl der Karten im Store gespeichert

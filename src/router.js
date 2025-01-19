@@ -3,6 +3,7 @@ import HomePage from './pages/HomePage.vue'
 import SortingPage from './pages/SortingPage.vue'
 import FinishPage from './pages/FinishPage.vue'
 import TestPage from './pages/TestPage.vue'
+import PageLayout from './pages/PageLayout.vue'
 //Definiert die Routen und Namen für die verschiedenen Seiten.
 const routes = [
   {
@@ -25,6 +26,11 @@ const routes = [
     name: 'TestPage',
     component: TestPage,
   },
+  {
+    path: '/pageLayout',
+    name: 'PageLayout',
+    component: PageLayout,
+  }
 ]
 //erstellt den router
 const router = createRouter({
