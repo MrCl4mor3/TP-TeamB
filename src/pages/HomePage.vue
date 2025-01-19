@@ -33,13 +33,19 @@ resetStore()
     <fieldset class="radio-box">
       <legend>{{ descriptions.selectAlgorithm }}</legend>
       <div class="radio-group-algorithms">
-        <div v-for="category in algorithms" :key="category.key" class="flex items-center gap-2">
+        <div
+          v-for="category in algorithms"
+          :key="category.key"
+          class="flex items-center gap-2"
+          :class="{ 'disabled-text': selectedMode === 'Freies Sortieren' }"
+        >
           <input
             type="radio"
             :id="category.key"
             v-model="selectedCategory"
             name="category"
             :value="category.name"
+            :disabled="selectedMode === 'Freies Sortieren'"
           />
           <label :for="category.key" class="radio-label">{{ category.name }}</label>
         </div>
@@ -227,6 +233,7 @@ legend {
   font-size: 1.7em; /* Größe der Überschrift */
   font-family: Arial, sans-serif;
 }
+
 .description-container {
   display: flex; /* Macht den Container zur Flexbox */
   justify-content: center; /* Zentriert den Inhalt */
@@ -236,5 +243,15 @@ legend {
   font-family: Arial, sans-serif;
   font-weight: bold;
   font-size: 20px;
+}
+
+.disabled-text {
+  color: gray;
+  cursor: not-allowed;
+}
+
+input:disabled + label {
+  color: gray;
+  cursor: not-allowed;
 }
 </style>
