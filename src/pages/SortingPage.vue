@@ -1,6 +1,5 @@
 <script setup>
 import { onMounted} from "vue";
-import { store } from '../store'
 
 store.numberOfFlippedCards = 0
 store.score = 0
@@ -11,14 +10,16 @@ function generateCards() {
   const min = 1;
   const max = 28;
   let cards = [];
-  cards[0] = svgTemplate.cloneNode(true);
+  cards[0] = {id: 1, svg: svgTemplate.cloneNode(true)};
 
   for (let i = 1; i < store.numberOfCards; i++) {
-    let newSvg = updateSvgID(cards[i - 1], 'card'+ i);
+    let oldCard = cards[i - 1];
+    let oldSvg = oldCard.svg.cloneNode(true);
+    let newSvg = updateSvgID(oldSvg, 'card'+ i);
     newSvg = removePart(getRandomInt(min, max), newSvg);
-    cards[i] = newSvg;
+    cards[i] = {id: i, svg: newSvg};
   }
-
+  store.cards = cards;
 }
 
 function removePart(id, svgContent) {
