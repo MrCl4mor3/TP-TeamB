@@ -4,17 +4,10 @@
 <template>
   <StandardLayout
     :store="store"
-    :goToHomePage="goToHomePage"
     :isExpanded="isExpanded"
-    :descriptionToAlgorithm="descriptionToAlgorithm"
-    :SwapCards="SwapCards"
-    :startOver="startOver"
-    :shuffel="shuffel"
-    :checkIfCorrect="checkIfCorrect"
   >
     <template #cards="{ selectCards, numberOfSwaps }">
       <!-- übergibt die benötigten Methoden und variablen -->
-      <!-- Zusätzlicher Inhalt für die Game-Seite -->
       <div>
         <div class="card-grid">
           <div v-for="(card, index) in store.cards" :key="card.id" class="card-and-line">
@@ -73,15 +66,6 @@ export default {
   methods: {
     moveToSmaller() {
     },
-    SelectCard(index) {
-      if (this.selectedCard === null) {
-        this.selectedCard = index;
-      } else {
-        this.selectedCard = null;
-        //alert("FALSCH")
-      }
-
-    }
   },
 }
 </script>

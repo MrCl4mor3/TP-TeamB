@@ -1,14 +1,10 @@
 <template>
   <div>
 
-
-
-    <!-- Header -->
     <div>
       <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage" />
     </div>
 
-    <!-- FieldSet -->
     <FieldSet
       :legend="`${store.selectedCategory} , ${store.selectedMode}`"
       :toggleable="true"
@@ -24,37 +20,16 @@
 
 
 
-    <!-- Score -->
+
     <div>
       <p>Score: {{ store.score }}</p>
     </div>
-    <!-- Dynamic Content -->
-    <slot name="content"
+    <!-- hier werden die Karten in den einzelnen Seiten hinzugefügt -->
+    <slot name="cards"
           :select-cards="SelectCard"
           :number-of-swaps="this.numberOfSwaps"/>
 
-    <!-- Card Grid
-    <div class="card-grid">
-      <div v-for="(card, index) in store.cards" :key="card.id" class="card-and-line">
-        <FlippedCard @click="SelectCard(index)">
-          <template #front>
-            <h1></h1>
-          </template>
-          <template #back>
-            <img :src="`./images/${card.id}.png`" />
-          </template>
-        </FlippedCard>
-
-          <svg class="line" width="50" height="300">
-             Linie
-            <line v-show="index === 0" x1="25" y1="0" x2="25" y2="300" stroke="red" stroke-width="6" />
-          </svg>
-      </div>
-    </div>
-    -->
-
-
-    <!-- Button Container -->
+    <!-- hier werden die zusätzlichen Knöpfe hinzugefügt -->
     <div class="button-container">
       <slot name="extraButtons"
         :swap-cards="SwapCards"
@@ -67,16 +42,12 @@
 </template>
 
 <script>
-import FlippedCard from "@/components/FlippedCard.vue";
 import bubbleSortDescription from "@/descriptions/algorithmDescriptions.json";
 import errorMessages from "@/descriptions/ErrorMessages.json";
 import { store } from '@/store.js'
 
 export default {
   name: "StandardLayout",
-  components: {
-    FlippedCard,
-  },
   props: {
     store: {
       type: Object,
@@ -105,14 +76,8 @@ export default {
       let canSort = true;
 
       if (store.selectedMode === "Vorgegebenes Sortieren") {
-        if (
-          store.correctSortingOrder[this.numberOfSwaps].includes(store.selectedCards[0]) &&
-          store.correctSortingOrder[this.numberOfSwaps].includes(store.selectedCards[1])
-        ) {
-          canSort = true;
-        } else {
-          canSort = false;
-        }
+        canSort = !!(store.correctSortingOrder[this.numberOfSwaps].includes(store.selectedCards[0]) &&
+          store.correctSortingOrder[this.numberOfSwaps].includes(store.selectedCards[1]));
       }
       if (store.selectedCards.length === 2 && canSort) {
         const [firstIndex, secondIndex] = store.selectedCards;
@@ -164,16 +129,11 @@ export default {
       this.$router.push("/");
       store.selectedCards = [];
     },
-    moveSmallerCard() {
-
-    }
   },
 };
 </script>
 
 <style scoped>
-
-
 .button-container {
   display: flex;
   justify-content: center;
@@ -181,7 +141,4 @@ export default {
   font-family: Arial, sans-serif;
   margin-top: 20px;
 }
-
-
-
 </style>
