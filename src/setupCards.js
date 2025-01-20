@@ -17,17 +17,15 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
       const min = 1;
       const max = 28;
       let cards = [];
-      cards[0] = {id: 1, svg: svgTemplate.cloneNode(true)};
+      cards[0] = {id: 0, svg: svgTemplate.cloneNode(true)};
 
 
       for (let i = 1; i < store.numberOfCards; i++) {
-        console.log(i);
         let oldCard = cards[i - 1];
         let oldSvg = oldCard.svg.cloneNode(true);
         let newSvg = updateSvgID(oldSvg, 'card'+ i);
         //newSvg = removePart(getRandomInt(min, max), newSvg);
         cards[i] = {id: i, svg: newSvg};
-        console.log(i);
       }
       store.cards = cards;
     })
@@ -44,7 +42,9 @@ function removePart(id, svgContent) {
 }
 
 function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  const test =Math.floor(Math.random() * (max - min + 1)) + min;
+  console.log(test);
+  return test;
 }
 
 function updateSvgID(svgContent, newId) {
