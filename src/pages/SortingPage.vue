@@ -10,9 +10,15 @@ function generateCards() {
   let svgTemplate = document.getElementById('svgPicture');
   const min = 1;
   const max = 28;
-  for (let i = 0; i < store.numberOfCards; i++) {
-    console.log(i);
+  let cards = [];
+  cards[0] = svgTemplate.cloneNode(true);
+
+  for (let i = 1; i < store.numberOfCards; i++) {
+    let newSvg = updateSvgID(cards[i - 1], 'card'+ i);
+    newSvg = removePart(getRandomInt(min, max), newSvg);
+    cards[i] = newSvg;
   }
+
 }
 
 function removePart(id, svgContent) {
