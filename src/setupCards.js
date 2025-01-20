@@ -1,5 +1,5 @@
 import { store } from './store'
-import cardSvg from '@/assets/card.svg'
+import cardSvg from '@/assets/card2.svg'
 
 export function generateCards(selectedCategory, selectedMode, numberOfCards) {
   store.selectedMode = selectedMode;
@@ -62,12 +62,16 @@ function updateSvgID(svgContent, newId) {
   }
   svgContent.setAttribute("id", newId);
 
-  // Alle IDs innerhalb des SVGs neu setzen, um Konflikte zu vermeiden.
-  const allPaths = svgContent.querySelectorAll('[id]');
-  allPaths.forEach((path, index) => {
-    path.setAttribute('id', `${newId}-${index + 1}`);
+  // Alle Elemente mit einer ID im SVG finden
+  const allElements = svgContent.querySelectorAll('[id]');
+
+  allElements.forEach((element, index) => {
+    // Setze eine neue ID für jedes Element
+    let newElementId = `${newId}-${index + 1}`;
+
+    // Falls das Element eine ID hat, wird sie ersetzt
+    element.setAttribute('id', newElementId);
   });
 
   return svgContent;
 }
-
