@@ -17,7 +17,7 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
 
       //Min und Max Werte für die Zufallszahlen
       const min = 1;
-      const max = 28;
+      const max = 20;
       let cards = [];
       //Karte 0 ist die Vorlage
       cards[0] = {id: 0, svg: svgTemplate.cloneNode(true)};
