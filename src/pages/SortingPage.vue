@@ -1,7 +1,42 @@
 <script setup>
+import { onMounted} from "vue";
+import { store } from '../store'
+
 store.numberOfFlippedCards = 0
 store.score = 0
 store.cards = store.startingCards.slice()
+
+function generateCards() {
+  let svgTemplate = document.getElementById('svgPicture');
+  const min = 1;
+  const max = 28;
+  for (let i = 0; i < store.numberOfCards; i++) {
+    console.log(i);
+  }
+}
+
+function removePart(id, svgContent) {
+  svgContent.getElementById(id).remove();
+
+  return svgContent;
+}
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function updateSvgID(svgContent, newId) {
+  if ( svgContent.hasAttribute("id")) {
+    svgContent.removeAttribute("id");
+  }
+  svgContent.setAttribute("id", newId);
+
+  return svgContent;
+}
+
+onMounted(() => {
+  generateCards();
+})
 </script>
 
 
@@ -29,7 +64,7 @@ store.cards = store.startingCards.slice()
 
 
   <div class="svgPrototyp">
-    <svg id="Layer_1" x="0px" y="0px" width="100%" viewBox="0 0 200 300" enable-background="new 0 0 200 300" xml:space="preserve">
+    <svg id="svgPicture" x="0px" y="0px" width="100%" viewBox="0 0 200 300" enable-background="new 0 0 200 300" xml:space="preserve">
 
 
       <path id="1" fill="none" opacity="1.000000" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.000000" d=" M192.500000,75.500000   C192.204742,65.179153 190.255310,55.138527 184.394028,46.572514   C176.555191,35.116402 168.111389,35.929825 160.964722,47.979073   C155.080078,57.900558 153.663254,68.889877 153.078308,80.004120   C152.439133,92.149033 153.997421,104.160629 158.645294,115.440132   C160.662872,120.336456 163.522125,125.104706 168.972153,127.561760   C173.875061,129.772141 180.078400,127.860741 183.492081,122.494957   C188.349915,114.859192 190.831528,106.488632 192.145615,97.521339   C193.201447,90.316277 192.705246,83.168457 193.000000,76.000000  "/>
