@@ -51,7 +51,9 @@ function removePart(id, svgContent) {
 
 
 function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  const random = Math.floor(Math.random() * (max - min + 1)) + min;
+  console.log(random);
+  return random;
 }
 
 function updateSvgID(svgContent, newId) {
