@@ -160,7 +160,4 @@ export default {
   margin-top: 20px;
 }
 
-.svgPrototyp {
-  display: none;
-}
 </style>
