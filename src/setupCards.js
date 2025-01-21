@@ -45,6 +45,10 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
 
 function removePart(id, svgContent) {
   const element = svgContent.querySelector(`#${id}`);
+
+  if (!element) {
+    return svgContent;
+  }
   element.parentNode.removeChild(element);
   return svgContent;
 }
