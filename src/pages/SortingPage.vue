@@ -35,10 +35,14 @@ store.cards = store.startingCards.slice()
     <div v-for="(card, index) in store.cards" :key="card.id">
       <FlippedCard @click="SelectCard(index)">
         <template #front>
-          <h1>{{card.id}}</h1>
+          <div class="frontsite">
+            <h1>{{card.id}}</h1>
+          </div>
         </template>
         <template #back>
-          <div v-html="card.svg.outerHTML"></div>
+          <div class="backsite">
+            <div v-html="card.svg.outerHTML"></div>
+          </div>
         </template>
       </FlippedCard>
     </div>

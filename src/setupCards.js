@@ -20,12 +20,12 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
       const max = 20;
       let cards = [];
       //Karte 0 ist die Vorlage
-      cards[0] = {id: 0, svg: svgTemplate.cloneNode(true)};
+      cards[store.numberOfCards - 1] = {id: store.numberOfCards - 1, svg: svgTemplate.cloneNode(true)};
 
       //Entfernen einzelner Komponenten
-      for (let i = 1; i < store.numberOfCards; i++) {
+      for (let i = store.numberOfCards - 2; i >= 0; i--) {
         //Kopiere das Bild zuvor
-        let oldCard = cards[i - 1];
+        let oldCard = cards[i + 1];
         //Kopiere daraus das svg Element
         let oldSvg = oldCard.svg.cloneNode(true);
         //Update die ID in "card + i", zb card1.
@@ -36,7 +36,10 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
         cards[i] = {id: i, svg: newSvg};
       }
       //Speicher die Karten im Store ab
+      store.correctCards = cards.slice();
       store.cards = cards;
+      store.cards = store.cards.sort(() => Math.random() - 0.5);
+      store.startingCards = cards.slice();
     })
     .catch(error => {
       console.error('Error:', error);
