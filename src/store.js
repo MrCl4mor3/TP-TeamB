@@ -11,6 +11,9 @@ function getDefaultStore() {
     score: 0,
     selectedCategory: null,
     selectedMode: null,
+    correctSortingOrder: [],
+    selectedCards: []
+
   }
 }
 

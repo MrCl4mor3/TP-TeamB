@@ -37,9 +37,11 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
       }
       //Speicher die Karten im Store ab
       store.correctCards = cards.slice();
-      store.cards = cards;
-      store.cards = store.cards.sort(() => Math.random() - 0.5);
-      store.startingCards = cards.slice();
+      store.cards = cards.slice();
+      while (arraysAreEqual(store.cards, store.correctCards)){
+        store.cards = store.cards.sort(() => Math.random() - 0.5)
+      }
+      store.startingCards = store.cards.slice()
     })
     .catch(error => {
       console.error('Error:', error);
@@ -81,4 +83,13 @@ function updateSvgID(svgContent, newId) {
   });
 
   return svgContent;
+}
+
+function arraysAreEqual(arr1, arr2) {
+  for (let i = 0; i < arr1.length; i++) {
+    if (arr1[i] !== arr2[i]) {
+      return false
+    }
+  }
+  return true
 }

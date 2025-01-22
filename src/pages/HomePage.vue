@@ -60,6 +60,8 @@ resetStore()
 
   <div class="start-container">
     <ButtonPress label="Start" @click="goToSortingPage" />
+    {{this.selectedCategory}}
+
   </div>
 </template>
 
@@ -120,9 +122,9 @@ export default {
     },
 
     goToTestPage() {
+      generateCards(this.selectedCategory, this.selectedMode, this.numberOfCards)
       this.$router.push('/testPage')
     },
-
     // Methode um zur Sortierseite zu navigieren, dabei wird die Anzahl der Karten im Store gespeichert
     // und die Karten werden in einem Array gespeiert und gemischt.
     goToSortingPage() {
@@ -142,7 +144,12 @@ export default {
       }
       // Karten generieren und in den Store speichern
       generateCards(this.selectedCategory, this.selectedMode, this.numberOfCards)
-      this.$router.push('/sortingPage')
+      if(this.selectedCategory === 'Quick Sort') {
+        this.$router.push('/quickSortPage')
+      }
+      else {
+        this.$router.push('/sortingPage')
+      }
     },
   },
 }
