@@ -74,6 +74,17 @@ export default {
 }
 </script>
 
+<style>
+/*Hier wird definiert wie die Karten angeordnet werden sollen*/
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  justify-items: center;
+  font-family: Arial, sans-serif;
+}
+</style>
+
 <style scoped>
 .card-and-line {
   display: flex;
