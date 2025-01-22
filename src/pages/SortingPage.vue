@@ -14,14 +14,20 @@ const algorithmMap = {
     'Merge Sort': mergeSortWithScore,
     'Quick Sort': quickSortWithScore,
 }
+
 store.numberOfFlippedCards = 0
 store.score = 0
 store.cards = store.startingCards.slice()
+
 algorithmMap[store.selectedCategory](store.startingCards)
 console.log(store.correctSortingOrder)
 </script>
+
+
 <template>
+
   <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage" />
+
   <FieldSet
     :legend="`${store.selectedCategory} , ${store.selectedMode}`"
     :toggleable="true"
@@ -35,22 +41,32 @@ console.log(store.correctSortingOrder)
     </p>
   </FieldSet>
 
+
   <div>
     <p>Score: {{ store.score }}</p>
   </div>
+
+
   <div class="card-grid">
     <!-- Hier wird für jede Karte ein FlippedCard erstellt -->
     <div v-for="(card, index) in store.cards" :key="card.id">
       <FlippedCard @click="SelectCard(index)">
         <template #front>
-          <h1></h1>
+          <div class="frontsite">
+            <h1>{{card.id}}</h1>
+          </div>
         </template>
         <template #back>
-          <img :src="`./images/${card.id}.png`" />
+          <div class="backsite">
+            <div v-html="card.svg.outerHTML"></div>
+          </div>
         </template>
       </FlippedCard>
     </div>
   </div>
+
+
+
   <!-- Hier werden die Buttons für die Funktionen des Spiels erstellt -->
   <div class="button-container">
     <ButtonPress label="Vertausch" @click="SwapCards" />
@@ -173,4 +189,5 @@ export default {
   font-family: Arial, sans-serif;
   margin-top: 20px;
 }
+
 </style>
