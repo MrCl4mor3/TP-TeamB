@@ -155,6 +155,7 @@ export default {
 }
 </script>
 
+
 <style scoped>
 /*Styling für die Überschrift*/
 h1 {
