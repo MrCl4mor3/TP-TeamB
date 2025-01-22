@@ -13,10 +13,14 @@
           <div v-for="(card, index) in store.cards" :key="card.id" class="card-and-line">
             <FlippedCard @click="selectCards(index)">
               <template #front>
-                <h1></h1>
+                <div class="frontsite">
+                  <h1>{{ card.id }}</h1>
+                </div>
               </template>
               <template #back>
-                <img :src="`./images/${card.id}.png`"  alt=""/>
+                <div class="backsite">
+                  <div v-html="card.svg.outerHTML"></div>
+                </div>
               </template>
             </FlippedCard>
 
