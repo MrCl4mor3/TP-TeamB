@@ -27,8 +27,6 @@
 
     <template #extraButtons="{ swapCards }">
       <ButtonPress label="vertauschen" @click="swapCards" />
-      <P> {{store.correctSortingOrder}}</P>
-
     </template>
   </StandardLayout>
 </template>
