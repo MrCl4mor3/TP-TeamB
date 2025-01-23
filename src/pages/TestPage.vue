@@ -1,5 +1,4 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>
   <StandardLayout
@@ -23,7 +22,7 @@
                 <h1></h1>
               </template>
               <template #back>
-                <img :src="`./images/${card.id}.png`"  alt=""/>
+                <img :src="`./images/${card.id}.png`" alt="" />
               </template>
             </FlippedCard>
 
@@ -71,17 +70,15 @@ export default {
     }
   },
   methods: {
-    moveToSmaller() {
-    },
+    moveToSmaller() {},
     SelectCard(index) {
       if (this.selectedCard === null) {
-        this.selectedCard = index;
+        this.selectedCard = index
       } else {
-        this.selectedCard = null;
+        this.selectedCard = null
         //alert("FALSCH")
       }
-
-    }
+    },
   },
 }
 </script>

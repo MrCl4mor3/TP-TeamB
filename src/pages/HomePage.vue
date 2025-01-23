@@ -66,7 +66,7 @@ resetStore()
 </template>
 
 <script>
-import { generateCards} from '@/setupCards.js'
+import { generateCards } from '@/cardSetup.js'
 import errorMessages from '../descriptions/errorMessages.json'
 import descriptions from '../descriptions/homePageDescriptions.json'
 import startConfig from '../configs/startConfig.json'
@@ -144,17 +144,15 @@ export default {
       }
       // Karten generieren und in den Store speichern
       generateCards(this.selectedCategory, this.selectedMode, this.numberOfCards)
-      if(this.selectedCategory === 'Quick Sort') {
+      if (this.selectedCategory === 'Quick Sort') {
         this.$router.push('/quickSortPage')
-      }
-      else {
+      } else {
         this.$router.push('/sortingPage')
       }
     },
   },
 }
 </script>
-
 
 <style scoped>
 /*Styling für die Überschrift*/
