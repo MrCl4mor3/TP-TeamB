@@ -73,6 +73,7 @@ export default {
   },
   methods: {
     SwapCards() {
+      console.log(store.selectedMode);
       let canSort = true;
 
       if (store.selectedMode === "Vorgegebenes Sortieren") {

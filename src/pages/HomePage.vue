@@ -66,7 +66,7 @@ resetStore()
 </template>
 
 <script>
-import { generateCards } from '@/setupCards.js'
+import { generateCards} from '@/setupCards.js'
 import errorMessages from '../descriptions/errorMessages.json'
 import descriptions from '../descriptions/homePageDescriptions.json'
 import startConfig from '../configs/startConfig.json'

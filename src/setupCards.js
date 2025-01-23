@@ -1,6 +1,24 @@
 import { store } from './store'
 import cardSvg from '@/assets/card2.svg'
 
+
+import {
+  bubbleSortWithScore,
+  insertionSortWithScore,
+  mergeSortWithScore, quickSortWithScore,
+  selectionSortWithScore
+} from '@/algorithms.js'
+
+const algorithmMap = {
+  'Bubble Sort': bubbleSortWithScore,
+  'Selection Sort': selectionSortWithScore,
+  'Insertion Sort': insertionSortWithScore,
+  'Merge Sort': mergeSortWithScore,
+  'Quick Sort': quickSortWithScore,
+}
+
+
+
 export function generateCards(selectedCategory, selectedMode, numberOfCards) {
   store.selectedMode = selectedMode;
   store.selectedCategory = selectedCategory;
@@ -20,7 +38,7 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
       const max = 20;
       let cards = [];
       //Karte 0 ist die Vorlage
-      cards[store.numberOfCards - 1] = {id: store.numberOfCards - 1, svg: svgTemplate.cloneNode(true)};
+      cards[store.numberOfCards - 1] = { id: store.numberOfCards - 1, svg: svgTemplate.cloneNode(true) };
 
       //Entfernen einzelner Komponenten
       for (let i = store.numberOfCards - 2; i >= 0; i--) {
@@ -29,19 +47,20 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
         //Kopiere daraus das svg Element
         let oldSvg = oldCard.svg.cloneNode(true);
         //Update die ID in "card + i", zb card1.
-        let newSvg = updateSvgID(oldSvg, 'card'+ i);
+        let newSvg = updateSvgID(oldSvg, 'card' + i);
         //Entferne nun ein Path mit einer zufälligen Nummer, die id ist der Form "card1-3" für den 3. Pfad
         newSvg = removePart(`${'card' + i}-${getRandomInt(min, max)}`, newSvg);
         //Speicher das neue bild in cards ab
-        cards[i] = {id: i, svg: newSvg};
+        cards[i] = { id: i, svg: newSvg };
       }
       //Speicher die Karten im Store ab
       store.correctCards = cards.slice();
       store.cards = cards.slice();
-      while (arraysAreEqual(store.cards, store.correctCards)){
+      while (arraysAreEqual(store.cards, store.correctCards)) {
         store.cards = store.cards.sort(() => Math.random() - 0.5)
       }
       store.startingCards = store.cards.slice()
+      algorithmMap[store.selectedCategory](store.startingCards)
     })
     .catch(error => {
       console.error('Error:', error);
@@ -93,3 +112,4 @@ function arraysAreEqual(arr1, arr2) {
   }
   return true
 }
+
