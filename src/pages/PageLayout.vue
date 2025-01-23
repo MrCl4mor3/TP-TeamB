@@ -27,6 +27,7 @@
     <!-- hier werden die Karten in den einzelnen Seiten hinzugefügt -->
     <slot name="cards"
           :select-cards="SelectCard"
+          :select-cards2="SelectCardQuick"
           :number-of-swaps="this.numberOfSwaps"/>
 
     <!-- hier werden die zusätzlichen Knöpfe hinzugefügt -->
@@ -75,10 +76,10 @@ export default {
     SwapCards() {
       let canSort = true;
 
-      if (store.selectedMode === "Vorgegebenes Sortieren") {
-        canSort = !!(store.correctSortingOrder[this.numberOfSwaps].includes(store.selectedCards[0]) &&
-          store.correctSortingOrder[this.numberOfSwaps].includes(store.selectedCards[1]));
-      }
+    //  if (store.selectedMode === "Vorgegebenes Sortieren") {
+    //    canSort = !!(store.correctSortingOrder[this.numberOfSwaps].includes(store.selectedCards[0]) &&
+    //       store.correctSortingOrder[this.numberOfSwaps].includes(store.selectedCards[1]));
+    //  }
       if (store.selectedCards.length === 2 && canSort) {
         const [firstIndex, secondIndex] = store.selectedCards;
         const temp = store.cards[firstIndex];
@@ -93,6 +94,21 @@ export default {
       if (store.selectedCards.includes(index)) {
         store.selectedCards = store.selectedCards.filter((card) => card !== index);
       } else if (store.selectedCards.length < 2) {
+        store.selectedCards.push(index);
+        store.score++;
+      }
+    },
+    //für Quicksort, es werden Pivotelement erkannt und anders behandelt
+    SelectCardQuick(index) {
+      if (store.pivotIndices.includes(index) || store.pivotElementIndex === index) {
+        alert("pivotelement");
+      }
+      if (store.selectedCards.includes(index)) {
+        store.selectedCards = store.selectedCards.filter((card) => card !== index);
+      } else if (store.selectedCards.length < 2) {
+        if (index === store.lookingIndex) {
+          alert("correct");
+        }
         store.selectedCards.push(index);
         store.score++;
       }
