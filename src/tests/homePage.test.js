@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import HomePage from '@/pages/HomePage.vue'
 import { resetStore } from '../store'
-import { generateCards } from '@/setupCards';
+import { generateCards } from '../cardSetup.js';
 
 // Mock für Vue Router
 vi.mock('vue-router', () => ({

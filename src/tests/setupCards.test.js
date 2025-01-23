@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { generateCards, generateCards2 } from '@/setupCards';
+import { generateCards, generateCards2 } from '@/cardSetup.js';
 import { store } from '@/store';
 
 describe('setupCards.js', () => {
