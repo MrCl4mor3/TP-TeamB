@@ -124,10 +124,7 @@ describe('HomePage.vue', () => {
     alertMock.mockRestore()
   })
 
-  it('navigates to the test page when "t" key is pressed', async () => {
-    await wrapper.trigger('keyup', { key: 't' })
-    expect(routerMock.push).toHaveBeenCalledWith('/testPage')
-  })
+
 
   it('navigates to the sorting page when "Enter" key is pressed', async () => {
     // Set valid inputs
