@@ -13,22 +13,6 @@ resetStore()
   </div>
   <!-- Flexbox für die Auswahl von Algorithmen und Modi -->
   <div class="modi-algo-container">
-    <!-- Box für Algorithmen -->
-    <fieldset class="radio-box">
-      <legend>{{ descriptions.selectAlgorithm }}</legend>
-      <div class="radio-group-algorithms">
-        <div v-for="category in algorithms" :key="category.key" class="flex items-center gap-2">
-          <input
-            type="radio"
-            :id="category.key"
-            v-model="selectedCategory"
-            name="category"
-            :value="category.name"
-          />
-          <label :for="category.key" class="radio-label">{{ category.name }}</label>
-        </div>
-      </div>
-    </fieldset>
     <!-- Box für Modi -->
     <fieldset class="radio-box">
       <legend>{{ description.selectMode }}</legend>
@@ -45,6 +29,28 @@ resetStore()
         </div>
       </div>
     </fieldset>
+    <!-- Box für Algorithmen -->
+    <fieldset class="radio-box">
+      <legend>{{ descriptions.selectAlgorithm }}</legend>
+      <div class="radio-group-algorithms">
+        <div
+          v-for="category in algorithms"
+          :key="category.key"
+          class="flex items-center gap-2"
+          :class="{ 'disabled-text': selectedMode === 'Freies Sortieren' }"
+        >
+          <input
+            type="radio"
+            :id="category.key"
+            v-model="selectedCategory"
+            name="category"
+            :value="category.name"
+            :disabled="selectedMode === 'Freies Sortieren'"
+          />
+          <label :for="category.key" class="radio-label">{{ category.name }}</label>
+        </div>
+      </div>
+    </fieldset>
   </div>
 
   <div class="cards-container">
@@ -54,6 +60,8 @@ resetStore()
 
   <div class="start-container">
     <ButtonPress label="Start" @click="goToSortingPage" />
+    {{this.selectedCategory}}
+
   </div>
 </template>
 
@@ -114,9 +122,9 @@ export default {
     },
 
     goToTestPage() {
+      generateCards(this.selectedCategory, this.selectedMode, this.numberOfCards)
       this.$router.push('/testPage')
     },
-
     // Methode um zur Sortierseite zu navigieren, dabei wird die Anzahl der Karten im Store gespeichert
     // und die Karten werden in einem Array gespeiert und gemischt.
     goToSortingPage() {
@@ -136,11 +144,17 @@ export default {
       }
       // Karten generieren und in den Store speichern
       generateCards(this.selectedCategory, this.selectedMode, this.numberOfCards)
-      this.$router.push('/sortingPage')
+      if(this.selectedCategory === 'Quick Sort') {
+        this.$router.push('/quickSortPage')
+      }
+      else {
+        this.$router.push('/sortingPage')
+      }
     },
   },
 }
 </script>
+
 
 <style scoped>
 /*Styling für die Überschrift*/
@@ -227,6 +241,7 @@ legend {
   font-size: 1.7em; /* Größe der Überschrift */
   font-family: Arial, sans-serif;
 }
+
 .description-container {
   display: flex; /* Macht den Container zur Flexbox */
   justify-content: center; /* Zentriert den Inhalt */
@@ -236,5 +251,15 @@ legend {
   font-family: Arial, sans-serif;
   font-weight: bold;
   font-size: 20px;
+}
+
+.disabled-text {
+  color: gray;
+  cursor: not-allowed;
+}
+
+input:disabled + label {
+  color: gray;
+  cursor: not-allowed;
 }
 </style>
