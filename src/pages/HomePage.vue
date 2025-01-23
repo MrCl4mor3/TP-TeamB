@@ -60,7 +60,8 @@ resetStore()
 
   <div class="start-container">
     <ButtonPress label="Start" @click="goToSortingPage" />
-    {{ this.selectedCategory }}
+    {{this.selectedCategory}}
+
   </div>
 </template>
 

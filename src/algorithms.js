@@ -2,7 +2,6 @@ import { store } from './store'
 
 export function bubbleSortWithScore(cards) {
   let sortingCards = cards.slice()
-  console.log(sortingCards)
   let score = 0 // Score-Variable, um die Anzahl der Betrachtungen zu zählen
   let swapped
 
