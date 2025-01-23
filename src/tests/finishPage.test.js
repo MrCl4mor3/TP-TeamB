@@ -25,6 +25,8 @@ describe('FinishPage', () => {
     expect(wrapper.text()).toContain('Score: 50')
   })
 
+
+  //funktioniert richtig man muss nachricht nur anpassen
   it('should call sorting algorithms and display their results', async () => {
     // Arrange: mount the component
     const wrapper = mount(FinishPage)

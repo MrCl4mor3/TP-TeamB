@@ -47,6 +47,7 @@ describe('HomePage.vue', () => {
     expect(modeOptions.length).toBe(wrapper.vm.modes.length)
   })
 
+  //nicht notwendig?
   it('renders the number of cards input', () => {
     const inputNumber = wrapper.find('input#AnzahlKarten')
     expect(inputNumber.exists()).toBe(true)
@@ -65,7 +66,7 @@ describe('HomePage.vue', () => {
   })
 
   it('validates input and navigates to sorting page on start button click', async () => {
-    const startButton = wrapper.find('.start-container button')
+    const startButton = wrapper.find('.start-container ButtonPress button')
 
     // Set valid inputs
     wrapper.vm.selectedCategory = 'Bubble Sort'

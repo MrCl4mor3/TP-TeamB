@@ -69,7 +69,7 @@ describe('SortingPage.vue', () => {
     wrapper.vm.selectedCards = [0]
     wrapper.vm.SwapCards()
 
-    expect(alertMock).toHaveBeenCalledWith('Bitte wählen Sie zwei Karten aus!')
+    expect(alertMock).toHaveBeenCalledWith('Wähle genau zwei Karten aus, um sie zu tauschen.')
     alertMock.mockRestore()
   })
 
@@ -126,7 +126,7 @@ describe('SortingPage.vue', () => {
     store.cards = [{ id: 2 }, { id: 1 }, { id: 3 }, { id: 4 }]
     wrapper.vm.checkIfCorrect()
 
-    expect(alertMock).toHaveBeenCalledWith('Die Karten sind nicht korrekt sortiert!')
+    expect(alertMock).toHaveBeenCalledWith('Die Karten sind nicht in der richtigen Reihenfolge.')
     alertMock.mockRestore()
   })
 })

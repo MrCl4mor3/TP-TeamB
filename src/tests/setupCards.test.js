@@ -43,6 +43,7 @@ describe('setupCards.js', () => {
       expect(shuffledCardIds.sort()).toEqual(cardIds.sort());
     });
 
+    //wieso? starting cards sind anders als correct cards
     it('should store the correct cards in their original order', () => {
       generateCards('Kategorie1', 'Modus1', 5);
 
