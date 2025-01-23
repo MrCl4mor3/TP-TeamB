@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from './pages/HomePage.vue'
-import SortingPage from './pages/SortingPage.vue'
+import SortingPage from './pages/SortingPage2.vue'
 import FinishPage from './pages/FinishPage.vue'
 import TestPage from './pages/TestPage.vue'
+import QuicksortPage from './pages/QuicksortPage.vue'
 //Definiert die Routen und Namen für die verschiedenen Seiten.
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: '/TestPage',
     name: 'TestPage',
     component: TestPage,
+  },
+  {
+    path: '/quickSortPage',
+    name: 'QuickSortPage',
+    component: QuicksortPage,
   },
 ]
 //erstellt den router

@@ -1,10 +1,31 @@
 <script setup>
+import {
+  bubbleSortWithScore,
+  insertionSortWithScore,
+  mergeSortWithScore,
+  quickSortWithScore,
+  selectionSortWithScore,
+} from '@/algorithms.js'
+
+const algorithmMap = {
+  'Bubble Sort': bubbleSortWithScore,
+  'Selection Sort': selectionSortWithScore,
+  'Insertion Sort': insertionSortWithScore,
+  'Merge Sort': mergeSortWithScore,
+  'Quick Sort': quickSortWithScore,
+}
+
 store.numberOfFlippedCards = 0
 store.score = 0
 store.cards = store.startingCards.slice()
+
+algorithmMap[store.selectedCategory](store.startingCards)
+console.log(store.correctSortingOrder)
 </script>
+
 <template>
   <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage" />
+
   <FieldSet
     :legend="`${store.selectedCategory} , ${store.selectedMode}`"
     :toggleable="true"
@@ -21,19 +42,25 @@ store.cards = store.startingCards.slice()
   <div>
     <p>Score: {{ store.score }}</p>
   </div>
+
   <div class="card-grid">
     <!-- Hier wird für jede Karte ein FlippedCard erstellt -->
     <div v-for="(card, index) in store.cards" :key="card.id">
       <FlippedCard @click="SelectCard(index)">
         <template #front>
-          <h1></h1>
+          <div class="frontsite">
+            <h1>{{ card.id }}</h1>
+          </div>
         </template>
         <template #back>
-          <img :src="`./images/${card.id}.png`" />
+          <div class="backsite">
+            <div v-html="card.svg.outerHTML"></div>
+          </div>
         </template>
       </FlippedCard>
     </div>
   </div>
+
   <!-- Hier werden die Buttons für die Funktionen des Spiels erstellt -->
   <div class="button-container">
     <ButtonPress label="Vertausch" @click="SwapCards" />
@@ -49,9 +76,11 @@ import { store } from '../store'
 import 'primeicons/primeicons.css'
 import bubbleSortDescription from '../descriptions/algorithmDescriptions.json'
 import errorMessages from '../descriptions/ErrorMessages.json'
+
 export default {
   data() {
     return {
+      numberOfSwaps: 0,
       selectedCards: [],
       descriptionToAlgorithm: {
         'Bubble Sort': bubbleSortDescription['Bubble Sort'],
@@ -71,11 +100,24 @@ export default {
   methods: {
     // Tausche die Positionen der beiden Karten im Store wenn zwei Karten ausgewählt wurden
     SwapCards() {
-      if (this.selectedCards.length === 2) {
+      let canSort = true
+
+      if (store.selectedMode === 'Vorgegebenes Sortieren') {
+        if (
+          store.correctSortingOrder[this.numberOfSwaps].includes(this.selectedCards[0]) &&
+          store.correctSortingOrder[this.numberOfSwaps].includes(this.selectedCards[1])
+        ) {
+          canSort = true
+        } else {
+          canSort = false
+        }
+      }
+      if (this.selectedCards.length === 2 && canSort) {
         const [firstIndex, secondIndex] = this.selectedCards
         const temp = store.cards[firstIndex]
         store.cards[firstIndex] = store.cards[secondIndex]
         store.cards[secondIndex] = temp
+        this.numberOfSwaps++
       } else {
         alert(errorMessages['selectTwoCards'])
       }
