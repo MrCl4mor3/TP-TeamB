@@ -1,6 +1,5 @@
 import { store } from './store'
 
-
 export function bubbleSortWithScore(cards) {
   let sortingCards = cards.slice()
   console.log(sortingCards)
@@ -13,7 +12,7 @@ export function bubbleSortWithScore(cards) {
       score++ // Ein Element wird betrachtet
       console.log(score)
       if (sortingCards[i].id > sortingCards[i + 1].id) {
-        store.correctSortingOrder.push([i,i+1])
+        store.correctSortingOrder.push([i, i + 1])
 
         // Elemente vertauschen
         const temp = sortingCards[i]
@@ -136,5 +135,3 @@ export function mergeSortWithScore(cards) {
 
   return { score }
 }
-
-

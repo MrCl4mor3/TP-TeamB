@@ -1,11 +1,7 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>
-  <StandardLayout
-    :store="store"
-    :isExpanded="isExpanded"
-  >
+  <StandardLayout :store="store" :isExpanded="isExpanded">
     <template #cards="{ selectCards, numberOfSwaps }">
       <!-- übergibt die benötigten Methoden und variablen -->
       <div>
@@ -68,8 +64,7 @@ export default {
     }
   },
   methods: {
-    moveToSmaller() {
-    },
+    moveToSmaller() {},
   },
 }
 </script>
