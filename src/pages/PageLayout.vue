@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import bubbleSortDescription from '@/descriptions/algorithmDescriptions.json'
+import algorithmDescription from '@/descriptions/algorithmDescriptions.json'
 import errorMessages from '@/descriptions/ErrorMessages.json'
 import { store } from '@/store.js'
 
@@ -55,11 +55,11 @@ export default {
       numberOfSwaps: 0,
       selectedCards: [],
       descriptionToAlgorithm: {
-        'Bubble Sort': bubbleSortDescription['Bubble Sort'],
-        'Selection Sort': bubbleSortDescription['Selection Sort'],
-        'Insertion Sort': bubbleSortDescription['Insertion Sort'],
-        'Merge Sort': bubbleSortDescription['Merge Sort'],
-        'Quick Sort': bubbleSortDescription['Quick Sort'],
+        'Bubble Sort': algorithmDescription['Bubble Sort'],
+        'Selection Sort': algorithmDescription['Selection Sort'],
+        'Insertion Sort': algorithmDescription['Insertion Sort'],
+        'Merge Sort': algorithmDescription['Merge Sort'],
+        'Quick Sort': algorithmDescription['Quick Sort'],
       },
     }
   },

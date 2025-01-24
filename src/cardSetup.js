@@ -31,19 +31,17 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
       const svgDocument = parser.parseFromString(svgContent, 'image/svg+xml')
       let svgTemplate = svgDocument.documentElement
 
-      //Min und Max Werte für die Zufallszahlen
+      //Min und Max Werte für die Zufallszahlen der zu entfernenden ids
       const min = 1
       const max = 20
       let cards = []
+
       //Karte 0 ist die Vorlage
       cards[store.numberOfCards - 1] = {
         id: store.numberOfCards - 1,
         svg: svgTemplate.cloneNode(true),
       }
-      cards[store.numberOfCards - 1] = {
-        id: store.numberOfCards - 1,
-        svg: svgTemplate.cloneNode(true),
-      }
+
 
       //Entfernen einzelner Komponenten
       for (let i = store.numberOfCards - 2; i >= 0; i--) {
@@ -81,7 +79,7 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
 //Entfernt ein Element aus dem SVG
 function removePart(id, svgContent) {
   const element = svgContent.querySelector(`#${id}`)
-  console.log('id ' + element)
+
   if (!element) {
     return svgContent
   }
