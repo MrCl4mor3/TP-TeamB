@@ -52,7 +52,7 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
         let oldSvg = oldCard.svg.cloneNode(true)
         //Update die ID in "card + i", zb card1.
         let newSvg = updateSvgID(oldSvg, 'card' + i)
-        //Entferne nun ein Path mit einer zufälligen Nummer, die id ist der Form "card1-3" für den 3. Pfad
+        //Entferne nun ein Path mit einer zufälligen Nummer, die id ist in der Form "card1-3" für den 3. Pfad
         newSvg = removePart(`${'card' + i}-${getRandomInt(min, max)}`, newSvg)
         //Speicher das neue bild in cards ab
         cards[i] = { id: i, svg: newSvg }
