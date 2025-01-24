@@ -80,7 +80,7 @@ export default {
         store.cards[secondIndex] = temp
         this.numberOfSwaps++
       } else {
-        alert(errorMessages['selectTwoCards'])
+        alert(errorMessages['wrongAlgorithmStep'])
       }
     },
     SelectCard(index) {
