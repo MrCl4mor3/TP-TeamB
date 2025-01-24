@@ -10,7 +10,7 @@ export function bubbleSortWithScore(cards, returnSorted = false) {
     swapped = false
     for (let i = 0; i < sortingCards.length - 1; i++) {
       score++ // Ein Element wird betrachtet
-      console.log(score)
+      //console.log(score)
       if (sortingCards[i].id > sortingCards[i + 1].id) {
         store.correctSortingOrder.push([i, i + 1])
 

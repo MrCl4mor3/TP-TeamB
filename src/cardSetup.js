@@ -73,7 +73,7 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
 
 function removePart(id, svgContent) {
   const element = svgContent.querySelector(`#${id}`)
-
+  console.log("id " + element)
   if (!element) {
     return svgContent
   }
@@ -83,9 +83,7 @@ function removePart(id, svgContent) {
 
 
 function getRandomInt(min, max) {
-  const random = Math.floor(Math.random() * (max - min + 1)) + min
-  console.log(random)
-  return random
+  return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
 function updateSvgID(svgContent, newId) {
