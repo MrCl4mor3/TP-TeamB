@@ -16,19 +16,9 @@ describe('SortingPage.vue', () => {
     // Store zurücksetzen
     store.numberOfFlippedCards = 0
     store.score = 0
-    store.cards = [
-      { id: 1 },
-      { id: 2 },
-      { id: 3 },
-      { id: 4 },
-    ]
+    store.cards = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]
     store.startingCards = store.cards.slice()
-    store.correctCards = [
-      { id: 1 },
-      { id: 2 },
-      { id: 3 },
-      { id: 4 },
-    ]
+    store.correctCards = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]
   })
 
   it('renders the correct number of cards', () => {

@@ -1,4 +1,3 @@
-
 import { store } from './store'
 
 export function bubbleSortWithScore(cards, returnSorted = false) {
@@ -153,7 +152,6 @@ export function mergeSortWithScore(cards, returnSorted = false) {
   if (returnSorted) {
     return { score, sortedArray }
   }
-
 
   return { score }
 }

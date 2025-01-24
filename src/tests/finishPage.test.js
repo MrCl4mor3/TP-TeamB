@@ -2,7 +2,13 @@ import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import FinishPage from '@/pages/FinishPage.vue'
 import { store } from '@/store'
-import { bubbleSortWithScore, selectionSortWithScore, insertionSortWithScore, quickSortWithScore, mergeSortWithScore } from '@/algorithms.js'
+import {
+  bubbleSortWithScore,
+  selectionSortWithScore,
+  insertionSortWithScore,
+  quickSortWithScore,
+  mergeSortWithScore,
+} from '@/algorithms.js'
 
 // Mocking the algorithms to avoid actual sorting during tests
 vi.mock('@/algorithms.js', () => ({
@@ -24,7 +30,6 @@ describe('FinishPage', () => {
     // Assert: check if the score is displayed correctly
     expect(wrapper.text()).toContain('Score: 50')
   })
-
 
   //funktioniert richtig man muss nachricht nur anpassen
   it('should call sorting algorithms and display their results', async () => {

@@ -1,12 +1,12 @@
 import { store } from './store'
 import cardSvg from '@/assets/card2.svg'
 
-
 import {
   bubbleSortWithScore,
   insertionSortWithScore,
-  mergeSortWithScore, quickSortWithScore,
-  selectionSortWithScore
+  mergeSortWithScore,
+  quickSortWithScore,
+  selectionSortWithScore,
 } from '@/algorithms.js'
 
 const algorithmMap = {
@@ -16,8 +16,6 @@ const algorithmMap = {
   'Merge Sort': mergeSortWithScore,
   'Quick Sort': quickSortWithScore,
 }
-
-
 
 export function generateCards(selectedCategory, selectedMode, numberOfCards) {
   store.selectedMode = selectedMode
@@ -38,7 +36,10 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
       const max = 20
       let cards = []
       //Karte 0 ist die Vorlage
-      cards[store.numberOfCards - 1] = { id: store.numberOfCards - 1, svg: svgTemplate.cloneNode(true) };
+      cards[store.numberOfCards - 1] = {
+        id: store.numberOfCards - 1,
+        svg: svgTemplate.cloneNode(true),
+      }
       cards[store.numberOfCards - 1] = {
         id: store.numberOfCards - 1,
         svg: svgTemplate.cloneNode(true),
@@ -73,14 +74,13 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
 
 function removePart(id, svgContent) {
   const element = svgContent.querySelector(`#${id}`)
-  console.log("id " + element)
+  console.log('id ' + element)
   if (!element) {
     return svgContent
   }
   element.parentNode.removeChild(element)
   return svgContent
 }
-
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
