@@ -58,20 +58,27 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
         //Speicher das neue bild in cards ab
         cards[i] = { id: i, svg: newSvg }
       }
+
+
       //Speicher die Karten im Store ab
       store.correctCards = cards.slice()
       store.cards = cards.slice()
+
       while (arraysAreEqual(store.cards, store.correctCards)) {
         store.cards = store.cards.sort(() => Math.random() - 0.5)
       }
+
+
       store.startingCards = store.cards.slice()
       algorithmMap[store.selectedCategory](store.startingCards)
     })
+
     .catch((error) => {
       console.error('Error:', error)
     })
 }
 
+//Entfernt ein Element aus dem SVG
 function removePart(id, svgContent) {
   const element = svgContent.querySelector(`#${id}`)
   console.log('id ' + element)
@@ -82,10 +89,17 @@ function removePart(id, svgContent) {
   return svgContent
 }
 
+// Gibt eine Zufallszahl zwischen min und max zurück (inklusive) und rundet auf die nächste ganze Zahl ab
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
+/**
+ * Ändert die ID des SVG-Elements und aller enthaltenen Elemente.
+ * @param {Element} svgContent Das SVG-Element, dessen ID geändert werden soll.
+ * @param {string} newId Die neue ID.
+ * @returns {Element} Das SVG-Element mit der neuen ID.
+ */
 function updateSvgID(svgContent, newId) {
   if (svgContent.hasAttribute('id')) {
     svgContent.removeAttribute('id')
