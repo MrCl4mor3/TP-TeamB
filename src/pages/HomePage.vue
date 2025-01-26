@@ -208,6 +208,7 @@ legend {
   align-items: center; /* Zentriert die Elemente */
   gap: 20px; /* Abstand zwischen den Elementen */
   font-family: Arial, sans-serif;
+  margin-top: 10px; /* Abstand nach oben */
 }
 
 .start-container button {
