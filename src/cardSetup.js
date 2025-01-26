@@ -35,13 +35,14 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
       const min = 1
       const max = 20
       let cards = []
+      let removedParts = []
 
-      //Karte 0 ist die Vorlage
+      //Erstelle die Karten und speichere sie in cards ab
+      //Die letzte Karte wird nicht verändert
       cards[store.numberOfCards - 1] = {
         id: store.numberOfCards - 1,
         svg: svgTemplate.cloneNode(true),
       }
-
 
       //Entfernen einzelner Komponenten
       for (let i = store.numberOfCards - 2; i >= 0; i--) {
@@ -62,6 +63,7 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
       store.correctCards = cards.slice()
       store.cards = cards.slice()
 
+      //Mische die Karten, falls sie gleich sind
       while (arraysAreEqual(store.cards, store.correctCards)) {
         store.cards = store.cards.sort(() => Math.random() - 0.5)
       }
