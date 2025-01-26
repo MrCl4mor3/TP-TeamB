@@ -1,18 +1,18 @@
 <script setup>
-
 import {
   bubbleSortWithScore,
   insertionSortWithScore,
-  mergeSortWithScore, quickSortWithScore,
-  selectionSortWithScore
+  mergeSortWithScore,
+  quickSortWithScore,
+  selectionSortWithScore,
 } from '@/algorithms.js'
 
 const algorithmMap = {
   'Bubble Sort': bubbleSortWithScore,
-    'Selection Sort': selectionSortWithScore,
-    'Insertion Sort': insertionSortWithScore,
-    'Merge Sort': mergeSortWithScore,
-    'Quick Sort': quickSortWithScore,
+  'Selection Sort': selectionSortWithScore,
+  'Insertion Sort': insertionSortWithScore,
+  'Merge Sort': mergeSortWithScore,
+  'Quick Sort': quickSortWithScore,
 }
 
 store.numberOfFlippedCards = 0
@@ -23,9 +23,7 @@ algorithmMap[store.selectedCategory](store.startingCards)
 console.log(store.correctSortingOrder)
 </script>
 
-
 <template>
-
   <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage" />
 
   <FieldSet
@@ -41,11 +39,9 @@ console.log(store.correctSortingOrder)
     </p>
   </FieldSet>
 
-
   <div>
     <p>Score: {{ store.score }}</p>
   </div>
-
 
   <div class="card-grid">
     <!-- Hier wird für jede Karte ein FlippedCard erstellt -->
@@ -53,7 +49,7 @@ console.log(store.correctSortingOrder)
       <FlippedCard @click="SelectCard(index)">
         <template #front>
           <div class="frontsite">
-            <h1>{{card.id}}</h1>
+            <h1>{{ card.id }}</h1>
           </div>
         </template>
         <template #back>
@@ -64,8 +60,6 @@ console.log(store.correctSortingOrder)
       </FlippedCard>
     </div>
   </div>
-
-
 
   <!-- Hier werden die Buttons für die Funktionen des Spiels erstellt -->
   <div class="button-container">
@@ -108,23 +102,25 @@ export default {
     SwapCards() {
       let canSort = true
 
-      if(store.selectedMode === "Vorgegebenes Sortieren") {
-        if (store.correctSortingOrder[this.numberOfSwaps].includes(this.selectedCards[0]) &&
-          store.correctSortingOrder[this.numberOfSwaps].includes(this.selectedCards[1])) {
+      if (store.selectedMode === 'Vorgegebenes Sortieren') {
+        if (
+          store.correctSortingOrder[this.numberOfSwaps].includes(this.selectedCards[0]) &&
+          store.correctSortingOrder[this.numberOfSwaps].includes(this.selectedCards[1])
+        ) {
           canSort = true
         } else {
           canSort = false
         }
       }
-        if (this.selectedCards.length === 2 && canSort) {
-          const [firstIndex, secondIndex] = this.selectedCards
-          const temp = store.cards[firstIndex]
-          store.cards[firstIndex] = store.cards[secondIndex]
-          store.cards[secondIndex] = temp
-          this.numberOfSwaps++;
-        } else {
-          alert(errorMessages['selectTwoCards'])
-        }
+      if (this.selectedCards.length === 2 && canSort) {
+        const [firstIndex, secondIndex] = this.selectedCards
+        const temp = store.cards[firstIndex]
+        store.cards[firstIndex] = store.cards[secondIndex]
+        store.cards[secondIndex] = temp
+        this.numberOfSwaps++
+      } else {
+        alert(errorMessages['selectTwoCards'])
+      }
     },
     // Methode um die Karte auszuwählen, heirbei wird die Karte aus dem Array der ausgewählten
     // Karten entfernt wenn sie schon ausgewählt wurde, ansonsten wird sie hinzugefügt
@@ -189,5 +185,4 @@ export default {
   font-family: Arial, sans-serif;
   margin-top: 20px;
 }
-
 </style>

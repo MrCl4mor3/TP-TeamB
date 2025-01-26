@@ -5,5 +5,6 @@
   "wrongOrder": "Die Karten sind nicht in der richtigen Reihenfolge.",
   "noAlgorithmSelected": "Du musst einen Algorithmus auswählen, um das Spiel zu starten.",
   "noModeSelected": "Du musst einen Modus auswählen, um das Spiel zu starten.",
-  "outOfRange": "Die Anzahl der Karten muss zwischen 4 und 20 liegen."
+  "outOfRange": "Die Anzahl der Karten muss zwischen 4 und 20 liegen.",
+  "wrongAlgorithmStep": "Das ist ein falscher Schritt, schau dir nochmals die Funktionsweise des ausgewählten Algorithmus an"
 }
