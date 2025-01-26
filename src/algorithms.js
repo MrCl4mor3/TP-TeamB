@@ -1,9 +1,7 @@
 import { store } from './store'
 
-
-export function bubbleSortWithScore(cards) {
+export function bubbleSortWithScore(cards, returnSorted = false) {
   let sortingCards = cards.slice()
-  console.log(sortingCards)
   let score = 0 // Score-Variable, um die Anzahl der Betrachtungen zu zählen
   let swapped
 
@@ -11,9 +9,9 @@ export function bubbleSortWithScore(cards) {
     swapped = false
     for (let i = 0; i < sortingCards.length - 1; i++) {
       score++ // Ein Element wird betrachtet
-      console.log(score)
+      //console.log(score)
       if (sortingCards[i].id > sortingCards[i + 1].id) {
-        store.correctSortingOrder.push([i,i+1])
+        store.correctSortingOrder.push([i, i + 1])
 
         // Elemente vertauschen
         const temp = sortingCards[i]
@@ -24,9 +22,13 @@ export function bubbleSortWithScore(cards) {
     }
   } while (swapped)
 
+  if (returnSorted) {
+    return { score, sortedArray: sortingCards }
+  }
+
   return { score }
 }
-export function selectionSortWithScore(cards) {
+export function selectionSortWithScore(cards, returnSorted = false) {
   let sortingCards = cards.slice()
   let score = 0
 
@@ -48,10 +50,14 @@ export function selectionSortWithScore(cards) {
     }
   }
 
+  if (returnSorted) {
+    return { score, sortedArray: sortingCards }
+  }
+
   return { score }
 }
 
-export function insertionSortWithScore(cards) {
+export function insertionSortWithScore(cards, returnSorted = false) {
   let sortingCards = cards.slice()
   let score = 0
 
@@ -69,10 +75,14 @@ export function insertionSortWithScore(cards) {
     sortingCards[j + 1] = current
   }
 
+  if (returnSorted) {
+    return { score, sortedArray: sortingCards }
+  }
+
   return { score }
 }
 
-export function quickSortWithScore(cards) {
+export function quickSortWithScore(cards, returnSorted = false) {
   let score = 0
 
   function quickSort(array) {
@@ -97,11 +107,16 @@ export function quickSortWithScore(cards) {
     return [...quickSort(left), pivot, ...quickSort(right)]
   }
 
-  quickSort(cards.slice())
+  const sortedArray = quickSort(cards.slice())
+
+  if (returnSorted) {
+    return { score, sortedArray }
+  }
+
   return { score }
 }
 
-export function mergeSortWithScore(cards) {
+export function mergeSortWithScore(cards, returnSorted = false) {
   let score = 0
 
   function merge(left, right) {
@@ -132,9 +147,11 @@ export function mergeSortWithScore(cards) {
     return merge(left, right)
   }
 
-  mergeSort(cards.slice())
+  const sortedArray = mergeSort(cards.slice())
+
+  if (returnSorted) {
+    return { score, sortedArray }
+  }
 
   return { score }
 }
-
-

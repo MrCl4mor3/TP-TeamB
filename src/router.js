@@ -30,7 +30,7 @@ const routes = [
     path: '/quickSortPage',
     name: 'QuickSortPage',
     component: QuicksortPage,
-  }
+  },
 ]
 //erstellt den router
 const router = createRouter({

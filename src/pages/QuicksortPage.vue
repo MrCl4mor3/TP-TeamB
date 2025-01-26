@@ -1,5 +1,4 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>
   <StandardLayout
@@ -54,7 +53,6 @@
 import StandardLayout from './PageLayout.vue'
 import { store } from '@/store.js'
 import FlippedCard from '@/components/FlippedCard.vue'
-//import errorMessages from '@/descriptions/errorMessages.json'
 
 export default {
   name: 'GamePage',
