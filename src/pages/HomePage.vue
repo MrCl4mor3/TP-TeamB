@@ -64,7 +64,7 @@ resetStore()
 </template>
 
 <script>
-import { generateCards } from '@/cardSetup.js'
+import { generateCards, generateCards2 } from '@/cardSetup.js'
 import errorMessages from '../descriptions/errorMessages.json'
 import descriptions from '../descriptions/homePageDescriptions.json'
 import startConfig from '../configs/startConfig.json'
@@ -120,7 +120,7 @@ export default {
     },
 
     goToTestPage() {
-      generateCards(this.selectedCategory, this.selectedMode, this.numberOfCards)
+      generateCards2(this.selectedCategory, this.selectedMode, 20)
       this.$router.push('/testPage')
     },
     // Methode um zur Sortierseite zu navigieren, dabei wird die Anzahl der Karten im Store gespeichert
