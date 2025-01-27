@@ -134,16 +134,16 @@ onBeforeUnmount(() => {
             :value="category.name"
             :disabled="selectedMode === 'Freies Sortieren'"
           />
-          <label
-            :for="category.key"
-            class="radio-label"
-            :title="
-              selectedMode === 'Freies Sortieren'
-                ? 'Wähle zuerst den Modus vorgegebenes Sortieren!'
-                : ''
-            "
-            >{{ category.name }}</label
-          >
+          <label :for="category.key" class="radio-label">
+            {{ category.name }}
+            <span
+              v-if="selectedMode === 'Freies Sortieren'"
+              class="tooltip"
+            >
+            {{ description.test }}
+            </span>
+          </label>
+
         </div>
       </div>
     </fieldset>
@@ -158,6 +158,7 @@ onBeforeUnmount(() => {
   <div class="start-container">
     <ButtonPress label="Start" @click="goToSortingPage" />
   </div>
+  <p>Current Mode: {{ selectedMode }}</p>
 </template>
 
 <style scoped>
@@ -274,4 +275,18 @@ input:disabled + label {
   color: gray;
   opacity: 0.6; /* verringert die Sichtbarkeit */
 }
+.tooltip {
+  display: none;
+  position: absolute;
+  color: red;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  white-space: nowrap;
+  z-index: 1000;
+}
+label:hover .tooltip {
+  display: inline-block;
+}
+
 </style>
