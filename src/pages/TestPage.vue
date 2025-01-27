@@ -123,7 +123,7 @@ export default {
       }
     },
     // Methode um die Karte auszuwählen, heirbei wird die Karte aus dem Array der ausgewählten
-    // Karten entfernt wenn sie schon ausgewählt wurde, ansonsten wird sie hinzugefügt
+    // Karten entfernt, wenn sie schon ausgewählt wurde, ansonsten wird sie hinzugefügt
     SelectCard(index) {
       if (this.selectedCards.includes(index)) {
         this.selectedCards = this.selectedCards.filter((card) => card !== index)
@@ -149,7 +149,7 @@ export default {
         alert(errorMessages['shuffleError'])
       }
     },
-    //Kontrolliert ob die Karten grade gleich angeordent sind wie die korrekten Karten
+    //Kontrolliert, ob die Karten grade gleich angeordnet sind wie die korrekten Karten
     checkIfCorrect() {
       if (store.cards.every((card, index) => card.id === store.correctCards[index].id)) {
         this.$router.push('/finishPage')
