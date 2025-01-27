@@ -51,7 +51,7 @@ function goToSortingPage() {
   }
 
   // Karten generieren und weiterleiten
-  generateCards(selectedCategory.value, selectedMode.value, numberOfCards.value)
+  generateCards(selectedCategory.value, selectedMode.value, numberOfCards.value, false)
   if (selectedCategory.value === 'Quick Sort') {
     router.push('/quickSortPage')
   } else {
@@ -60,7 +60,7 @@ function goToSortingPage() {
 }
 
 function goToTestPage() {
-  generateCards(selectedCategory.value, selectedMode.value, 20)
+  generateCards(selectedCategory.value, selectedMode.value, 20, true)
   router.push('/testPage')
 }
 
