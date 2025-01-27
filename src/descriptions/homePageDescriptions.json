@@ -5,5 +5,5 @@
   "selectNumber": "Anzahl an Karten: ",
   "instructionHeader": "Neu hier? Hier findest du eine Anweisungen:",
   "instructions": "Hier ist die Anleitung",
-  "test": "Wähle zuerst den Modus vorgegebenes Sortieren aus!"
+  "wrongMode": "Wähle den Modus vorgegebenes Sortieren aus!"
 }

@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test:unit": "vitest",
-    "test": "vitest",
+    "wrongMode": "vitest",
     "coverage": "vitest run --coverage",
     "lint": "eslint . --fix",
     "format": "prettier --write src/"

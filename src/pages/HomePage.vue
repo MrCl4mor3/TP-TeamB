@@ -154,7 +154,6 @@ onBeforeUnmount(() => {
   <div class="start-container">
     <ButtonPress label="Start" @click="goToSortingPage" />
   </div>
-  <p>Current Mode: {{ selectedMode }}</p>
 </template>
 
 <style scoped>
@@ -166,7 +165,7 @@ h1 {
 }
 
 .slider {
-  width: 35%;
+  width: 20%;
   margin: 20px;
 }
 .NumberSelect {
