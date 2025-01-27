@@ -136,14 +136,10 @@ onBeforeUnmount(() => {
           />
           <label :for="category.key" class="radio-label">
             {{ category.name }}
-            <span
-              v-if="selectedMode === 'Freies Sortieren'"
-              class="tooltip"
-            >
-            {{ description.test }}
+            <span v-if="selectedMode === 'Freies Sortieren'" class="tooltip">
+              {{ description.test }}
             </span>
           </label>
-
         </div>
       </div>
     </fieldset>
@@ -288,5 +284,4 @@ input:disabled + label {
 label:hover .tooltip {
   display: inline-block;
 }
-
 </style>
