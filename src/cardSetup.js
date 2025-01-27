@@ -59,7 +59,7 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards, tes
           let randomID = getRandomInt(min, max)
           if (!removedParts.includes(randomID)) {
             removedParts.push(randomID)
-            newSvg = removePart( `card${i}-${randomID}`, newSvg)
+            newSvg = removePart(`card${i}-${randomID}`, newSvg)
             //Speicher das neue bild in cards ab
             cards[i] = { id: i, svg: newSvg }
             break
@@ -79,7 +79,7 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards, tes
       store.startingCards = store.cards.slice()
       algorithmMap[store.selectedCategory](store.startingCards)
 
-      if(testMode) {
+      if (testMode) {
         store.cards = store.correctCards
         store.startingCards = store.correctCards
       }
@@ -114,29 +114,28 @@ function getRandomInt(min, max) {
 function updateSvgID(svgContent, newId) {
   // Entferne die ID des Haupt-SVG-Elements, falls vorhanden
   if (svgContent.hasAttribute('id')) {
-    svgContent.removeAttribute('id');
+    svgContent.removeAttribute('id')
   }
-  svgContent.setAttribute('id', newId);
+  svgContent.setAttribute('id', newId)
 
   // Alle Elemente mit einer ID im SVG finden
-  const allElements = svgContent.querySelectorAll('[id]');
+  const allElements = svgContent.querySelectorAll('[id]')
 
   allElements.forEach((element) => {
-    const currentId = element.getAttribute('id');
+    const currentId = element.getAttribute('id')
 
     // Extrahiere die bestehende Nummerierung (Suffix) aus der aktuellen ID
-    const idParts = currentId.split('-');
+    const idParts = currentId.split('-')
     if (idParts.length > 1) {
-      const suffix = idParts[idParts.length - 1];
+      const suffix = idParts[idParts.length - 1]
       // Setze die neue ID mit dem neuen Präfix (newId) und dem alten Suffix
-      const newElementId = `${newId}-${suffix}`;
-      element.setAttribute('id', newElementId);
+      const newElementId = `${newId}-${suffix}`
+      element.setAttribute('id', newElementId)
     }
-  });
+  })
 
-  return svgContent;
+  return svgContent
 }
-
 
 /*
 Prüft, ob beide arrays identisch sind
