@@ -87,14 +87,21 @@ onBeforeUnmount(() => {
 
 <template>
   <h1>{{ description.headline }}</h1>
+
+
+  <!-- Beschreibung des Spiels -->
   <div class="description-container">
     <details>
       <summary>{{ description.instructionHeader }}</summary>
       <p>{{ description.instructions }}</p>
     </details>
   </div>
+
+
   <!-- Flexbox für die Auswahl von Algorithmen und Modi -->
   <div class="modi-algo-container">
+
+    <!-- Auswahl des Modus -->
     <fieldset class="radio-box">
       <legend>{{ description.selectMode }}</legend>
       <div class="radio-group-modes">
@@ -110,8 +117,13 @@ onBeforeUnmount(() => {
         </div>
       </div>
     </fieldset>
+
+
+    <!-- Auswahl des Algorithmus -->
     <fieldset class="radio-box">
-      <legend>{{ description.selectAlgorithm }}</legend>
+      <legend :class="{ 'disabled-text': selectedMode === 'Freies Sortieren' }">
+        {{ description.selectAlgorithm }}
+      </legend>
       <div class="radio-group-algorithms">
         <div
           v-for="category in algorithms"
@@ -132,6 +144,9 @@ onBeforeUnmount(() => {
       </div>
     </fieldset>
   </div>
+
+
+  <!-- Auswahl der Anzahl der Karten -->
   <div class="NumberSelect">
     <label for="AnzahlKarten">{{description.selectNumber}}</label>
     <InputText v-model.number="slideNumber" inputId="AnzahlKarten" />
@@ -152,7 +167,7 @@ h1 {
 }
 
 .slider {
-  width: 50%;
+  width: 35%;
   margin: 20px;
 }
 .NumberSelect {
@@ -161,6 +176,8 @@ h1 {
   align-items: center;
   margin-top: 20px;
   margin-bottom: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 20px;
 }
 
 .modi-algo-container {
@@ -240,20 +257,21 @@ legend {
   display: flex; /* Macht den Container zur Flexbox */
   justify-content: center; /* Zentriert den Inhalt */
   text-align: center; /* Zentriert den gesamten Inhalt horizontal */
-  margin-top: 24px; /* Optional: Abstand nach oben */
-  margin-bottom: 24px; /* Optional: Abstand nach unten */
+  margin-top: 24px; /* Abstand nach oben */
+  margin-bottom: 24px; /* Abstand nach unten */
   font-family: Arial, sans-serif;
   font-weight: bold;
   font-size: 20px;
 }
 
-.disabled-text {
-  color: gray;
-  cursor: not-allowed;
-}
-
 input:disabled + label {
   color: gray;
   cursor: not-allowed;
+  opacity: 0.6; /* verringert die Sichtbarkeit */
+}
+.disabled-text {
+  color: gray;
+  cursor: not-allowed;
+  opacity: 0.6; /* verringert die Sichtbarkeit */
 }
 </style>
