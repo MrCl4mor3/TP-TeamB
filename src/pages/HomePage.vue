@@ -5,7 +5,7 @@ import { generateCards } from '@/cardSetup.js'
 import startConfig from '../configs/startConfig.json'
 import errorMessages from '../descriptions/errorMessages.json'
 import descriptions from '../descriptions/homePageDescriptions.json'
-import router from "@/router.js";
+import router from '@/router.js'
 import Slider from 'primevue/slider'
 import InputText from 'primevue/inputtext'
 
@@ -84,10 +84,8 @@ onBeforeUnmount(() => {
 })
 </script>
 
-
 <template>
   <h1>{{ description.headline }}</h1>
-
 
   <!-- Beschreibung des Spiels -->
   <div class="description-container">
@@ -97,10 +95,8 @@ onBeforeUnmount(() => {
     </details>
   </div>
 
-
   <!-- Flexbox für die Auswahl von Algorithmen und Modi -->
   <div class="modi-algo-container">
-
     <!-- Auswahl des Modus -->
     <fieldset class="radio-box">
       <legend>{{ description.selectMode }}</legend>
@@ -117,7 +113,6 @@ onBeforeUnmount(() => {
         </div>
       </div>
     </fieldset>
-
 
     <!-- Auswahl des Algorithmus -->
     <fieldset class="radio-box">
@@ -139,16 +134,24 @@ onBeforeUnmount(() => {
             :value="category.name"
             :disabled="selectedMode === 'Freies Sortieren'"
           />
-          <label :for="category.key" class="radio-label">{{ category.name }}</label>
+          <label
+            :for="category.key"
+            class="radio-label"
+            :title="
+              selectedMode === 'Freies Sortieren'
+                ? 'Wähle zuerst den Modus vorgegebenes Sortieren!'
+                : ''
+            "
+            >{{ category.name }}</label
+          >
         </div>
       </div>
     </fieldset>
   </div>
 
-
   <!-- Auswahl der Anzahl der Karten -->
   <div class="NumberSelect">
-    <label for="AnzahlKarten">{{description.selectNumber}}</label>
+    <label for="AnzahlKarten">{{ description.selectNumber }}</label>
     <InputText v-model.number="slideNumber" inputId="AnzahlKarten" />
     <Slider v-model="slideNumber" class="slider" :min="4" :max="20" />
   </div>
@@ -156,7 +159,6 @@ onBeforeUnmount(() => {
     <ButtonPress label="Start" @click="goToSortingPage" />
   </div>
 </template>
-
 
 <style scoped>
 /*Styling für die Überschrift*/
@@ -266,12 +268,10 @@ legend {
 
 input:disabled + label {
   color: gray;
-  cursor: not-allowed;
   opacity: 0.6; /* verringert die Sichtbarkeit */
 }
 .disabled-text {
   color: gray;
-  cursor: not-allowed;
   opacity: 0.6; /* verringert die Sichtbarkeit */
 }
 </style>

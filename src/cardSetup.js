@@ -58,7 +58,6 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
         cards[i] = { id: i, svg: newSvg }
       }
 
-
       //Speicher die Karten im Store ab
       store.correctCards = cards.slice()
       store.cards = cards.slice()
@@ -67,7 +66,6 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
       while (arraysAreEqual(store.cards, store.correctCards)) {
         store.cards = store.cards.sort(() => Math.random() - 0.5)
       }
-
 
       store.startingCards = store.cards.slice()
       algorithmMap[store.selectedCategory](store.startingCards)
