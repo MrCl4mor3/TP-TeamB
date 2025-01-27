@@ -35,7 +35,6 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
       const min = 1
       const max = 20
       let cards = []
-      let removedParts = []
 
       //Erstelle die Karten und speichere sie in cards ab
       //Die letzte Karte wird nicht verändert
@@ -82,10 +81,9 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
 function removePart(id, svgContent) {
   const element = svgContent.querySelector(`#${id}`)
 
-  if (!element) {
-    return svgContent
+  if (element) {
+    element.parentNode.removeChild(element)
   }
-  element.parentNode.removeChild(element)
   return svgContent
 }
 
