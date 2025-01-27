@@ -14,3 +14,9 @@ body {
     text-align: center;
     color: black;
 }
+
+/*Styling für die Überschrift*/
+h1 {
+    margin-top: 10px;
+    font-size: 80px; /* Größe der Überschrift */
+}
