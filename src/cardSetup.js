@@ -17,69 +17,6 @@ const algorithmMap = {
   'Quick Sort': quickSortWithScore,
 }
 
-export function generateCards2(selectedCategory, selectedMode, numberOfCards) {
-  store.selectedMode = selectedMode
-  store.selectedCategory = selectedCategory
-  store.numberOfCards = numberOfCards
-
-  //lade zunächst die svg Datei
-  fetch(cardSvg)
-    .then((response) => response.text())
-    .then((svgContent) => {
-      //Parse die SVG Datei und speichere sie in einer Variable
-      const parser = new DOMParser()
-      const svgDocument = parser.parseFromString(svgContent, 'image/svg+xml')
-      let svgTemplate = svgDocument.documentElement
-
-      //Min und Max Werte für die Zufallszahlen der zu entfernenden ids
-      const min = 1
-      const max = 20
-      let cards = []
-      let removedParts = []
-
-      //Erstelle die Karten und speichere sie in cards ab
-      //Die letzte Karte wird nicht verändert
-      cards[store.numberOfCards - 1] = {
-        id: store.numberOfCards - 1,
-        svg: svgTemplate.cloneNode(true),
-      }
-
-      //Entfernen einzelner Komponenten
-      for (let i = store.numberOfCards - 2; i >= 0; i--) {
-        //Kopiere das Bild zuvor
-        let oldCard = cards[i + 1]
-        //Kopiere daraus das svg Element
-        let oldSvg = oldCard.svg.cloneNode(true)
-        //Update die ID in "card + i", zb card1.
-        let newSvg = updateSvgID(oldSvg, 'card' + i)
-
-        //Entferne nun ein Path mit einer zufälligen Nummer, die id ist in der Form "card1-3" für den 3. Pfad
-        //Entferne nur Pfade, die noch nicht entfernt wurden
-        while (true) {
-          let randomID = `${'card' + i}-${getRandomInt(min, max)}`
-          if (!removedParts.includes(randomID)) {
-            removedParts.push(randomID)
-            newSvg = removePart(randomID, newSvg)
-            //Speicher das neue bild in cards ab
-            cards[i] = { id: i, svg: newSvg }
-            break
-          }
-        }
-      }
-
-      //Speicher die Karten im Store ab
-      store.correctCards = cards.slice()
-      store.cards = cards.slice()
-
-      store.startingCards = store.cards.slice()
-      algorithmMap[store.selectedCategory](store.startingCards)
-    })
-
-    .catch((error) => {
-      console.error('Error:', error)
-    })
-}
-
 export function generateCards(selectedCategory, selectedMode, numberOfCards) {
   store.selectedMode = selectedMode
   store.selectedCategory = selectedCategory
@@ -152,10 +89,9 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
 function removePart(id, svgContent) {
   const element = svgContent.querySelector(`#${id}`)
 
-  if (!element) {
-    return svgContent
+  if (element) {
+    element.parentNode.removeChild(element)
   }
-  element.parentNode.removeChild(element)
   return svgContent
 }
 
