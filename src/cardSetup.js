@@ -53,7 +53,6 @@ export function generateCards2(selectedCategory, selectedMode, numberOfCards) {
         //Update die ID in "card + i", zb card1.
         let newSvg = updateSvgID(oldSvg, 'card' + i)
 
-
         //Entferne nun ein Path mit einer zufälligen Nummer, die id ist in der Form "card1-3" für den 3. Pfad
         //Entferne nur Pfade, die noch nicht entfernt wurden
         while (true) {
@@ -68,11 +67,9 @@ export function generateCards2(selectedCategory, selectedMode, numberOfCards) {
         }
       }
 
-
       //Speicher die Karten im Store ab
       store.correctCards = cards.slice()
       store.cards = cards.slice()
-
 
       store.startingCards = store.cards.slice()
       algorithmMap[store.selectedCategory](store.startingCards)
@@ -82,7 +79,6 @@ export function generateCards2(selectedCategory, selectedMode, numberOfCards) {
       console.error('Error:', error)
     })
 }
-
 
 export function generateCards(selectedCategory, selectedMode, numberOfCards) {
   store.selectedMode = selectedMode
@@ -120,7 +116,6 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
         //Update die ID in "card + i", zb card1.
         let newSvg = updateSvgID(oldSvg, 'card' + i)
 
-
         //Entferne nun ein Path mit einer zufälligen Nummer, die id ist in der Form "card1-3" für den 3. Pfad
         //Entferne nur Pfade, die noch nicht entfernt wurden
         while (true) {
@@ -135,7 +130,6 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
         }
       }
 
-
       //Speicher die Karten im Store ab
       store.correctCards = cards.slice()
       store.cards = cards.slice()
@@ -144,7 +138,6 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
       while (arraysAreEqual(store.cards, store.correctCards)) {
         store.cards = store.cards.sort(() => Math.random() - 0.5)
       }
-
 
       store.startingCards = store.cards.slice()
       algorithmMap[store.selectedCategory](store.startingCards)
