@@ -137,7 +137,7 @@ onBeforeUnmount(() => {
           <label :for="category.key" class="radio-label">
             {{ category.name }}
             <span v-if="selectedMode === 'Freies Sortieren'" class="tooltip">
-              {{ description.test }}
+              {{ description.wrongMode }}
             </span>
           </label>
         </div>
