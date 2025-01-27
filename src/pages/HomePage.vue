@@ -135,7 +135,7 @@ onBeforeUnmount(() => {
   <div class="NumberSelect">
     <label for="AnzahlKarten">{{description.selectNumber}}</label>
     <InputText v-model.number="slideNumber" inputId="AnzahlKarten" />
-    <Slider v-model="slideNumber" class="w-full h-2" :min="4" :max="20" />
+    <Slider v-model="slideNumber" class="slider" :min="4" :max="20" />
   </div>
   <div class="start-container">
     <ButtonPress label="Start" @click="goToSortingPage" />
@@ -149,6 +149,18 @@ h1 {
   font-size: 80px; /* Größe der Überschrift */
   text-align: center; /* Zentriert den Text */
   font-family: Arial, sans-serif; /* Schriftart */
+}
+
+.slider {
+  width: 50%;
+  margin: 20px;
+}
+.NumberSelect {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .modi-algo-container {
