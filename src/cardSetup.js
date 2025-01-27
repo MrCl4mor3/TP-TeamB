@@ -17,7 +17,7 @@ const algorithmMap = {
   'Quick Sort': quickSortWithScore,
 }
 
-export function generateCards(selectedCategory, selectedMode, numberOfCards) {
+export function generateCards(selectedCategory, selectedMode, numberOfCards, testMode) {
   store.selectedMode = selectedMode
   store.selectedCategory = selectedCategory
   store.numberOfCards = numberOfCards
@@ -52,12 +52,20 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
         let oldSvg = oldCard.svg.cloneNode(true)
         //Update die ID in "card + i", zb card1.
         let newSvg = updateSvgID(oldSvg, 'card' + i)
-        //Entferne nun ein Path mit einer zufälligen Nummer, die id ist in der Form "card1-3" für den 3. Pfad
-        newSvg = removePart(`${'card' + i}-${getRandomInt(min, max)}`, newSvg)
-        //Speicher das neue bild in cards ab
-        cards[i] = { id: i, svg: newSvg }
-      }
 
+        //Entferne nun ein Path mit einer zufälligen Nummer, die id ist in der Form "card1-3" für den 3. Pfad
+        //Entferne nur Pfade, die noch nicht entfernt wurden
+        while (true) {
+          let randomID = getRandomInt(min, max)
+          if (!removedParts.includes(randomID)) {
+            removedParts.push(randomID)
+            newSvg = removePart(`card${i}-${randomID}`, newSvg)
+            //Speicher das neue bild in cards ab
+            cards[i] = { id: i, svg: newSvg }
+            break
+          }
+        }
+      }
 
       //Speicher die Karten im Store ab
       store.correctCards = cards.slice()
@@ -68,9 +76,13 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
         store.cards = store.cards.sort(() => Math.random() - 0.5)
       }
 
-
       store.startingCards = store.cards.slice()
       algorithmMap[store.selectedCategory](store.startingCards)
+
+      if (testMode) {
+        store.cards = store.correctCards
+        store.startingCards = store.correctCards
+      }
     })
 
     .catch((error) => {
@@ -80,12 +92,11 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
 
 //Entfernt ein Element aus dem SVG
 function removePart(id, svgContent) {
+  console.log('id: ' + id)
   const element = svgContent.querySelector(`#${id}`)
-
-  if (!element) {
-    return svgContent
+  if (element) {
+    element.parentNode.removeChild(element)
   }
-  element.parentNode.removeChild(element)
   return svgContent
 }
 
@@ -101,6 +112,7 @@ function getRandomInt(min, max) {
  * @returns {Element} Das SVG-Element mit der neuen ID.
  */
 function updateSvgID(svgContent, newId) {
+  // Entferne die ID des Haupt-SVG-Elements, falls vorhanden
   if (svgContent.hasAttribute('id')) {
     svgContent.removeAttribute('id')
   }
@@ -109,17 +121,25 @@ function updateSvgID(svgContent, newId) {
   // Alle Elemente mit einer ID im SVG finden
   const allElements = svgContent.querySelectorAll('[id]')
 
-  allElements.forEach((element, index) => {
-    // Setze eine neue ID für jedes Element
-    let newElementId = `${newId}-${index + 1}`
+  allElements.forEach((element) => {
+    const currentId = element.getAttribute('id')
 
-    // Falls das Element eine ID hat, wird sie ersetzt
-    element.setAttribute('id', newElementId)
+    // Extrahiere die bestehende Nummerierung (Suffix) aus der aktuellen ID
+    const idParts = currentId.split('-')
+    if (idParts.length > 1) {
+      const suffix = idParts[idParts.length - 1]
+      // Setze die neue ID mit dem neuen Präfix (newId) und dem alten Suffix
+      const newElementId = `${newId}-${suffix}`
+      element.setAttribute('id', newElementId)
+    }
   })
 
   return svgContent
 }
 
+/*
+Prüft, ob beide arrays identisch sind
+ */
 function arraysAreEqual(arr1, arr2) {
   for (let i = 0; i < arr1.length; i++) {
     if (arr1[i] !== arr2[i]) {
