@@ -1,0 +1,111 @@
+/*Styling für die Überschrift*/
+h1 {
+    font-size: 80px; /* Größe der Überschrift */
+}
+
+.slider {
+    width: 20%;
+    margin: 20px;
+}
+.NumberSelect {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.modi-algo-container {
+    display: flex; /* Macht den Container zur Flexbox */
+    justify-content: center; /* Zentriert die Boxen */
+    gap: 1px; /* Abstand zwischen den Boxen */
+}
+
+.radio-box {
+    display: flex; /* Macht die Box zur Flexbox */
+    max-width: 30%; /* Maximale Breite der Box */
+    flex: 1; /* Füllt den verfügbaren Platz aus */
+    flex-direction: column; /* Anordnung der Elemente */
+    justify-content: space-evenly;
+    align-items: flex-start; /* Links ausgerichtet */
+    padding: 10px; /* Innenabstand */
+    border: 1px solid black; /* Rahmen */
+    border-radius: 8px; /* Abrundung der Ecken */
+    margin: 20px; /* Außenabstand */
+}
+
+.radio-label {
+    position: relative;
+    cursor: pointer;
+    padding-left: 30px;
+}
+
+.radio-group-algorithms {
+    display: flex; /* Macht die Gruppe zur Flexbox */
+    flex-direction: column; /* Anordnung der Elemente */
+    gap: 10px; /* Abstand zwischen den Elementen */
+}
+
+.radio-group-modes {
+    display: flex; /* Macht die Gruppe zur Flexbox */
+    flex-direction: column; /* Anordnung der Elemente */
+    gap: 10px; /* Abstand zwischen den Elementen */
+}
+
+legend {
+    font-size: 1.7em; /* Größe der Überschrift */
+    font-weight: bold; /* Fett gedruckt */
+    margin-bottom: 8px; /* Abstand nach unten */
+}
+
+.start-container {
+    display: flex; /* Macht den Container zur Flexbox */
+    flex-direction: column; /* Anordnung der Elemente */
+    justify-content: center; /* Zentriert die Elemente */
+    align-items: center; /* Zentriert die Elemente */
+    gap: 20px; /* Abstand zwischen den Elementen */
+    margin-top: 10px; /* Abstand nach oben */
+}
+
+.start-container button {
+    width: 200px; /* Breite des Buttons */
+    height: 50px; /* Höhe des Buttons */
+    font-size: 1.7em; /* Größe des Textes */
+}
+
+.cards-container h2 {
+    margin-bottom: 8px; /* Abstand zwischen Überschrift und Input-Feld */
+    font-size: 1.7em; /* Größe der Überschrift */
+}
+
+.description-container {
+    display: flex; /* Macht den Container zur Flexbox */
+    justify-content: center; /* Zentriert den Inhalt */
+    margin-top: 24px; /* Abstand nach oben */
+    margin-bottom: 24px; /* Abstand nach unten */
+    font-weight: bold;
+    font-size: 20px;
+}
+
+input:disabled + label {
+    color: gray;
+    opacity: 0.6; /* verringert die Sichtbarkeit */
+}
+.disabled-text {
+    color: gray;
+    opacity: 0.6; /* verringert die Sichtbarkeit */
+}
+.tooltip {
+    display: none;
+    position: absolute;
+    color: red;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    white-space: nowrap;
+    z-index: 1000;
+}
+label:hover .tooltip {
+    display: inline-block;
+}
