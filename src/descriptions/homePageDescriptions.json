@@ -2,7 +2,8 @@
   "headline": "Sortieralgorithmen",
   "selectAlgorithm": "Wähle einen Algorithmus",
   "selectMode": "Wähle einen Modus",
-  "selectNumber": "Wähle eine Anzahl an Karten zwischen 4 und 20",
+  "selectNumber": "Anzahl an Karten: ",
   "instructionHeader": "Neu hier? Hier findest du eine Anweisungen:",
-  "instructions": "Hier ist die Anleitung"
+  "instructions": "Hier ist die Anleitung",
+  "wrongMode": "Wähle den Modus vorgegebenes Sortieren aus!"
 }
