@@ -7,7 +7,6 @@
           <FlippedCard @click="selectCards(index)">
             <template #front>
               <div class="frontside">
-                <h1>Test</h1>
               </div>
             </template>
             <template #back>
@@ -50,9 +49,11 @@ export default {
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
+  column-gap: 10px;
+  row-gap: 45px;
   justify-items: center;
   font-family: Arial, sans-serif;
+  box-sizing: border-box;
 }
 
 .card-grid > div {
