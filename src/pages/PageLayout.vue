@@ -28,7 +28,6 @@
           :select-cards="SelectCard"
           :select-cards2="SelectCardQuick"
           :number-of-swaps="this.numberOfSwaps"/>
-    <slot name="cards" :select-cards="SelectCard" :number-of-swaps="this.numberOfSwaps" />
 
     <!-- hier werden die zusätzlichen Knöpfe hinzugefügt -->
     <div class="button-container">
