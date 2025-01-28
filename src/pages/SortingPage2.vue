@@ -43,12 +43,26 @@ export default {
   },
 }
 </script>
+
+
 <style scoped>
+/* Styling für die Karten */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 32px;
+  gap: 16px;
   justify-items: center;
   font-family: Arial, sans-serif;
+}
+
+.card-grid > div {
+  border: 2px solid black; /* Schwarze Umrandung */
+  border-radius: 8px; /* Abgerundete Ecken */
+  transition: transform 0.2s ease, border-color 0.2s ease; /* Animation für Hover-Effekt */
+}
+
+.card-grid > div:hover {
+  transform: scale(1.1); /* Vergrößert die Karte leicht */
+  border-color: black; /* Ändert die Umrandungsfarbe beim Hover */
 }
 </style>
