@@ -6,12 +6,12 @@
         <div v-for="(card, index) in store.cards" :key="card.id">
           <FlippedCard @click="selectCards(index)">
             <template #front>
-              <div class="frontsite">
-                <h1>{{ card.id }}</h1>
+              <div class="frontside">
+                <h1>Test</h1>
               </div>
             </template>
             <template #back>
-              <div class="backsite">
+              <div class="backside">
                 <div v-html="card.svg.outerHTML"></div>
               </div>
             </template>
@@ -56,13 +56,24 @@ export default {
 }
 
 .card-grid > div {
-  border: 2px solid black; /* Schwarze Umrandung */
-  border-radius: 8px; /* Abgerundete Ecken */
-  transition: transform 0.2s ease, border-color 0.2s ease; /* Animation für Hover-Effekt */
+  perspective: 1000px; /* Perspektive für die 3D-Drehung */
+  transition: transform 0.2s ease; /* Animation für Hover */
 }
 
 .card-grid > div:hover {
   transform: scale(1.1); /* Vergrößert die Karte leicht */
-  border-color: black; /* Ändert die Umrandungsfarbe beim Hover */
 }
+
+.frontside,
+.backside {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 2px solid black; /* Schwarze Umrandung */
+  border-radius: 8px; /* Abgerundete Ecken */
+  backface-visibility: hidden; /* Verhindert das Anzeigen der Rückseite */
+  transition: border-color 0.2s ease; /* Sanfte Änderung der Umrandungsfarbe */
+}
+
 </style>
+
