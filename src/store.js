@@ -13,6 +13,7 @@ function getDefaultStore() {
     selectedMode: null,
     correctSortingOrder: [],
     selectedCards: [],
+    selectedLines: 0,
   }
 }
 
