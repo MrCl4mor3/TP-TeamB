@@ -7,7 +7,6 @@ import errorMessages from '../descriptions/errorMessages.json'
 import descriptions from '../descriptions/homePageDescriptions.json'
 import router from '@/router.js'
 import Slider from 'primevue/slider'
-import InputText from 'primevue/inputtext'
 
 // Reset des Stores
 resetStore()
@@ -148,7 +147,13 @@ onBeforeUnmount(() => {
   <!-- Auswahl der Anzahl der Karten -->
   <div class="NumberSelect">
     <label for="AnzahlKarten">{{ description.selectNumber }}</label>
-    <InputText v-model.number="slideNumber" inputId="AnzahlKarten" />
+    <InputNumber
+      v-model="slideNumber"
+      inputId="AnzahlKarten"
+      showButtons
+      :min="startConfig.minNumberOfCards"
+      :max="startConfig.maxNumberOfCards"
+    />
     <Slider v-model="slideNumber" class="slider" :min="4" :max="20" />
   </div>
   <div class="start-container">

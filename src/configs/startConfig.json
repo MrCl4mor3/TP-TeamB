@@ -1,5 +1,7 @@
 {
   "startAlgorithm": "Bubble Sort",
   "startMode": "Freies Sortieren",
-  "startNumberOfCards": 4
+  "startNumberOfCards": 4,
+  "minNumberOfCards": 4,
+  "maxNumberOfCards": 10
 }
