@@ -67,11 +67,12 @@ export default {
 
 .frontside,
 .backside {
+  overflow: hidden;
   position: absolute;
   width: 100%;
   height: 100%;
   border: 2px solid black; /* Schwarze Umrandung */
-  border-radius: 8px; /* Abgerundete Ecken */
+  border-radius: 12px; /* Abgerundete Ecken */
   backface-visibility: hidden; /* Verhindert das Anzeigen der Rückseite */
   transition: border-color 0.2s ease; /* Sanfte Änderung der Umrandungsfarbe */
 }
