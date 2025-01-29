@@ -1,7 +1,10 @@
 <template>
   <div>
-    <div>
+    <div class="button-container">
       <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage" />
+      <ButtonPress label="Starte neu" @click="startOver" />
+      <ButtonPress label="misch erneut" @click="shuffel" />
+      <ButtonPress label="Beende Spiel" @click="checkIfCorrect" />
     </div>
 
     <FieldSet
@@ -26,9 +29,6 @@
     <!-- hier werden die zusätzlichen Knöpfe hinzugefügt -->
     <div class="button-container">
       <slot name="extraButtons" :swap-cards="SwapCards" />
-      <ButtonPress label="Starte neu" @click="startOver" />
-      <ButtonPress label="misch erneut" @click="shuffel" />
-      <ButtonPress label="Beende Spiel" @click="checkIfCorrect" />
     </div>
   </div>
 </template>

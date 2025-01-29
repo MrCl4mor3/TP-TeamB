@@ -54,7 +54,6 @@ export default {
   row-gap: 45px;
   justify-items: center;
   font-family: Arial, sans-serif;
-  box-sizing: border-box;
 }
 
 </style>
