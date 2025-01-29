@@ -76,6 +76,7 @@ export default {
   justify-content: center;
   background: #eee;
   border: 1px solid #ccc;
+  border-radius: 12px;
 }
 
 .card-back {

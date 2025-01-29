@@ -75,6 +75,7 @@ export default {
   border-radius: 12px; /* Abgerundete Ecken */
   backface-visibility: hidden; /* Verhindert das Anzeigen der Rückseite */
   transition: border-color 0.2s ease; /* Sanfte Änderung der Umrandungsfarbe */
+  background: white;
 }
 
 </style>
