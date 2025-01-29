@@ -45,6 +45,7 @@ export default {
 
 
 <style scoped>
+
 /* Styling für die Karten */
 .card-grid {
   display: grid;
@@ -54,28 +55,6 @@ export default {
   justify-items: center;
   font-family: Arial, sans-serif;
   box-sizing: border-box;
-}
-
-.card-grid > div {
-  perspective: 1000px; /* Perspektive für die 3D-Drehung */
-  transition: transform 0.2s ease; /* Animation für Hover */
-}
-
-.card-grid > div:hover {
-  transform: scale(1.1); /* Vergrößert die Karte leicht */
-}
-
-.frontside,
-.backside {
-  overflow: hidden;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border: 2px solid black; /* Schwarze Umrandung */
-  border-radius: 12px; /* Abgerundete Ecken */
-  backface-visibility: hidden; /* Verhindert das Anzeigen der Rückseite */
-  transition: border-color 0.2s ease; /* Sanfte Änderung der Umrandungsfarbe */
-  background: white;
 }
 
 </style>
