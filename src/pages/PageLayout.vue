@@ -65,15 +65,17 @@ export default {
   },
   methods: {
     SwapCards() {
+      console.log("test")
       let canSort = true
 
-      if (store.selectedMode === 'Vorgegebenes Sortieren') {
+      if (store.selectedMode === 'Vorgegebenes Sortieren' && store.selectedCategory !== 'Merge Sort') {
         canSort = !!(
           store.correctSortingOrder[this.numberOfSwaps].includes(store.selectedCards[0]) &&
           store.correctSortingOrder[this.numberOfSwaps].includes(store.selectedCards[1])
         )
       }
       if (store.selectedCards.length === 2 && canSort) {
+        console.log("test")
         const [firstIndex, secondIndex] = store.selectedCards
         const temp = store.cards[firstIndex]
         store.cards[firstIndex] = store.cards[secondIndex]
@@ -109,7 +111,8 @@ export default {
       }
     },
     checkIfCorrect() {
-      if (store.cards.every((card, index) => card.id === store.correctCards[index].id)) {
+      if (store.cards.every((card, index) => card.id === store.correctCards[index].id)
+        || store.containers[0].every((card, index) => card.id === store.correctCards[index].id)) {
         this.$router.push('/finishPage')
       } else {
         alert(errorMessages['wrongOrder'])

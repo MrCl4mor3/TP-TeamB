@@ -14,7 +14,7 @@ function getDefaultStore() {
     correctSortingOrder: [],
     selectedCards: [],
     selectedLines: 0,
-    containers: []
+    containers: [],
   }
 }
 

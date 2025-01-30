@@ -1,6 +1,32 @@
 <script setup>
 
 import DividingLine from '@/components/DividingLine.vue'
+
+import { ref } from 'vue'
+
+
+const draggedIndex = ref(null)
+
+function dragStart(index) {
+  draggedIndex.value = index
+}
+
+function drop(targetIndex) {
+  if (draggedIndex.value !== null && draggedIndex.value !== targetIndex) {
+    // Hole den gezogenen Container
+    const draggedContainer = store.containers[draggedIndex.value]
+
+    // Füge alle Karten zum Ziel-Container hinzu
+    store.containers[targetIndex] = [...store.containers[targetIndex], ...draggedContainer]
+
+    // Entferne den alten, leeren Container
+    store.containers.splice(draggedIndex.value, 1)
+
+    // Reset
+    draggedIndex.value = null
+
+  }
+}
 </script>
 
 <template>
@@ -9,10 +35,14 @@ import DividingLine from '@/components/DividingLine.vue'
       <!-- übergibt die benötigten Methoden und variablen -->
 
         <div class="grid-grids">
-          <div v-for="(container, containerIndex) in store.containers" :key="containerIndex" class="container-and-line">
+          <div v-for="(container, containerIndex) in store.containers" :key="containerIndex" class="container-and-line"
+               draggable="true"
+               @dragstart="dragStart(containerIndex)"
+               @dragover.prevent
+               @drop="drop(containerIndex)">
             <div class="card-grid">
               <div v-for="(card, index) in container" :key="card.id" class="card-and-line">
-            <FlippedCard @click="selectCards(index)">
+            <FlippedCard @click="selectCardsInContainer(containerIndex, index)">
               <template #front>
                 <div class="frontsite">
                   <h1>{{ card.id }}</h1>
@@ -32,12 +62,13 @@ import DividingLine from '@/components/DividingLine.vue'
       </div>
     </template>
     <template #extraButtons="{ swapCards }">
-      <ButtonPress label="vertauschen" @click="swapCards" />
+      <ButtonPress label="vertauschen" @click="canSwapInContainer" />
       <ButtonPress label="split" @click="splitContainer" />
-      <ButtonPress label="größer" @click="moveToBigger" />
 
-      <p>{{store.containers.length}}</p>
+
+      <p>container{{this.selectedContainerIndex}}</p>
       <p>{{store.cards.length}}</p>
+      <P> {{this.selectedCards.length}}</P>
     </template>
   </StandardLayout>
 </template>
@@ -46,6 +77,7 @@ import DividingLine from '@/components/DividingLine.vue'
 import StandardLayout from './PageLayout.vue'
 import { store } from '@/store.js'
 import FlippedCard from '@/components/FlippedCard.vue'
+import errorMessages from '@/descriptions/errorMessages.json'
 
 export default {
   components: {
@@ -57,9 +89,44 @@ export default {
       store,
       linePositionContainer: null,
       linePositionCard: null,
+      selectedContainerIndex: null,
+      selectedCards: [],
     }
   },
   methods: {
+    selectCardsInContainer(containerIndex,cardIndex) {
+      if(this.selectedCards.length === 0) {
+        this.selectedContainerIndex = containerIndex
+      }
+      if(this.selectedContainerIndex === null || this.selectedContainerIndex === containerIndex) {
+        this.selectedContainerIndex = containerIndex
+        if (this.selectedCards.includes(cardIndex)) {
+          this.selectedCards = this.selectedCards.filter((card) => card !== cardIndex)  //ncoh entfernen des container index hinzufügen
+        } else if (this.selectedCards.length < 2) {
+          this.selectedCards.push(cardIndex)
+          store.score++
+        }
+      } else {
+        store.allowedToFlip = false
+        console.log('mergesort')
+        alert("falscher Container")
+      }
+    },
+    canSwapInContainer() {
+      const canSort = true
+
+      if (this.selectedCards.length === 2 ) {
+        console.log("test 2")
+        const [firstIndex, secondIndex] = this.selectedCards
+        const temp = store.containers[this.selectedContainerIndex][firstIndex]
+        store.containers[this.selectedContainerIndex][firstIndex] = store.containers[this.selectedContainerIndex][secondIndex]
+        store.containers[this.selectedContainerIndex][secondIndex] = temp
+        this.numberOfSwaps++
+      } else {
+        alert(errorMessages['wrongAlgorithmStep'])
+      }
+
+    },
     selectLine(containerIndex, index) {
       if(store.selectedLines !== 0) {
         this.linePositionContainer = containerIndex
@@ -77,8 +144,8 @@ export default {
 
       store.containers.splice(this.linePositionContainer, 1, firstHalf, secondHalf)
       store.selectedLines = 0;
-    }
-  }
+    },
+  },
 }
 </script>
 <style scoped>

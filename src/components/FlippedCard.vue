@@ -32,13 +32,14 @@ export default {
     // umgedreht sind. Wenn die Karte schon umgedreht ist wird die Anzahl der umgedrehten karten
     // um eins reduziert.
     toggleFlip() {
-      if (store.numberOfFlippedCards < 2 && !this.isFlipped) {
-        this.isFlipped = !this.isFlipped
-        store.numberOfFlippedCards++
-      } else if (this.isFlipped) {
-        this.isFlipped = !this.isFlipped
-        store.numberOfFlippedCards--
-      }
+      console.log('flipped card')
+        if (store.numberOfFlippedCards < 2 && !this.isFlipped) {
+          this.isFlipped = !this.isFlipped
+          store.numberOfFlippedCards++
+        } else if (this.isFlipped) {
+          this.isFlipped = !this.isFlipped
+          store.numberOfFlippedCards--
+        }
     },
   },
 }
