@@ -1,12 +1,20 @@
-<template>
-  <div>
-    <div class="button-container">
-      <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage" />
-      <ButtonPress label="Starte neu" @click="startOver" />
-      <ButtonPress label="misch erneut" @click="shuffel" />
-      <ButtonPress label="Beende Spiel" @click="checkIfCorrect" />
-    </div>
+<script setup>
+import { useToast } from "primevue/usetoast";
 
+</script>
+
+
+<template>
+  <header>
+    <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage" />
+    <h1>{{store.selectedCategory}} , {{store.selectedMode}}</h1>
+    <div class="button-container-meta">
+      <ButtonPress label="?"></ButtonPress>
+      <SplitButton icon="pi pi-refresh" :model="refreshButton"/>
+    </div>
+  </header>
+
+  <div>
     <FieldSet
       :legend="`${store.selectedCategory} , ${store.selectedMode}`"
       :toggleable="true"
@@ -29,6 +37,7 @@
     <!-- hier werden die zusätzlichen Knöpfe hinzugefügt -->
     <div class="button-container">
       <slot name="extraButtons" :swap-cards="SwapCards" />
+      <ButtonPress label="Beende Spiel" @click="checkIfCorrect" />
     </div>
   </div>
 </template>
@@ -52,6 +61,16 @@ export default {
   },
   data() {
     return {
+      refreshButton: [
+        {
+          label: 'Mische neu',
+          command: () => this.shuffel(),
+        },
+        {
+          label: 'Starte neu',
+          command: () => this.startOver(),
+        },
+      ],
       numberOfSwaps: 0,
       selectedCards: [],
       descriptionToAlgorithm: {
@@ -132,5 +151,26 @@ export default {
   margin-top: 20px;
 }
 
+.button-container-meta {
+  display: flex;
+  gap: 10px;
+  font-family: Arial, sans-serif;
+}
 
+header {
+  padding: 25px 10px;
+  position: sticky;
+  top: 0;
+  background-color: lightgray;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+}
+
+h1 {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
 </style>
