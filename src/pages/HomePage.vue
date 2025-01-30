@@ -203,6 +203,7 @@ h1 {
   border-radius: 8px; /* Abrundung der Ecken */
   margin: 20px; /* Außenabstand */
   font-family: Arial, sans-serif;
+  accent-color: #10b981;
 }
 
 .radio-label {
@@ -225,6 +226,7 @@ h1 {
   gap: 10px; /* Abstand zwischen den Elementen */
   font-family: Arial, sans-serif;
 }
+
 
 legend {
   font-size: 1.7em; /* Größe der Überschrift */
