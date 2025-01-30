@@ -14,8 +14,24 @@ function getDefaultStore() {
     correctSortingOrder: [],
     selectedCards: [],
     selectedLines: 0,
+    containers: []
   }
 }
+
+/*
+export const store = reactive({
+  lines: [], // Array für die Linien
+  setDividingLines() {
+    this.lines.forEach(line => {
+      if (line.isSelected) {
+        line.isDividingLine = true
+      }
+    })
+  }
+})
+
+
+ */
 
 // Den Store mit dem initialen Zustand initialisieren
 export const store = reactive(getDefaultStore())

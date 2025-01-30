@@ -5,12 +5,13 @@ import DividingLine from '@/components/DividingLine.vue'
 
 <template>
   <StandardLayout :store="store" :isExpanded="isExpanded">
-
     <template #cards="{ selectCards}">
       <!-- übergibt die benötigten Methoden und variablen -->
-      <div>
-        <div class="card-grid">
-          <div v-for="(card, index) in store.cards" :key="card.id" class="card-and-line">
+
+        <div class="grid-grids">
+          <div v-for="(container, containerIndex) in store.containers" :key="containerIndex" class="container-and-line">
+            <div class="card-grid">
+              <div v-for="(card, index) in container" :key="card.id" class="card-and-line">
             <FlippedCard @click="selectCards(index)">
               <template #front>
                 <div class="frontsite">
@@ -23,15 +24,20 @@ import DividingLine from '@/components/DividingLine.vue'
                 </div>
               </template>
             </FlippedCard>
-            <DividingLine v-if="index < store.cards.length - 1" />
+            <DividingLine v-if="index < container.length - 1" @click="selectLine(containerIndex, index)" />
           </div>
+        </div>
+            <DividingLine v-if="(containerIndex < store.containers.length - 1) && (store.containers.length === store.cards.length)" @click="selectLine(containerIndex, index)" />
         </div>
       </div>
     </template>
     <template #extraButtons="{ swapCards }">
       <ButtonPress label="vertauschen" @click="swapCards" />
-      <ButtonPress label="kleiner" @click="moveToSmaller" />
+      <ButtonPress label="split" @click="splitContainer" />
       <ButtonPress label="größer" @click="moveToBigger" />
+
+      <p>{{store.containers.length}}</p>
+      <p>{{store.cards.length}}</p>
     </template>
   </StandardLayout>
 </template>
@@ -49,21 +55,54 @@ export default {
   data() {
     return {
       store,
+      linePositionContainer: null,
+      linePositionCard: null,
     }
   },
+  methods: {
+    selectLine(containerIndex, index) {
+      if(store.selectedLines !== 0) {
+        this.linePositionContainer = containerIndex
+        this.linePositionCard = index
+      } else {
+        this.linePositionContainer = null
+        this.linePositionCard = null
+      }
+    },
+    splitContainer() {
+      const containerToSplit = store.containers[this.linePositionContainer]
+
+      const firstHalf = containerToSplit.slice(0, this.linePositionCard + 1)
+      const secondHalf = containerToSplit.slice(this.linePositionCard + 1)
+
+      store.containers.splice(this.linePositionContainer, 1, firstHalf, secondHalf)
+      store.selectedLines = 0;
+    }
+  }
 }
 </script>
 <style scoped>
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 32px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   justify-items: center;
   font-family: Arial, sans-serif;
+  border: 4px solid mediumvioletred; /* Fügt eine weiße Umrandung hinzu */
+  padding: 10px; /* Abstand zwischen Inhalt und Rahmen */
+  margin-bottom: 20px; /* Abstand zwischen einzelnen Grids */
+  border-radius: 10px; /* Optional: Abgerundete Ecken */
+  width: max-content;
+  max-width: 100%;
 }
 .card-and-line {
   display: flex;
   align-items: center;
+  justify-content: center;
+}
+.container-and-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
 

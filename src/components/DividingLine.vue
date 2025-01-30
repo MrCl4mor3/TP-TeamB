@@ -3,18 +3,20 @@
 </script>
 
 <template>
-  <svg class="line" width="50" height="300" @click="selectLine()">
+  <svg class="line" width="30" height="300" @click="selectLine()">
     <!-- Linie -->
+    <!--kein plan warum aber x=15 wäre nicht mittig-->
     <line
-      x1="25"
+      x1="20"
       y1="0"
-      x2="25"
+      x2="20"
       y2="300"
 
-      :stroke="isSelected ? 'red' : 'grey'"
+      :stroke="isSelected ? 'blue' : (isDividingLine ? 'green' : 'red')"
 
       stroke-width="6"
-      :visibility="isSelected ? 'visible' : 'hidden'"
+
+
     />
   </svg>
 </template>
