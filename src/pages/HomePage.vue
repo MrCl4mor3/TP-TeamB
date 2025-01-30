@@ -167,6 +167,7 @@ h1 {
   font-size: 80px; /* Größe der Überschrift */
   text-align: center; /* Zentriert den Text */
   font-family: Arial, sans-serif; /* Schriftart */
+  color: #10b981;
 }
 
 .slider {
