@@ -25,7 +25,6 @@
     </div>
     <!-- hier werden die Karten in den einzelnen Seiten hinzugefügt -->
     <slot name="cards" :select-cards="SelectCard" :number-of-swaps="this.numberOfSwaps" />
-    <span v-if="store.selectedCards.length === 2" class="tooltip">Test</span>
 
     <!-- hier werden die zusätzlichen Knöpfe hinzugefügt -->
     <div class="button-container">
@@ -133,8 +132,5 @@ export default {
   margin-top: 20px;
 }
 
-.tooltip {
-  color: red;
-}
 
 </style>
