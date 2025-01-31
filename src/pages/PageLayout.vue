@@ -1,7 +1,6 @@
 <script setup>
 import { ref} from "vue";
-
-const rightMode = ref(store.selectedMode === 'Vorgegebenes Sortieren')
+const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
 </script>
 
 <template>
@@ -9,8 +8,8 @@ const rightMode = ref(store.selectedMode === 'Vorgegebenes Sortieren')
   <header>
     <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage" />
     <h1>
-      <span v-if="rightMode">{{store.selectedCategory}}</span>
-      <span v-else>{{store.selectedMode}}</span>
+      <span v-if="noAlgorithmNeeded">{{store.selectedMode}}</span>
+      <span v-else>{{store.selectedCategory}}</span>
     </h1>
     <div class="button-container-meta">
       <ButtonPress label="?"></ButtonPress>
