@@ -174,7 +174,7 @@ h1 {
 }
 
 .slider {
-  width: 20%;
+  width: 15%;
   margin: 20px;
 }
 .NumberSelect {
@@ -294,6 +294,7 @@ input:disabled + label {
 label:hover .tooltip {
   display: inline-block;
 }
+
 footer {
   justify-content: right;
   font-family: Arial, sans-serif;
