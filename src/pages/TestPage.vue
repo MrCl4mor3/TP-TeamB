@@ -164,25 +164,3 @@ export default {
   },
 }
 </script>
-
-<style>
-/*Hier wird definiert wie die Karten angeordnet werden sollen*/
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
-  justify-items: center;
-  font-family: Arial, sans-serif;
-}
-</style>
-
-<style scoped>
-/*Styling für die Buttons*/
-.button-container {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  font-family: Arial, sans-serif;
-  margin-top: 20px;
-}
-</style>

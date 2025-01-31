@@ -150,44 +150,6 @@ export default {
 </script>
 
 <style scoped>
-.button-container {
-  display: flex;
-  gap: 10px;
-  text-align: center;
-  font-family: Arial, sans-serif;
-}
-
-.button-container-meta {
-  display: flex;
-  gap: 10px;
-  font-family: Arial, sans-serif;
-}
-
-header {
-  padding: 25px 10px;
-  position: sticky;
-  top: 0;
-  background-color: lightgray;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
-  z-index: 1000;
-}
-
-footer {
-  display: flex;
-  bottom: 0;
-  position: sticky;
-  z-index: 1000;
-  background-color: lightgray;
-  padding: 25px 10px;
-  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.7);
-  margin-top: 20px;
-  justify-content: center;
-  align-items: center;
-}
-
 .score {
   justify-self: left;
   left: 0;
@@ -198,22 +160,8 @@ footer {
 }
 
 
-h1 {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  color: #10b981;
-}
-h2 {
-  font-family: Arial, sans-serif;
-  color: #10b981;
-}
-
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
+header {
+  justify-content: space-between;
 }
 
 </style>

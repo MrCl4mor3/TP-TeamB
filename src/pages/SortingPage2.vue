@@ -44,17 +44,3 @@ export default {
 </script>
 
 
-<style scoped>
-
-/* Styling für die Karten */
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  column-gap: 10px;
-  row-gap: 45px;
-  justify-items: center;
-  font-family: Arial, sans-serif;
-}
-
-</style>
-
