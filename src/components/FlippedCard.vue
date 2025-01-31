@@ -61,7 +61,6 @@ export default {
   transform-style: preserve-3d;
   transition: transform 0.6s;
 }
-
 .card:hover {
   transform: scale(1.1);
 }
@@ -79,7 +78,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: white;
+  background: #10b981;
   border: 2px solid black;
   border-radius: 12px;
   overflow: hidden;
@@ -89,4 +88,5 @@ export default {
   transform: rotateY(180deg); /*dreht die Rückseite der Karte um 180 Grad*/
   background: white;
 }
+
 </style>

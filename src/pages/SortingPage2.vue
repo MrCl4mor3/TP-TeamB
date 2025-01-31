@@ -20,7 +20,7 @@
     </template>
 
     <template #extraButtons="{ swapCards }">
-      <ButtonPress label="vertauschen" @click="swapCards" />
+      <ButtonPress label="vertauschen" icon="pi pi-arrow-right-arrow-left" @click="swapCards" />
     </template>
   </StandardLayout>
 </template>
@@ -54,7 +54,6 @@ export default {
   row-gap: 45px;
   justify-items: center;
   font-family: Arial, sans-serif;
-  box-sizing: border-box;
 }
 
 </style>
