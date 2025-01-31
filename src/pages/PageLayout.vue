@@ -1,8 +1,17 @@
+<script setup>
+import { ref} from "vue";
+
+const rightMode = ref(store.selectedMode === 'Vorgegebenes Sortieren')
+</script>
+
 <template>
 
   <header>
     <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage" />
-    <h1>{{store.selectedCategory}} , {{store.selectedMode}}</h1>
+    <h1>
+      <span v-if="rightMode">{{store.selectedCategory}}</span>
+      <span v-else>{{store.selectedMode}}</span>
+    </h1>
     <div class="button-container-meta">
       <ButtonPress label="?"></ButtonPress>
       <SplitButton icon="pi pi-refresh" :model="refreshButton"/>
@@ -192,8 +201,10 @@ footer {
 h1 {
   margin: 0;
   font-family: Arial, sans-serif;
+  color: #10b981;
 }
 h2 {
   font-family: Arial, sans-serif;
+  color: #10b981;
 }
 </style>
