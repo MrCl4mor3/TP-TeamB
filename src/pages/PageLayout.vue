@@ -1,5 +1,7 @@
 <script setup>
 import { ref} from "vue";
+import Dialog from 'primevue/dialog';
+
 const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
 </script>
 
@@ -12,25 +14,17 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
       <span v-else>{{store.selectedCategory}}</span>
     </h1>
     <div class="button-container-meta">
-      <ButtonPress label="?"></ButtonPress>
+      <ButtonPress label="?" @click="openTutorial"></ButtonPress>
       <SplitButton icon="pi pi-refresh" :model="refreshButton"/>
     </div>
   </header>
 
-  <div>
-    <FieldSet
-      :legend="`${store.selectedCategory} , ${store.selectedMode}`"
-      :toggleable="true"
-      :co llapsed="true"
-    >
-      <template #toggleicon>
-        <span>{{ isExpanded ? '?' : '❓' }}</span>
-      </template>
-      <p class="m-0" style="white-space: pre-wrap">
-        {{ descriptionToAlgorithm[store.selectedCategory] }}
-      </p>
-    </FieldSet>
+  <Dialog v-model:visible="visibleTutorial" modal header="Tutorial" :style="{ width: '400px' }">
+    <p>{{ descriptionToAlgorithm[store.selectedCategory] }}</p>
+    <ButtonPress label="Schließen" icon="pi pi-times" @click="visibleTutorial = false" />
+  </Dialog>
 
+  <div>
     <!-- hier werden die Karten in den einzelnen Seiten hinzugefügt -->
     <slot name="cards" :select-cards="SelectCard" :number-of-swaps="this.numberOfSwaps" />
   </div>
@@ -67,6 +61,7 @@ export default {
   },
   data() {
     return {
+      visibleTutorial: false,
       refreshButton: [
         {
           label: 'Mische neu',
@@ -89,6 +84,9 @@ export default {
     }
   },
   methods: {
+    openTutorial() {
+      this.visibleTutorial = true
+    },
     SwapCards() {
       let canSort = true
 
