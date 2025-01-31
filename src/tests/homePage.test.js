@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import HomePage from '@/pages/HomePage.vue'
 import { resetStore } from '../store'
-import { generateCards } from '@/setupCards';
+import { generateCards } from '../cardSetup.js'
 
 // Mock für Vue Router
 vi.mock('vue-router', () => ({
@@ -123,8 +123,6 @@ describe('HomePage.vue', () => {
     expect(alertMock).toHaveBeenCalledWith('Bitte geben Sie eine Anzahl zwischen 4 und 20 ein!')
     alertMock.mockRestore()
   })
-
-
 
   it('navigates to the sorting page when "Enter" key is pressed', async () => {
     // Set valid inputs

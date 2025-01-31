@@ -1,13 +1,28 @@
-<template>
-  <div>
-    <div>
-      <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage" />
-    </div>
+<script setup>
+import { ref} from "vue";
 
+const rightMode = ref(store.selectedMode === 'Vorgegebenes Sortieren')
+</script>
+
+<template>
+
+  <header>
+    <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage" />
+    <h1>
+      <span v-if="rightMode">{{store.selectedCategory}}</span>
+      <span v-else>{{store.selectedMode}}</span>
+    </h1>
+    <div class="button-container-meta">
+      <ButtonPress label="?"></ButtonPress>
+      <SplitButton icon="pi pi-refresh" :model="refreshButton"/>
+    </div>
+  </header>
+
+  <div>
     <FieldSet
       :legend="`${store.selectedCategory} , ${store.selectedMode}`"
       :toggleable="true"
-      :collapsed="true"
+      :co llapsed="true"
     >
       <template #toggleicon>
         <span>{{ isExpanded ? '?' : '❓' }}</span>
@@ -17,24 +32,25 @@
       </p>
     </FieldSet>
 
-    <div>
-      <p>Score: {{ store.score }}</p>
-    </div>
     <!-- hier werden die Karten in den einzelnen Seiten hinzugefügt -->
     <slot name="cards" :select-cards="SelectCard" :number-of-swaps="this.numberOfSwaps" />
+  </div>
 
+  <footer>
+    <!--Einfügen des Scores -->
+    <div class="score">
+      <h2>Score: {{ store.score }}</h2>
+    </div>
     <!-- hier werden die zusätzlichen Knöpfe hinzugefügt -->
     <div class="button-container">
       <slot name="extraButtons" :swap-cards="SwapCards" />
-      <ButtonPress label="Starte neu" @click="startOver" />
-      <ButtonPress label="misch erneut" @click="shuffel" />
-      <ButtonPress label="Beende Spiel" @click="checkIfCorrect" />
+      <ButtonPress label="richtig sortiert?" @click="checkIfCorrect" />
     </div>
-  </div>
+  </footer>
 </template>
 
 <script>
-import bubbleSortDescription from '@/descriptions/algorithmDescriptions.json'
+import algorithmDescription from '@/descriptions/algorithmDescriptions.json'
 import errorMessages from '@/descriptions/ErrorMessages.json'
 import { store } from '@/store.js'
 
@@ -52,14 +68,24 @@ export default {
   },
   data() {
     return {
+      refreshButton: [
+        {
+          label: 'Mische neu',
+          command: () => this.shuffel(),
+        },
+        {
+          label: 'Starte neu',
+          command: () => this.startOver(),
+        },
+      ],
       numberOfSwaps: 0,
       selectedCards: [],
       descriptionToAlgorithm: {
-        'Bubble Sort': bubbleSortDescription['Bubble Sort'],
-        'Selection Sort': bubbleSortDescription['Selection Sort'],
-        'Insertion Sort': bubbleSortDescription['Insertion Sort'],
-        'Merge Sort': bubbleSortDescription['Merge Sort'],
-        'Quick Sort': bubbleSortDescription['Quick Sort'],
+        'Bubble Sort': algorithmDescription['Bubble Sort'],
+        'Selection Sort': algorithmDescription['Selection Sort'],
+        'Insertion Sort': algorithmDescription['Insertion Sort'],
+        'Merge Sort': algorithmDescription['Merge Sort'],
+        'Quick Sort': algorithmDescription['Quick Sort'],
       },
     }
   },
@@ -80,7 +106,7 @@ export default {
         store.cards[secondIndex] = temp
         this.numberOfSwaps++
       } else {
-        alert(errorMessages['selectTwoCards'])
+        alert(errorMessages['wrongAlgorithmStep'])
       }
     },
     SelectCard(index) {
@@ -126,9 +152,59 @@ export default {
 <style scoped>
 .button-container {
   display: flex;
-  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.button-container-meta {
+  display: flex;
   gap: 10px;
   font-family: Arial, sans-serif;
+}
+
+header {
+  padding: 25px 10px;
+  position: sticky;
+  top: 0;
+  background-color: lightgray;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+}
+
+footer {
+  display: flex;
+  bottom: 0;
+  position: sticky;
+  z-index: 1000;
+  background-color: lightgray;
+  padding: 25px 10px;
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.7);
   margin-top: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.score {
+  justify-self: left;
+  left: 0;
+  position: absolute;
+  align-items: center;
+  display: flex;
+  margin-left: 10px;
+}
+
+
+h1 {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: #10b981;
+}
+h2 {
+  font-family: Arial, sans-serif;
+  color: #10b981;
 }
 </style>

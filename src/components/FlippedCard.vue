@@ -45,6 +45,7 @@ export default {
 </script>
 
 <style scoped>
+
 /*Container für die Karte*/
 .card-container {
   perspective: 1000px;
@@ -60,6 +61,9 @@ export default {
   transform-style: preserve-3d;
   transition: transform 0.6s;
 }
+.card:hover {
+  transform: scale(1.1);
+}
 
 .card.flipped {
   transform: rotateY(180deg); /* Dreht die Karte um 180 Grad um die Y-Achse */
@@ -74,12 +78,15 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #eee;
-  border: 1px solid #ccc;
+  background: #10b981;
+  border: 2px solid black;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .card-back {
   transform: rotateY(180deg); /*dreht die Rückseite der Karte um 180 Grad*/
-  background: #ddd;
+  background: white;
 }
+
 </style>

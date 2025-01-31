@@ -1,7 +1,6 @@
-export function bubbleSortWithScore(cards, returnSorted = false) {
 import { store } from './store'
 
-export function bubbleSortWithScore(cards) {
+export function bubbleSortWithScore(cards, returnSorted = false) {
   let sortingCards = cards.slice()
   let score = 0 // Score-Variable, um die Anzahl der Betrachtungen zu zählen
   let swapped
@@ -10,7 +9,7 @@ export function bubbleSortWithScore(cards) {
     swapped = false
     for (let i = 0; i < sortingCards.length - 1; i++) {
       score++ // Ein Element wird betrachtet
-      console.log(score)
+      //console.log(score)
       if (sortingCards[i].id > sortingCards[i + 1].id) {
         store.correctSortingOrder.push([i, i + 1])
 
@@ -153,7 +152,6 @@ export function mergeSortWithScore(cards, returnSorted = false) {
   if (returnSorted) {
     return { score, sortedArray }
   }
-
 
   return { score }
 }
