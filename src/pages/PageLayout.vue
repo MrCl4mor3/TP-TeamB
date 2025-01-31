@@ -1,10 +1,5 @@
-<script setup>
-import { useToast } from "primevue/usetoast";
-
-</script>
-
-
 <template>
+
   <header>
     <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage" />
     <h1>{{store.selectedCategory}} , {{store.selectedMode}}</h1>
@@ -18,7 +13,7 @@ import { useToast } from "primevue/usetoast";
     <FieldSet
       :legend="`${store.selectedCategory} , ${store.selectedMode}`"
       :toggleable="true"
-      :collapsed="true"
+      :co llapsed="true"
     >
       <template #toggleicon>
         <span>{{ isExpanded ? '?' : '❓' }}</span>
@@ -28,12 +23,15 @@ import { useToast } from "primevue/usetoast";
       </p>
     </FieldSet>
 
-    <div>
-      <p>Score: {{ store.score }}</p>
-    </div>
     <!-- hier werden die Karten in den einzelnen Seiten hinzugefügt -->
     <slot name="cards" :select-cards="SelectCard" :number-of-swaps="this.numberOfSwaps" />
+  </div>
 
+  <div class="footer">
+    <!--Einfügen des Scores -->
+    <div class="score">
+      <h2>Score: {{ store.score }}</h2>
+    </div>
     <!-- hier werden die zusätzlichen Knöpfe hinzugefügt -->
     <div class="button-container">
       <slot name="extraButtons" :swap-cards="SwapCards" />
@@ -145,10 +143,9 @@ export default {
 <style scoped>
 .button-container {
   display: flex;
-  justify-content: center;
   gap: 10px;
+  text-align: center;
   font-family: Arial, sans-serif;
-  margin-top: 20px;
 }
 
 .button-container-meta {
@@ -169,8 +166,30 @@ header {
   z-index: 1000;
 }
 
+.footer {
+  display: flex;
+  bottom: 0;
+  position: sticky;
+  z-index: 1000;
+  background-color: lightgray;
+  padding: 25px 10px;
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.7);
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.score {
+  justify-self: left;
+  left: 0;
+  position: absolute;
+}
+
+
 h1 {
   margin: 0;
+  font-family: Arial, sans-serif;
+}
+h2 {
   font-family: Arial, sans-serif;
 }
 </style>
