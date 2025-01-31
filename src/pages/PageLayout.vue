@@ -27,7 +27,7 @@
     <slot name="cards" :select-cards="SelectCard" :number-of-swaps="this.numberOfSwaps" />
   </div>
 
-  <div class="footer">
+  <footer>
     <!--Einfügen des Scores -->
     <div class="score">
       <h2>Score: {{ store.score }}</h2>
@@ -37,7 +37,7 @@
       <slot name="extraButtons" :swap-cards="SwapCards" />
       <ButtonPress label="Beende Spiel" @click="checkIfCorrect" />
     </div>
-  </div>
+  </footer>
 </template>
 
 <script>
@@ -166,7 +166,7 @@ header {
   z-index: 1000;
 }
 
-.footer {
+footer {
   display: flex;
   bottom: 0;
   position: sticky;
@@ -176,12 +176,16 @@ header {
   box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.7);
   margin-top: 20px;
   justify-content: center;
+  align-items: center;
 }
 
 .score {
   justify-self: left;
   left: 0;
   position: absolute;
+  align-items: center;
+  display: flex;
+  margin-left: 10px;
 }
 
 
