@@ -44,7 +44,7 @@ const rightMode = ref(store.selectedMode === 'Vorgegebenes Sortieren')
     <!-- hier werden die zusätzlichen Knöpfe hinzugefügt -->
     <div class="button-container">
       <slot name="extraButtons" :swap-cards="SwapCards" />
-      <ButtonPress label="Beende Spiel" @click="checkIfCorrect" />
+      <ButtonPress label="richtig sortiert?" @click="checkIfCorrect" />
     </div>
   </footer>
 </template>
