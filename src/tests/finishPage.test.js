@@ -12,11 +12,11 @@ import {
 
 // Mocking the algorithms to avoid actual sorting during tests
 vi.mock('@/algorithms.js', () => ({
-  bubbleSortWithScore: vi.fn().mockReturnValue({ score: 10, sortedArray: [] }),
-  selectionSortWithScore: vi.fn().mockReturnValue({ score: 15, sortedArray: [] }),
-  insertionSortWithScore: vi.fn().mockReturnValue({ score: 20, sortedArray: [] }),
-  quickSortWithScore: vi.fn().mockReturnValue({ score: 25, sortedArray: [] }),
-  mergeSortWithScore: vi.fn().mockReturnValue({ score: 30, sortedArray: [] }),
+  bubbleSortWithScore: vi.fn().mockReturnValue({ score: 10 }),
+  selectionSortWithScore: vi.fn().mockReturnValue({ score: 15 }),
+  insertionSortWithScore: vi.fn().mockReturnValue({ score: 20 }),
+  quickSortWithScore: vi.fn().mockReturnValue({ score: 25 }),
+  mergeSortWithScore: vi.fn().mockReturnValue({ score: 30 }),
 }))
 
 describe('FinishPage', () => {
@@ -31,17 +31,17 @@ describe('FinishPage', () => {
     expect(wrapper.text()).toContain('Score: 50')
   })
 
-  //funktioniert richtig man muss nachricht nur anpassen
   it('should call sorting algorithms and display their results', async () => {
     // Arrange: mount the component
     const wrapper = mount(FinishPage)
 
     // Assert: check if the sorting algorithm results are displayed correctly
-    expect(wrapper.text()).toContain('bubblesort { score: 10, sortedArray: [] }')
-    expect(wrapper.text()).toContain('selectionSort { score: 15, sortedArray: [] }')
-    expect(wrapper.text()).toContain('insertionSort { score: 20, sortedArray: [] }')
-    expect(wrapper.text()).toContain('quickSort { score: 25, sortedArray: [] }')
-    expect(wrapper.text()).toContain('mergeSort { score: 30, sortedArray: [] }')
+    expect(wrapper.html()).toMatch(/<p>bubblesort\s*\{\s*"score":\s*10\s*\}<\/p>/)
+    expect(wrapper.html()).toMatch(/<p>selectionSort\s*\{\s*"score":\s*15\s*\}<\/p>/)
+    expect(wrapper.html()).toMatch(/<p>insertionSort\s*\{\s*"score":\s*20\s*\}<\/p>/)
+    expect(wrapper.html()).toMatch(/<p>quickSort\s*\{\s*"score":\s*25\s*\}<\/p>/)
+    expect(wrapper.html()).toMatch(/<p>mergeSort\s*\{\s*"score":\s*30\s*\}<\/p>/)
+
   })
 
   it('should navigate to the home page when the button is clicked', async () => {

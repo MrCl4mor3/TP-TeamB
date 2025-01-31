@@ -13,6 +13,8 @@ describe('Store', () => {
       score: 0,
       selectedCategory: null,
       selectedMode: null,
+      correctSortingOrder: [],
+      selectedCards: [],
     }
 
     // Store sollte mit dem Standardzustand übereinstimmen
@@ -47,6 +49,8 @@ describe('Store', () => {
       score: 0,
       selectedCategory: null,
       selectedMode: null,
+      correctSortingOrder: [],
+      selectedCards: [],
     }
 
     // Überprüfen, ob der Store zurückgesetzt wurde
