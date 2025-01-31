@@ -20,7 +20,7 @@
     </template>
 
     <template #extraButtons="{ swapCards }">
-      <ButtonPress label="vertauschen" @click="swapCards" />
+      <ButtonPress label="vertauschen" icon="pi pi-arrow-right-arrow-left" @click="swapCards" />
     </template>
   </StandardLayout>
 </template>
