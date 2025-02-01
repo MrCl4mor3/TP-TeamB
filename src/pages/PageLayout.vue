@@ -33,7 +33,7 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
 
   <div>
     <!-- hier werden die Karten in den einzelnen Seiten hinzugefügt -->
-    <slot name="cards" :select-cards="SelectCard" :number-of-swaps="this.numberOfSwaps" />
+    <slot name="cards" :select-cards="SelectCard" :number-of-swaps="numberOfSwaps" />
   </div>
 
   <footer>
