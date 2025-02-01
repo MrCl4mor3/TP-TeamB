@@ -41,7 +41,7 @@
       </div>
     </template>
     <template #extraButtons="{ swapCards }">
-      <ButtonPress label="vertauschen" @click="swapCards" />
+      <ButtonPress label="vertauschen" icon="pi pi-arrow-right-arrow-left" @click="swapCards" />
       <ButtonPress label="kleiner" @click="moveToSmaller" />
       <ButtonPress label="größer" @click="moveToBigger" />
       <ButtonPress label="Pivotelement" @click="selectPivot" />

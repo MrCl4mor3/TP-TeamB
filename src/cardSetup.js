@@ -92,7 +92,6 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards, tes
 
 //Entfernt ein Element aus dem SVG
 function removePart(id, svgContent) {
-  console.log('id: ' + id)
   const element = svgContent.querySelector(`#${id}`)
   if (element) {
     element.parentNode.removeChild(element)

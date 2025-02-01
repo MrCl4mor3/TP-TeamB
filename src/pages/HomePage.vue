@@ -7,7 +7,6 @@ import errorMessages from '../descriptions/errorMessages.json'
 import descriptions from '../descriptions/homePageDescriptions.json'
 import router from '@/router.js'
 import Slider from 'primevue/slider'
-import InputText from 'primevue/inputtext'
 
 // Reset des Stores
 resetStore()
@@ -148,7 +147,13 @@ onBeforeUnmount(() => {
   <!-- Auswahl der Anzahl der Karten -->
   <div class="NumberSelect">
     <label for="AnzahlKarten">{{ description.selectNumber }}</label>
-    <InputText v-model.number="slideNumber" inputId="AnzahlKarten" />
+    <InputNumber
+      v-model="slideNumber"
+      inputId="AnzahlKarten"
+      showButtons
+      :min="startConfig.minNumberOfCards"
+      :max="startConfig.maxNumberOfCards"
+    />
     <Slider v-model="slideNumber" class="slider" :min="4" :max="20" />
   </div>
   <div class="start-container">
@@ -162,6 +167,7 @@ h1 {
   font-size: 80px; /* Größe der Überschrift */
   text-align: center; /* Zentriert den Text */
   font-family: Arial, sans-serif; /* Schriftart */
+  color: #10b981;
 }
 
 .slider {
@@ -197,6 +203,7 @@ h1 {
   border-radius: 8px; /* Abrundung der Ecken */
   margin: 20px; /* Außenabstand */
   font-family: Arial, sans-serif;
+  accent-color: #10b981;
 }
 
 .radio-label {
@@ -219,6 +226,7 @@ h1 {
   gap: 10px; /* Abstand zwischen den Elementen */
   font-family: Arial, sans-serif;
 }
+
 
 legend {
   font-size: 1.7em; /* Größe der Überschrift */
