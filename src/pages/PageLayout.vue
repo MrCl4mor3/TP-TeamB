@@ -19,8 +19,10 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     </div>
   </header>
 
-  <Dialog v-model:visible="visibleTutorial" :header="`Tutorial - ${store.selectedCategory}`" class="dialog">
-    <div v-html="formatDescription(store.selectedCategory)"></div>
+  <Dialog v-model:visible="visibleTutorial" :header="`Tutorial - ${store.selectedCategory}`" class="dialog" >
+    <div class="dialog-content">
+      <div v-html="formatDescription(store.selectedCategory)"></div>
+    </div>
     <div class="button-container">
       <ButtonPress label="Schließen" icon="pi pi-times" @click="visibleTutorial = false" />
     </div>
@@ -166,8 +168,10 @@ export default {
   margin-left: 10px;
 }
 
-.dialog {
-  width: 100%;
+.dialog-content {
+  padding: 1rem;
+  font-size: 1.2em;
+  line-height: 1.6;
 }
 
 header {
