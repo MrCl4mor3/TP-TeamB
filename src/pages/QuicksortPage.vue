@@ -112,6 +112,7 @@ export default {
       }
     },
     selectPivot() {
+      document.getElementsByClassName('card-container')[0].__vueParentComponent.ctx.toggleFlip();
       //Wenn es noch keines gibt wird das Erste Element genommen
       if (this.lookingIndex === null ) {
         alert("getting first pivot");

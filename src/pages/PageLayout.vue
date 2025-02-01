@@ -37,7 +37,7 @@ const rightMode = ref(store.selectedMode === 'Vorgegebenes Sortieren')
           :select-cards="SelectCard"
           :select-cards2="SelectCardQuick"
           :number-of-swaps="this.numberOfSwaps"/>
-
+  </div>
   <footer>
     <!--Einfügen des Scores -->
     <div class="score">
