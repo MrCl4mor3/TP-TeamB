@@ -44,6 +44,8 @@ h2 {
     gap: 10px;
     text-align: center;
     font-family: Arial, sans-serif;
+    justify-content: center;
+    margin: 10px;
 }
 
 .button-container-meta {

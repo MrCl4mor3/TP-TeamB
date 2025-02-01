@@ -19,9 +19,11 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     </div>
   </header>
 
-  <Dialog v-model:visible="visibleTutorial" modal header="Tutorial" :style="{ width: '400px' }">
-    <p>{{ descriptionToAlgorithm[store.selectedCategory] }}</p>
-    <ButtonPress label="Schließen" icon="pi pi-times" @click="visibleTutorial = false" />
+  <Dialog v-model:visible="visibleTutorial" :header="`Tutorial - ${store.selectedCategory}`" class="dialog">
+    <div v-html="formatDescription(store.selectedCategory)"></div>
+    <div class="button-container">
+      <ButtonPress label="Schließen" icon="pi pi-times" @click="visibleTutorial = false" />
+    </div>
   </Dialog>
 
   <div>
@@ -142,6 +144,14 @@ export default {
       this.$router.push('/')
       store.selectedCards = []
     },
+
+    formatDescription(category) {
+      if (!this.descriptionToAlgorithm[category]) return "";
+      return this.descriptionToAlgorithm[category]
+        .split("\n") // Splitte den Text an Zeilenumbrüchen
+        .map(line => `<p>${line}</p>`) // Wandle jede Zeile in ein <p>-Tag um
+        .join(""); // Füge alle Absätze wieder zusammen
+    },
   },
 }
 </script>
@@ -156,6 +166,9 @@ export default {
   margin-left: 10px;
 }
 
+.dialog {
+  width: 100%;
+}
 
 header {
   justify-content: space-between;
