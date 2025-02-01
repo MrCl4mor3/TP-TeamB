@@ -19,7 +19,7 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     </div>
   </header>
 
-  <Dialog v-model:visible="visibleTutorial" :header="`Tutorial - ${store.selectedCategory}`" class="dialog" >
+  <Dialog v-model:visible="visibleTutorial" :header="`Tutorial - ${store.selectedMode === 'Freies Sortieren' ? store.selectedMode : store.selectedCategory}`" class="dialog" >
     <div class="dialog-content">
       <div v-html="formatDescription(store.selectedCategory)"></div>
     </div>
@@ -84,6 +84,7 @@ export default {
         'Insertion Sort': algorithmDescription['Insertion Sort'],
         'Merge Sort': algorithmDescription['Merge Sort'],
         'Quick Sort': algorithmDescription['Quick Sort'],
+        'Free Sort': algorithmDescription['Free Sort'],
       },
     }
   },
@@ -147,12 +148,23 @@ export default {
       store.selectedCards = []
     },
 
+
     formatDescription(category) {
+
+      // Überprüfe, ob der Mode "Freies Sortieren" ist
+      if (this.store.selectedMode === "Freies Sortieren") {
+        category ='Free Sort';
+      }
+
+      // Wenn die Kategorie keine Beschreibung hat, gib einen leeren String zurück
       if (!this.descriptionToAlgorithm[category]) return "";
+
+
+      // Formatieren der Beschreibung: Jede Zeile wird in ein <p>-Tag eingeschlossen
       return this.descriptionToAlgorithm[category]
-        .split("\n") // Splitte den Text an Zeilenumbrüchen
-        .map(line => `<p>${line}</p>`) // Wandle jede Zeile in ein <p>-Tag um
-        .join(""); // Füge alle Absätze wieder zusammen
+        .split("\n")  // Splitte den Text an Zeilenumbrüchen
+        .map(line => `<p>${line}</p>`)  // Wandle jede Zeile in ein <p>-Tag um
+        .join("");  // Füge alle Absätze wieder zusammen
     },
   },
 }
