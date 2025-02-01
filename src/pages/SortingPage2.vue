@@ -6,8 +6,7 @@
         <div v-for="(card, index) in store.cards" :key="card.id">
           <FlippedCard @click="selectCards(index)">
             <template #front>
-              <div class="frontside">
-              </div>
+              <div class="frontside"></div>
             </template>
             <template #back>
               <div class="backside">
@@ -42,5 +41,3 @@ export default {
   },
 }
 </script>
-
-

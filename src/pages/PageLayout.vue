@@ -1,25 +1,28 @@
 <script setup>
-import { ref} from "vue";
-import Dialog from 'primevue/dialog';
+import { ref } from 'vue'
+import Dialog from 'primevue/dialog'
 
 const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
 </script>
 
 <template>
-
   <header>
     <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage" />
     <h1>
-      <span v-if="noAlgorithmNeeded">{{store.selectedMode}}</span>
-      <span v-else>{{store.selectedCategory}}</span>
+      <span v-if="noAlgorithmNeeded">{{ store.selectedMode }}</span>
+      <span v-else>{{ store.selectedCategory }}</span>
     </h1>
     <div class="button-container-meta">
       <ButtonPress label="?" @click="openTutorial"></ButtonPress>
-      <SplitButton icon="pi pi-refresh" :model="refreshButton"/>
+      <SplitButton icon="pi pi-refresh" :model="refreshButton" />
     </div>
   </header>
 
-  <Dialog v-model:visible="visibleTutorial" :header="`Tutorial - ${store.selectedMode === 'Freies Sortieren' ? store.selectedMode : store.selectedCategory}`" class="dialog" >
+  <Dialog
+    v-model:visible="visibleTutorial"
+    :header="`Tutorial - ${store.selectedMode === 'Freies Sortieren' ? store.selectedMode : store.selectedCategory}`"
+    class="dialog"
+  >
     <div class="dialog-content">
       <div v-html="formatDescription(store.selectedCategory)"></div>
     </div>
@@ -148,23 +151,20 @@ export default {
       store.selectedCards = []
     },
 
-
     formatDescription(category) {
-
       // Überprüfe, ob der Mode "Freies Sortieren" ist
-      if (this.store.selectedMode === "Freies Sortieren") {
-        category ='Free Sort';
+      if (this.store.selectedMode === 'Freies Sortieren') {
+        category = 'Free Sort'
       }
 
       // Wenn die Kategorie keine Beschreibung hat, gib einen leeren String zurück
-      if (!this.descriptionToAlgorithm[category]) return "";
-
+      if (!this.descriptionToAlgorithm[category]) return ''
 
       // Formatieren der Beschreibung: Jede Zeile wird in ein <p>-Tag eingeschlossen
       return this.descriptionToAlgorithm[category]
-        .split("\n")  // Splitte den Text an Zeilenumbrüchen
-        .map(line => `<p>${line}</p>`)  // Wandle jede Zeile in ein <p>-Tag um
-        .join("");  // Füge alle Absätze wieder zusammen
+        .split('\n') // Splitte den Text an Zeilenumbrüchen
+        .map((line) => `<p>${line}</p>`) // Wandle jede Zeile in ein <p>-Tag um
+        .join('') // Füge alle Absätze wieder zusammen
     },
   },
 }
@@ -189,5 +189,4 @@ export default {
 header {
   justify-content: space-between;
 }
-
 </style>

@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import Dialog from 'primevue/dialog';
-import Button from 'primevue/button';
+import Dialog from 'primevue/dialog'
+import Button from 'primevue/button'
 
 export default {
   components: {
@@ -21,14 +21,14 @@ export default {
   data() {
     return {
       visible: false,
-    };
+    }
   },
   methods: {
     openDialog() {
-      this.visible = true;
+      this.visible = true
     },
   },
-};
+}
 </script>
 
 <style>

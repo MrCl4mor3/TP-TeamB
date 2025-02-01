@@ -163,7 +163,7 @@ onBeforeUnmount(() => {
   </div>
 
   <footer>
-    <p>{{description.impressum}}</p>
+    <p>{{ description.impressum }}</p>
   </footer>
 </template>
 
@@ -229,7 +229,6 @@ h1 {
   gap: 10px; /* Abstand zwischen den Elementen */
   font-family: Arial, sans-serif;
 }
-
 
 legend {
   font-size: 1.7em; /* Größe der Überschrift */
