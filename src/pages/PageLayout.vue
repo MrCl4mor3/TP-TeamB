@@ -123,15 +123,19 @@ export default {
     SelectCardQuick(index) {
       if (store.pivotIndices.includes(index) || store.pivotElementIndex === index) {
         alert("pivotelement");
-      }
-      if (store.selectedCards.includes(index)) {
-        store.selectedCards = store.selectedCards.filter((card) => card !== index);
-      } else if (store.selectedCards.length < 2) {
-        if (index === store.lookingIndex) {
-          alert("correct");
+        document.getElementsByClassName('card-container')[index].__vueParentComponent.ctx.toggleFlip();
+      } else {
+        if (store.selectedCards.includes(index)) {
+          store.selectedCards = store.selectedCards.filter((card) => card !== index);
+        } else if (store.selectedCards.length < 2) {
+          if (index === store.lookingIndex) {
+            store.selectedCards.push(index);
+            store.score++;
+          } else {
+            alert("Flasche Karte");
+            document.getElementsByClassName('card-container')[index].__vueParentComponent.ctx.toggleFlip();
+          }
         }
-        store.selectedCards.push(index);
-        store.score++;
       }
     },
     startOver() {
