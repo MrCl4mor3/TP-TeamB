@@ -85,12 +85,4 @@ export default {
   display: flex;
   align-items: center;
 }
-
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 32px;
-  justify-items: center;
-  font-family: Arial, sans-serif;
-}
 </style>
