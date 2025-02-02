@@ -27,12 +27,19 @@ export default {
       isFlipped: false,
     }
   },
+  props: {
+    cardId: {
+      type: [String, Number],
+      required: true
+    }
+  },
   methods: {
     // Methode um die Karte zu drehen. Hier kann nur umgedreht werden wenn weniger als 2 Karten
     // umgedreht sind. Wenn die Karte schon umgedreht ist wird die Anzahl der umgedrehten karten
     // um eins reduziert.
     toggleFlip() {
-      console.log('flipped card')
+      console.log(this.cardId)
+
         if (store.numberOfFlippedCards < 2 && !this.isFlipped) {
           this.isFlipped = !this.isFlipped
           store.numberOfFlippedCards++
@@ -40,6 +47,7 @@ export default {
           this.isFlipped = !this.isFlipped
           store.numberOfFlippedCards--
         }
+
     },
   },
 }

@@ -70,7 +70,6 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards, tes
       //Speicher die Karten im Store ab
       store.correctCards = cards.slice()
       store.cards = cards.slice()
-      store.containers.push(cards)
 
       //Mische die Karten, falls sie gleich sind
       while (arraysAreEqual(store.cards, store.correctCards)) {
@@ -78,6 +77,8 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards, tes
       }
 
       store.startingCards = store.cards.slice()
+      store.containers.push(store.startingCards)
+
       algorithmMap[store.selectedCategory](store.startingCards)
 
       if (testMode) {

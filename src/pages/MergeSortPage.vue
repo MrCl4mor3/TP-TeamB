@@ -13,16 +13,9 @@ function dragStart(index) {
 
 function drop(targetIndex) {
   if (draggedIndex.value !== null && draggedIndex.value !== targetIndex) {
-    // Hole den gezogenen Container
     const draggedContainer = store.containers[draggedIndex.value]
-
-    // Füge alle Karten zum Ziel-Container hinzu
     store.containers[targetIndex] = [...store.containers[targetIndex], ...draggedContainer]
-
-    // Entferne den alten, leeren Container
     store.containers.splice(draggedIndex.value, 1)
-
-    // Reset
     draggedIndex.value = null
 
   }
@@ -42,10 +35,10 @@ function drop(targetIndex) {
                @drop="drop(containerIndex)">
             <div class="card-grid">
               <div v-for="(card, index) in container" :key="card.id" class="card-and-line">
-            <FlippedCard @click="selectCardsInContainer(containerIndex, index)">
+            <FlippedCard  @click="selectCardsInContainer(containerIndex, index)">
               <template #front>
                 <div class="frontsite">
-                  <h1>{{ card.id }}</h1>
+                  <h1>{{ card.id}}</h1>
                 </div>
               </template>
               <template #back>
@@ -57,7 +50,6 @@ function drop(targetIndex) {
             <DividingLine v-if="index < container.length - 1" @click="selectLine(containerIndex, index)" />
           </div>
         </div>
-            <DividingLine v-if="(containerIndex < store.containers.length - 1) && (store.containers.length === store.cards.length)" @click="selectLine(containerIndex, index)" />
         </div>
       </div>
     </template>
