@@ -23,8 +23,7 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     </h1>
     <div class="button-container-meta">
       <ButtonPress label="?" @click="openTutorial"></ButtonPress>
-      <SplitButton icon="pi pi-refresh" :model="refreshButton" />
-      <ButtonPress @click="showToast(); shuffel()"></ButtonPress>
+      <ButtonPress icon="pi pi-refresh" @click="showToast(); shuffel()"></ButtonPress>
     </div>
   </header>
 
@@ -78,16 +77,6 @@ export default {
   data() {
     return {
       visibleTutorial: false,
-      refreshButton: [
-        {
-          label: 'Mische neu',
-          command: () => this.shuffel(),
-        },
-        {
-          label: 'Starte neu',
-          command: () => this.startOver(),
-        },
-      ],
       numberOfSwaps: 0,
       selectedCards: [],
       descriptionToAlgorithm: {
