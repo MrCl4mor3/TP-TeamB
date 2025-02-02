@@ -12,21 +12,24 @@ function dragStart(index) {
 }
 
 function drop(targetIndex) {
+  if(store.numberOfFlippedCards === 0) {
   if (draggedIndex.value !== null && draggedIndex.value !== targetIndex) {
     const draggedContainer = store.containers[draggedIndex.value]
     store.containers[targetIndex] = [...store.containers[targetIndex], ...draggedContainer]
     store.containers.splice(draggedIndex.value, 1)
     draggedIndex.value = null
+  }
 
+  } else {
+    alert("Karten müssen umgedreht sein")
   }
 }
 </script>
 
 <template>
   <StandardLayout :store="store" :isExpanded="isExpanded">
-    <template #cards="{ selectCards}">
+    <template #cards>
       <!-- übergibt die benötigten Methoden und variablen -->
-
         <div class="grid-grids">
           <div v-for="(container, containerIndex) in store.containers" :key="containerIndex" class="container-and-line"
                draggable="true"
@@ -35,7 +38,9 @@ function drop(targetIndex) {
                @drop="drop(containerIndex)">
             <div class="card-grid">
               <div v-for="(card, index) in container" :key="card.id" class="card-and-line">
-            <FlippedCard  @click="selectCardsInContainer(containerIndex, index)">
+            <FlippedCard :card-id="card.id"
+                         :ref="'flippedCard'"
+                         @click="selectCardsInContainer(containerIndex, index)">
               <template #front>
                 <div class="frontsite">
                   <h1>{{ card.id}}</h1>
@@ -53,14 +58,9 @@ function drop(targetIndex) {
         </div>
       </div>
     </template>
-    <template #extraButtons="{ swapCards }">
+    <template #extraButtons>
       <ButtonPress label="vertauschen" @click="canSwapInContainer" />
       <ButtonPress label="split" @click="splitContainer" />
-
-
-      <p>container{{this.selectedContainerIndex}}</p>
-      <p>{{store.cards.length}}</p>
-      <P> {{this.selectedCards.length}}</P>
     </template>
   </StandardLayout>
 </template>
@@ -88,10 +88,10 @@ export default {
   methods: {
     selectCardsInContainer(containerIndex,cardIndex) {
       if(this.selectedCards.length === 0) {
-        this.selectedContainerIndex = containerIndex
+        store.currentSelectedContainer = containerIndex
       }
-      if(this.selectedContainerIndex === null || this.selectedContainerIndex === containerIndex) {
-        this.selectedContainerIndex = containerIndex
+      if(store.currentSelectedContainer === null || store.currentSelectedContainer === containerIndex) {
+        store.currentSelectedContainer = containerIndex
         if (this.selectedCards.includes(cardIndex)) {
           this.selectedCards = this.selectedCards.filter((card) => card !== cardIndex)  //ncoh entfernen des container index hinzufügen
         } else if (this.selectedCards.length < 2) {
@@ -110,9 +110,9 @@ export default {
       if (this.selectedCards.length === 2 ) {
         console.log("test 2")
         const [firstIndex, secondIndex] = this.selectedCards
-        const temp = store.containers[this.selectedContainerIndex][firstIndex]
-        store.containers[this.selectedContainerIndex][firstIndex] = store.containers[this.selectedContainerIndex][secondIndex]
-        store.containers[this.selectedContainerIndex][secondIndex] = temp
+        const temp = store.containers[store.currentSelectedContainer][firstIndex]
+        store.containers[store.currentSelectedContainer][firstIndex] = store.containers[store.currentSelectedContainer][secondIndex]
+        store.containers[store.currentSelectedContainer][secondIndex] = temp
         this.numberOfSwaps++
       } else {
         alert(errorMessages['wrongAlgorithmStep'])
@@ -136,7 +136,22 @@ export default {
 
       store.containers.splice(this.linePositionContainer, 1, firstHalf, secondHalf)
       store.selectedLines = 0;
+      this.flipAllCards()
     },
+    flipAllCards() {
+      const allCards = this.$refs.flippedCard;
+
+      // Prüfen, ob es ein Array von Instanzen ist (bei v-for)
+      if (Array.isArray(allCards)) {
+        allCards.forEach(card => {
+          card.isFlipped = false;  // Setze jede Karte auf geflippt
+        });
+      } else if (allCards) {
+        allCards.isFlipped = false;  // Falls es nur eine Instanz ist
+      }
+      store.numberOfFlippedCards = 0;
+      store.currentSelectedContainer = null;
+    }
   },
 }
 </script>

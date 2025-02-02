@@ -15,6 +15,7 @@ function getDefaultStore() {
     selectedCards: [],
     selectedLines: 0,
     containers: [],
+    currentSelectedContainer: null,
   }
 }
 

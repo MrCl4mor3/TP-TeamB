@@ -29,7 +29,7 @@ export default {
   },
   props: {
     cardId: {
-      type: [String, Number],
+      type: [ Number],
       required: true
     }
   },
@@ -39,7 +39,9 @@ export default {
     // um eins reduziert.
     toggleFlip() {
       console.log(this.cardId)
+      console.log(store.containers[0])
 
+      if (store.numberOfFlippedCards === 0 || store.containers[store.currentSelectedContainer].some(card => card.id === this.cardId)) {
         if (store.numberOfFlippedCards < 2 && !this.isFlipped) {
           this.isFlipped = !this.isFlipped
           store.numberOfFlippedCards++
@@ -47,6 +49,7 @@ export default {
           this.isFlipped = !this.isFlipped
           store.numberOfFlippedCards--
         }
+      }
 
     },
   },
