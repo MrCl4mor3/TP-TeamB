@@ -1,39 +1,39 @@
 <script setup>
-import { ref} from "vue";
+import { ref } from 'vue'
+import Dialog from 'primevue/dialog'
 
-const rightMode = ref(store.selectedMode === 'Vorgegebenes Sortieren')
+const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
 </script>
 
 <template>
-
   <header>
     <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage" />
     <h1>
-      <span v-if="rightMode">{{store.selectedCategory}}</span>
-      <span v-else>{{store.selectedMode}}</span>
+      <span v-if="noAlgorithmNeeded">{{ store.selectedMode }}</span>
+      <span v-else>{{ store.selectedCategory }}</span>
     </h1>
     <div class="button-container-meta">
-      <ButtonPress label="?"></ButtonPress>
-      <SplitButton icon="pi pi-refresh" :model="refreshButton"/>
+      <ButtonPress label="?" @click="openTutorial"></ButtonPress>
+      <SplitButton icon="pi pi-refresh" :model="refreshButton" />
     </div>
   </header>
 
-  <div>
-    <FieldSet
-      :legend="`${store.selectedCategory} , ${store.selectedMode}`"
-      :toggleable="true"
-      :co llapsed="true"
-    >
-      <template #toggleicon>
-        <span>{{ isExpanded ? '?' : '❓' }}</span>
-      </template>
-      <p class="m-0" style="white-space: pre-wrap">
-        {{ descriptionToAlgorithm[store.selectedCategory] }}
-      </p>
-    </FieldSet>
+  <Dialog
+    v-model:visible="visibleTutorial"
+    :header="`Tutorial - ${store.selectedMode === 'Freies Sortieren' ? store.selectedMode : store.selectedCategory}`"
+    class="dialog"
+  >
+    <div class="dialog-content">
+      <div v-html="formatDescription(store.selectedCategory)"></div>
+    </div>
+    <div class="button-container">
+      <ButtonPress label="Schließen" icon="pi pi-times" @click="visibleTutorial = false" />
+    </div>
+  </Dialog>
 
+  <div>
     <!-- hier werden die Karten in den einzelnen Seiten hinzugefügt -->
-    <slot name="cards" :select-cards="SelectCard" :number-of-swaps="this.numberOfSwaps" />
+    <slot name="cards" :select-cards="SelectCard" :number-of-swaps="numberOfSwaps" />
   </div>
 
   <footer>
@@ -68,6 +68,7 @@ export default {
   },
   data() {
     return {
+      visibleTutorial: false,
       refreshButton: [
         {
           label: 'Mische neu',
@@ -86,10 +87,14 @@ export default {
         'Insertion Sort': algorithmDescription['Insertion Sort'],
         'Merge Sort': algorithmDescription['Merge Sort'],
         'Quick Sort': algorithmDescription['Quick Sort'],
+        'Free Sort': algorithmDescription['Free Sort'],
       },
     }
   },
   methods: {
+    openTutorial() {
+      this.visibleTutorial = true
+    },
     SwapCards() {
       let canSort = true
 
@@ -145,49 +150,27 @@ export default {
       this.$router.push('/')
       store.selectedCards = []
     },
+
+    formatDescription(category) {
+      // Überprüfe, ob der Mode "Freies Sortieren" ist
+      if (this.store.selectedMode === 'Freies Sortieren') {
+        category = 'Free Sort'
+      }
+
+      // Wenn die Kategorie keine Beschreibung hat, gib einen leeren String zurück
+      if (!this.descriptionToAlgorithm[category]) return ''
+
+      // Formatieren der Beschreibung: Jede Zeile wird in ein <p>-Tag eingeschlossen
+      return this.descriptionToAlgorithm[category]
+        .split('\n') // Splitte den Text an Zeilenumbrüchen
+        .map((line) => `<p>${line}</p>`) // Wandle jede Zeile in ein <p>-Tag um
+        .join('') // Füge alle Absätze wieder zusammen
+    },
   },
 }
 </script>
 
 <style scoped>
-.button-container {
-  display: flex;
-  gap: 10px;
-  text-align: center;
-  font-family: Arial, sans-serif;
-}
-
-.button-container-meta {
-  display: flex;
-  gap: 10px;
-  font-family: Arial, sans-serif;
-}
-
-header {
-  padding: 25px 10px;
-  position: sticky;
-  top: 0;
-  background-color: lightgray;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
-  z-index: 1000;
-}
-
-footer {
-  display: flex;
-  bottom: 0;
-  position: sticky;
-  z-index: 1000;
-  background-color: lightgray;
-  padding: 25px 10px;
-  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.7);
-  margin-top: 20px;
-  justify-content: center;
-  align-items: center;
-}
-
 .score {
   justify-self: left;
   left: 0;
@@ -197,14 +180,13 @@ footer {
   margin-left: 10px;
 }
 
-
-h1 {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  color: #10b981;
+.dialog-content {
+  padding: 1rem;
+  font-size: 1.2em;
+  line-height: 1.6;
 }
-h2 {
-  font-family: Arial, sans-serif;
-  color: #10b981;
+
+header {
+  justify-content: space-between;
 }
 </style>

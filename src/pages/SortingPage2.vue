@@ -6,8 +6,7 @@
         <div v-for="(card, index) in store.cards" :key="card.id">
           <FlippedCard @click="selectCards(index)">
             <template #front>
-              <div class="frontside">
-              </div>
+              <div class="frontside"></div>
             </template>
             <template #back>
               <div class="backside">
@@ -42,19 +41,3 @@ export default {
   },
 }
 </script>
-
-
-<style scoped>
-
-/* Styling für die Karten */
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  column-gap: 10px;
-  row-gap: 45px;
-  justify-items: center;
-  font-family: Arial, sans-serif;
-}
-
-</style>
-

@@ -84,7 +84,9 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <h1>{{ description.headline }}</h1>
+  <header>
+    <h1>{{ description.headline }}</h1>
+  </header>
 
   <!-- Beschreibung des Spiels -->
   <div class="description-container">
@@ -159,19 +161,20 @@ onBeforeUnmount(() => {
   <div class="start-container">
     <ButtonPress label="Start" @click="goToSortingPage" />
   </div>
+
+  <footer>
+    <p>{{ description.impressum }}</p>
+  </footer>
 </template>
 
 <style scoped>
 /*Styling für die Überschrift*/
 h1 {
   font-size: 80px; /* Größe der Überschrift */
-  text-align: center; /* Zentriert den Text */
-  font-family: Arial, sans-serif; /* Schriftart */
-  color: #10b981;
 }
 
 .slider {
-  width: 20%;
+  width: 15%;
   margin: 20px;
 }
 .NumberSelect {
@@ -226,7 +229,6 @@ h1 {
   gap: 10px; /* Abstand zwischen den Elementen */
   font-family: Arial, sans-serif;
 }
-
 
 legend {
   font-size: 1.7em; /* Größe der Überschrift */
@@ -290,5 +292,11 @@ input:disabled + label {
 }
 label:hover .tooltip {
   display: inline-block;
+}
+
+footer {
+  justify-content: right;
+  font-family: Arial, sans-serif;
+  font-size: 1em;
 }
 </style>
