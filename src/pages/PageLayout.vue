@@ -1,6 +1,15 @@
 <script setup>
 import { ref } from 'vue'
 import Dialog from 'primevue/dialog'
+import { useToast } from "primevue/usetoast";
+import Toast from "primevue/toast";
+
+const toast = useToast();
+
+const showToast = () => {
+  console.log('Toast wurde angezeigt');
+  toast.add({ severity: 'success', summary: 'Erfolg', detail: 'Toast wurde angezeigt', life: 3000 });
+}
 
 const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
 </script>
@@ -15,6 +24,7 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     <div class="button-container-meta">
       <ButtonPress label="?" @click="openTutorial"></ButtonPress>
       <SplitButton icon="pi pi-refresh" :model="refreshButton" />
+      <ButtonPress @click="showToast(); shuffel()"></ButtonPress>
     </div>
   </header>
 
@@ -27,6 +37,8 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
       <div v-html="formatDescription(store.selectedCategory)"></div>
     </div>
   </Dialog>
+
+  <Toast/>
 
   <div>
     <!-- hier werden die Karten in den einzelnen Seiten hinzugefügt -->
