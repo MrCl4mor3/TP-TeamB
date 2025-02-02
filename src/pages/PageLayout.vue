@@ -26,9 +26,6 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     <div class="dialog-content">
       <div v-html="formatDescription(store.selectedCategory)"></div>
     </div>
-    <div class="button-container">
-      <ButtonPress label="Schließen" icon="pi pi-times" @click="visibleTutorial = false" />
-    </div>
   </Dialog>
 
   <div>
@@ -44,7 +41,7 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     <!-- hier werden die zusätzlichen Knöpfe hinzugefügt -->
     <div class="button-container">
       <slot name="extraButtons" :swap-cards="SwapCards" />
-      <ButtonPress label="richtig sortiert?" @click="checkIfCorrect" />
+      <ButtonPress label="fertig sortiert" @click="checkIfCorrect" />
     </div>
   </footer>
 </template>
