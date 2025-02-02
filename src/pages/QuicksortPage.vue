@@ -13,7 +13,6 @@
             <FlippedCard @click="selectCards2(index)" ref="singlecard">
               <template #front>
                 <div class="frontsite">
-                  <h1>{{ card.id }}</h1>
                 </div>
               </template>
               <template #back>
@@ -23,17 +22,16 @@
               </template>
             </FlippedCard>
 
-
             <svg class="line" width="50" height="300">
               <!-- Linie -->
               <line
                 v-show="index === this.numberOfSwaps"
-                x1="7"
+                x1="6"
                 y1="0"
-                x2="7"
+                x2="6"
                 y2="300"
                 stroke="red"
-                stroke-width="6"
+                stroke-width="5"
               />
             </svg>
           </div>
@@ -86,10 +84,15 @@ export default {
         }
         //erstes Pivotelement wird aufgedeckt und umrandet
         document.getElementsByClassName('card-container')[0].__vueParentComponent.ctx.toggleFlip();
-        this.$refs.cardlist[this.trueCardRef[0]].firstChild.firstChild.style.border = '2px solid red';
+        this.$refs.cardlist[this.trueCardRef[0]].firstChild.firstChild.style.border = '2px solid blue';
         store.selectedCards.push(0);
 
       } else {
+        if (store.lookingIndex >= store.cards.length || store.pivotIndices.includes(store.lookingIndex+1)){
+          alert("zugelassen");
+        } else {
+          alert("nope");
+        }
         //Nicht das erste mal gedrückt, also muss das alte Pivotelement als fertig sortiert gespeichert werden
         store.pivotIndices.push(store.pivotElementIndex);
         //alle Karten werden zugedeckt
@@ -102,11 +105,11 @@ export default {
         //einelementige Teilmengen sind auch schon sortiert, also müssen dementsprechend makiert werden
         if (this.biggerCards === 1) {
           store.pivotIndices.push(store.pivotElementIndex+1);
-          this.$refs.cardlist[this.trueCardRef[store.pivotElementIndex+1]].firstChild.firstChild.style.border = '2px solid green';
+          this.$refs.cardlist[this.trueCardRef[store.pivotElementIndex+1]].firstChild.firstChild.style.border = '2px solid blue';
         }
         if (this.smallerCards === 1) {
           store.pivotIndices.push(store.pivotElementIndex-1);
-          this.$refs.cardlist[this.trueCardRef[store.pivotElementIndex-1]].firstChild.firstChild.style.border = '2px solid yellow';
+          this.$refs.cardlist[this.trueCardRef[store.pivotElementIndex-1]].firstChild.firstChild.style.border = '2px solid blue';
         }
         let checked = 0;
         //check ob alles schon als sortiert gespeichert wurde
@@ -150,8 +153,9 @@ export default {
           store.cards[swapid] = store.cards[store.pivotElementIndex];
           store.cards[store.pivotElementIndex] = temp;
           //updaten der trueCardRef nach vertauschen von elementen
-          this.trueCardRef[store.pivotElementIndex] = swapid;
-          this.trueCardRef[swapid] = store.pivotElementIndex;
+          let tempref = this.trueCardRef[swapid];
+          this.trueCardRef[swapid] = this.trueCardRef[store.pivotElementIndex];
+          this.trueCardRef[store.pivotElementIndex] = tempref;
 
           store.pivotElementIndex = swapid;
           //alle Karten die größer als das Pivot gemerkt sind müssen wieder nach rechts getauscht werden
@@ -162,8 +166,9 @@ export default {
               store.cards[swapid - 1] = temp;
 
               //updaten der trueCardRef nach vertauschen von elementen
-              this.trueCardRef[swapid - 1] = swapid;
-              this.trueCardRef[swapid] = swapid - 1;
+              let tempref = this.trueCardRef[swapid];
+              this.trueCardRef[swapid] = this.trueCardRef[swapid - 1];
+              this.trueCardRef[swapid - 1] = tempref;
 
               store.pivotElementIndex = swapid - 1;
               swapid--;
@@ -224,5 +229,6 @@ export default {
   row-gap: 45px;
   justify-items: center;
   font-family: Arial, sans-serif;
+  margin-left: 24px;
 }
 </style>
