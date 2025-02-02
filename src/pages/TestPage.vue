@@ -1,28 +1,45 @@
 <template>
-  <div class = "test-page">
-    <Toast/>
-    <ButtonPress @click="showToast">Zeige Toast</ButtonPress>
-  </div>
+  <StandardLayout :store="store" :isExpanded="isExpanded">
+    <template #cards="{ selectCards }">
+      <div class="card-grid">
+        <!-- Hier wird für jede Karte ein FlippedCard erstellt -->
+        <div v-for="(card, index) in store.cards" :key="card.id">
+          <FlippedCard @click="selectCards(index)">
+            <template #front>
+              <div class="frontside">
+                <div v-html="card.svg.outerHTML"></div>
+              </div>
+            </template>
+            <template #back>
+              <div class="backside">
+                <div v-html="card.svg.outerHTML"></div>
+              </div>
+            </template>
+          </FlippedCard>
+        </div>
+      </div>
+    </template>
+
+    <template #extraButtons="{ swapCards }">
+      <ButtonPress label="vertauschen" icon="pi pi-arrow-right-arrow-left" @click="swapCards" />
+    </template>
+  </StandardLayout>
 </template>
 
-<style>
-.test-page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+<script>
+import StandardLayout from './PageLayout.vue'
+import { store } from '@/store.js'
+import FlippedCard from '@/components/FlippedCard.vue'
+
+export default {
+  components: {
+    StandardLayout,
+    FlippedCard,
+  },
+  data() {
+    return {
+      store,
+    }
+  },
 }
-</style>
-
-<script setup>
-import { useToast } from "primevue/usetoast";
-import Toast from "primevue/toast";
-
-const toast = useToast();
-
-const showToast = () => {
-  console.log('Toast wurde angezeigt');
-  toast.add({ severity: 'success', summary: 'Erfolg', detail: 'Toast wurde angezeigt' });
-}
-
 </script>
