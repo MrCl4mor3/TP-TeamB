@@ -59,7 +59,7 @@ function goToSortingPage() {
 }
 
 function goToTestPage() {
-  generateCards(selectedCategory.value, selectedMode.value, 20, true)
+  generateCards(selectedCategory.value, selectedMode.value, numberOfCards.value, true)
   router.push('/testPage')
 }
 
