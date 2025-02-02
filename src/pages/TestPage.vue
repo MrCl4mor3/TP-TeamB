@@ -1,39 +1,45 @@
 <template>
-  <div class="p-4">
-    <Button label="Öffne Dialog" icon="pi pi-external-link" @click="openDialog" />
+  <StandardLayout :store="store" :isExpanded="isExpanded">
+    <template #cards="{ selectCards }">
+      <div class="card-grid">
+        <!-- Hier wird für jede Karte ein FlippedCard erstellt -->
+        <div v-for="(card, index) in store.cards" :key="card.id">
+          <FlippedCard @click="selectCards(index)">
+            <template #front>
+              <div class="frontside">
+                <div v-html="card.svg.outerHTML"></div>
+              </div>
+            </template>
+            <template #back>
+              <div class="backside">
+                <div v-html="card.svg.outerHTML"></div>
+              </div>
+            </template>
+          </FlippedCard>
+        </div>
+      </div>
+    </template>
 
-    <Dialog v-model:visible="visible" modal header="Dynamischer Dialog" :style="{ width: '400px' }">
-      <p>Hier ist ein dynamischer Dialog mit PrimeVue.</p>
-      <Button label="Schließen" icon="pi pi-times" @click="visible = false" class="p-button-text" />
-    </Dialog>
-  </div>
+    <template #extraButtons="{ swapCards }">
+      <ButtonPress label="vertauschen" icon="pi pi-arrow-right-arrow-left" @click="swapCards" />
+    </template>
+  </StandardLayout>
 </template>
 
 <script>
-import Dialog from 'primevue/dialog'
-import Button from 'primevue/button'
+import StandardLayout from './PageLayout.vue'
+import { store } from '@/store.js'
+import FlippedCard from '@/components/FlippedCard.vue'
 
 export default {
   components: {
-    Dialog,
-    Button,
+    StandardLayout,
+    FlippedCard,
   },
   data() {
     return {
-      visible: false,
+      store,
     }
-  },
-  methods: {
-    openDialog() {
-      this.visible = true
-    },
   },
 }
 </script>
-
-<style>
-/* Optional: Stil für das Layout */
-.p-4 {
-  padding: 1rem;
-}
-</style>
