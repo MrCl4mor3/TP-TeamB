@@ -1,6 +1,15 @@
 <script setup>
 import { ref } from 'vue'
 import Dialog from 'primevue/dialog'
+import { useToast } from "primevue/usetoast";
+import Toast from "primevue/toast";
+
+const toast = useToast();
+
+const showToast = () => {
+  console.log('Toast wurde angezeigt');
+  toast.add({ severity: 'success', summary: 'Erfolg', detail: 'Toast wurde angezeigt', life: 3000 });
+}
 
 const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
 </script>
@@ -15,7 +24,7 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     </h1>
     <div class="button-container-meta">
       <ButtonPress label="?" @click="openTutorial"></ButtonPress>
-      <SplitButton icon="pi pi-refresh" :model="refreshButton" />
+      <ButtonPress icon="pi pi-refresh" @click="showToast(); shuffel()"></ButtonPress>
     </div>
   </header>
 
@@ -27,10 +36,9 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     <div class="dialog-content">
       <div v-html="formatDescription(store.selectedCategory)"></div>
     </div>
-    <div class="button-container">
-      <ButtonPress label="Schließen" icon="pi pi-times" @click="visibleTutorial = false" />
-    </div>
   </Dialog>
+
+  <Toast/>
 
   <div>
     <!-- hier werden die Karten in den einzelnen Seiten hinzugefügt -->
@@ -48,7 +56,7 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     <!-- hier werden die zusätzlichen Knöpfe hinzugefügt -->
     <div class="button-container">
       <slot name="extraButtons" :swap-cards="SwapCards" />
-      <ButtonPress label="richtig sortiert?" @click="checkIfCorrect" />
+      <ButtonPress label="fertig sortiert" @click="checkIfCorrect" />
     </div>
   </footer>
 </template>
@@ -73,16 +81,6 @@ export default {
   data() {
     return {
       visibleTutorial: false,
-      refreshButton: [
-        {
-          label: 'Mische neu',
-          command: () => this.shuffel(),
-        },
-        {
-          label: 'Starte neu',
-          command: () => this.startOver(),
-        },
-      ],
       numberOfSwaps: 0,
       selectedCards: [],
       descriptionToAlgorithm: {
