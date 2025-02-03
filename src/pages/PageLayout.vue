@@ -6,6 +6,7 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
 </script>
 
 <template>
+
   <header>
     <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage" />
     <h1>
@@ -33,7 +34,10 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
 
   <div>
     <!-- hier werden die Karten in den einzelnen Seiten hinzugefügt -->
-    <slot name="cards" :select-cards="SelectCard" />
+    <slot name="cards"
+          :select-cards="SelectCard"
+          :select-cards2="SelectCardQuick"
+          :number-of-swaps="this.numberOfSwaps"/>
   </div>
 
   <footer>
@@ -96,7 +100,6 @@ export default {
       this.visibleTutorial = true
     },
     SwapCards() {
-      console.log("test")
       let canSort = true
 
       if (store.selectedMode === 'Vorgegebenes Sortieren' && store.selectedCategory !== 'Merge Sort') {
@@ -106,7 +109,6 @@ export default {
         )
       }
       if (store.selectedCards.length === 2 && canSort) {
-        console.log("test")
         const [firstIndex, secondIndex] = store.selectedCards
         const temp = store.cards[firstIndex]
         store.cards[firstIndex] = store.cards[secondIndex]
@@ -120,8 +122,27 @@ export default {
       if (store.selectedCards.includes(index)) {
         store.selectedCards = store.selectedCards.filter((card) => card !== index)
       } else if (store.selectedCards.length < 2) {
-        store.selectedCards.push(index)
-        store.score++
+        store.selectedCards.push(index);
+        store.score++;
+      }
+    },
+    //für Quicksort, es werden Pivotelement erkannt und anders behandelt
+    SelectCardQuick(index) {
+      if (store.pivotIndices.includes(index) || store.pivotElementIndex === index) {
+        alert("pivotelement");
+        document.getElementsByClassName('card-container')[index].__vueParentComponent.ctx.toggleFlip();
+      } else {
+        if (store.selectedCards.includes(index)) {
+          store.selectedCards = store.selectedCards.filter((card) => card !== index);
+        } else if (store.selectedCards.length < 2) {
+          if (index === store.lookingIndex) {
+            store.selectedCards.push(index);
+            store.score++;
+          } else {
+            alert("Flasche Karte");
+            document.getElementsByClassName('card-container')[index].__vueParentComponent.ctx.toggleFlip();
+          }
+        }
       }
     },
     startOver() {
