@@ -10,7 +10,7 @@
       <div>
         <div class="card-grid">
           <div v-for="(card, index) in store.cards" :key="card.id" ref="cardlist" class="card-and-line">
-            <FlippedCard @click="selectCards2(index)"  card-id="card.id" ref="singlecard">
+            <FlippedCard @click="selectCards2(index)"  :card-id="card.id" ref="singlecard">
               <template #front>
                 <div class="frontsite">
                 </div>
@@ -66,7 +66,8 @@ export default {
       firsttime: true,
       biggerCards: 0,
       smallerCards: 0,
-      trueCardRef: []
+      trueCardRef: [],
+      startigCardIds: []
     }
   },
   methods: {
@@ -82,63 +83,75 @@ export default {
         for (let i = 0; i < store.cards.length; i++) {
           this.trueCardRef.push(i);
         }
+        //für korrektes späteres ändern der Kartenrückseiten wird die die Originalreihenfolge der Karten-ids gespeichert
+        const allCards = this.$refs.singlecard;
+        // Sichergehen, dass es ein Array von Instanzen ist
+        if (Array.isArray(allCards)) {
+          allCards.forEach(card => {
+            this.startigCardIds.push(card);
+          });
+        } else {
+          alert("UhOh only 1 Card exists, that should never happen");
+        }
         //erstes Pivotelement wird aufgedeckt und umrandet
         document.getElementsByClassName('card-container')[0].__vueParentComponent.ctx.toggleFlip();
         this.$refs.cardlist[this.trueCardRef[0]].firstChild.firstChild.style.border = '2px solid blue';
         store.selectedCards.push(0);
-
+        store.score++;
       } else {
-        if (store.lookingIndex >= store.cards.length || store.pivotIndices.includes(store.lookingIndex+1)){
-          alert("zugelassen");
-        } else {
-          alert("nope");
-        }
-        //Nicht das erste mal gedrückt, also muss das alte Pivotelement als fertig sortiert gespeichert werden
-        store.pivotIndices.push(store.pivotElementIndex);
-        //alle Karten werden zugedeckt
-        for (let i = 0; i < store.cards.length; i++) {
-          if (store.selectedCards.includes(i)){
-            document.getElementsByClassName('card-container')[i].__vueParentComponent.ctx.toggleFlip();
+        //ist der Teilarray fertig einsortiert
+        if (store.lookingIndex >= store.cards.length || store.pivotIndices.includes(store.lookingIndex)){
+          //Nicht das erste mal gedrückt, also muss das alte Pivotelement als fertig sortiert gespeichert werden
+          store.pivotIndices.push(store.pivotElementIndex);
+          this.startigCardIds[this.trueCardRef[store.pivotElementIndex]].colourchange();
+          //alle Karten werden zugedeckt
+          for (let i = 0; i < store.cards.length; i++) {
+            if (store.selectedCards.includes(i)){
+              document.getElementsByClassName('card-container')[i].__vueParentComponent.ctx.toggleFlip();
+            }
           }
-        }
-        store.selectedCards.splice(0);
-        //einelementige Teilmengen sind auch schon sortiert, also müssen dementsprechend makiert werden
-        if (this.biggerCards === 1) {
-          store.pivotIndices.push(store.pivotElementIndex+1);
-          this.$refs.cardlist[this.trueCardRef[store.pivotElementIndex+1]].firstChild.firstChild.style.border = '2px solid blue';
-        }
-        if (this.smallerCards === 1) {
-          store.pivotIndices.push(store.pivotElementIndex-1);
-          this.$refs.cardlist[this.trueCardRef[store.pivotElementIndex-1]].firstChild.firstChild.style.border = '2px solid blue';
-        }
-        let checked = 0;
-        //check ob alles schon als sortiert gespeichert wurde
-        if (store.pivotIndices.length === store.cards.length) {
-          checked = store.cards.length;
-        }
-        //geht weiter bis zum nächsten Element das noch nicht sortiert wurde oder pivotelement war.
-        //Dieses ist dann das linke vom nächsten Abschnitt und damit neues Pivot
-        while (store.pivotIndices.length < store.cards.length && checked < store.cards.length) {
-          //falls am ende angekommen muss an den anfang gesprungen werden
-          if (store.lookingIndex >= store.cards.length) {
-            store.lookingIndex = 0;
+          store.selectedCards.splice(0);
+          //einelementige Teilmengen sind auch schon sortiert, also müssen dementsprechend makiert werden
+          if (this.biggerCards === 1) {
+            store.pivotIndices.push(store.pivotElementIndex+1);
+            this.startigCardIds[this.trueCardRef[store.pivotElementIndex+1]].colourchange();
           }
-          if (!store.pivotIndices.includes(store.lookingIndex)) {
-            store.pivotElementIndex = store.lookingIndex;
-
-            //neues Pivot wird makiert
-            document.getElementsByClassName('card-container')[store.pivotElementIndex].__vueParentComponent.ctx.toggleFlip();
-            this.$refs.cardlist[this.trueCardRef[store.pivotElementIndex]].firstChild.firstChild.style.border = '2px solid blue';
-            store.selectedCards.push(store.pivotElementIndex);
-
-            this.numberOfSwaps = store.lookingIndex;
-            this.biggerCards = 0;
-            this.smallerCards = 0;
+          if (this.smallerCards === 1) {
+            store.pivotIndices.push(store.pivotElementIndex-1);
+            this.startigCardIds[this.trueCardRef[store.pivotElementIndex-1]].colourchange();
+          }
+          let checked = 0;
+          //check ob alles schon als sortiert gespeichert wurde
+          if (store.pivotIndices.length === store.cards.length) {
             checked = store.cards.length;
           }
-          store.lookingIndex++;
-          checked ++;
+          //geht weiter bis zum nächsten Element das noch nicht sortiert wurde oder pivotelement war.
+          //Dieses ist dann das linke vom nächsten Abschnitt und damit neues Pivot
+          while (store.pivotIndices.length < store.cards.length && checked < store.cards.length) {
+            //falls am ende angekommen muss an den anfang gesprungen werden
+            if (store.lookingIndex >= store.cards.length) {
+              store.lookingIndex = 0;
+            }
+            if (!store.pivotIndices.includes(store.lookingIndex)) {
+              store.pivotElementIndex = store.lookingIndex;
+
+              //neues Pivot wird makiert
+              document.getElementsByClassName('card-container')[store.pivotElementIndex].__vueParentComponent.ctx.toggleFlip();
+              this.$refs.cardlist[this.trueCardRef[store.pivotElementIndex]].firstChild.firstChild.style.border = '2px solid blue';
+              store.selectedCards.push(store.pivotElementIndex);
+
+              this.numberOfSwaps = store.lookingIndex;
+              this.biggerCards = 0;
+              this.smallerCards = 0;
+              checked = store.cards.length;
+            }
+            store.lookingIndex++;
+            checked ++;
+          }
+        } else {
+          alert("Der aktuelle Teil ist noch nicht fertig eingeordnet");
         }
+        store.score++;
       }
     },
     //das Element muss nach links vom Pivotelement getauscht werden
@@ -156,6 +169,10 @@ export default {
           let tempref = this.trueCardRef[swapid];
           this.trueCardRef[swapid] = this.trueCardRef[store.pivotElementIndex];
           this.trueCardRef[store.pivotElementIndex] = tempref;
+
+          //automatisches Zudecken der Karte
+          document.getElementsByClassName('card-container')[swapid].__vueParentComponent.ctx.toggleFlip();
+          store.selectedCards = store.selectedCards.filter((card) => card !== store.pivotElementIndex);
 
           store.pivotElementIndex = swapid;
           //alle Karten die größer als das Pivot gemerkt sind müssen wieder nach rechts getauscht werden
@@ -192,6 +209,10 @@ export default {
       } else {
         if (store.selectedCards.length === 2) {
           this.biggerCards++;
+          //automatisches Zudecken der Karte
+          document.getElementsByClassName('card-container')[store.lookingIndex].__vueParentComponent.ctx.toggleFlip();
+          store.selectedCards = store.selectedCards.filter((card) => card !== store.lookingIndex);
+
           store.lookingIndex++;
           this.numberOfSwaps++;
         } else {
