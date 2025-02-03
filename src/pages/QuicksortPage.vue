@@ -10,7 +10,7 @@
       <div>
         <div class="card-grid">
           <div v-for="(card, index) in store.cards" :key="card.id" ref="cardlist" class="card-and-line">
-            <FlippedCard @click="selectCards2(index)" ref="singlecard">
+            <FlippedCard @click="selectCards2(index)"  card-id="card.id" ref="singlecard">
               <template #front>
                 <div class="frontsite">
                 </div>

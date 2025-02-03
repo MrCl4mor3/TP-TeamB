@@ -27,6 +27,12 @@ export default {
       isFlipped: false,
     }
   },
+  props: {
+    cardId: {
+      type: Number,
+      required: true,
+    },
+  },
   methods: {
     // Methode um die Karte zu drehen. Hier kann nur umgedreht werden wenn weniger als 2 Karten
     // umgedreht sind. Wenn die Karte schon umgedreht ist wird die Anzahl der umgedrehten karten
