@@ -27,24 +27,36 @@ export default {
       isFlipped: false,
     }
   },
+  props: {
+    cardId: {
+      type: Number,
+      required: true,
+    },
+  },
   methods: {
     // Methode um die Karte zu drehen. Hier kann nur umgedreht werden wenn weniger als 2 Karten
     // umgedreht sind. Wenn die Karte schon umgedreht ist wird die Anzahl der umgedrehten karten
     // um eins reduziert.
     toggleFlip() {
-      if (store.numberOfFlippedCards < 2 && !this.isFlipped) {
-        this.isFlipped = !this.isFlipped
-        store.numberOfFlippedCards++
-      } else if (this.isFlipped) {
-        this.isFlipped = !this.isFlipped
-        store.numberOfFlippedCards--
+
+      if (store.numberOfFlippedCards === 0 || store.selectedCategory !== 'Merge Sort'
+        || store.containers[store.currentSelectedContainer].some(card => card.id === this.cardId)) {
+        if (store.numberOfFlippedCards < 2 && !this.isFlipped) {
+          this.isFlipped = !this.isFlipped
+          store.numberOfFlippedCards++
+        } else if (this.isFlipped) {
+          this.isFlipped = !this.isFlipped
+          store.numberOfFlippedCards--
+        }
       }
+
     },
   },
 }
 </script>
 
 <style scoped>
+
 /*Container für die Karte*/
 .card-container {
   perspective: 1000px;
@@ -87,4 +99,5 @@ export default {
   transform: rotateY(180deg); /*dreht die Rückseite der Karte um 180 Grad*/
   background: white;
 }
+
 </style>

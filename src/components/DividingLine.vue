@@ -1,0 +1,53 @@
+<script setup>
+
+</script>
+
+<template>
+  <svg class="line" width="30" height="300" @click="selectLine()">
+    <!-- Linie -->
+    <!--kein plan warum aber x=15 wäre nicht mittig-->
+    <line
+      x1="20"
+      y1="0"
+      x2="20"
+      y2="300"
+
+      :stroke="isSelected ? 'blue' : (isDividingLine ? 'green' : 'red')"
+
+      stroke-width="6"
+
+
+    />
+  </svg>
+</template>
+<script>
+import { store } from '../store'
+export default {
+  setup() {
+    return { store } //Setup, damit auf store zugegriffen werden kann
+  },
+  data() {
+    //variablen die in der Komponente verwendet werden
+    return {
+      isSelected: false,
+      isDividingLine: false,
+    }
+  },
+  methods: {
+    selectLine() {
+      if(this.isSelected) {
+        this.isSelected = false
+        store.selectedLines--
+      } else if(!this.isSelected && store.selectedLines === 0) {
+        store.selectedLines++
+        this.isSelected = true
+      }
+    }
+
+    }
+  }
+
+</script>
+
+<style scoped>
+</style>

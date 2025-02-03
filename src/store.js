@@ -13,6 +13,12 @@ function getDefaultStore() {
     selectedMode: null,
     correctSortingOrder: [],
     selectedCards: [],
+    pivotIndices: [],
+    lookingIndex: 0,
+    pivotElementIndex: 0,
+    selectedLines: 0,
+    containers: [],
+    currentSelectedContainer: null,
   }
 }
 
