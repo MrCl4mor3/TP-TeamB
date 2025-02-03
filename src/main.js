@@ -7,7 +7,9 @@ import Aura from '@primevue/themes/aura'
 import InputNumber from 'primevue/inputnumber'
 import Button from 'primevue/button'
 import Fieldset from 'primevue/fieldset'
-import SplitButton from "primevue/splitbutton";
+import SplitButton from 'primevue/splitbutton'
+
+import './assets/global.css'
 
 const app = createApp(App)
 app.use(PrimeVue, {

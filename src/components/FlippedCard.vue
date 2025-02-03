@@ -57,7 +57,6 @@ export default {
 </script>
 
 <style scoped>
-
 /*Container für die Karte*/
 .card-container {
   perspective: 1000px;
@@ -100,5 +99,4 @@ export default {
   transform: rotateY(180deg); /*dreht die Rückseite der Karte um 180 Grad*/
   background: white;
 }
-
 </style>
