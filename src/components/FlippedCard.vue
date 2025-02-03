@@ -41,7 +41,8 @@ export default {
       console.log(this.cardId)
       console.log(store.containers[0])
 
-      if (store.numberOfFlippedCards === 0 || store.containers[store.currentSelectedContainer].some(card => card.id === this.cardId)) {
+      if (store.numberOfFlippedCards === 0 || store.selectedCategory !== 'Merge Sort'
+        || store.containers[store.currentSelectedContainer].some(card => card.id === this.cardId)) {
         if (store.numberOfFlippedCards < 2 && !this.isFlipped) {
           this.isFlipped = !this.isFlipped
           store.numberOfFlippedCards++
