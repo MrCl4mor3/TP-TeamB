@@ -53,7 +53,10 @@ function goToSortingPage() {
   generateCards(selectedCategory.value, selectedMode.value, numberOfCards.value, false)
   if (selectedCategory.value === 'Quick Sort') {
     router.push('/quickSortPage')
-  } else {
+  } else if (selectedCategory.value === 'Merge Sort') {
+    router.push('/mergeSortPage')
+  }
+  else {
     router.push('/sortingPage')
   }
 }

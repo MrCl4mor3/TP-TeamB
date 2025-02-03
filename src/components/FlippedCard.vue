@@ -27,18 +27,30 @@ export default {
       isFlipped: false,
     }
   },
+  props: {
+    cardId: {
+      type: [ Number],
+      required: true
+    }
+  },
   methods: {
     // Methode um die Karte zu drehen. Hier kann nur umgedreht werden wenn weniger als 2 Karten
     // umgedreht sind. Wenn die Karte schon umgedreht ist wird die Anzahl der umgedrehten karten
     // um eins reduziert.
     toggleFlip() {
-      if (store.numberOfFlippedCards < 2 && !this.isFlipped) {
-        this.isFlipped = !this.isFlipped
-        store.numberOfFlippedCards++
-      } else if (this.isFlipped) {
-        this.isFlipped = !this.isFlipped
-        store.numberOfFlippedCards--
+      console.log(this.cardId)
+      console.log(store.containers[0])
+
+      if (store.numberOfFlippedCards === 0 || store.containers[store.currentSelectedContainer].some(card => card.id === this.cardId)) {
+        if (store.numberOfFlippedCards < 2 && !this.isFlipped) {
+          this.isFlipped = !this.isFlipped
+          store.numberOfFlippedCards++
+        } else if (this.isFlipped) {
+          this.isFlipped = !this.isFlipped
+          store.numberOfFlippedCards--
+        }
       }
+
     },
   },
 }

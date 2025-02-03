@@ -103,6 +103,8 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards, tes
       }
 
       store.startingCards = store.cards.slice()
+      store.containers.push(store.startingCards)
+
       algorithmMap[store.selectedCategory](store.startingCards)
 
       if (testMode) {
