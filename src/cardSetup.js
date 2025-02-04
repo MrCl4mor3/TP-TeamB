@@ -38,10 +38,12 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards, tes
       let removedParts = []
 
       //Erstelle die Karten und speichere sie in cards ab
-      //Die letzte Karte wird nicht verändert
+      let svg = svgTemplate.cloneNode(true)
+      //Update die ID's in "card + i", zb card1.
+      let newSvg = updateSvgID(svg, 'card' + (numberOfCards - 1))
       cards[store.numberOfCards - 1] = {
-        id: store.numberOfCards - 1,
-        svg: svgTemplate.cloneNode(true),
+        id: store.numberOfCards,
+        svg: newSvg,
       }
 
       //Entfernen einzelner Komponenten
@@ -50,10 +52,10 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards, tes
         let oldCard = cards[i + 1]
         //Kopiere daraus das svg Element
         let oldSvg = oldCard.svg.cloneNode(true)
-        //Update die ID in "card + i", zb card1.
+        //Update die ID's in "card + i", zb card1.
         let newSvg = updateSvgID(oldSvg, 'card' + i)
 
-        //Entferne nun ein Path mit einer zufälligen Nummer, die id ist in der Form "card1-3" für den 3. Pfad
+        //Entferne nun ein Element mit einer zufälligen Nummer, die id ist in der Form "card1-3" für den 3. Pfad
         //Entferne nur Pfade, die noch nicht entfernt wurden
         while (true) {
           let randomID = getRandomInt(min, max)
@@ -67,6 +69,30 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards, tes
         }
       }
 
+      // Anzahl an Elemente, die noch möglich sind zu entfernen
+      const elementsLeft = max - store.numberOfCards
+      // Lösche weitere Elemente
+      for (let i = 0; i < elementsLeft; i++) {
+        // Wähle zufällig einer der Karten aus, um dort ein zusätzliches Element zu löschen.
+        // Bei -1 wird kein Element gelöscht
+        const removeIndexCards = getRandomInt(-1, numberOfCards - 1)
+
+        // Wähle zufällig eine ID, die gelöscht werden soll und noch nicht gelöscht wurde
+        let randomID
+        do {
+          randomID = getRandomInt(min, max)
+        } while (removedParts.includes(randomID))
+        removedParts.push(randomID)
+
+        // Das zu löschende Element muss nun in alle Karten bis zum removeIndex gelöscht werden
+        for (let j = 0; j <= removeIndexCards; j++) {
+          let oldSvg = cards[j].svg.cloneNode(true)
+          let newSvg = removePart(`card${j}-${randomID}`, oldSvg)
+          cards[j] = { id: j, svg: newSvg }
+          console.log(j)
+        }
+      }
+
       //Speicher die Karten im Store ab
       store.correctCards = cards.slice()
       store.cards = cards.slice()
@@ -77,6 +103,8 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards, tes
       }
 
       store.startingCards = store.cards.slice()
+      store.containers.push(store.startingCards)
+
       algorithmMap[store.selectedCategory](store.startingCards)
 
       if (testMode) {

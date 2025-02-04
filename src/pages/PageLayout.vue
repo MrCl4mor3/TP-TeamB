@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import Dialog from 'primevue/dialog'
+import Toast from 'primevue/toast'
 
 const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
 </script>
@@ -14,7 +15,10 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     </h1>
     <div class="button-container-meta">
       <ButtonPress label="?" @click="openTutorial"></ButtonPress>
-      <SplitButton icon="pi pi-refresh" :model="refreshButton" />
+      <ButtonPress
+        icon="pi pi-refresh"
+        @click="shuffel"
+      ></ButtonPress>
     </div>
   </header>
 
@@ -26,14 +30,13 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     <div class="dialog-content">
       <div v-html="formatDescription(store.selectedCategory)"></div>
     </div>
-    <div class="button-container">
-      <ButtonPress label="Schließen" icon="pi pi-times" @click="visibleTutorial = false" />
-    </div>
   </Dialog>
+
+  <Toast />
 
   <div>
     <!-- hier werden die Karten in den einzelnen Seiten hinzugefügt -->
-    <slot name="cards" :select-cards="SelectCard" :number-of-swaps="numberOfSwaps" />
+    <slot name="cards" :select-cards="SelectCard" :select-cards2="SelectCardQuick" />
   </div>
 
   <footer>
@@ -44,12 +47,13 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     <!-- hier werden die zusätzlichen Knöpfe hinzugefügt -->
     <div class="button-container">
       <slot name="extraButtons" :swap-cards="SwapCards" />
-      <ButtonPress label="richtig sortiert?" @click="checkIfCorrect" />
+      <ButtonPress label="fertig sortiert" @click="checkIfCorrect" />
     </div>
   </footer>
 </template>
 
 <script>
+import { useToast} from "primevue/usetoast"
 import algorithmDescription from '@/descriptions/algorithmDescriptions.json'
 import errorMessages from '@/descriptions/ErrorMessages.json'
 import { store } from '@/store.js'
@@ -68,17 +72,8 @@ export default {
   },
   data() {
     return {
+      toast: null,
       visibleTutorial: false,
-      refreshButton: [
-        {
-          label: 'Mische neu',
-          command: () => this.shuffel(),
-        },
-        {
-          label: 'Starte neu',
-          command: () => this.startOver(),
-        },
-      ],
       numberOfSwaps: 0,
       selectedCards: [],
       descriptionToAlgorithm: {
@@ -91,6 +86,11 @@ export default {
       },
     }
   },
+
+  mounted() {
+    this.toast = useToast()
+  },
+
   methods: {
     openTutorial() {
       this.visibleTutorial = true
@@ -98,7 +98,7 @@ export default {
     SwapCards() {
       let canSort = true
 
-      if (store.selectedMode === 'Vorgegebenes Sortieren') {
+      if (store.selectedMode === 'Vorgegebenes Sortieren' && store.selectedCategory !== 'Merge Sort') {
         canSort = !!(
           store.correctSortingOrder[this.numberOfSwaps].includes(store.selectedCards[0]) &&
           store.correctSortingOrder[this.numberOfSwaps].includes(store.selectedCards[1])
@@ -111,45 +111,72 @@ export default {
         store.cards[secondIndex] = temp
         this.numberOfSwaps++
       } else {
-        alert(errorMessages['wrongAlgorithmStep'])
+        this.toast.add({ severity: 'error', summary: 'Fehler', detail: errorMessages['wrongAlgorithmStep'] })
       }
     },
     SelectCard(index) {
       if (store.selectedCards.includes(index)) {
         store.selectedCards = store.selectedCards.filter((card) => card !== index)
       } else if (store.selectedCards.length < 2) {
-        store.selectedCards.push(index)
-        store.score++
+        store.selectedCards.push(index);
+        store.score++;
+      }
+    },
+
+    //für Quicksort, es werden Pivotelement erkannt und anders behandelt
+    SelectCardQuick(index) {
+      if (store.pivotIndices.includes(index) || store.pivotElementIndex === index) {
+        alert("pivotelement");
+        document.getElementsByClassName('card-container')[index].__vueParentComponent.ctx.toggleFlip();
+      } else {
+        if (store.selectedCards.includes(index)) {
+          store.selectedCards = store.selectedCards.filter((card) => card !== index);
+        } else if (store.selectedCards.length < 2) {
+          if (index === store.lookingIndex) {
+            store.selectedCards.push(index);
+            store.score++;
+          } else {
+            alert("Flasche Karte");
+            document.getElementsByClassName('card-container')[index].__vueParentComponent.ctx.toggleFlip();
+          }
+        }
       }
     },
     startOver() {
       if (store.selectedCards.length === 0) {
         store.cards = store.startingCards.slice()
         store.score = 0
+        this.toast.add({ severity: 'success', summary: 'Spiel wurde zurückgesetzt' })
       } else {
-        alert(errorMessages['restartError'])
+        this.toast.add({ severity: 'error', summary: 'Fehler', detail: 'Kann nicht zurücksetzen, während Karten ausgewählt sind' })
       }
     },
+
     shuffel() {
       if (store.selectedCards.length === 0) {
         store.cards = store.cards.sort(() => Math.random() - 0.5)
         store.startingCards = store.cards.slice()
         store.score = 0
+        this.toast.add({ severity: 'success', summary: 'Karten wurden gemischt' })
       } else {
-        alert(errorMessages['shuffleError'])
+        this.toast.add({ severity: 'error', summary: 'Fehler', detail: 'Kann nicht mischen, während Karten ausgewählt sind' })
       }
     },
+
     checkIfCorrect() {
-      if (store.cards.every((card, index) => card.id === store.correctCards[index].id)) {
+      if (store.cards.every((card, index) => card.id === store.correctCards[index].id)
+        || store.containers[0].every((card, index) => card.id === store.correctCards[index].id)) {
         this.$router.push('/finishPage')
       } else {
-        alert(errorMessages['wrongOrder'])
+        this.toast.add({ severity: 'error', summary: 'Fehler', detail: 'Die Karten sind noch nicht korrekt sortiert' })
       }
     },
+
     goToHomePage() {
       this.$router.push('/')
       store.selectedCards = []
     },
+
 
     formatDescription(category) {
       // Überprüfe, ob der Mode "Freies Sortieren" ist
