@@ -1,21 +1,12 @@
 <script setup>
 import { ref } from 'vue'
 import Dialog from 'primevue/dialog'
-import { useToast } from "primevue/usetoast";
-import Toast from "primevue/toast";
-
-const toast = useToast();
-
-const showToast = () => {
-  console.log('Toast wurde angezeigt');
-  toast.add({ severity: 'success', summary: 'Erfolg', detail: 'Toast wurde angezeigt', life: 3000 });
-}
+import Toast from 'primevue/toast'
 
 const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
 </script>
 
 <template>
-
   <header>
     <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage" />
     <h1>
@@ -24,7 +15,10 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     </h1>
     <div class="button-container-meta">
       <ButtonPress label="?" @click="openTutorial"></ButtonPress>
-      <ButtonPress icon="pi pi-refresh" @click="showToast(); shuffel()"></ButtonPress>
+      <ButtonPress
+        icon="pi pi-refresh"
+        @click="shuffel"
+      ></ButtonPress>
     </div>
   </header>
 
@@ -38,13 +32,11 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     </div>
   </Dialog>
 
-  <Toast/>
+  <Toast />
 
   <div>
     <!-- hier werden die Karten in den einzelnen Seiten hinzugefügt -->
-    <slot name="cards"
-          :select-cards="SelectCard"
-          :select-cards2="SelectCardQuick"/>
+    <slot name="cards" :select-cards="SelectCard" :select-cards2="SelectCardQuick" />
   </div>
 
   <footer>
@@ -61,6 +53,7 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
 </template>
 
 <script>
+import { useToast} from "primevue/usetoast"
 import algorithmDescription from '@/descriptions/algorithmDescriptions.json'
 import errorMessages from '@/descriptions/ErrorMessages.json'
 import { store } from '@/store.js'
@@ -79,6 +72,7 @@ export default {
   },
   data() {
     return {
+      toast: null,
       visibleTutorial: false,
       numberOfSwaps: 0,
       selectedCards: [],
@@ -92,6 +86,11 @@ export default {
       },
     }
   },
+
+  mounted() {
+    this.toast = useToast()
+  },
+
   methods: {
     openTutorial() {
       this.visibleTutorial = true
@@ -112,7 +111,7 @@ export default {
         store.cards[secondIndex] = temp
         this.numberOfSwaps++
       } else {
-        alert(errorMessages['wrongAlgorithmStep'])
+        this.toast.add({ severity: 'error', summary: 'Fehler', detail: errorMessages['wrongAlgorithmStep'] })
       }
     },
     SelectCard(index) {
@@ -123,6 +122,7 @@ export default {
         store.score++;
       }
     },
+
     //für Quicksort, es werden Pivotelement erkannt und anders behandelt
     SelectCardQuick(index) {
       if (store.pivotIndices.includes(index) || store.pivotElementIndex === index) {
@@ -146,31 +146,37 @@ export default {
       if (store.selectedCards.length === 0) {
         store.cards = store.startingCards.slice()
         store.score = 0
+        this.toast.add({ severity: 'success', summary: 'Spiel wurde zurückgesetzt' })
       } else {
-        alert(errorMessages['restartError'])
+        this.toast.add({ severity: 'error', summary: 'Fehler', detail: 'Kann nicht zurücksetzen, während Karten ausgewählt sind' })
       }
     },
+
     shuffel() {
       if (store.selectedCards.length === 0) {
         store.cards = store.cards.sort(() => Math.random() - 0.5)
         store.startingCards = store.cards.slice()
         store.score = 0
+        this.toast.add({ severity: 'success', summary: 'Karten wurden gemischt' })
       } else {
-        alert(errorMessages['shuffleError'])
+        this.toast.add({ severity: 'error', summary: 'Fehler', detail: 'Kann nicht mischen, während Karten ausgewählt sind' })
       }
     },
+
     checkIfCorrect() {
       if (store.cards.every((card, index) => card.id === store.correctCards[index].id)
         || store.containers[0].every((card, index) => card.id === store.correctCards[index].id)) {
         this.$router.push('/finishPage')
       } else {
-        alert(errorMessages['wrongOrder'])
+        this.toast.add({ severity: 'error', summary: 'Fehler', detail: 'Die Karten sind noch nicht korrekt sortiert' })
       }
     },
+
     goToHomePage() {
       this.$router.push('/')
       store.selectedCards = []
     },
+
 
     formatDescription(category) {
       // Überprüfe, ob der Mode "Freies Sortieren" ist
