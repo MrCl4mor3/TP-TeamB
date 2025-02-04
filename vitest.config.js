@@ -10,7 +10,9 @@ export default mergeConfig(
       exclude: [...configDefaults.exclude, 'e2e/**'],
       root: fileURLToPath(new URL('./', import.meta.url)),
       coverage: {
+        provider: 'istanbul',
         reporter: ['text', 'json', 'html'],
+        reportsDirectory: "dist/SortLab/coverage",  // Setzt das Coverage-Verzeichnis auf den richtigen Pfad
       },
     },
   }),
