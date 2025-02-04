@@ -54,10 +54,10 @@ export default {
     },
 
     colourchange(){
-      if (this.colour === 'blue') {
+      if (this.colour === 'grey') {
         this.colout = '#10b981';
       } else {
-        this.colour = 'blue';
+        this.colour = 'grey';
       }
     },
   },

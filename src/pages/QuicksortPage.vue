@@ -1,19 +1,20 @@
 <script setup></script>
 
 <template>
-  <StandardLayout
-    :store="store"
-    :isExpanded="isExpanded"
-  >
+  <StandardLayout :store="store" :isExpanded="isExpanded">
     <template #cards="{ selectCards2 }">
       <!-- übergibt die benötigten Methoden und variablen -->
       <div>
         <div class="card-grid">
-          <div v-for="(card, index) in store.cards" :key="card.id" ref="cardlist" class="card-and-line">
-            <FlippedCard @click="selectCards2(index)"  :card-id="card.id" ref="singlecard">
+          <div
+            v-for="(card, index) in store.cards"
+            :key="card.id"
+            ref="cardlist"
+            class="card-and-line"
+          >
+            <FlippedCard @click="selectCards2(index)" :card-id="card.id" ref="singlecard">
               <template #front>
-                <div class="frontsite">
-                </div>
+                <div class="frontsite"></div>
               </template>
               <template #back>
                 <div class="backsite">
@@ -38,7 +39,7 @@
         </div>
       </div>
     </template>
-    <template #extraButtons="{ }">
+    <template #extraButtons="{}">
       <ButtonPress label="kleiner" icon="pi pi-arrow-left" @click="moveToSmaller" />
       <ButtonPress label="größer" icon="pi pi-arrow-right" @click="moveToBigger" />
       <ButtonPress label="Pivotelement" @click="selectPivot" />
@@ -67,7 +68,7 @@ export default {
       biggerCards: 0,
       smallerCards: 0,
       trueCardRef: [],
-      startigCardIds: []
+      startigCardIds: [],
     }
   },
   methods: {
@@ -94,8 +95,8 @@ export default {
           alert("UhOh only 1 Card exists, that should never happen");
         }
         //erstes Pivotelement wird aufgedeckt und umrandet
-        document.getElementsByClassName('card-container')[0].__vueParentComponent.ctx.toggleFlip();
-        this.$refs.cardlist[this.trueCardRef[0]].firstChild.firstChild.style.border = '2px solid blue';
+        this.startigCardIds[0].toggleFlip();
+        this.$refs.cardlist[this.trueCardRef[0]].firstChild.firstChild.style.border = '2px solid green';
         store.selectedCards.push(0);
         store.score++;
       } else {
@@ -104,10 +105,11 @@ export default {
           //Nicht das erste mal gedrückt, also muss das alte Pivotelement als fertig sortiert gespeichert werden
           store.pivotIndices.push(store.pivotElementIndex);
           this.startigCardIds[this.trueCardRef[store.pivotElementIndex]].colourchange();
+          this.$refs.cardlist[this.trueCardRef[store.pivotElementIndex]].firstChild.firstChild.style.border = null;
           //alle Karten werden zugedeckt
           for (let i = 0; i < store.cards.length; i++) {
             if (store.selectedCards.includes(i)){
-              document.getElementsByClassName('card-container')[i].__vueParentComponent.ctx.toggleFlip();
+              this.startigCardIds[this.trueCardRef[i]].toggleFlip();
             }
           }
           store.selectedCards.splice(0);
@@ -136,8 +138,8 @@ export default {
               store.pivotElementIndex = store.lookingIndex;
 
               //neues Pivot wird makiert
-              document.getElementsByClassName('card-container')[store.pivotElementIndex].__vueParentComponent.ctx.toggleFlip();
-              this.$refs.cardlist[this.trueCardRef[store.pivotElementIndex]].firstChild.firstChild.style.border = '2px solid blue';
+              this.startigCardIds[this.trueCardRef[store.pivotElementIndex]].toggleFlip();
+              this.$refs.cardlist[this.trueCardRef[store.pivotElementIndex]].firstChild.firstChild.style.border = '2px solid green';
               store.selectedCards.push(store.pivotElementIndex);
 
               this.numberOfSwaps = store.lookingIndex;
@@ -171,7 +173,7 @@ export default {
           this.trueCardRef[store.pivotElementIndex] = tempref;
 
           //automatisches Zudecken der Karte
-          document.getElementsByClassName('card-container')[swapid].__vueParentComponent.ctx.toggleFlip();
+          this.startigCardIds[this.trueCardRef[store.pivotElementIndex]].toggleFlip();
           store.selectedCards = store.selectedCards.filter((card) => card !== store.pivotElementIndex);
 
           store.pivotElementIndex = swapid;
@@ -210,7 +212,7 @@ export default {
         if (store.selectedCards.length === 2) {
           this.biggerCards++;
           //automatisches Zudecken der Karte
-          document.getElementsByClassName('card-container')[store.lookingIndex].__vueParentComponent.ctx.toggleFlip();
+          this.startigCardIds[this.trueCardRef[store.lookingIndex]].toggleFlip();
           store.selectedCards = store.selectedCards.filter((card) => card !== store.lookingIndex);
 
           store.lookingIndex++;
