@@ -111,7 +111,7 @@ export default {
         store.cards[secondIndex] = temp
         this.numberOfSwaps++
       } else {
-        alert(errorMessages['wrongAlgorithmStep'])
+        this.toast.add({ severity: 'error', summary: 'Fehler', detail: errorMessages['wrongAlgorithmStep'] })
       }
     },
     SelectCard(index) {
@@ -122,6 +122,7 @@ export default {
         store.score++;
       }
     },
+
     //für Quicksort, es werden Pivotelement erkannt und anders behandelt
     SelectCardQuick(index) {
       if (store.pivotIndices.includes(index) || store.pivotElementIndex === index) {
@@ -145,10 +146,12 @@ export default {
       if (store.selectedCards.length === 0) {
         store.cards = store.startingCards.slice()
         store.score = 0
+        this.toast.add({ severity: 'success', summary: 'Spiel wurde zurückgesetzt' })
       } else {
-        alert(errorMessages['restartError'])
+        this.toast.add({ severity: 'error', summary: 'Fehler', detail: 'Kann nicht zurücksetzen, während Karten ausgewählt sind' })
       }
     },
+
     shuffel() {
       if (store.selectedCards.length === 0) {
         store.cards = store.cards.sort(() => Math.random() - 0.5)
@@ -159,19 +162,21 @@ export default {
         this.toast.add({ severity: 'error', summary: 'Fehler', detail: 'Kann nicht mischen, während Karten ausgewählt sind' })
       }
     },
+
     checkIfCorrect() {
       if (store.cards.every((card, index) => card.id === store.correctCards[index].id)
         || store.containers[0].every((card, index) => card.id === store.correctCards[index].id)) {
-        this.toast.add({ severity: 'success', summary: 'Korrekt', detail: 'Die Karten sind korrekt sortiert' })
         this.$router.push('/finishPage')
       } else {
         this.toast.add({ severity: 'error', summary: 'Fehler', detail: 'Die Karten sind noch nicht korrekt sortiert' })
       }
     },
+
     goToHomePage() {
       this.$router.push('/')
       store.selectedCards = []
     },
+
 
     formatDescription(category) {
       // Überprüfe, ob der Mode "Freies Sortieren" ist
