@@ -1,9 +1,7 @@
 <script setup>
-
 import DividingLine from '@/components/DividingLine.vue'
 
 import { ref } from 'vue'
-
 
 const draggedIndex = ref(null)
 
@@ -12,16 +10,15 @@ function dragStart(index) {
 }
 
 function drop(targetIndex) {
-  if(store.numberOfFlippedCards === 0) {
-  if (draggedIndex.value !== null && draggedIndex.value !== targetIndex) {
-    const draggedContainer = store.containers[draggedIndex.value]
-    store.containers[targetIndex] = [...store.containers[targetIndex], ...draggedContainer]
-    store.containers.splice(draggedIndex.value, 1)
-    draggedIndex.value = null
-  }
-
+  if (store.numberOfFlippedCards === 0) {
+    if (draggedIndex.value !== null && draggedIndex.value !== targetIndex) {
+      const draggedContainer = store.containers[draggedIndex.value]
+      store.containers[targetIndex] = [...store.containers[targetIndex], ...draggedContainer]
+      store.containers.splice(draggedIndex.value, 1)
+      draggedIndex.value = null
+    }
   } else {
-    alert("Karten müssen umgedreht sein")
+    alert('Karten müssen umgedreht sein')
   }
 }
 </script>
@@ -30,31 +27,49 @@ function drop(targetIndex) {
   <StandardLayout :store="store" :isExpanded="isExpanded">
     <template #cards>
       <!-- übergibt die benötigten Methoden und variablen -->
-        <div class="grid-grids">
-          <div v-for="(container, containerIndex) in store.containers" :key="containerIndex" class="container-and-line"
-               draggable="true"
-               @dragstart="dragStart(containerIndex)"
-               @dragover.prevent
-               @drop="drop(containerIndex)">
-            <div class="card-grid">
-              <div v-for="(card, index) in container" :key="card.id" class="card-and-line">
-            <FlippedCard :card-id="card.id"
-                         :ref="'flippedCard'"
-                         @click="selectCardsInContainer(containerIndex, index)">
-              <template #front>
-                <div class="frontsite">
-                  <h1>{{ card.id}}</h1>
-                </div>
-              </template>
-              <template #back>
-                <div class="backsite">
-                  <div v-html="card.svg.outerHTML"></div>
-                </div>
-              </template>
-            </FlippedCard>
-            <DividingLine v-if="index < container.length - 1" @click="selectLine(containerIndex, index)" />
+      <div class="grid-grids">
+        <div
+          v-for="(container, containerIndex) in store.containers"
+          :key="containerIndex"
+          class="container-and-line"
+          draggable="true"
+          @dragstart="
+            dragStart(containerIndex);
+            dragging(containerIndex)
+          "
+          @dragover.prevent
+          @drop="
+            drop(containerIndex);
+            dividingMark(containerIndex)
+          "
+        >
+          <div class="card-grid">
+            <div v-for="(card, index) in container" :key="card.id" class="card-and-line">
+              <FlippedCard
+                :card-id="card.id"
+                :ref="'flippedCard'"
+                @click="selectCardsInContainer(containerIndex, index)"
+              >
+                <template #front>
+                  <div class="frontsite">
+                    <h1>{{ card.id }}</h1>
+                  </div>
+                </template>
+                <template #back>
+                  <div class="backsite">
+                    <div v-html="card.svg.outerHTML"></div>
+                  </div>
+                </template>
+              </FlippedCard>
+              <DividingLine
+                :container-index=containerIndex
+                :line-index=index
+                v-if="index < container.length - 1"
+                @click="selectALine(containerIndex, index)"
+                ref="linie"
+              />
+            </div>
           </div>
-        </div>
         </div>
       </div>
     </template>
@@ -83,9 +98,11 @@ export default {
       linePositionCard: null,
       selectedContainerIndex: null,
       selectedCards: [],
+      draggedContainersize: 0,
     }
   },
   methods: {
+    //Kartenaufdecken, mit check das nur Karten aus einem Container aufgedeckt werden dürfen
     selectCardsInContainer(containerIndex,cardIndex) {
       if(this.selectedCards.length === 0) {
         store.currentSelectedContainer = containerIndex
@@ -93,7 +110,7 @@ export default {
       if(store.currentSelectedContainer === null || store.currentSelectedContainer === containerIndex) {
         store.currentSelectedContainer = containerIndex
         if (this.selectedCards.includes(cardIndex)) {
-          this.selectedCards = this.selectedCards.filter((card) => card !== cardIndex)  //ncoh entfernen des container index hinzufügen
+          this.selectedCards = this.selectedCards.filter((card) => card !== cardIndex)  //nach entfernen des container index hinzufügen
         } else if (this.selectedCards.length < 2) {
           this.selectedCards.push(cardIndex)
           store.score++
@@ -104,6 +121,7 @@ export default {
         alert("falscher Container")
       }
     },
+    //TODO canSort? sicher das diese methode voll funktionsfähig ist?
     canSwapInContainer() {
       const canSort = true
 
@@ -119,7 +137,22 @@ export default {
       }
 
     },
-    selectLine(containerIndex, index) {
+    //die Länge des gezogenen Containers muss gespeichert werden
+    dragging(draggedContainer) {
+      this.draggedContainersize = store.containers[draggedContainer].length;
+    },
+    //hier wird die Position der Linie gespeichert, die genau da ist wo die zwei fusionierten Container aufeinader treffen
+    dividingMark(targetContainer) {
+      //reset um von allen anderen Linien die Markierung wegzumachen
+      store.dividingLinePosition = -1;
+      store.dividingContainerPosition = -1;
+      store.dividingLinePosition = store.containers[targetContainer].length-this.draggedContainersize-1;
+      store.dividingContainerPosition = targetContainer;
+      alert("container pos:"+targetContainer + " -- line pos:"+store.dividingLinePosition);
+
+    },
+    //Auswählen der Linie, festhalten der Position für den split
+    selectALine(containerIndex, index) {
       if(store.selectedLines !== 0) {
         this.linePositionContainer = containerIndex
         this.linePositionCard = index
@@ -128,6 +161,7 @@ export default {
         this.linePositionCard = null
       }
     },
+    //Splittet den Container an der gemerkten Position
     splitContainer() {
       const containerToSplit = store.containers[this.linePositionContainer]
 
@@ -136,8 +170,9 @@ export default {
 
       store.containers.splice(this.linePositionContainer, 1, firstHalf, secondHalf)
       store.selectedLines = 0;
-      this.flipAllCards()
+      this.flipAllCards();
     },
+    //dreht alle Karten um
     flipAllCards() {
       const allCards = this.$refs.flippedCard;
 
@@ -157,7 +192,7 @@ export default {
 </script>
 <style scoped>
 .card-grid {
-  display: flex;
+  display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   justify-items: center;
   font-family: Arial, sans-serif;
@@ -179,4 +214,3 @@ export default {
   justify-content: center;
 }
 </style>
-

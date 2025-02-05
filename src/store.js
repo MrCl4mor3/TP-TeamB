@@ -19,6 +19,8 @@ function getDefaultStore() {
     selectedLines: 0,
     containers: [],
     currentSelectedContainer: null,
+    dividingContainerPosition: -1,
+    dividingLinePosition: -1,
   }
 }
 
