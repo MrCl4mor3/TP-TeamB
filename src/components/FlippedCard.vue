@@ -25,6 +25,7 @@ export default {
     //variablen die in der Komponente verwendet werden
     return {
       isFlipped: false,
+      colour: '#10b981',
     }
   },
   props: {
@@ -50,6 +51,14 @@ export default {
         }
       }
 
+    },
+
+    colourchange(){
+      if (this.colour === 'grey') {
+        this.colout = '#10b981';
+      } else {
+        this.colour = 'grey';
+      }
     },
   },
 }
@@ -89,7 +98,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #10b981;
+  background: v-bind(colour);
   border: 2px solid black;
   border-radius: 12px;
   overflow: hidden;
