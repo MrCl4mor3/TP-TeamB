@@ -3,6 +3,10 @@
   padding: 0;
   box-sizing: border-box;
 }
+body {
+    font-family: Arial, sans-serif;
+}
+
 
 header {
   padding: 25px 10px;
@@ -40,18 +44,15 @@ footer {
 
 h1 {
   margin: 0;
-  font-family: Arial, sans-serif;
   color: #10b981;
 }
 h2 {
-  font-family: Arial, sans-serif;
   color: #10b981;
 }
 .button-container {
   display: flex;
   gap: 10px;
   text-align: center;
-  font-family: Arial, sans-serif;
   justify-content: center;
   margin: 10px;
 }
@@ -59,7 +60,6 @@ h2 {
 .button-container-meta {
   display: flex;
   gap: 10px;
-  font-family: Arial, sans-serif;
 }
 /*Hier wird definiert wie die Karten angeordnet werden sollen*/
 .card-grid {
@@ -67,5 +67,4 @@ h2 {
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 16px;
   justify-items: center;
-  font-family: Arial, sans-serif;
 }
