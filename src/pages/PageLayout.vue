@@ -184,6 +184,7 @@ export default {
       if (store.selectedCards.length === 0) {
         store.cards = store.startingCards.slice()
         store.score = 0
+        this.visibleEndScreen = false;
         this.toast.add({ severity: 'success', summary: 'Spiel wurde zurückgesetzt' })
       } else {
         this.toast.add({ severity: 'error', summary: 'Fehler', detail: 'Kann nicht zurücksetzen, während Karten ausgewählt sind' })
@@ -195,6 +196,7 @@ export default {
         store.cards = store.cards.sort(() => Math.random() - 0.5)
         store.startingCards = store.cards.slice()
         store.score = 0
+        this.visibleEndScreen = false;
         this.toast.add({ severity: 'success', summary: 'Karten wurden gemischt' })
       } else {
         this.toast.add({ severity: 'error', summary: 'Fehler', detail: 'Kann nicht mischen, während Karten ausgewählt sind' })
