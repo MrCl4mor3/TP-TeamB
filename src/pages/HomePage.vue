@@ -87,84 +87,93 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
+  <!-- Überschrift -->
   <header>
     <h1>{{ description.headline }}</h1>
   </header>
 
-  <!-- Beschreibung des Spiels -->
-  <div class="description-container">
-    <details>
-      <summary>{{ description.instructionHeader }}</summary>
-      <p>{{ description.instructions }}</p>
-    </details>
-  </div>
+  <div class="content">
 
-  <!-- Flexbox für die Auswahl von Algorithmen und Modi -->
-  <div class="modi-algo-container">
-    <!-- Auswahl des Modus -->
-    <fieldset class="radio-box">
-      <legend>{{ description.selectMode }}</legend>
-      <div class="radio-group-modes">
-        <div v-for="category in modes" :key="category.key" class="flex items-center gap-2">
-          <input
-            type="radio"
-            :id="category.key"
-            v-model="selectedMode"
-            name="mode"
-            :value="category.name"
-          />
-          <label :for="category.key" class="radio-label">{{ category.name }}</label>
+    <!-- Beschreibung des Spiels -->
+    <div class="description-container">
+      <details>
+        <summary>{{ description.instructionHeader }}</summary>
+        <p>{{ description.instructions }}</p>
+      </details>
+    </div>
+
+    <!-- Flexbox für die Auswahl von Algorithmen und Modi -->
+    <div class="modi-algo-container">
+      <!-- Auswahl des Modus -->
+      <fieldset class="radio-box">
+        <legend>{{ description.selectMode }}</legend>
+        <div class="radio-group-modes">
+          <div v-for="category in modes" :key="category.key" class="flex items-center gap-2">
+            <input
+              type="radio"
+              :id="category.key"
+              v-model="selectedMode"
+              name="mode"
+              :value="category.name"
+            />
+            <label :for="category.key" class="radio-label">{{ category.name }}</label>
+          </div>
         </div>
-      </div>
-    </fieldset>
+      </fieldset>
 
-    <!-- Auswahl des Algorithmus -->
-    <fieldset class="radio-box">
-      <legend :class="{ 'disabled-text': selectedMode === 'Freies Sortieren' }">
-        {{ description.selectAlgorithm }}
-      </legend>
-      <div class="radio-group-algorithms">
-        <div
-          v-for="category in algorithms"
-          :key="category.key"
-          class="flex items-center gap-2"
-          :class="{ 'disabled-text': selectedMode === 'Freies Sortieren' }"
-        >
-          <input
-            type="radio"
-            :id="category.key"
-            v-model="selectedCategory"
-            name="category"
-            :value="category.name"
-            :disabled="selectedMode === 'Freies Sortieren'"
-          />
-          <label :for="category.key" class="radio-label">
-            {{ category.name }}
-            <span v-if="selectedMode === 'Freies Sortieren'" class="tooltip">
-              {{ description.wrongMode }}
-            </span>
-          </label>
+      <!-- Auswahl des Algorithmus -->
+      <fieldset class="radio-box">
+        <legend :class="{ 'disabled-text': selectedMode === 'Freies Sortieren' }">
+          {{ description.selectAlgorithm }}
+        </legend>
+        <div class="radio-group-algorithms">
+          <div
+            v-for="category in algorithms"
+            :key="category.key"
+            class="flex items-center gap-2"
+            :class="{ 'disabled-text': selectedMode === 'Freies Sortieren' }"
+          >
+            <input
+              type="radio"
+              :id="category.key"
+              v-model="selectedCategory"
+              name="category"
+              :value="category.name"
+              :disabled="selectedMode === 'Freies Sortieren'"
+            />
+            <label :for="category.key" class="radio-label">
+              {{ category.name }}
+              <span v-if="selectedMode === 'Freies Sortieren'" class="tooltip">
+                {{ description.wrongMode }}
+              </span>
+            </label>
+          </div>
         </div>
-      </div>
-    </fieldset>
+      </fieldset>
+    </div>
+
+    <!-- Auswahl der Anzahl der Karten -->
+    <div class="NumberSelect">
+      <label for="AnzahlKarten">{{ description.selectNumber }}</label>
+      <InputNumber
+        v-model="slideNumber"
+        inputId="AnzahlKarten"
+        showButtons
+        :min="startConfig.minNumberOfCards"
+        :max="startConfig.maxNumberOfCards"
+      />
+      <Slider v-model="slideNumber" class="slider" :min="4" :max="20" />
+    </div>
+
+    <!-- Start-Button -->
+    <div class="start-container">
+      <ButtonPress label="Start" @click="goToSortingPage" />
+    </div>
+
+
   </div>
 
-  <!-- Auswahl der Anzahl der Karten -->
-  <div class="NumberSelect">
-    <label for="AnzahlKarten">{{ description.selectNumber }}</label>
-    <InputNumber
-      v-model="slideNumber"
-      inputId="AnzahlKarten"
-      showButtons
-      :min="startConfig.minNumberOfCards"
-      :max="startConfig.maxNumberOfCards"
-    />
-    <Slider v-model="slideNumber" class="slider" :min="4" :max="20" />
-  </div>
-  <div class="start-container">
-    <ButtonPress label="Start" @click="goToSortingPage" />
-  </div>
-
+  <!-- Fußzeile -->
   <footer>
     <p>{{ description.impressum }}</p>
   </footer>
@@ -188,6 +197,7 @@ h1 {
   margin-bottom: 20px;
   font-family: Arial, sans-serif;
   font-size: 20px;
+  width: 100%;
 }
 
 .modi-algo-container {
@@ -195,6 +205,7 @@ h1 {
   justify-content: center; /* Zentriert die Boxen */
   gap: 1px; /* Abstand zwischen den Boxen */
   font-family: Arial, sans-serif;
+  width: 100%;
 }
 
 .radio-box {
