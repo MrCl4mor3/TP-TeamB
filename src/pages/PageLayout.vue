@@ -3,7 +3,10 @@ import { ref } from 'vue'
 import Dialog from 'primevue/dialog'
 import Toast from 'primevue/toast'
 
+
+
 const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
+
 </script>
 
 <template>
@@ -32,6 +35,27 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     </div>
   </Dialog>
 
+  <Dialog
+    v-model:visible="visibleEndScreen"
+    :header="'Bravo- Die Karten sind richtig sortiert!'"
+    class="dialog">
+    <div class="dialog-content">
+      <div>
+        <p>Score: {{ store.score }}</p>
+        <p>BubbleSort: {{ bubbleSortResult }}</p>
+        <p>SelectionSort: {{ selectionSortResult }}</p>
+        <p>InsertionSort: {{ insertionSortResult }}</p>
+        <p>QuickSort: {{ quickSortResult }}</p>
+        <p>MergeSort: {{ mergeSortResult }}</p>
+      </div>
+      <div class="button-container">
+        <ButtonPress icon="pi pi-home" @click="goToHomePage" />
+        <ButtonPress label="Neustart" @click="startOver" />
+        <ButtonPress label="Neu mischen" @click="shuffel" />
+      </div>
+    </div>
+  </Dialog>
+
   <Toast />
 
   <div>
@@ -57,6 +81,13 @@ import { useToast} from "primevue/usetoast"
 import algorithmDescription from '@/descriptions/algorithmDescriptions.json'
 import errorMessages from '@/descriptions/ErrorMessages.json'
 import { store } from '@/store.js'
+import {
+  bubbleSortWithScore,
+  insertionSortWithScore,
+  mergeSortWithScore,
+  quickSortWithScore,
+  selectionSortWithScore
+} from "@/algorithms.js";
 
 export default {
   name: 'StandardLayout',
@@ -72,8 +103,15 @@ export default {
   },
   data() {
     return {
+
+      bubbleSortResult: bubbleSortWithScore(store.startingCards),
+      selectionSortResult: selectionSortWithScore(store.startingCards),
+      insertionSortResult: insertionSortWithScore(store.startingCards),
+      quickSortResult: quickSortWithScore(store.startingCards),
+      mergeSortResult: mergeSortWithScore(store.startingCards),
       toast: null,
       visibleTutorial: false,
+      visibleEndScreen: false,
       numberOfSwaps: 0,
       selectedCards: [],
       descriptionToAlgorithm: {
@@ -166,7 +204,7 @@ export default {
     checkIfCorrect() {
       if (store.cards.every((card, index) => card.id === store.correctCards[index].id)
         || store.containers[0].every((card, index) => card.id === store.correctCards[index].id)) {
-        this.$router.push('/finishPage')
+        this.visibleEndScreen = true
       } else {
         this.toast.add({ severity: 'error', summary: 'Fehler', detail: 'Die Karten sind noch nicht korrekt sortiert' })
       }
@@ -208,6 +246,8 @@ export default {
 }
 
 .dialog-content {
+  display: flex;
+  flex-direction: column;
   padding: 1rem;
   font-size: 1.2em;
   line-height: 1.6;
