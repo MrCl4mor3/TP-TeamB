@@ -83,6 +83,7 @@ import { useToast} from "primevue/usetoast"
 import algorithmDescription from '@/descriptions/algorithmDescriptions.json'
 import errorMessages from '@/descriptions/ErrorMessages.json'
 import { store } from '@/store.js'
+import { resetStartValues } from "@/store.js";
 import {
   bubbleSortWithScore,
   insertionSortWithScore,
@@ -186,19 +187,17 @@ export default {
     },
 
     startOver() {
-      this.closeAllCards()
+      this.prepareReset()
       store.cards = store.startingCards.slice()
-      store.score = 0
       this.visibleEndScreen = false;
       this.toast.add({ severity: 'success', summary: 'Spiel wurde zurückgesetzt', life: 3000 })
     },
 
     shuffel() {
-      this.closeAllCards()
+      this.prepareReset()
 
       store.cards = store.cards.sort(() => Math.random() - 0.5)
       store.startingCards = store.cards.slice()
-      store.score = 0
 
       this.visibleEndScreen = false;
       this.toast.add({ severity: 'success', summary: 'Karten wurden gemischt', life: 3000 })
@@ -229,12 +228,11 @@ export default {
       })
     },
     //Alle Karten werden zugedeckt
-    closeAllCards() {
+    prepareReset() {
       store.cards.forEach((card, index) => {
           document.getElementsByClassName('card-container')[index].__vueParentComponent.ctx.closeCard()
       })
-      store.numberOfFlippedCards = 0
-      store.selectedCards = []
+      resetStartValues()
     },
 
     goToHomePage() {
