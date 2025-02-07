@@ -195,7 +195,6 @@ export default {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   justify-items: center;
-  font-family: Arial, sans-serif;
   border: 4px solid mediumvioletred; /* Fügt eine weiße Umrandung hinzu */
   padding: 10px; /* Abstand zwischen Inhalt und Rahmen */
   margin-bottom: 20px; /* Abstand zwischen einzelnen Grids */
