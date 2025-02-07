@@ -32,7 +32,7 @@ export function resetStore() {
 }
 
 export function resetStartValues() {
-  store.numberOfFlippedCards = 0
-  store.score = 0
-  store.selectedCards = []
+  store.numberOfFlippedCards = getDefaultStore().numberOfFlippedCards
+  store.score = getDefaultStore().score
+  store.selectedCards = getDefaultStore().selectedCards
 }
