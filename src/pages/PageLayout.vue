@@ -186,10 +186,11 @@ export default {
     },
 
     startOver() {
-        store.cards = store.startingCards.slice()
-        store.score = 0
-        this.visibleEndScreen = false;
-        this.toast.add({ severity: 'success', summary: 'Spiel wurde zurückgesetzt', life: 3000 })
+      this.closeAllCards()
+      store.cards = store.startingCards.slice()
+      store.score = 0
+      this.visibleEndScreen = false;
+      this.toast.add({ severity: 'success', summary: 'Spiel wurde zurückgesetzt', life: 3000 })
     },
 
     shuffel() {
