@@ -89,7 +89,6 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards, tes
           let oldSvg = cards[j].svg.cloneNode(true)
           let newSvg = removePart(`card${j}-${randomID}`, oldSvg)
           cards[j] = { id: j, svg: newSvg }
-          console.log(j)
         }
       }
 
