@@ -50,7 +50,14 @@ export default {
           store.numberOfFlippedCards--
         }
       }
+    },
 
+    openCard() {
+      this.isFlipped = true
+    },
+
+    closeCard() {
+      this.isFlipped = false
     },
 
     colourchange(){

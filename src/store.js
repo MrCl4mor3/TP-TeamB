@@ -30,3 +30,9 @@ export const store = reactive(getDefaultStore())
 export function resetStore() {
   Object.assign(store, getDefaultStore())
 }
+
+export function resetStartValues() {
+  store.numberOfFlippedCards = getDefaultStore().numberOfFlippedCards
+  store.score = getDefaultStore().score
+  store.selectedCards = getDefaultStore().selectedCards
+}

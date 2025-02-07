@@ -3,7 +3,10 @@ import { ref } from 'vue'
 import Dialog from 'primevue/dialog'
 import Toast from 'primevue/toast'
 
+
+
 const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
+
 </script>
 
 <template>
@@ -32,6 +35,28 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     </div>
   </Dialog>
 
+  <Dialog
+    v-model:visible="visibleEndScreen"
+    :header="'Bravo- Die Karten sind richtig sortiert!'"
+    class="dialog"
+    @update:visible="prepareReset">
+    <div class="dialog-content">
+      <div>
+        <p>Score: {{ store.score }}</p>
+        <p>BubbleSort: {{ this.bubbleSortResult.score }}</p>
+        <p>SelectionSort: {{ this.selectionSortResult.score }}</p>
+        <p>InsertionSort: {{ this.insertionSortResult.score }}</p>
+        <p>QuickSort: {{ this.quickSortResult.score }}</p>
+        <p>MergeSort: {{ this.mergeSortResult.score }}</p>
+      </div>
+      <div class="button-container">
+        <ButtonPress icon="pi pi-home" @click="goToHomePage" />
+        <ButtonPress label="Neustart" @click="startOver" />
+        <ButtonPress label="Neu mischen" @click="shuffel" />
+      </div>
+    </div>
+  </Dialog>
+
   <Toast />
 
   <div>
@@ -46,6 +71,8 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     </div>
     <!-- hier werden die zusätzlichen Knöpfe hinzugefügt -->
     <div class="button-container">
+      <ButtonPress label="auf" @click="openAllCards" />
+      <ButtonPress label="zu" @click="prepareReset" />
       <slot name="extraButtons" :swap-cards="SwapCards" />
       <ButtonPress label="fertig sortiert" @click="checkIfCorrect" />
     </div>
@@ -56,7 +83,14 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
 import { useToast} from "primevue/usetoast"
 import algorithmDescription from '@/descriptions/algorithmDescriptions.json'
 import errorMessages from '@/descriptions/ErrorMessages.json'
-import { store } from '@/store.js'
+import { store, resetStartValues } from '@/store.js'
+import {
+  bubbleSortWithScore,
+  insertionSortWithScore,
+  mergeSortWithScore,
+  quickSortWithScore,
+  selectionSortWithScore
+} from "@/algorithms.js";
 
 export default {
   name: 'StandardLayout',
@@ -72,8 +106,15 @@ export default {
   },
   data() {
     return {
+
+      bubbleSortResult: null,
+      selectionSortResult: null,
+      insertionSortResult: null,
+      quickSortResult: null,
+      mergeSortResult: null,
       toast: null,
       visibleTutorial: false,
+      visibleEndScreen: false,
       numberOfSwaps: 0,
       selectedCards: [],
       descriptionToAlgorithm: {
@@ -95,6 +136,7 @@ export default {
     openTutorial() {
       this.visibleTutorial = true
     },
+
     SwapCards() {
       let canSort = true
 
@@ -111,9 +153,10 @@ export default {
         store.cards[secondIndex] = temp
         this.numberOfSwaps++
       } else {
-        this.toast.add({ severity: 'error', summary: 'Fehler', detail: errorMessages['wrongAlgorithmStep'] })
+        this.toast.add({ severity: 'error', summary: 'Fehler', detail: errorMessages['wrongAlgorithmStep'], life: 3000 })
       }
     },
+
     SelectCard(index) {
       if (store.selectedCards.includes(index)) {
         store.selectedCards = store.selectedCards.filter((card) => card !== index)
@@ -142,34 +185,55 @@ export default {
         }
       }
     },
+
     startOver() {
-      if (store.selectedCards.length === 0) {
-        store.cards = store.startingCards.slice()
-        store.score = 0
-        this.toast.add({ severity: 'success', summary: 'Spiel wurde zurückgesetzt' })
-      } else {
-        this.toast.add({ severity: 'error', summary: 'Fehler', detail: 'Kann nicht zurücksetzen, während Karten ausgewählt sind' })
-      }
+      this.prepareReset()
+      store.cards = store.startingCards.slice()
+      this.visibleEndScreen = false;
+      this.toast.add({ severity: 'success', summary: 'Spiel wurde zurückgesetzt', life: 3000 })
     },
 
     shuffel() {
-      if (store.selectedCards.length === 0) {
-        store.cards = store.cards.sort(() => Math.random() - 0.5)
-        store.startingCards = store.cards.slice()
-        store.score = 0
-        this.toast.add({ severity: 'success', summary: 'Karten wurden gemischt' })
-      } else {
-        this.toast.add({ severity: 'error', summary: 'Fehler', detail: 'Kann nicht mischen, während Karten ausgewählt sind' })
-      }
+      this.prepareReset()
+
+      store.cards = store.cards.sort(() => Math.random() - 0.5)
+      store.startingCards = store.cards.slice()
+
+      this.visibleEndScreen = false;
+      this.toast.add({ severity: 'success', summary: 'Karten wurden gemischt', life: 3000 })
     },
 
     checkIfCorrect() {
       if (store.cards.every((card, index) => card.id === store.correctCards[index].id)
         || store.containers[0].every((card, index) => card.id === store.correctCards[index].id)) {
-        this.$router.push('/finishPage')
+        this.calculateScore()
+        this.openAllCards()
+        this.visibleEndScreen = true
       } else {
-        this.toast.add({ severity: 'error', summary: 'Fehler', detail: 'Die Karten sind noch nicht korrekt sortiert' })
+        this.toast.add({ severity: 'error', summary: 'Fehler', detail: 'Die Karten sind noch nicht korrekt sortiert', life: 3000 })
       }
+    },
+
+    calculateScore() {
+      this.bubbleSortResult = bubbleSortWithScore(store.startingCards)
+      this.selectionSortResult = selectionSortWithScore(store.startingCards)
+      this.insertionSortResult = insertionSortWithScore(store.startingCards)
+      this.quickSortResult = quickSortWithScore(store.startingCards)
+      this.mergeSortResult = mergeSortWithScore(store.startingCards)
+    },
+
+    //Alle Karten werden aufgedeckt
+    openAllCards() {
+      store.cards.forEach((card, index) => {
+          document.getElementsByClassName('card-container')[index].__vueParentComponent.ctx.openCard()
+      })
+    },
+    //Alle Karten werden zugedeckt
+    prepareReset() {
+      store.cards.forEach((card, index) => {
+          document.getElementsByClassName('card-container')[index].__vueParentComponent.ctx.closeCard()
+      })
+      resetStartValues()
     },
 
     goToHomePage() {
@@ -208,6 +272,8 @@ export default {
 }
 
 .dialog-content {
+  display: flex;
+  flex-direction: column;
   padding: 1rem;
   font-size: 1.2em;
   line-height: 1.6;

@@ -195,7 +195,6 @@ h1 {
   align-items: center;
   margin-top: 20px;
   margin-bottom: 20px;
-  font-family: Arial, sans-serif;
   font-size: 20px;
   width: 100%;
 }
@@ -204,7 +203,6 @@ h1 {
   display: flex; /* Macht den Container zur Flexbox */
   justify-content: center; /* Zentriert die Boxen */
   gap: 1px; /* Abstand zwischen den Boxen */
-  font-family: Arial, sans-serif;
   width: 100%;
 }
 
@@ -219,7 +217,6 @@ h1 {
   border: 1px solid black; /* Rahmen */
   border-radius: 8px; /* Abrundung der Ecken */
   margin: 20px; /* Außenabstand */
-  font-family: Arial, sans-serif;
   accent-color: #10b981;
 }
 
@@ -227,21 +224,18 @@ h1 {
   position: relative;
   cursor: pointer;
   padding-left: 30px;
-  font-family: Arial, sans-serif;
 }
 
 .radio-group-algorithms {
   display: flex; /* Macht die Gruppe zur Flexbox */
   flex-direction: column; /* Anordnung der Elemente */
   gap: 10px; /* Abstand zwischen den Elementen */
-  font-family: Arial, sans-serif;
 }
 
 .radio-group-modes {
   display: flex; /* Macht die Gruppe zur Flexbox */
   flex-direction: column; /* Anordnung der Elemente */
   gap: 10px; /* Abstand zwischen den Elementen */
-  font-family: Arial, sans-serif;
 }
 
 legend {
@@ -249,7 +243,6 @@ legend {
   font-weight: bold; /* Fett gedruckt */
   margin-bottom: 8px; /* Abstand nach unten */
   text-align: center; /* Zentriert den Text */
-  font-family: Arial, sans-serif;
 }
 
 .start-container {
@@ -258,7 +251,6 @@ legend {
   justify-content: center; /* Zentriert die Elemente */
   align-items: center; /* Zentriert die Elemente */
   gap: 20px; /* Abstand zwischen den Elementen */
-  font-family: Arial, sans-serif;
   margin-top: 10px; /* Abstand nach oben */
 }
 
@@ -266,13 +258,11 @@ legend {
   width: 200px; /* Breite des Buttons */
   height: 50px; /* Höhe des Buttons */
   font-size: 1.7em; /* Größe des Textes */
-  font-family: Arial, sans-serif;
 }
 
 .cards-container h2 {
   margin-bottom: 8px; /* Abstand zwischen Überschrift und Input-Feld */
   font-size: 1.7em; /* Größe der Überschrift */
-  font-family: Arial, sans-serif;
 }
 
 .description-container {
@@ -281,7 +271,6 @@ legend {
   text-align: center; /* Zentriert den gesamten Inhalt horizontal */
   margin-top: 24px; /* Abstand nach oben */
   margin-bottom: 24px; /* Abstand nach unten */
-  font-family: Arial, sans-serif;
   font-weight: bold;
   font-size: 20px;
 }
@@ -310,7 +299,6 @@ label:hover .tooltip {
 
 footer {
   justify-content: right;
-  font-family: Arial, sans-serif;
   font-size: 1em;
 }
 </style>
