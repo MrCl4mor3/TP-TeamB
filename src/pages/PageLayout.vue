@@ -75,14 +75,6 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
       <slot name="extraButtons" :swap-cards="SwapCards" />
       <ButtonPress label="fertig sortiert" @click="checkIfCorrect" />
     </div>
-    <div>
-      <p>Score: {{ store.score }}</p>
-      <p>BubbleSort: {{ this.bubbleSortResult.score }}</p>
-      <p>SelectionSort: {{ this.selectionSortResult.score }}</p>
-      <p>InsertionSort: {{ this.insertionSortResult.score }}</p>
-      <p>QuickSort: {{ this.quickSortResult.score }}</p>
-      <p>MergeSort: {{ this.mergeSortResult.score }}</p>
-    </div>
   </footer>
 </template>
 
@@ -114,11 +106,11 @@ export default {
   data() {
     return {
 
-      bubbleSortResult: bubbleSortWithScore(store.startingCards),
-      selectionSortResult: selectionSortWithScore(store.startingCards),
-      insertionSortResult: insertionSortWithScore(store.startingCards),
-      quickSortResult: quickSortWithScore(store.startingCards),
-      mergeSortResult: mergeSortWithScore(store.startingCards),
+      bubbleSortResult: null,
+      selectionSortResult: null,
+      insertionSortResult: null,
+      quickSortResult: null,
+      mergeSortResult: null,
       toast: null,
       visibleTutorial: false,
       visibleEndScreen: false,
@@ -215,10 +207,19 @@ export default {
     checkIfCorrect() {
       if (store.cards.every((card, index) => card.id === store.correctCards[index].id)
         || store.containers[0].every((card, index) => card.id === store.correctCards[index].id)) {
+        this.calculateScore()
         this.visibleEndScreen = true
       } else {
         this.toast.add({ severity: 'error', summary: 'Fehler', detail: 'Die Karten sind noch nicht korrekt sortiert', life: 3000 })
       }
+    },
+
+    calculateScore() {
+      this.bubbleSortResult = bubbleSortWithScore(store.startingCards)
+      this.selectionSortResult = selectionSortWithScore(store.startingCards)
+      this.insertionSortResult = insertionSortWithScore(store.startingCards)
+      this.quickSortResult = quickSortWithScore(store.startingCards)
+      this.mergeSortResult = mergeSortWithScore(store.startingCards)
     },
 
     //Alle Karten werden aufgedeckt
