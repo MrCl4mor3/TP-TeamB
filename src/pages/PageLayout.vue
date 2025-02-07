@@ -38,7 +38,8 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
   <Dialog
     v-model:visible="visibleEndScreen"
     :header="'Bravo- Die Karten sind richtig sortiert!'"
-    class="dialog">
+    class="dialog"
+    @update:visible="prepareReset">
     <div class="dialog-content">
       <div>
         <p>Score: {{ store.score }}</p>
@@ -206,6 +207,7 @@ export default {
       if (store.cards.every((card, index) => card.id === store.correctCards[index].id)
         || store.containers[0].every((card, index) => card.id === store.correctCards[index].id)) {
         this.calculateScore()
+        this.openAllCards()
         this.visibleEndScreen = true
       } else {
         this.toast.add({ severity: 'error', summary: 'Fehler', detail: 'Die Karten sind noch nicht korrekt sortiert', life: 3000 })
