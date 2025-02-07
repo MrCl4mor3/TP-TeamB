@@ -42,11 +42,11 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     <div class="dialog-content">
       <div>
         <p>Score: {{ store.score }}</p>
-        <p>BubbleSort: {{ bubbleSortResult }}</p>
-        <p>SelectionSort: {{ selectionSortResult }}</p>
-        <p>InsertionSort: {{ insertionSortResult }}</p>
-        <p>QuickSort: {{ quickSortResult }}</p>
-        <p>MergeSort: {{ mergeSortResult }}</p>
+        <p>BubbleSort: {{ this.bubbleSortResult.score }}</p>
+        <p>SelectionSort: {{ this.selectionSortResult.score }}</p>
+        <p>InsertionSort: {{ this.insertionSortResult.score }}</p>
+        <p>QuickSort: {{ this.quickSortResult.score }}</p>
+        <p>MergeSort: {{ this.mergeSortResult.score }}</p>
       </div>
       <div class="button-container">
         <ButtonPress icon="pi pi-home" @click="goToHomePage" />
@@ -74,6 +74,14 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
       <ButtonPress label="zu" @click="closeAllCards" />
       <slot name="extraButtons" :swap-cards="SwapCards" />
       <ButtonPress label="fertig sortiert" @click="checkIfCorrect" />
+    </div>
+    <div>
+      <p>Score: {{ store.score }}</p>
+      <p>BubbleSort: {{ this.bubbleSortResult.score }}</p>
+      <p>SelectionSort: {{ this.selectionSortResult.score }}</p>
+      <p>InsertionSort: {{ this.insertionSortResult.score }}</p>
+      <p>QuickSort: {{ this.quickSortResult.score }}</p>
+      <p>MergeSort: {{ this.mergeSortResult.score }}</p>
     </div>
   </footer>
 </template>
@@ -225,6 +233,7 @@ export default {
           document.getElementsByClassName('card-container')[index].__vueParentComponent.ctx.closeCard()
       })
       store.numberOfFlippedCards = 0
+      store.selectedCards = []
     },
 
     goToHomePage() {
