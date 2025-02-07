@@ -70,6 +70,8 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     </div>
     <!-- hier werden die zusätzlichen Knöpfe hinzugefügt -->
     <div class="button-container">
+      <ButtonPress label="auf" @click="openAllCards" />
+      <ButtonPress label="zu" @click="closeAllCards" />
       <slot name="extraButtons" :swap-cards="SwapCards" />
       <ButtonPress label="fertig sortiert" @click="checkIfCorrect" />
     </div>
@@ -133,6 +135,7 @@ export default {
     openTutorial() {
       this.visibleTutorial = true
     },
+
     SwapCards() {
       let canSort = true
 
@@ -152,6 +155,7 @@ export default {
         this.toast.add({ severity: 'error', summary: 'Fehler', detail: errorMessages['wrongAlgorithmStep'] })
       }
     },
+
     SelectCard(index) {
       if (store.selectedCards.includes(index)) {
         store.selectedCards = store.selectedCards.filter((card) => card !== index)
@@ -180,27 +184,23 @@ export default {
         }
       }
     },
+
     startOver() {
-      if (store.selectedCards.length === 0) {
         store.cards = store.startingCards.slice()
         store.score = 0
         this.visibleEndScreen = false;
         this.toast.add({ severity: 'success', summary: 'Spiel wurde zurückgesetzt' })
-      } else {
-        this.toast.add({ severity: 'error', summary: 'Fehler', detail: 'Kann nicht zurücksetzen, während Karten ausgewählt sind' })
-      }
     },
 
     shuffel() {
-      if (store.selectedCards.length === 0) {
-        store.cards = store.cards.sort(() => Math.random() - 0.5)
-        store.startingCards = store.cards.slice()
-        store.score = 0
-        this.visibleEndScreen = false;
-        this.toast.add({ severity: 'success', summary: 'Karten wurden gemischt' })
-      } else {
-        this.toast.add({ severity: 'error', summary: 'Fehler', detail: 'Kann nicht mischen, während Karten ausgewählt sind' })
-      }
+      this.closeAllCards()
+
+      store.cards = store.cards.sort(() => Math.random() - 0.5)
+      store.startingCards = store.cards.slice()
+      store.score = 0
+
+      this.visibleEndScreen = false;
+      this.toast.add({ severity: 'success', summary: 'Karten wurden gemischt' })
     },
 
     checkIfCorrect() {
@@ -210,6 +210,20 @@ export default {
       } else {
         this.toast.add({ severity: 'error', summary: 'Fehler', detail: 'Die Karten sind noch nicht korrekt sortiert' })
       }
+    },
+
+    //Alle Karten werden aufgedeckt
+    openAllCards() {
+      store.cards.forEach((card, index) => {
+          document.getElementsByClassName('card-container')[index].__vueParentComponent.ctx.openCard()
+      })
+    },
+    //Alle Karten werden zugedeckt
+    closeAllCards() {
+      store.cards.forEach((card, index) => {
+          document.getElementsByClassName('card-container')[index].__vueParentComponent.ctx.closeCard()
+      })
+      store.numberOfFlippedCards = 0
     },
 
     goToHomePage() {
