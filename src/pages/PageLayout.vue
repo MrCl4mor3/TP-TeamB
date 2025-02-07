@@ -152,7 +152,7 @@ export default {
         store.cards[secondIndex] = temp
         this.numberOfSwaps++
       } else {
-        this.toast.add({ severity: 'error', summary: 'Fehler', detail: errorMessages['wrongAlgorithmStep'] })
+        this.toast.add({ severity: 'error', summary: 'Fehler', detail: errorMessages['wrongAlgorithmStep'], life: 3000 })
       }
     },
 
@@ -189,7 +189,7 @@ export default {
         store.cards = store.startingCards.slice()
         store.score = 0
         this.visibleEndScreen = false;
-        this.toast.add({ severity: 'success', summary: 'Spiel wurde zurückgesetzt' })
+        this.toast.add({ severity: 'success', summary: 'Spiel wurde zurückgesetzt', life: 3000 })
     },
 
     shuffel() {
@@ -200,7 +200,7 @@ export default {
       store.score = 0
 
       this.visibleEndScreen = false;
-      this.toast.add({ severity: 'success', summary: 'Karten wurden gemischt' })
+      this.toast.add({ severity: 'success', summary: 'Karten wurden gemischt', life: 3000 })
     },
 
     checkIfCorrect() {
@@ -208,7 +208,7 @@ export default {
         || store.containers[0].every((card, index) => card.id === store.correctCards[index].id)) {
         this.visibleEndScreen = true
       } else {
-        this.toast.add({ severity: 'error', summary: 'Fehler', detail: 'Die Karten sind noch nicht korrekt sortiert' })
+        this.toast.add({ severity: 'error', summary: 'Fehler', detail: 'Die Karten sind noch nicht korrekt sortiert', life: 3000 })
       }
     },
 
