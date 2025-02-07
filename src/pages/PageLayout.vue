@@ -71,7 +71,7 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     <!-- hier werden die zusätzlichen Knöpfe hinzugefügt -->
     <div class="button-container">
       <ButtonPress label="auf" @click="openAllCards" />
-      <ButtonPress label="zu" @click="closeAllCards" />
+      <ButtonPress label="zu" @click="prepareReset" />
       <slot name="extraButtons" :swap-cards="SwapCards" />
       <ButtonPress label="fertig sortiert" @click="checkIfCorrect" />
     </div>
@@ -82,8 +82,7 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
 import { useToast} from "primevue/usetoast"
 import algorithmDescription from '@/descriptions/algorithmDescriptions.json'
 import errorMessages from '@/descriptions/ErrorMessages.json'
-import { store } from '@/store.js'
-import { resetStartValues } from "@/store.js";
+import { store, resetStartValues } from '@/store.js'
 import {
   bubbleSortWithScore,
   insertionSortWithScore,
