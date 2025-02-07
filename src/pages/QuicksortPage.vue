@@ -234,7 +234,6 @@ export default {
   column-gap: 10px;
   row-gap: 45px;
   justify-items: center;
-  font-family: Arial, sans-serif;
 }
 </style>
 
@@ -251,7 +250,6 @@ export default {
   column-gap: 10px;
   row-gap: 45px;
   justify-items: center;
-  font-family: Arial, sans-serif;
   margin-left: 24px;
 }
 </style>
