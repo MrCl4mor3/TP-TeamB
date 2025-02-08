@@ -48,7 +48,14 @@ export default {
         this.isSelected = true
       }
     },
-
+    reloadRecolour () {
+      if (store.dividingContainerPosition === this.containerIndex && store.dividingLinePosition === this.lineIndex) {
+        this.isDividingLine = true;
+      }else {
+        this.isDividingLine = false;
+        this.isSelected = false;
+      }
+    }
     }
   }
 </script>

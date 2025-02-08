@@ -167,24 +167,24 @@ export default {
     },
 
     //für Quicksort, es werden Pivotelement erkannt und anders behandelt
-    SelectCardQuick(index) {
-      if (store.pivotIndices.includes(index) || store.pivotElementIndex === index) {
-        alert("pivotelement");
-        document.getElementsByClassName('card-container')[index].__vueParentComponent.ctx.toggleFlip();
-      } else {
-        if (store.selectedCards.includes(index)) {
-          store.selectedCards = store.selectedCards.filter((card) => card !== index);
-        } else if (store.selectedCards.length < 2) {
-          if (index === store.lookingIndex) {
-            store.selectedCards.push(index);
-            store.score++;
-          } else {
-            alert("Flasche Karte");
-            document.getElementsByClassName('card-container')[index].__vueParentComponent.ctx.toggleFlip();
-          }
-        }
-      }
-    },
+    // SelectCardQuick(index) {
+    //   if (store.pivotIndices.includes(index) || store.pivotElementIndex === index) {
+    //     alert("pivotelement");
+    //     document.getElementsByClassName('card-container')[index].__vueParentComponent.ctx.toggleFlip();
+    //   } else {
+    //     if (store.selectedCards.includes(index)) {
+    //       store.selectedCards = store.selectedCards.filter((card) => card !== index);
+    //     } else if (store.selectedCards.length < 2) {
+    //       if (index === store.lookingIndex) {
+    //         store.selectedCards.push(index);
+    //         store.score++;
+    //       } else {
+    //         alert("Flasche Karte");
+    //         document.getElementsByClassName('card-container')[index].__vueParentComponent.ctx.toggleFlip();
+    //       }
+    //     }
+    //   }
+    // },
 
     startOver() {
       this.prepareReset()
@@ -224,16 +224,22 @@ export default {
 
     //Alle Karten werden aufgedeckt
     openAllCards() {
-      store.cards.forEach((card, index) => {
-          document.getElementsByClassName('card-container')[index].__vueParentComponent.ctx.openCard()
-      })
+      store.currentCards.forEach((card) => {
+        card.openCard();
+      });
     },
     //Alle Karten werden zugedeckt
     prepareReset() {
-      store.cards.forEach((card, index) => {
-          document.getElementsByClassName('card-container')[index].__vueParentComponent.ctx.closeCard()
-      })
-      resetStartValues()
+      store.currentCards.forEach((card) => {
+      card.closeCard();
+      card.colour = '#10b981';
+    });
+      store.reloadPage = true;
+      store.dividingLinePosition = -1;
+      store.dividingContainerPosition = -1;
+      store.containers.splice(0);
+      store.containers.push(store.startingCards);
+      resetStartValues();
     },
 
     goToHomePage() {

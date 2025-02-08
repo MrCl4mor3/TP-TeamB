@@ -34,6 +34,9 @@ export default {
       required: true,
     },
   },
+  mounted() {
+    store.currentCards.push(this);
+  },
   methods: {
     // Methode um die Karte zu drehen. Hier kann nur umgedreht werden wenn weniger als 2 Karten
     // umgedreht sind. Wenn die Karte schon umgedreht ist wird die Anzahl der umgedrehten karten
@@ -62,7 +65,7 @@ export default {
 
     colourchange(){
       if (this.colour === 'grey') {
-        this.colout = '#10b981';
+        this.colour = '#10b981';
       } else {
         this.colour = 'grey';
       }
