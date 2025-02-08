@@ -7,11 +7,14 @@ import errorMessages from '../descriptions/errorMessages.json'
 import descriptions from '../descriptions/homePageDescriptions.json'
 import router from '@/router.js'
 import Slider from 'primevue/slider'
+import Dialog from "primevue/dialog";
+import TutorialDialog from '@/components/TutorialDialog.vue'
 
 // Reset des Stores
 resetStore()
 
 // Daten-Variablen
+const visibleTutorial = ref(false)
 const selectedCategory = ref(startConfig.startAlgorithm)
 const selectedMode = ref(startConfig.startMode)
 const description = ref(descriptions)
@@ -76,9 +79,21 @@ function handleKeyPress(event) {
   }
 }
 
+function openTutorial() {
+  visibleTutorial.value = true
+}
+
 // Lifecycle-Hooks
 onMounted(() => {
   window.addEventListener('keyup', handleKeyPress)
+
+
+  //Überprüft, ob der Nutzer die Seite schon einmal besucht hat
+  if (sessionStorage.getItem('visited') === null) {
+    sessionStorage.setItem('visited', 'true')
+    openTutorial()
+  }
+
 })
 
 onBeforeUnmount(() => {
@@ -90,17 +105,21 @@ onBeforeUnmount(() => {
   <!-- Überschrift -->
   <header>
     <h1>{{ description.headline }}</h1>
+    <ButtonPress class="button" label="?" @click="openTutorial"></ButtonPress>
   </header>
 
   <div class="content">
 
     <!-- Beschreibung des Spiels -->
-    <div class="description-container">
-      <details>
-        <summary>{{ description.instructionHeader }}</summary>
-        <p>{{ description.instructions }}</p>
-      </details>
-    </div>
+    <Dialog
+      v-model:visible="visibleTutorial"
+      :header="`SortLab Anleitung`"
+      class="dialog"
+    >
+      <div class="dialog-content">
+        <TutorialDialog />
+      </div>
+    </Dialog>
 
     <!-- Flexbox für die Auswahl von Algorithmen und Modi -->
     <div class="modi-algo-container">
@@ -300,5 +319,9 @@ label:hover .tooltip {
 footer {
   justify-content: right;
   font-size: 1em;
+}
+.button {
+  font-size: 1.7em;
+  padding: 8px 14px;
 }
 </style>

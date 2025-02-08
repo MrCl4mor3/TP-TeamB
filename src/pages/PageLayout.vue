@@ -285,8 +285,4 @@ export default {
   line-height: 1.6;
 }
 
-header {
-  justify-content: space-between;
-}
-
 </style>

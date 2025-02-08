@@ -19,7 +19,7 @@ header {
   top: 0;
   background-color: lightgray;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
   z-index: 1000;
@@ -47,9 +47,10 @@ footer {
   align-items: center;
 }
 
-h1 {
-  margin: 0;
+header h1 {
   color: #10b981;
+  flex-grow: 1;
+  text-align: center;
 }
 h2 {
   color: #10b981;
