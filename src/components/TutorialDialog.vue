@@ -7,8 +7,8 @@ onMounted(() => {
   generateCards("bubble-sort", "free-sort", 4, false);
 });
 
-const cardBigger = computed(() => store.cards[0]);
-const cardSmaller = computed(() => store.cards[1]);
+const cardSmaller = computed(() => store.correctCards[0]);
+const cardBigger = computed(() => store.correctCards[1]);
 </script>
 
 
@@ -31,12 +31,12 @@ const cardSmaller = computed(() => store.cards[1]);
       <div class="example-cards">
         <!-- Karten mit weniger Strichen -->
         <div class="card-with-text">
-          <div class="example-card" v-if="cardBigger && cardBigger.svg" v-html="cardBigger.svg.outerHTML"></div>
+          <div class="example-card" v-if="cardBigger && cardBigger.svg" v-html="cardSmaller.svg.outerHTML"></div>
           <p><strong>kleiner</strong></p>
         </div>
         <!-- Karten mit mehr Strichen -->
         <div class="card-with-text">
-          <div class="example-card" v-if="cardSmaller && cardSmaller.svg" v-html="cardSmaller.svg.outerHTML"></div>
+          <div class="example-card" v-if="cardSmaller && cardSmaller.svg" v-html="cardBigger.svg.outerHTML"></div>
           <p><strong>größer</strong></p>
         </div>
       </div>
@@ -59,12 +59,20 @@ const cardSmaller = computed(() => store.cards[1]);
 
 <style scoped>
 .dialog-content {
-  padding: 20px;
   font-size: 1.2em;
+  padding: 20px;
+  line-height: 1.5; /* Angenehme Zeilenhöhe für den Fließtext */
 }
 
 h2 {
   font-weight: bold;
+  line-height: 1.3;
+  margin-top: 24px; /* Mehr Abstand nach oben */
+  margin-bottom: 16px; /* Klarer Abstand zur nächsten Zeile */
+}
+
+p {
+  margin-bottom: 12px; /* Geringerer Abstand zwischen Absätzen */
 }
 
 ul {
@@ -73,7 +81,8 @@ ul {
 }
 
 ul li {
-  margin-bottom: 10px;
+  margin-bottom: 8px; /* Geringer Abstand für bessere Lesbarkeit */
+  line-height: 1.5;
 }
 
 .example-cards {
@@ -84,10 +93,10 @@ ul li {
 }
 
 .example-card {
-  width: 200px; /*200px, 300px*/
+  width: 200px;
   height: 300px;
-  border: 2px solid black; /* Schwarzer Rahmen */
-  border-radius: 12px; /* Runde Ecken */
+  border: 2px solid black;
+  border-radius: 12px;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -95,9 +104,10 @@ ul li {
 }
 
 .example-card svg {
-  width: 100%; /* SVG in die Box passend skalieren */
+  width: 100%;
   height: 100%;
 }
+
 .card-with-text {
   display: flex;
   justify-content: center;
