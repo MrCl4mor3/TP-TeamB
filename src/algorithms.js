@@ -36,7 +36,6 @@ export function selectionSortWithScore(cards, returnSorted = false) {
     let minIndex = i
     for (let j = i + 1; j < sortingCards.length; j++) {
       score++ // Ein Element wird betrachtet
-      console.log(score)
       if (sortingCards[j].id < sortingCards[minIndex].id) {
         minIndex = j
       }
@@ -66,7 +65,6 @@ export function insertionSortWithScore(cards, returnSorted = false) {
     let j = i - 1
     while (j >= 0 && sortingCards[j].id > current.id) {
       score++ // Ein Element wird betrachtet
-      console.log(score)
       store.correctSortingOrder.push([j, j + 1])
       sortingCards[j + 1] = sortingCards[j]
       j--
@@ -96,7 +94,6 @@ export function quickSortWithScore(cards, returnSorted = false) {
 
     for (let i = 0; i < array.length - 1; i++) {
       score++ // Ein Element wird betrachtet
-      console.log(score)
       if (array[i].id < pivot.id) {
         left.push(array[i])
       } else {
@@ -124,7 +121,6 @@ export function mergeSortWithScore(cards, returnSorted = false) {
 
     while (left.length && right.length) {
       score++ // Ein Element wird betrachtet
-      console.log(score)
       if (left[0].id <= right[0].id) {
         result.push(left.shift())
       } else {
