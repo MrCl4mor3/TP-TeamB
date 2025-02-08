@@ -7,11 +7,13 @@ import errorMessages from '../descriptions/errorMessages.json'
 import descriptions from '../descriptions/homePageDescriptions.json'
 import router from '@/router.js'
 import Slider from 'primevue/slider'
+import Dialog from "primevue/dialog";
 
 // Reset des Stores
 resetStore()
 
 // Daten-Variablen
+const visibleTutorial = ref(false)
 const selectedCategory = ref(startConfig.startAlgorithm)
 const selectedMode = ref(startConfig.startMode)
 const description = ref(descriptions)
@@ -76,6 +78,10 @@ function handleKeyPress(event) {
   }
 }
 
+function openTutorial() {
+  visibleTutorial.value = true
+}
+
 // Lifecycle-Hooks
 onMounted(() => {
   window.addEventListener('keyup', handleKeyPress)
@@ -90,18 +96,21 @@ onBeforeUnmount(() => {
   <!-- Überschrift -->
   <header>
     <h1>{{ description.headline }}</h1>
-    <ButtonPress label="Test" @click="goToTestPage"/>
+    <ButtonPress class="button" label="?" @click="openTutorial"></ButtonPress>
   </header>
 
   <div class="content">
 
     <!-- Beschreibung des Spiels -->
-    <div class="description-container">
-      <details>
-        <summary>{{ description.instructionHeader }}</summary>
-        <p>{{ description.instructions }}</p>
-      </details>
-    </div>
+    <Dialog
+      v-model:visible="visibleTutorial"
+      :header="`Tutorial`"
+      class="dialog"
+    >
+      <div class="dialog-content">
+
+      </div>
+    </Dialog>
 
     <!-- Flexbox für die Auswahl von Algorithmen und Modi -->
     <div class="modi-algo-container">
@@ -301,5 +310,9 @@ label:hover .tooltip {
 footer {
   justify-content: right;
   font-size: 1em;
+}
+.button {
+  font-size: 1.7em;
+  padding: 8px 14px;
 }
 </style>
