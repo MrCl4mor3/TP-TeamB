@@ -88,6 +88,7 @@ export function quickSortWithScore(cards, returnSorted = false) {
       return array
     }
 
+    score++; //pivotelement wird betrachtet
     const pivot = array[array.length - 1]
     const left = []
     const right = []

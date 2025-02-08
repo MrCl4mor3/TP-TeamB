@@ -49,7 +49,7 @@ function drop(targetIndex) {
             <div v-for="(card, index) in container" :key="card.id" class="card-and-line">
               <FlippedCard
                 :card-id="card.id"
-                :ref="'flippedCard'"
+                :ref="'singlecard'"
                 @click="selectCardsInContainer(containerIndex, index)"
               >
                 <template #front>
@@ -106,6 +106,11 @@ export default {
   methods: {
     //Kartenaufdecken, mit check das nur Karten aus einem Container aufgedeckt werden dürfen
     selectCardsInContainer(containerIndex,cardIndex) {
+      //Beim Pagereload wird alles zurückgesetzt
+      if (store.reloadPage) {
+        this.resetMergePage();
+        store.reloadPage = false;
+      }
       if(this.selectedCards.length === 0) {
         store.currentSelectedContainer = containerIndex
       }
@@ -150,9 +155,22 @@ export default {
       store.dividingLinePosition = store.containers[targetContainer].length-this.draggedContainersize-1;
       store.dividingContainerPosition = targetContainer;
 
+      let allLines = this.$refs.linie;
+      // Prüfen, ob es ein Array von Instanzen ist
+      if (Array.isArray(allLines)) {
+        allLines.forEach(line => {
+          line.reloadRecolour(); //linien in richtige Farbe machen
+        });
+      }
+
     },
     //Auswählen der Linie, festhalten der Position für den split
     selectALine(containerIndex, index) {
+      //Beim Pagereload wird alles zurückgesetzt
+      if (store.reloadPage) {
+        this.resetMergePage();
+        store.reloadPage = false;
+      }
       if(store.selectedLines !== 0) {
         this.linePositionContainer = containerIndex
         this.linePositionCard = index
@@ -174,7 +192,7 @@ export default {
     },
     //dreht alle Karten um
     flipAllCards() {
-      const allCards = this.$refs.flippedCard;
+      const allCards = this.$refs.singlecard;
 
       // Prüfen, ob es ein Array von Instanzen ist (bei v-for)
       if (Array.isArray(allCards)) {
@@ -186,6 +204,28 @@ export default {
       }
       store.numberOfFlippedCards = 0;
       store.currentSelectedContainer = null;
+    },
+    resetMergePage() {
+      //reset store Variablen
+      store.numberOfFlippedCards = 0;
+      store.currentSelectedContainer = null;
+      store.selectedLines = 0;
+      store.dividingLinePosition = -1;
+      store.dividingContainerPosition = -1;
+      //reset lokale Variablen
+      this.linePositionContainer = null;
+      this.linePositionCard = null;
+      this.selectedContainerIndex = null;
+      this.selectedCards.slice(0);
+      this.draggedContainersize = 0;
+
+      let allLines = this.$refs.linie;
+      // Prüfen, ob es ein Array von Instanzen ist
+      if (Array.isArray(allLines)) {
+        allLines.forEach(line => {
+          line.reloadRecolour(); //linien in richtige Farbe machen
+        });
+      }
     }
   },
 }

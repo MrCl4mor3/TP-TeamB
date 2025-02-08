@@ -2,7 +2,7 @@
 
 <template>
   <StandardLayout :store="store" :isExpanded="isExpanded">
-    <template #cards="{ selectCards2 }">
+    <template #cards="{ }">
       <!-- übergibt die benötigten Methoden und variablen -->
       <div>
         <div class="card-grid">
@@ -12,7 +12,7 @@
             ref="cardlist"
             class="card-and-line"
           >
-            <FlippedCard @click="selectCards2(index)" :card-id="card.id" ref="singlecard">
+            <FlippedCard @click="SelectCardQuick(index)" :card-id="card.id" ref="singlecard">
               <template #front>
                 <div class="frontsite"></div>
               </template>
@@ -73,6 +73,11 @@ export default {
   },
   methods: {
     selectPivot() {
+      //Beim Pagereload wird alles zurückgesetzt
+      if (store.reloadPage) {
+        this.resetQuickPage();
+        store.reloadPage = false;
+      }
       //Als erste Aktion muss ein PIvotelement gewählt werden,
       if (this.firsttime) {
         this.firsttime = false;
@@ -81,11 +86,13 @@ export default {
         this.numberOfSwaps = 0;
         //in der ersten Aktion wird trueCardRef aufgesetzt. Dieser ist nötig damit karten korrekt umrandet werder können,
         //da sich bei vertauschen die Position der Karten verändern, aber die Id gleich bleibt
+        this.trueCardRef.slice(0);
         for (let i = 0; i < store.cards.length; i++) {
           this.trueCardRef.push(i);
         }
         //für korrektes späteres ändern der Kartenrückseiten wird die die Originalreihenfolge der Karten-ids gespeichert
         const allCards = this.$refs.singlecard;
+        this.startigCardIds.slice(0);
         // Sichergehen, dass es ein Array von Instanzen ist
         if (Array.isArray(allCards)) {
           allCards.forEach(card => {
@@ -100,8 +107,13 @@ export default {
         store.selectedCards.push(0);
         store.score++;
       } else {
+        let checked = 0;
+        //check ob alles schon als sortiert gespeichert wurde
+        if (store.pivotIndices.length === store.cards.length) {
+          checked = store.cards.length;
+        }
         //ist der Teilarray fertig einsortiert
-        if (store.lookingIndex >= store.cards.length || store.pivotIndices.includes(store.lookingIndex)){
+        if ((store.lookingIndex >= store.cards.length || store.pivotIndices.includes(store.lookingIndex)) && checked < store.cards.length){
           //Nicht das erste mal gedrückt, also muss das alte Pivotelement als fertig sortiert gespeichert werden
           store.pivotIndices.push(store.pivotElementIndex);
           this.startigCardIds[this.trueCardRef[store.pivotElementIndex]].colourchange();
@@ -121,11 +133,6 @@ export default {
           if (this.smallerCards === 1) {
             store.pivotIndices.push(store.pivotElementIndex-1);
             this.startigCardIds[this.trueCardRef[store.pivotElementIndex-1]].colourchange();
-          }
-          let checked = 0;
-          //check ob alles schon als sortiert gespeichert wurde
-          if (store.pivotIndices.length === store.cards.length) {
-            checked = store.cards.length;
           }
           //geht weiter bis zum nächsten Element das noch nicht sortiert wurde oder pivotelement war.
           //Dieses ist dann das linke vom nächsten Abschnitt und damit neues Pivot
@@ -151,13 +158,65 @@ export default {
             checked ++;
           }
         } else {
-          alert("Der aktuelle Teil ist noch nicht fertig eingeordnet");
+          if (checked < store.cards.length){
+            alert("Der aktuelle Teil ist noch nicht fertig eingeordnet");
+          } else {
+            alert("Alle Karten sind als sortiert markiert");
+          }
         }
         store.score++;
       }
     },
+    //für Quicksort, es werden Pivotelement erkannt und anders behandelt
+    SelectCardQuick(index) {
+      //hier muss abgefangen werden wenn zuerst auf Karten geklickt wird, ohne das Quicksort initialisiert wurde durch erstes pivotelement drücken
+      if (this.firsttime) {
+        alert("Zum starten auf Pivotelement klicken")
+
+        let tempcards = this.$refs.singlecard;
+        this.startigCardIds.slice(0);
+        // Sichergehen, dass es ein Array von Instanzen ist
+        if (Array.isArray(tempcards)) {
+          tempcards.forEach(card => {
+            this.startigCardIds.push(card);
+          });
+        } else {
+          alert("UhOh only 1 Card exists, that should never happen");
+        }
+        this.trueCardRef.slice(0);
+        for (let i = 0; i < store.cards.length; i++) {
+          this.trueCardRef.push(i);
+        }
+      }
+      //Beim Pagereload wird alles zurückgesetzt
+      if (store.reloadPage) {
+        this.resetQuickPage();
+        store.reloadPage = false;
+      }
+      if (store.pivotIndices.includes(index) || store.pivotElementIndex === index) {
+        alert("pivotelement");
+        this.startigCardIds[this.trueCardRef[index]].toggleFlip();
+      } else {
+        if (store.selectedCards.includes(index)) {
+          store.selectedCards = store.selectedCards.filter((card) => card !== index);
+        } else if (store.selectedCards.length < 2) {
+          if (index === store.lookingIndex) {
+            store.selectedCards.push(index);
+            store.score++;
+          } else {
+            alert("Flasche Karte");
+            this.startigCardIds[this.trueCardRef[index]].toggleFlip();
+          }
+        }
+      }
+    },
     //das Element muss nach links vom Pivotelement getauscht werden
     moveToSmaller() {
+      //Beim Pagereload wird alles zurückgesetzt
+      if (store.reloadPage) {
+        this.resetQuickPage();
+        store.reloadPage = false;
+      }
       if (this.firsttime) {
         alert("Zum starten auf Pivotelement klicken")
       } else {
@@ -206,6 +265,11 @@ export default {
     },
     //wenn sie größer ist muss sich nur gemerkt werden wie viele in dem "Bigger" teil sind, keine Vertauschung notwendig
     moveToBigger() {
+      //Beim Pagereload wird alles zurückgesetzt
+      if (store.reloadPage) {
+        this.resetQuickPage();
+        store.reloadPage = false;
+      }
       if (this.firsttime) {
         alert("Zum starten auf Pivotelement klicken")
       } else {
@@ -222,6 +286,30 @@ export default {
         }
       }
     },
+    //reset der ganze page zu dem Startzustand
+    resetQuickPage() {
+      alert("resetting qsp");
+      //pivotboarder weg
+      this.$refs.cardlist[this.trueCardRef[store.pivotElementIndex]].firstChild.firstChild.style.border = null;
+      //kartenrückseite auf default farbe
+      this.startigCardIds.forEach((card) => {
+        card.colour = '#10b981'
+      });
+      //reset variablen die im store gespeichert sind
+      store.selectedCards.splice(0);
+      store.pivotIndices.splice(0);
+      store.lookingIndex = 0;
+      store.pivotElementIndex = 0;
+      //reset lokale variablen
+      this.numberOfSwaps = 0;
+      this.selectedCard = null;
+      this.pivotElement = null;
+      this.firsttime = true;
+      this.biggerCards = 0;
+      this.smallerCards = 0;
+      this.trueCardRef.splice(0);
+      this.startigCardIds.splice(0);
+    }
   },
 }
 </script>

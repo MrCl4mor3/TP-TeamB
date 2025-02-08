@@ -4,7 +4,7 @@
       <div class="card-grid">
         <!-- Hier wird für jede Karte ein FlippedCard erstellt -->
         <div v-for="(card, index) in store.cards" :key="card.id">
-          <FlippedCard @click="selectCards(index)">
+          <FlippedCard @click="selectCards(index)" :card-id="card.id" ref="singlecard">
             <template #front>
               <div class="frontside"></div>
             </template>

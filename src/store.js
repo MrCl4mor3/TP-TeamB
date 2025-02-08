@@ -14,13 +14,15 @@ function getDefaultStore() {
     correctSortingOrder: [],
     selectedCards: [],
     pivotIndices: [],
-    lookingIndex: 0,
-    pivotElementIndex: 0,
+    lookingIndex: -1,
+    pivotElementIndex: -1,
     selectedLines: 0,
     containers: [],
     currentSelectedContainer: null,
     dividingContainerPosition: -1,
     dividingLinePosition: -1,
+    currentCards: [],
+    reloadPage: false,
   }
 }
 
