@@ -59,7 +59,7 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
 
   <Toast />
 
-  <div>
+  <div class="content">
     <!-- hier werden die Karten in den einzelnen Seiten hinzugefügt -->
     <slot name="cards" :select-cards="SelectCard" :select-cards2="SelectCardQuick" />
   </div>
@@ -282,4 +282,5 @@ export default {
 header {
   justify-content: space-between;
 }
+
 </style>

@@ -69,8 +69,8 @@ h2 {
 }
 /*Hier wird definiert wie die Karten angeordnet werden sollen*/
 .card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   justify-items: center;
 }
