@@ -90,6 +90,7 @@ onBeforeUnmount(() => {
   <!-- Überschrift -->
   <header>
     <h1>{{ description.headline }}</h1>
+    <ButtonPress label="Test" @click="goToTestPage"/>
   </header>
 
   <div class="content">
