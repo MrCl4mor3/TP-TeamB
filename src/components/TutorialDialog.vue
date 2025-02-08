@@ -27,12 +27,19 @@ const cardSmaller = computed(() => store.cards[1]);
     <h2>Wie funktioniert das Sortieren?</h2>
     <p>Die Karten enthalten Bilder mit Strichen. "Kleiner" bedeutet, dass eine Karte weniger Striche hat als eine andere. Deine Aufgabe ist es, die Karten in der richtigen Reihenfolge zu sortieren.</p>
     <p>Hierfür kannst du bis zu zwei aufdecken und nachdem vergleichen vertauschen. Bei Mergesort und Quicksort gibt es algorithmenspezifische Zusatzfunktionen.</p>
-    <!-- Beispielkarten mit "<" einfügen -->
-    <div class="example-cards">
-      <div v-if="cardBigger && cardBigger.svg" v-html="cardBigger.svg.outerHTML"></div>
-      <div v-if="cardSmaller && cardSmaller.svg" v-html="cardSmaller.svg.outerHTML"></div>
-    </div>
-
+    <!-- Beispielkarten mit einfügen -->
+      <div class="example-cards">
+        <!-- Karten mit weniger Strichen -->
+        <div class="card-with-text">
+          <div class="example-card" v-if="cardBigger && cardBigger.svg" v-html="cardBigger.svg.outerHTML"></div>
+          <p><strong>kleiner</strong></p>
+        </div>
+        <!-- Karten mit mehr Strichen -->
+        <div class="card-with-text">
+          <div class="example-card" v-if="cardSmaller && cardSmaller.svg" v-html="cardSmaller.svg.outerHTML"></div>
+          <p><strong>größer</strong></p>
+        </div>
+      </div>
     <h2>Hilfreiche Funktionen:</h2>
     <ul>
       <li>Falls du nicht mehr weißt, wie dein gewählter Algorithmus funktioniert, kannst du mit dem ?-Symbol oben rechts eine Erklärung abrufen.</li>
@@ -73,5 +80,29 @@ ul li {
   display: flex;
   justify-content: center;
   gap: 20px;
+  margin-top: 20px;
 }
+
+.example-card {
+  width: 200px; /*200px, 300px*/
+  height: 300px;
+  border: 2px solid black; /* Schwarzer Rahmen */
+  border-radius: 12px; /* Runde Ecken */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.example-card svg {
+  width: 100%; /* SVG in die Box passend skalieren */
+  height: 100%;
+}
+.card-with-text {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
 </style>
