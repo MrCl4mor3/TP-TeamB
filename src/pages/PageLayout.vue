@@ -166,29 +166,11 @@ export default {
       }
     },
 
-    //für Quicksort, es werden Pivotelement erkannt und anders behandelt
-    // SelectCardQuick(index) {
-    //   if (store.pivotIndices.includes(index) || store.pivotElementIndex === index) {
-    //     alert("pivotelement");
-    //     document.getElementsByClassName('card-container')[index].__vueParentComponent.ctx.toggleFlip();
-    //   } else {
-    //     if (store.selectedCards.includes(index)) {
-    //       store.selectedCards = store.selectedCards.filter((card) => card !== index);
-    //     } else if (store.selectedCards.length < 2) {
-    //       if (index === store.lookingIndex) {
-    //         store.selectedCards.push(index);
-    //         store.score++;
-    //       } else {
-    //         alert("Flasche Karte");
-    //         document.getElementsByClassName('card-container')[index].__vueParentComponent.ctx.toggleFlip();
-    //       }
-    //     }
-    //   }
-    // },
-
     startOver() {
       this.prepareReset()
       store.cards = store.startingCards.slice()
+      store.containers.splice(0);
+      store.containers.push(store.startingCards);
       this.visibleEndScreen = false;
       this.toast.add({ severity: 'success', summary: 'Spiel wurde zurückgesetzt', life: 3000 })
     },
@@ -196,8 +178,13 @@ export default {
     shuffel() {
       this.prepareReset()
 
-      store.cards = store.cards.sort(() => Math.random() - 0.5)
-      store.startingCards = store.cards.slice()
+      if (store.selectedCategory === 'Quick Sort') {
+        store.quickReshuffle = true;
+        store.cards = store.startingCards.slice();
+      } else {
+        store.cards = store.cards.sort(() => Math.random() - 0.5)
+        store.startingCards = store.cards.slice()
+      }
 
       this.visibleEndScreen = false;
       this.toast.add({ severity: 'success', summary: 'Karten wurden gemischt', life: 3000 })
