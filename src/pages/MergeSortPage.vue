@@ -36,13 +36,15 @@ function drop(targetIndex) {
           class="container-and-line"
           draggable="true"
           @dragstart="
-            dragStart(containerIndex)
-            dragging(containerIndex)
+            () => {
+              dragStart(containerIndex), dragging(containerIndex)
+            }
           "
           @dragover.prevent
           @drop="
-            drop(containerIndex)
-            dividingMark(containerIndex)
+            () => {
+              drop(containerIndex), dividingMark(containerIndex)
+            }
           "
         >
           <div class="card-grid">
