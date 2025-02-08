@@ -85,6 +85,14 @@ function openTutorial() {
 // Lifecycle-Hooks
 onMounted(() => {
   window.addEventListener('keyup', handleKeyPress)
+
+
+  //Überprüft, ob der Nutzer die Seite schon einmal besucht hat
+  if (sessionStorage.getItem('visited') === null) {
+    sessionStorage.setItem('visited', 'true')
+    openTutorial()
+  }
+
 })
 
 onBeforeUnmount(() => {
