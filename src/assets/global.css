@@ -31,7 +31,7 @@ header {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: calc(100vh - 255px);
+  flex-grow: 1;
 }
 
 footer {
@@ -54,6 +54,7 @@ h1 {
 h2 {
   color: #10b981;
 }
+
 .button-container {
   display: flex;
   gap: 10px;
