@@ -197,7 +197,6 @@ export default {
   padding: 10px; /* Abstand zwischen Inhalt und Rahmen */
   margin-bottom: 20px; /* Abstand zwischen einzelnen Grids */
   border-radius: 10px; /* Optional: Abgerundete Ecken */
-  width: max-content;
   max-width: 100%;
 }
 .card-and-line {
