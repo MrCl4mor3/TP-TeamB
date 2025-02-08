@@ -20,7 +20,7 @@ function drop(targetIndex) {
       draggedIndex.value = null
     }
   } else {
-    this.toast.add({ severity: 'error', summary: 'Karten müssen umgedreht sein', life: 3000 })
+    toast.add({ severity: 'error', summary: 'Karten müssen umgedreht sein', life: 3000 })
   }
 }
 </script>
@@ -129,7 +129,7 @@ export default {
         }
       } else {
         store.allowedToFlip = false
-        this.toast.add({ severity: 'error', summary: 'falscher Container', life: 3000 })
+        toast.add({ severity: 'error', summary: 'falscher Container', life: 3000 })
       }
     },
     //TODO canSort? sicher das diese methode voll funktionsfähig ist?
@@ -145,7 +145,7 @@ export default {
         store.containers[store.currentSelectedContainer][secondIndex] = temp
         this.numberOfSwaps++
       } else {
-        this.toast.add({
+        toast.add({
           severity: 'error',
           summary: errorMessages['wrongAlgorithmStep'],
           life: 3000,
