@@ -78,3 +78,13 @@ h2 {
   column-gap: 20px;
   row-gap: 45px;
 }
+
+/* Dialog-Header Anpassung */
+.p-dialog .p-dialog-header {
+  font-weight: bold; /* Oder andere Schriftattribute */
+  background-color: #10b981; /* Hintergrundfarbe des Headers */
+  border-radius: 12px; /* Abrundung des Headers */
+  font-size: 30px; /* Schriftgröße des Headers */
+  color: white; /* Schriftfarbe des Headers */
+}
+

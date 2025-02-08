@@ -1,3 +1,17 @@
+<script setup>
+import { onMounted, computed } from "vue";
+import { store } from "@/store.js";
+import { generateCards } from "@/cardSetup.js";
+
+onMounted(() => {
+  generateCards("bubble-sort", "free-sort", 4, false);
+});
+
+const cardSmaller = computed(() => store.correctCards[0]);
+const cardBigger = computed(() => store.correctCards[1]);
+</script>
+
+
 <template>
   <div class="dialog-content">
     <h2>Willkommen bei SortLab!</h2>
@@ -13,8 +27,19 @@
     <h2>Wie funktioniert das Sortieren?</h2>
     <p>Die Karten enthalten Bilder mit Strichen. "Kleiner" bedeutet, dass eine Karte weniger Striche hat als eine andere. Deine Aufgabe ist es, die Karten in der richtigen Reihenfolge zu sortieren.</p>
     <p>Hierfür kannst du bis zu zwei aufdecken und nachdem vergleichen vertauschen. Bei Mergesort und Quicksort gibt es algorithmenspezifische Zusatzfunktionen.</p>
-    <!-- Beispielkarten mit "<" einfügen -->
-
+    <!-- Beispielkarten mit einfügen -->
+      <div class="example-cards">
+        <!-- Karten mit weniger Strichen -->
+        <div class="card-with-text">
+          <div class="example-card" v-if="cardBigger && cardBigger.svg" v-html="cardSmaller.svg.outerHTML"></div>
+          <p><strong>kleiner</strong></p>
+        </div>
+        <!-- Karten mit mehr Strichen -->
+        <div class="card-with-text">
+          <div class="example-card" v-if="cardSmaller && cardSmaller.svg" v-html="cardBigger.svg.outerHTML"></div>
+          <p><strong>größer</strong></p>
+        </div>
+      </div>
     <h2>Hilfreiche Funktionen:</h2>
     <ul>
       <li>Falls du nicht mehr weißt, wie dein gewählter Algorithmus funktioniert, kannst du mit dem ?-Symbol oben rechts eine Erklärung abrufen.</li>
@@ -31,17 +56,23 @@
   </div>
 </template>
 
-<script setup>
-</script>
 
 <style scoped>
 .dialog-content {
-  padding: 20px;
   font-size: 1.2em;
+  padding: 20px;
+  line-height: 1.5; /* Angenehme Zeilenhöhe für den Fließtext */
 }
 
 h2 {
   font-weight: bold;
+  line-height: 1.3;
+  margin-top: 24px; /* Mehr Abstand nach oben */
+  margin-bottom: 16px; /* Klarer Abstand zur nächsten Zeile */
+}
+
+p {
+  margin-bottom: 12px; /* Geringerer Abstand zwischen Absätzen */
 }
 
 ul {
@@ -50,6 +81,38 @@ ul {
 }
 
 ul li {
-  margin-bottom: 10px;
+  margin-bottom: 8px; /* Geringer Abstand für bessere Lesbarkeit */
+  line-height: 1.5;
 }
+
+.example-cards {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.example-card {
+  width: 200px;
+  height: 300px;
+  border: 2px solid black;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.example-card svg {
+  width: 100%;
+  height: 100%;
+}
+
+.card-with-text {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
 </style>
