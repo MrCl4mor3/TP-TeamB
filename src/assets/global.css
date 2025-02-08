@@ -10,7 +10,7 @@
   box-sizing: border-box;
 }
 body {
-    font-family: Arial, sans-serif;
+  font-family: Arial, sans-serif;
 }
 
 header {
@@ -87,4 +87,3 @@ h2 {
   font-size: 30px; /* Schriftgröße des Headers */
   color: white; /* Schriftfarbe des Headers */
 }
-

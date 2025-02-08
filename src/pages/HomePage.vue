@@ -7,7 +7,7 @@ import errorMessages from '../descriptions/errorMessages.json'
 import descriptions from '../descriptions/homePageDescriptions.json'
 import router from '@/router.js'
 import Slider from 'primevue/slider'
-import Dialog from "primevue/dialog";
+import Dialog from 'primevue/dialog'
 import TutorialDialog from '@/components/TutorialDialog.vue'
 
 // Reset des Stores
@@ -58,8 +58,7 @@ function goToSortingPage() {
     router.push('/quickSortPage')
   } else if (selectedCategory.value === 'Merge Sort') {
     router.push('/mergeSortPage')
-  }
-  else {
+  } else {
     router.push('/sortingPage')
   }
 }
@@ -87,13 +86,11 @@ function openTutorial() {
 onMounted(() => {
   window.addEventListener('keyup', handleKeyPress)
 
-
   //Überprüft, ob der Nutzer die Seite schon einmal besucht hat
   if (sessionStorage.getItem('visited') === null) {
     sessionStorage.setItem('visited', 'true')
     openTutorial()
   }
-
 })
 
 onBeforeUnmount(() => {
@@ -109,13 +106,8 @@ onBeforeUnmount(() => {
   </header>
 
   <div class="content">
-
     <!-- Beschreibung des Spiels -->
-    <Dialog
-      v-model:visible="visibleTutorial"
-      :header="`SortLab Anleitung`"
-      class="dialog"
-    >
+    <Dialog v-model:visible="visibleTutorial" :header="`SortLab Anleitung`" class="dialog">
       <div class="dialog-content">
         <TutorialDialog />
       </div>
@@ -188,8 +180,6 @@ onBeforeUnmount(() => {
     <div class="start-container">
       <ButtonPress label="Start" @click="goToSortingPage" />
     </div>
-
-
   </div>
 
   <!-- Fußzeile -->

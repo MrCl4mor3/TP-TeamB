@@ -35,16 +35,18 @@ export default {
     },
   },
   mounted() {
-    store.currentCards.push(this);
+    store.currentCards.push(this)
   },
   methods: {
     // Methode um die Karte zu drehen. Hier kann nur umgedreht werden wenn weniger als 2 Karten
     // umgedreht sind. Wenn die Karte schon umgedreht ist wird die Anzahl der umgedrehten karten
     // um eins reduziert.
     toggleFlip() {
-
-      if (store.numberOfFlippedCards === 0 || store.selectedCategory !== 'Merge Sort'
-        || store.containers[store.currentSelectedContainer].some(card => card.id === this.cardId)) {
+      if (
+        store.numberOfFlippedCards === 0 ||
+        store.selectedCategory !== 'Merge Sort' ||
+        store.containers[store.currentSelectedContainer].some((card) => card.id === this.cardId)
+      ) {
         if (store.numberOfFlippedCards < 2 && !this.isFlipped) {
           this.isFlipped = !this.isFlipped
           store.numberOfFlippedCards++
@@ -63,11 +65,11 @@ export default {
       this.isFlipped = false
     },
 
-    colourchange(){
+    colourchange() {
       if (this.colour === 'grey') {
-        this.colour = '#10b981';
+        this.colour = '#10b981'
       } else {
-        this.colour = 'grey';
+        this.colour = 'grey'
       }
     },
   },
@@ -75,7 +77,6 @@ export default {
 </script>
 
 <style scoped>
-
 /*Container für die Karte*/
 .card-container {
   perspective: 1000px;
@@ -118,5 +119,4 @@ export default {
   transform: rotateY(180deg); /*dreht die Rückseite der Karte um 180 Grad*/
   background: white;
 }
-
 </style>
