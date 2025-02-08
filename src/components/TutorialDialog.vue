@@ -1,3 +1,17 @@
+<script setup>
+import { onMounted, computed } from "vue";
+import { store } from "@/store.js";
+import { generateCards } from "@/cardSetup.js";
+
+onMounted(() => {
+  generateCards("bubble-sort", "free-sort", 4, false);
+});
+
+const cardBigger = computed(() => store.cards[0]);
+const cardSmaller = computed(() => store.cards[1]);
+</script>
+
+
 <template>
   <div class="dialog-content">
     <h2>Willkommen bei SortLab!</h2>
@@ -14,6 +28,10 @@
     <p>Die Karten enthalten Bilder mit Strichen. "Kleiner" bedeutet, dass eine Karte weniger Striche hat als eine andere. Deine Aufgabe ist es, die Karten in der richtigen Reihenfolge zu sortieren.</p>
     <p>Hierfür kannst du bis zu zwei aufdecken und nachdem vergleichen vertauschen. Bei Mergesort und Quicksort gibt es algorithmenspezifische Zusatzfunktionen.</p>
     <!-- Beispielkarten mit "<" einfügen -->
+    <div class="example-cards">
+      <div v-if="cardBigger && cardBigger.svg" v-html="cardBigger.svg.outerHTML"></div>
+      <div v-if="cardSmaller && cardSmaller.svg" v-html="cardSmaller.svg.outerHTML"></div>
+    </div>
 
     <h2>Hilfreiche Funktionen:</h2>
     <ul>
@@ -31,8 +49,6 @@
   </div>
 </template>
 
-<script setup>
-</script>
 
 <style scoped>
 .dialog-content {
@@ -51,5 +67,11 @@ ul {
 
 ul li {
   margin-bottom: 10px;
+}
+
+.example-cards {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
 </style>
