@@ -190,6 +190,7 @@ export default {
   },
 }
 </script>
+
 <style scoped>
 .card-grid {
   border: 4px solid mediumvioletred; /* Fügt eine weiße Umrandung hinzu */
