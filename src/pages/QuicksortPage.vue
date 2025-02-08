@@ -226,16 +226,6 @@ export default {
 }
 </script>
 
-<style>
-/*Hier wird definiert wie die Karten angeordnet werden sollen*/
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  column-gap: 10px;
-  row-gap: 45px;
-  justify-items: center;
-}
-</style>
 
 <style scoped>
 .card-and-line {
@@ -245,11 +235,7 @@ export default {
 }
 
 .card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  column-gap: 10px;
-  row-gap: 45px;
-  justify-items: center;
   margin-left: 24px;
 }
+
 </style>

@@ -2,7 +2,9 @@
 import DividingLine from '@/components/DividingLine.vue'
 
 import { ref } from 'vue'
+import { useToast} from "primevue/usetoast"
 
+const toast = useToast()
 const draggedIndex = ref(null)
 
 function dragStart(index) {
@@ -18,7 +20,7 @@ function drop(targetIndex) {
       draggedIndex.value = null
     }
   } else {
-    alert('Karten müssen umgedreht sein')
+    this.toast.add({ severity: 'error', summary: 'Karten müssen umgedreht sein', life: 3000 })
   }
 }
 </script>
@@ -117,8 +119,7 @@ export default {
         }
       } else {
         store.allowedToFlip = false
-        console.log('mergesort')
-        alert("falscher Container")
+        this.toast.add({ severity: 'error', summary: 'falscher Container', life: 3000 })
       }
     },
     //TODO canSort? sicher das diese methode voll funktionsfähig ist?
@@ -133,7 +134,7 @@ export default {
         store.containers[store.currentSelectedContainer][secondIndex] = temp
         this.numberOfSwaps++
       } else {
-        alert(errorMessages['wrongAlgorithmStep'])
+        this.toast.add({ severity: 'error', summary: errorMessages['wrongAlgorithmStep'], life: 3000 })
       }
 
     },
@@ -148,7 +149,6 @@ export default {
       store.dividingContainerPosition = -1;
       store.dividingLinePosition = store.containers[targetContainer].length-this.draggedContainersize-1;
       store.dividingContainerPosition = targetContainer;
-      alert("container pos:"+targetContainer + " -- line pos:"+store.dividingLinePosition);
 
     },
     //Auswählen der Linie, festhalten der Position für den split
@@ -190,16 +190,13 @@ export default {
   },
 }
 </script>
+
 <style scoped>
 .card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  justify-items: center;
   border: 4px solid mediumvioletred; /* Fügt eine weiße Umrandung hinzu */
   padding: 10px; /* Abstand zwischen Inhalt und Rahmen */
   margin-bottom: 20px; /* Abstand zwischen einzelnen Grids */
   border-radius: 10px; /* Optional: Abgerundete Ecken */
-  width: max-content;
   max-width: 100%;
 }
 .card-and-line {
