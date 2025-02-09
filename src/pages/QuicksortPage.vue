@@ -14,7 +14,9 @@
           >
             <FlippedCard @click="SelectCardQuick(index)" :card-id="card.id" ref="singlecard">
               <template #front>
-                <div class="frontsite"></div>
+                <div class="frontsite" >
+                  <h1 style="color: black">{{ card.id }}</h1>
+                </div>
               </template>
               <template #back>
                 <div class="backsite">
@@ -51,6 +53,7 @@
 import StandardLayout from './PageLayout.vue'
 import { store } from '@/store.js'
 import FlippedCard from '@/components/FlippedCard.vue'
+import { useToast} from "primevue/usetoast"
 
 export default {
   name: 'GamePage',
@@ -69,7 +72,11 @@ export default {
       smallerCards: 0,
       trueCardRef: [],
       startigCardIds: [],
+      toast: null
     }
+  },
+  mounted() {
+    this.toast = useToast()
   },
   methods: {
     selectPivot() {
@@ -99,14 +106,28 @@ export default {
             this.startigCardIds.push(card)
           })
         } else {
-          alert('UhOh only 1 Card exists, that should never happen')
+          this.toast.add({ severity: 'error', summary: 'Gerade existiert maximal eine Karte, etwas ist schief gelaufen', life: 3000 })
         }
+
+        if (store.quickReshuffle) {
+          for (let i = this.startigCardIds.length - 1; i >= 0; i--) {
+            const j = Math.floor(Math.random() * (i+1));
+            let temp = store.cards[i];
+            store.cards[i] = store.cards[j];
+            store.cards[j] = temp;
+            //updaten der trueCardRef nach vertauschen von elementen
+            let tempref = this.trueCardRef[i];
+            this.trueCardRef[i] = this.trueCardRef[j];
+            this.trueCardRef[j] = tempref;
+          }
+          store.quickReshuffle = false;
+        }
+
         //erstes Pivotelement wird aufgedeckt und umrandet
-        this.startigCardIds[0].toggleFlip()
-        this.$refs.cardlist[this.trueCardRef[0]].firstChild.firstChild.style.border =
-          '2px solid green'
-        store.selectedCards.push(0)
-        store.score++
+        this.startigCardIds[this.trueCardRef[0]].toggleFlip();
+        this.$refs.cardlist[this.trueCardRef[0]].firstChild.firstChild.style.border = '2px solid green';
+        store.selectedCards.push(0);
+        store.score++;
       } else {
         let checked = 0
         //check ob alles schon als sortiert gespeichert wurde
@@ -167,10 +188,10 @@ export default {
             checked++
           }
         } else {
-          if (checked < store.cards.length) {
-            alert('Der aktuelle Teil ist noch nicht fertig eingeordnet')
+          if (checked < store.cards.length){
+            this.toast.add({ severity: 'error', summary: 'Der Aktuelle Teil muss noch fertiggemacht werden', life: 3000 })
           } else {
-            alert('Alle Karten sind als sortiert markiert')
+            this.toast.add({ severity: 'success', summary: 'Alle Karten sind bereits als sortiert markiert', life: 3000 })
           }
         }
         store.score++
@@ -180,7 +201,7 @@ export default {
     SelectCardQuick(index) {
       //hier muss abgefangen werden wenn zuerst auf Karten geklickt wird, ohne das Quicksort initialisiert wurde durch erstes pivotelement drücken
       if (this.firsttime) {
-        alert('Zum starten auf Pivotelement klicken')
+        this.toast.add({ severity: 'error', summary: 'Zum Starten auf "Pivotelement" klicken', life: 3000 })
 
         let tempcards = this.$refs.singlecard
         this.startigCardIds.slice(0)
@@ -190,31 +211,29 @@ export default {
             this.startigCardIds.push(card)
           })
         } else {
-          alert('UhOh only 1 Card exists, that should never happen')
+          this.toast.add({ severity: 'error', summary: 'Gerade existiert maximal eine Karte, etwas ist schief gelaufen', life: 3000 })
         }
-        this.trueCardRef.slice(0)
-        for (let i = 0; i < store.cards.length; i++) {
-          this.trueCardRef.push(i)
+        this.startigCardIds[index].toggleFlip();
+        //Beim Pagereload wird alles zurückgesetzt
+        if (store.reloadPage) {
+          this.resetQuickPage();
+          store.reloadPage = false;
         }
-      }
-      //Beim Pagereload wird alles zurückgesetzt
-      if (store.reloadPage) {
-        this.resetQuickPage()
-        store.reloadPage = false
-      }
-      if (store.pivotIndices.includes(index) || store.pivotElementIndex === index) {
-        alert('pivotelement')
-        this.startigCardIds[this.trueCardRef[index]].toggleFlip()
       } else {
-        if (store.selectedCards.includes(index)) {
-          store.selectedCards = store.selectedCards.filter((card) => card !== index)
-        } else if (store.selectedCards.length < 2) {
-          if (index === store.lookingIndex) {
-            store.selectedCards.push(index)
-            store.score++
-          } else {
-            alert('Flasche Karte')
-            this.startigCardIds[this.trueCardRef[index]].toggleFlip()
+        if (store.pivotIndices.includes(index) || store.pivotElementIndex === index) {
+          this.toast.add({ severity: 'error', summary: 'Dies ist ein Pivotelement', life: 3000 })
+          this.startigCardIds[this.trueCardRef[index]].toggleFlip();
+        } else {
+          if (store.selectedCards.includes(index)) {
+            store.selectedCards = store.selectedCards.filter((card) => card !== index);
+          } else if (store.selectedCards.length < 2) {
+            if (index === store.lookingIndex) {
+              store.selectedCards.push(index);
+              store.score++;
+            } else {
+              this.toast.add({ severity: 'error', summary: 'Das ist die falsche Karte, der Algorithmus geht anders', life: 3000 })
+              this.startigCardIds[this.trueCardRef[index]].toggleFlip();
+            }
           }
         }
       }
@@ -227,7 +246,7 @@ export default {
         store.reloadPage = false
       }
       if (this.firsttime) {
-        alert('Zum starten auf Pivotelement klicken')
+        this.toast.add({ severity: 'error', summary: 'Zum Starten auf "Pivotelement" klicken', life: 3000 })
       } else {
         if (store.selectedCards.length === 2) {
           //tausch von Pivotelement und kleinerem Element
@@ -270,7 +289,7 @@ export default {
           store.lookingIndex++
           this.numberOfSwaps++
         } else {
-          alert('select one non-pivot Card')
+          this.toast.add({ severity: 'error', summary: 'decke noch eine nicht-pivot Karte auf, um vergleichen zu können', life: 3000 })
         }
       }
     },
@@ -282,7 +301,7 @@ export default {
         store.reloadPage = false
       }
       if (this.firsttime) {
-        alert('Zum starten auf Pivotelement klicken')
+        this.toast.add({ severity: 'error', summary: 'Zum Starten auf "Pivotelement" klicken', life: 3000 })
       } else {
         if (store.selectedCards.length === 2) {
           this.biggerCards++
@@ -293,17 +312,16 @@ export default {
           store.lookingIndex++
           this.numberOfSwaps++
         } else {
-          alert('select one non-pivot Card')
+          this.toast.add({ severity: 'error', summary: 'decke noch eine nicht-pivot Karte auf, um vergleichen zu können', life: 3000 })
         }
       }
     },
     //reset der ganze page zu dem Startzustand
     resetQuickPage() {
-      alert('resetting qsp')
       //pivotboarder weg
-      this.$refs.cardlist[
-        this.trueCardRef[store.pivotElementIndex]
-      ].firstChild.firstChild.style.border = null
+      if (!this.firsttime) {
+        this.$refs.cardlist[this.trueCardRef[store.pivotElementIndex]].firstChild.firstChild.style.border = null;
+      }
       //kartenrückseite auf default farbe
       this.startigCardIds.forEach((card) => {
         card.colour = '#10b981'
