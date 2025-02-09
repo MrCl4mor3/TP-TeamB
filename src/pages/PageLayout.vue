@@ -37,11 +37,11 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     <div class="dialog-content">
       <div>
         <p>Score: {{ store.score }}</p>
-        <p>BubbleSort: {{ this.bubbleSortResult.score }}</p>
-        <p>SelectionSort: {{ this.selectionSortResult.score }}</p>
-        <p>InsertionSort: {{ this.insertionSortResult.score }}</p>
-        <p>QuickSort: {{ this.quickSortResult.score }}</p>
-        <p>MergeSort: {{ this.mergeSortResult.score }}</p>
+<!--        <p>BubbleSort: {{ this.bubbleSortResult.score }}</p>-->
+<!--        <p>SelectionSort: {{ this.selectionSortResult.score }}</p>-->
+<!--        <p>InsertionSort: {{ this.insertionSortResult.score }}</p>-->
+<!--        <p>QuickSort: {{ this.quickSortResult.score }}</p>-->
+<!--        <p>MergeSort: {{ this.mergeSortResult.score }}</p>-->
       </div>
       <div class="button-container">
         <ButtonPress icon="pi pi-home" @click="goToHomePage" />
@@ -78,13 +78,13 @@ import { useToast } from 'primevue/usetoast'
 import algorithmDescription from '@/descriptions/algorithmDescriptions.json'
 import errorMessages from '@/descriptions/ErrorMessages.json'
 import { store, resetStartValues } from '@/store.js'
-import {
-  bubbleSortWithScore,
-  insertionSortWithScore,
-  mergeSortWithScore,
-  quickSortWithScore,
-  selectionSortWithScore,
-} from '@/algorithms.js'
+// import {
+//   bubbleSortWithScore,
+//   insertionSortWithScore,
+//   mergeSortWithScore,
+//   quickSortWithScore,
+//   selectionSortWithScore,
+// } from '@/algorithms.js'
 
 export default {
   name: 'StandardLayout',
@@ -197,7 +197,7 @@ export default {
         store.cards.every((card, index) => card.id === store.correctCards[index].id) ||
         store.containers[0].every((card, index) => card.id === store.correctCards[index].id)
       ) {
-        this.calculateScore()
+        // this.calculateScore()
         this.openAllCards()
         this.visibleEndScreen = true
       } else {
@@ -210,13 +210,13 @@ export default {
       }
     },
 
-    calculateScore() {
-      this.bubbleSortResult = bubbleSortWithScore(store.startingCards)
-      this.selectionSortResult = selectionSortWithScore(store.startingCards)
-      this.insertionSortResult = insertionSortWithScore(store.startingCards)
-      this.quickSortResult = quickSortWithScore(store.startingCards)
-      this.mergeSortResult = mergeSortWithScore(store.startingCards)
-    },
+    // calculateScore() {
+    //   this.bubbleSortResult = bubbleSortWithScore(store.startingCards)
+    //   this.selectionSortResult = selectionSortWithScore(store.startingCards)
+    //   this.insertionSortResult = insertionSortWithScore(store.startingCards)
+    //   this.quickSortResult = quickSortWithScore(store.startingCards)
+    //   this.mergeSortResult = mergeSortWithScore(store.startingCards)
+    // },
 
     //Alle Karten werden aufgedeckt
     openAllCards() {
