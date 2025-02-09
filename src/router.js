@@ -37,7 +37,7 @@ const routes = [
     path: '/mergeSortPage',
     name: 'MergeSortPage',
     component: MergeSortPage,
-  }
+  },
 ]
 //erstellt den router
 const router = createRouter({

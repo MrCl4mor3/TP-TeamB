@@ -3,10 +3,7 @@ import { ref } from 'vue'
 import Dialog from 'primevue/dialog'
 import Toast from 'primevue/toast'
 
-
-
 const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
-
 </script>
 
 <template>
@@ -18,10 +15,7 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     </h1>
     <div class="button-container-meta">
       <ButtonPress label="?" @click="openTutorial"></ButtonPress>
-      <ButtonPress
-        icon="pi pi-refresh"
-        @click="shuffel"
-      ></ButtonPress>
+      <ButtonPress icon="pi pi-refresh" @click="shuffel"></ButtonPress>
     </div>
   </header>
 
@@ -37,25 +31,28 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
 
   <Dialog
     v-model:visible="visibleEndScreen"
-    :header="'Bravo- Die Karten sind richtig sortiert!'"
+    :header="'Bravo - Die Karten sind richtig sortiert!'"
     class="dialog"
-    @update:visible="prepareReset">
-    <div class="dialog-content">
-      <div>
-        <p>Score: {{ store.score }}</p>
-        <p>BubbleSort: {{ this.bubbleSortResult.score }}</p>
-        <p>SelectionSort: {{ this.selectionSortResult.score }}</p>
-        <p>InsertionSort: {{ this.insertionSortResult.score }}</p>
-        <p>QuickSort: {{ this.quickSortResult.score }}</p>
-        <p>MergeSort: {{ this.mergeSortResult.score }}</p>
-      </div>
-      <div class="button-container">
-        <ButtonPress icon="pi pi-home" @click="goToHomePage" />
-        <ButtonPress label="Neustart" @click="startOver" />
-        <ButtonPress label="Neu mischen" @click="shuffel" />
-      </div>
+    @update:visible="prepareReset"
+    v-if="isScoreCalculated"
+  >
+  <div class="dialog-content">
+    <div>
+      <p>Score: {{ store.score }}</p>
+      <p v-if="bubbleSortResult">BubbleSort: {{ bubbleSortResult.score }}</p>
+      <p v-if="selectionSortResult">SelectionSort: {{ selectionSortResult.score }}</p>
+      <p v-if="insertionSortResult">InsertionSort: {{ insertionSortResult.score }}</p>
+      <p v-if="quickSortResult">QuickSort: {{ quickSortResult.score }}</p>
+      <p v-if="mergeSortResult">MergeSort: {{ mergeSortResult.score }}</p>
     </div>
+    <div class="button-container">
+      <ButtonPress icon="pi pi-home" @click="goToHomePage" />
+      <ButtonPress label="Neustart" @click="startOver" />
+      <ButtonPress label="Neu mischen" @click="shuffel" />
+    </div>
+  </div>
   </Dialog>
+
 
   <Toast />
 
@@ -80,7 +77,7 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
 </template>
 
 <script>
-import { useToast} from "primevue/usetoast"
+import { useToast } from 'primevue/usetoast'
 import algorithmDescription from '@/descriptions/algorithmDescriptions.json'
 import errorMessages from '@/descriptions/ErrorMessages.json'
 import { store, resetStartValues } from '@/store.js'
@@ -89,8 +86,9 @@ import {
   insertionSortWithScore,
   mergeSortWithScore,
   quickSortWithScore,
-  selectionSortWithScore
-} from "@/algorithms.js";
+  selectionSortWithScore,
+} from '@/algorithms.js'
+import { nextTick} from "vue";
 
 export default {
   name: 'StandardLayout',
@@ -106,7 +104,7 @@ export default {
   },
   data() {
     return {
-
+      isScoreCalculated: false,
       bubbleSortResult: null,
       selectionSortResult: null,
       insertionSortResult: null,
@@ -140,7 +138,10 @@ export default {
     SwapCards() {
       let canSort = true
 
-      if (store.selectedMode === 'Vorgegebenes Sortieren' && store.selectedCategory !== 'Merge Sort') {
+      if (
+        store.selectedMode === 'Vorgegebenes Sortieren' &&
+        store.selectedCategory !== 'Merge Sort'
+      ) {
         canSort = !!(
           store.correctSortingOrder[this.numberOfSwaps].includes(store.selectedCards[0]) &&
           store.correctSortingOrder[this.numberOfSwaps].includes(store.selectedCards[1])
@@ -153,7 +154,12 @@ export default {
         store.cards[secondIndex] = temp
         this.numberOfSwaps++
       } else {
-        this.toast.add({ severity: 'error', summary: 'Fehler', detail: errorMessages['wrongAlgorithmStep'], life: 3000 })
+        this.toast.add({
+          severity: 'error',
+          summary: 'Fehler',
+          detail: errorMessages['wrongAlgorithmStep'],
+          life: 3000,
+        })
       }
     },
 
@@ -161,8 +167,8 @@ export default {
       if (store.selectedCards.includes(index)) {
         store.selectedCards = store.selectedCards.filter((card) => card !== index)
       } else if (store.selectedCards.length < 2) {
-        store.selectedCards.push(index);
-        store.score++;
+        store.selectedCards.push(index)
+        store.score++
       }
     },
 
@@ -172,6 +178,7 @@ export default {
       store.containers.splice(0);
       store.containers.push(store.startingCards);
       this.visibleEndScreen = false;
+      this.visibleEndScreen = false
       this.toast.add({ severity: 'success', summary: 'Spiel wurde zurückgesetzt', life: 3000 })
     },
 
@@ -186,54 +193,66 @@ export default {
         store.startingCards = store.cards.slice()
       }
 
-      this.visibleEndScreen = false;
+      this.visibleEndScreen = false
       this.toast.add({ severity: 'success', summary: 'Karten wurden gemischt', life: 3000 })
     },
 
     checkIfCorrect() {
-      if (store.cards.every((card, index) => card.id === store.correctCards[index].id)
-        || store.containers[0].every((card, index) => card.id === store.correctCards[index].id)) {
+      if (
+        store.cards.every((card, index) => card.id === store.correctCards[index].id) ||
+        store.containers[0].every((card, index) => card.id === store.correctCards[index].id)
+      ) {
         this.calculateScore()
         this.openAllCards()
-        this.visibleEndScreen = true
+        nextTick(() => {
+          this.visibleEndScreen = true
+        })
       } else {
-        this.toast.add({ severity: 'error', summary: 'Fehler', detail: 'Die Karten sind noch nicht korrekt sortiert', life: 3000 })
+        this.toast.add({
+          severity: 'error',
+          summary: 'Fehler',
+          detail: 'Die Karten sind noch nicht korrekt sortiert',
+          life: 3000,
+        })
       }
     },
 
     calculateScore() {
+      this.isScoreCalculated = false
+
       this.bubbleSortResult = bubbleSortWithScore(store.startingCards)
       this.selectionSortResult = selectionSortWithScore(store.startingCards)
       this.insertionSortResult = insertionSortWithScore(store.startingCards)
       this.quickSortResult = quickSortWithScore(store.startingCards)
       this.mergeSortResult = mergeSortWithScore(store.startingCards)
+
+      this.isScoreCalculated = true
     },
 
     //Alle Karten werden aufgedeckt
     openAllCards() {
       store.currentCards.forEach((card) => {
-        card.openCard();
-      });
+        card.openCard()
+      })
     },
     //Alle Karten werden zugedeckt
     prepareReset() {
       store.currentCards.forEach((card) => {
-      card.closeCard();
-      card.colour = '#10b981';
-    });
-      store.reloadPage = true;
-      store.dividingLinePosition = -1;
-      store.dividingContainerPosition = -1;
-      store.containers.splice(0);
-      store.containers.push(store.startingCards);
-      resetStartValues();
+        card.closeCard()
+        card.colour = '#10b981'
+      })
+      store.reloadPage = true
+      store.dividingLinePosition = -1
+      store.dividingContainerPosition = -1
+      store.containers.splice(0)
+      store.containers.push(store.startingCards)
+      resetStartValues()
     },
 
     goToHomePage() {
       this.$router.push('/')
       store.selectedCards = []
     },
-
 
     formatDescription(category) {
       // Überprüfe, ob der Mode "Freies Sortieren" ist
@@ -271,5 +290,4 @@ export default {
   font-size: 1.2em;
   line-height: 1.6;
 }
-
 </style>
