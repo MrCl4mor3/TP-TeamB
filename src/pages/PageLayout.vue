@@ -31,25 +31,28 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
 
   <Dialog
     v-model:visible="visibleEndScreen"
-    :header="'Bravo- Die Karten sind richtig sortiert!'"
+    :header="'Bravo - Die Karten sind richtig sortiert!'"
     class="dialog"
-    @update:visible="prepareReset">
-    <div class="dialog-content">
-      <div>
-        <p>Score: {{ store.score }}</p>
-<!--        <p>BubbleSort: {{ this.bubbleSortResult.score }}</p>-->
-<!--        <p>SelectionSort: {{ this.selectionSortResult.score }}</p>-->
-<!--        <p>InsertionSort: {{ this.insertionSortResult.score }}</p>-->
-<!--        <p>QuickSort: {{ this.quickSortResult.score }}</p>-->
-<!--        <p>MergeSort: {{ this.mergeSortResult.score }}</p>-->
-      </div>
-      <div class="button-container">
-        <ButtonPress icon="pi pi-home" @click="goToHomePage" />
-        <ButtonPress label="Neustart" @click="startOver" />
-        <ButtonPress label="Neu mischen" @click="shuffel" />
-      </div>
+    @update:visible="prepareReset"
+    v-if="isScoreCalculated"
+  >
+  <div class="dialog-content">
+    <div>
+      <p>Score: {{ store.score }}</p>
+      <p v-if="bubbleSortResult">BubbleSort: {{ bubbleSortResult.score }}</p>
+      <p v-if="selectionSortResult">SelectionSort: {{ selectionSortResult.score }}</p>
+      <p v-if="insertionSortResult">InsertionSort: {{ insertionSortResult.score }}</p>
+      <p v-if="quickSortResult">QuickSort: {{ quickSortResult.score }}</p>
+      <p v-if="mergeSortResult">MergeSort: {{ mergeSortResult.score }}</p>
     </div>
+    <div class="button-container">
+      <ButtonPress icon="pi pi-home" @click="goToHomePage" />
+      <ButtonPress label="Neustart" @click="startOver" />
+      <ButtonPress label="Neu mischen" @click="shuffel" />
+    </div>
+  </div>
   </Dialog>
+
 
   <Toast />
 
@@ -78,13 +81,14 @@ import { useToast } from 'primevue/usetoast'
 import algorithmDescription from '@/descriptions/algorithmDescriptions.json'
 import errorMessages from '@/descriptions/ErrorMessages.json'
 import { store, resetStartValues } from '@/store.js'
-// import {
-//   bubbleSortWithScore,
-//   insertionSortWithScore,
-//   mergeSortWithScore,
-//   quickSortWithScore,
-//   selectionSortWithScore,
-// } from '@/algorithms.js'
+import {
+  bubbleSortWithScore,
+  insertionSortWithScore,
+  mergeSortWithScore,
+  quickSortWithScore,
+  selectionSortWithScore,
+} from '@/algorithms.js'
+import { nextTick} from "vue";
 
 export default {
   name: 'StandardLayout',
@@ -100,6 +104,7 @@ export default {
   },
   data() {
     return {
+      isScoreCalculated: false,
       bubbleSortResult: null,
       selectionSortResult: null,
       insertionSortResult: null,
@@ -197,9 +202,11 @@ export default {
         store.cards.every((card, index) => card.id === store.correctCards[index].id) ||
         store.containers[0].every((card, index) => card.id === store.correctCards[index].id)
       ) {
-        // this.calculateScore()
+        this.calculateScore()
         this.openAllCards()
-        this.visibleEndScreen = true
+        nextTick(() => {
+          this.visibleEndScreen = true
+        })
       } else {
         this.toast.add({
           severity: 'error',
@@ -210,13 +217,17 @@ export default {
       }
     },
 
-    // calculateScore() {
-    //   this.bubbleSortResult = bubbleSortWithScore(store.startingCards)
-    //   this.selectionSortResult = selectionSortWithScore(store.startingCards)
-    //   this.insertionSortResult = insertionSortWithScore(store.startingCards)
-    //   this.quickSortResult = quickSortWithScore(store.startingCards)
-    //   this.mergeSortResult = mergeSortWithScore(store.startingCards)
-    // },
+    calculateScore() {
+      this.isScoreCalculated = false
+
+      this.bubbleSortResult = bubbleSortWithScore(store.startingCards)
+      this.selectionSortResult = selectionSortWithScore(store.startingCards)
+      this.insertionSortResult = insertionSortWithScore(store.startingCards)
+      this.quickSortResult = quickSortWithScore(store.startingCards)
+      this.mergeSortResult = mergeSortWithScore(store.startingCards)
+
+      this.isScoreCalculated = true
+    },
 
     //Alle Karten werden aufgedeckt
     openAllCards() {
