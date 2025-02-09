@@ -32,8 +32,8 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards, tes
       let svgTemplate = svgDocument.documentElement
 
       //Min und Max Werte für die Zufallszahlen der zu entfernenden ids
-      const min = 1
-      const max = 20
+      const {min, max} = findMinMaxIds(svgTemplate)
+      console.log('min:', min, 'max:', max)
       let cards = []
       let removedParts = []
 
@@ -173,4 +173,15 @@ function arraysAreEqual(arr1, arr2) {
     }
   }
   return true
+}
+
+function findMinMaxIds(svgContent) {
+  let min = 0
+  let max = 0
+
+  let ids = Array.from(svgContent.querySelectorAll('[id]')).map(elem => parseInt(elem.id.split('-')[1]))
+  min = Math.min(...ids)
+  max = Math.max(...ids)
+
+  return {min, max}
 }
