@@ -91,7 +91,6 @@ const cardBigger = computed(() => store.correctCards[1])
 
 <style scoped>
 .dialog-content {
-  font-size: 1.2em;
   padding: 20px;
   line-height: 1.5;
 }

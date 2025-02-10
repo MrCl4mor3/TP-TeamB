@@ -1,9 +1,9 @@
 <template>
   <StandardLayout :store="store" :isExpanded="isExpanded">
     <template #cards="{ selectCards }">
-      <div class="card-grid">
+      <div class="flex-container-row">
         <!-- Hier wird für jede Karte ein FlippedCard erstellt -->
-        <div v-for="(card, index) in store.cards" :key="card.id" class="card-with-description">
+        <div v-for="(card, index) in store.cards" :key="card.id" class="flex-container-column">
           <FlippedCard
               @click="selectCards(index)"
               :card-id="card.id"
@@ -47,3 +47,11 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+
+.flex-container-column {
+  gap: 16px;
+  align-items: center;
+}
+</style>
