@@ -158,7 +158,7 @@ export default {
             card.closeCard()
             store.selectedCards.splice(0);
             store.numberOfFlippedCards = 0;
-          })},100)
+          })},300)
 
       } else {
         this.toast.add({
@@ -190,27 +190,32 @@ export default {
 
     startOver() {
       this.prepareReset()
-      store.cards = store.startingCards.slice()
-      store.containers.splice(0);
-      store.containers.push(store.startingCards);
-      this.visibleEndScreen = false;
-      this.visibleEndScreen = false
-      this.toast.add({ severity: 'success', summary: 'Spiel wurde zurückgesetzt', life: 3000 })
+
+      setTimeout(() => {
+        store.cards = store.startingCards.slice()
+        store.containers.splice(0);
+        store.containers.push(store.startingCards);
+        this.visibleEndScreen = false;
+        this.visibleEndScreen = false
+        this.toast.add({ severity: 'success', summary: 'Spiel wurde zurückgesetzt', life: 3000 })
+      }, 400)
     },
 
     shuffel() {
       this.prepareReset()
 
-      if (store.selectedCategory === 'Quick Sort') {
-        store.quickReshuffle = true;
-        store.cards = store.startingCards.slice();
-      } else {
-        store.cards = store.cards.sort(() => Math.random() - 0.5)
-        store.startingCards = store.cards.slice()
-      }
+      setTimeout(() => {
+        if (store.selectedCategory === 'Quick Sort') {
+          store.quickReshuffle = true;
+          store.cards = store.startingCards.slice();
+        } else {
+          store.cards = store.cards.sort(() => Math.random() - 0.5)
+          store.startingCards = store.cards.slice()
+        }
 
-      this.visibleEndScreen = false
-      this.toast.add({ severity: 'success', summary: 'Karten wurden gemischt', life: 3000 })
+        this.visibleEndScreen = false
+        this.toast.add({ severity: 'success', summary: 'Karten wurden gemischt', life: 3000 })
+      }, 400)
     },
 
     checkIfCorrect() {
