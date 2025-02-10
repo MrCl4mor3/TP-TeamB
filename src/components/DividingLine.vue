@@ -34,22 +34,34 @@ export default {
   },
   //checked ob diese Linie als Trennlinie Markiert werden muss
   mounted() {
-    if (store.dividingContainerPosition === this.containerIndex && store.dividingLinePosition === this.lineIndex) {
-      this.isDividingLine = true;
+    if (
+      store.dividingContainerPosition === this.containerIndex &&
+      store.dividingLinePosition === this.lineIndex
+    ) {
+      this.isDividingLine = true
     }
   },
   methods: {
     selectLine() {
-      if(this.isSelected) {
+      if (this.isSelected) {
         this.isSelected = false
         store.selectedLines--
-      } else if(!this.isSelected && store.selectedLines === 0) {
+      } else if (!this.isSelected && store.selectedLines === 0) {
         store.selectedLines++
         this.isSelected = true
       }
     },
-
-    }
-  }
+    reloadRecolour() {
+      if (
+        store.dividingContainerPosition === this.containerIndex &&
+        store.dividingLinePosition === this.lineIndex
+      ) {
+        this.isDividingLine = true
+      } else {
+        this.isDividingLine = false
+        this.isSelected = false
+      }
+    },
+  },
+}
 </script>
-

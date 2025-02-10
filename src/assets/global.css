@@ -10,7 +10,7 @@
   box-sizing: border-box;
 }
 body {
-    font-family: Arial, sans-serif;
+  font-family: Arial, sans-serif;
 }
 
 header {
@@ -19,7 +19,7 @@ header {
   top: 0;
   background-color: lightgray;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
   z-index: 1000;
@@ -47,9 +47,10 @@ footer {
   align-items: center;
 }
 
-h1 {
-  margin: 0;
+header h1 {
   color: #10b981;
+  flex-grow: 1;
+  text-align: center;
 }
 h2 {
   color: #10b981;
@@ -76,4 +77,17 @@ h2 {
   justify-items: center;
   column-gap: 20px;
   row-gap: 45px;
+}
+
+/* Dialog-Header Anpassung */
+.p-dialog .p-dialog-header {
+  font-weight: bold; /* Oder andere Schriftattribute */
+  background-color: #10b981; /* Hintergrundfarbe des Headers */
+  border-radius: 12px; /* Abrundung des Headers */
+  font-size: 30px; /* Schriftgröße des Headers */
+  color: white; /* Schriftfarbe des Headers */
+}
+
+.p-toast.p-toast-top-right {
+  top: 100px !important;
 }

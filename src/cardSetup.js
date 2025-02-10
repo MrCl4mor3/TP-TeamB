@@ -17,7 +17,8 @@ const algorithmMap = {
   'Quick Sort': quickSortWithScore,
 }
 
-export function generateCards(selectedCategory, selectedMode, numberOfCards, testMode) {
+
+export function generateCards(selectedCategory, selectedMode, numberOfCards) {
   store.selectedMode = selectedMode
   store.selectedCategory = selectedCategory
   store.numberOfCards = numberOfCards
@@ -32,8 +33,7 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards, tes
       let svgTemplate = svgDocument.documentElement
 
       //Min und Max Werte für die Zufallszahlen der zu entfernenden ids
-      const min = 1
-      const max = 20
+      const {min, max} = findMinMaxIds(svgTemplate)
       let cards = []
       let removedParts = []
 
@@ -105,11 +105,6 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards, tes
       store.containers.push(store.startingCards)
 
       algorithmMap[store.selectedCategory](store.startingCards)
-
-      if (testMode) {
-        store.cards = store.correctCards
-        store.startingCards = store.correctCards
-      }
     })
 
     .catch((error) => {
@@ -173,4 +168,15 @@ function arraysAreEqual(arr1, arr2) {
     }
   }
   return true
+}
+
+function findMinMaxIds(svgContent) {
+  let min = 0
+  let max = 0
+
+  let ids = Array.from(svgContent.querySelectorAll('[id]')).map(elem => parseInt(elem.id.split('-')[1]))
+  min = Math.min(...ids)
+  max = Math.max(...ids)
+
+  return {min, max}
 }
