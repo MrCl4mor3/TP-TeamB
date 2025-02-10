@@ -103,6 +103,7 @@ export default {
       selectedContainerIndex: null,
       selectedCards: [],
       draggedContainersize: 0,
+      toasty : useToast()
     }
   },
   methods: {
@@ -113,6 +114,7 @@ export default {
         this.resetMergePage()
         store.reloadPage = false
       }
+      //Karte ist die erst ausgewählte Karte
       if (this.selectedCards.length === 0) {
         store.currentSelectedContainer = containerIndex
       }
@@ -121,25 +123,26 @@ export default {
         store.currentSelectedContainer === containerIndex
       ) {
         store.currentSelectedContainer = containerIndex
+        //Karte wird zugedeckt, wenn zwei offen sind werden beide zugedeckt
         if (this.selectedCards.includes(cardIndex)) {
           if (this.selectedCards.length === 2) {
             this.flipAllCards();
           } else {
             this.selectedCards = this.selectedCards.filter((card) => card !== cardIndex) //nach entfernen des container index hinzufügen
           }
+          //Karte wird aufgedeckt
         } else if (this.selectedCards.length < 2) {
           this.selectedCards.push(cardIndex)
           store.score++
         }
       } else {
         store.allowedToFlip = false
-        toast.add({ severity: 'error', summary: messages["wrongContainer"], life: 3000 })
+        this.toasty.add({ severity: 'error', summary: messages["wrongContainer"], life: 3000 })
       }
     },
-
+    //Vertauscht zwei Karten aus dem gleichen Container, und deckt sie danach wieder um
     canSwapInContainer() {
       if (this.selectedCards.length === 2) {
-        console.log('test 2')
         const [firstIndex, secondIndex] = this.selectedCards
         const temp = store.containers[store.currentSelectedContainer][firstIndex]
         store.containers[store.currentSelectedContainer][firstIndex] =
@@ -220,7 +223,7 @@ export default {
       this.selectedCards.splice(0);
     },
     resetMergePage() {
-      //reset store Variablen
+      //reset store Variablen die von MergeSortPage benutzt werden
       store.numberOfFlippedCards = 0
       store.currentSelectedContainer = null
       store.selectedLines = 0

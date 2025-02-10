@@ -11,5 +11,11 @@
   "allCardsClose": "Alle Karten müssen umgedreht sein!",
   "restartGame": "Das Spiel wurde neu gestartet.",
   "shuffleCards": "Die Karten wurden gemischt.",
-  "oneCard": "Gerade existiert maximal eine Karte, etwas ist schief gelaufen"
+  "oneCard": "Gerade existiert maximal eine Karte, etwas ist schief gelaufen",
+  "finshThePart": "Der Aktuelle Teilarray muss noch fertiggemacht werden",
+  "quicksortSuccess" : "Alle Karten sind als sortiert markiert, hoffentlich hast du alles richtig gemacht!",
+  "choosingNewPivot" : "Das neue Pivotelement ist ausgewählt",
+  "clickPivotToStart" : "Zum Starten auf 'Pivotelement' klicken",
+  "pivotelement" : "Dies ist ein Pivotelement",
+  "missingNonPivot" : "Decke noch eine nicht-pivot Karte auf, um vergleichen zu können"
 }

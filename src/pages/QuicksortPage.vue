@@ -85,7 +85,7 @@ export default {
         this.resetQuickPage()
         store.reloadPage = false
       }
-      //Als erste Aktion muss ein PIvotelement gewählt werden,
+      //Als erste Aktion muss ein Pivotelement gewählt werden, hier werden dann alle Werte initialisiert
       if (this.firsttime) {
         this.firsttime = false
         store.lookingIndex = 1
@@ -108,14 +108,14 @@ export default {
         } else {
           this.toast.add({ severity: 'error', summary: messages['oneCard'], life: 3000 })
         }
-
+        //Hier wird beim reshufflen die Reihenfolge der Card gemischt.
         if (store.quickReshuffle) {
           for (let i = this.startigCardIds.length - 1; i >= 0; i--) {
             const j = Math.floor(Math.random() * (i+1));
             let temp = store.cards[i];
             store.cards[i] = store.cards[j];
             store.cards[j] = temp;
-            //updaten der trueCardRef nach vertauschen von elementen
+            //updaten der trueCardRef nach vertauschen von elementen, damit die Karten korrekt angesprochen werden können
             let tempref = this.trueCardRef[i];
             this.trueCardRef[i] = this.trueCardRef[j];
             this.trueCardRef[j] = tempref;
@@ -134,7 +134,7 @@ export default {
         if (store.pivotIndices.length === store.cards.length) {
           checked = store.cards.length
         }
-        //ist der Teilarray fertig einsortiert
+        //ist der Teilarray fertig einsortiert, also sind wir am ende des Karten Array oder beim altem pivotelement angekommen
         if (
           (store.lookingIndex >= store.cards.length ||
             store.pivotIndices.includes(store.lookingIndex)) &&
@@ -188,22 +188,24 @@ export default {
             checked++
           }
         } else {
+          //die Fälle das Pivotelementgedrückt wurde wenn entweder der Teilarray noch nicht soritert wurde oder jetzt alle Karten einsortiert sind
           if (checked < store.cards.length){
-            this.toast.add({ severity: 'error', summary: 'Der Aktuelle Teil muss noch fertiggemacht werden', life: 3000 })
+            this.toast.add({ severity: 'error', summary: messages['finshThePart'], life: 3000 })
           } else {
-            this.toast.add({ severity: 'success', summary: 'Alle Karten sind bereits als sortiert markiert', life: 3000 })
+            this.toast.add({ severity: 'success', summary: messages['quicksortSuccess'], life: 3000 })
           }
         }
         store.score++
-
-        this.toast.add({ severity: 'info', summary: 'Das neue Pivotelement ist ausgewählt', life: 3000 })
+        //weil sich hier so viel tut wird ein toast ausgegeben
+        this.toast.add({ severity: 'info', summary: messages['choosingNewPivot'], life: 3000 })
       }
     },
     //für Quicksort, es werden Pivotelement erkannt und anders behandelt
     SelectCardQuick(index) {
       //hier muss abgefangen werden wenn zuerst auf Karten geklickt wird, ohne das Quicksort initialisiert wurde durch erstes pivotelement drücken
+      //Dabei wird die gedrückte Karte wieder umgedreht und evtl bei reload der reset schonmal gemacht
       if (this.firsttime) {
-        this.toast.add({ severity: 'info', summary: 'Zum Starten auf "Pivotelement" klicken', life: 3000 })
+        this.toast.add({ severity: 'info', summary: messages['clickPivotToStart'], life: 3000 })
 
         let tempcards = this.$refs.singlecard
         this.startigCardIds.slice(0)
@@ -213,7 +215,7 @@ export default {
             this.startigCardIds.push(card)
           })
         } else {
-          this.toast.add({ severity: 'error', summary: 'Gerade existiert maximal eine Karte, etwas ist schief gelaufen', life: 3000 })
+          this.toast.add({ severity: 'error', summary: messages['oneCard'], life: 3000 })
         }
         this.startigCardIds[index].toggleFlip();
         //Beim Pagereload wird alles zurückgesetzt
@@ -222,18 +224,22 @@ export default {
           store.reloadPage = false;
         }
       } else {
+        //ist geklickte Karte Pivotelement oder schon fest?
         if (store.pivotIndices.includes(index) || store.pivotElementIndex === index) {
-          this.toast.add({ severity: 'error', summary: 'Dies ist ein Pivotelement', life: 3000 })
+          this.toast.add({ severity: 'error', summary: messages['pivotelement'], life: 3000 })
           this.startigCardIds[this.trueCardRef[index]].toggleFlip();
         } else {
+          //ist die geklickte Karte schon ausgewählt?
           if (store.selectedCards.includes(index)) {
             store.selectedCards = store.selectedCards.filter((card) => card !== index);
+            //Karte ist noch nicht ausgewählt
           } else if (store.selectedCards.length < 2) {
+            //Ist das die richtige nächste Karte?
             if (index === store.lookingIndex) {
               store.selectedCards.push(index);
               store.score++;
             } else {
-              this.toast.add({ severity: 'error', summary: 'Das ist die falsche Karte, der Algorithmus geht anders', life: 3000 })
+              this.toast.add({ severity: 'error', summary: messages['wrongAlgorithmStep'], life: 3000 })
               this.startigCardIds[this.trueCardRef[index]].toggleFlip();
             }
           }
@@ -248,7 +254,7 @@ export default {
         store.reloadPage = false
       }
       if (this.firsttime) {
-        this.toast.add({ severity: 'info', summary: 'Zum Starten auf "Pivotelement" klicken', life: 3000 })
+        this.toast.add({ severity: 'info', summary: messages['clickPivotToStart'], life: 3000 })
       } else {
         if (store.selectedCards.length === 2) {
           //tausch von Pivotelement und kleinerem Element
@@ -265,7 +271,6 @@ export default {
           let willBeFlipped = null;
           willBeFlipped = this.startigCardIds[this.trueCardRef[store.pivotElementIndex]];
           setTimeout(() => {willBeFlipped.toggleFlip();}, 30);
-          // this.startigCardIds[this.trueCardRef[store.pivotElementIndex]].toggleFlip()
           store.selectedCards = store.selectedCards.filter(
             (card) => card !== store.pivotElementIndex,
           )
@@ -294,7 +299,7 @@ export default {
           store.lookingIndex++
           this.numberOfSwaps++
         } else {
-          this.toast.add({ severity: 'error', summary: 'decke noch eine nicht-pivot Karte auf, um vergleichen zu können', life: 3000 })
+          this.toast.add({ severity: 'error', summary: messages['missingNonPivot'], life: 3000 })
         }
       }
     },
@@ -306,7 +311,7 @@ export default {
         store.reloadPage = false
       }
       if (this.firsttime) {
-        this.toast.add({ severity: 'info', summary: 'Zum Starten auf "Pivotelement" klicken', life: 3000 })
+        this.toast.add({ severity: 'info', summary: messages['clickPivotToStart'], life: 3000 })
       } else {
         if (store.selectedCards.length === 2) {
           this.biggerCards++
@@ -317,7 +322,7 @@ export default {
           store.lookingIndex++
           this.numberOfSwaps++
         } else {
-          this.toast.add({ severity: 'error', summary: 'decke noch eine nicht-pivot Karte auf, um vergleichen zu können', life: 3000 })
+          this.toast.add({ severity: 'error', summary: messages['missingNonPivot'], life: 3000 })
         }
       }
     },
@@ -331,7 +336,7 @@ export default {
       this.startigCardIds.forEach((card) => {
         card.colour = '#10b981'
       })
-      //reset variablen die im store gespeichert sind
+      //reset variablen die von Quicksortpage benutzt werden und im store gespeichert sind
       store.selectedCards.splice(0)
       store.pivotIndices.splice(0)
       store.lookingIndex = 0
