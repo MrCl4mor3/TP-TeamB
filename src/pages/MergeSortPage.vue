@@ -2,7 +2,6 @@
 import DividingLine from '@/components/DividingLine.vue'
 
 import { ref } from 'vue'
-import { useToast } from 'primevue/usetoast'
 
 const toast = useToast()
 const draggedIndex = ref(null)
@@ -37,13 +36,13 @@ function drop(targetIndex) {
           draggable="true"
           @dragstart="
             () => {
-              dragStart(containerIndex), dragging(containerIndex)
+              dragStart(containerIndex); dragging(containerIndex)
             }
           "
           @dragover.prevent
           @drop="
             () => {
-              drop(containerIndex), dividingMark(containerIndex)
+              drop(containerIndex); dividingMark(containerIndex)
             }
           "
         >
@@ -98,6 +97,7 @@ export default {
   },
   data() {
     return {
+      toasty: useToast(),
       store,
       linePositionContainer: null,
       linePositionCard: null,
@@ -134,7 +134,7 @@ export default {
         }
       } else {
         store.allowedToFlip = false
-        toast.add({ severity: 'error', summary: 'falscher Container', life: 3000 })
+        this.toasty.add({ severity: 'error', summary: 'falscher Container', life: 3000 })
       }
     },
 
@@ -149,9 +149,9 @@ export default {
         this.numberOfSwaps++
         setTimeout(() => {this.flipAllCards();}, 200);
       } else {
-        toast.add({
+        this.toasty.add({
           severity: 'error',
-          summary: errorMessages['wrongAlgorithmStep'],
+          summary: errorMessages['selectTwoCards'],
           life: 3000,
         })
       }

@@ -12,7 +12,7 @@
             ref="cardlist"
             class="card-and-line"
           >
-            <FlippedCard @click="SelectCardQuick(index)" :card-id="card.id" ref="singlecard">
+            <FlippedCard @click="this.SelectCardQuick(index)" :card-id="card.id" ref="singlecard">
               <template #front>
                 <div class="frontsite" >
                   <h1 style="color: black">{{ card.id }}</h1>
@@ -24,7 +24,7 @@
                 </div>
               </template>
             </FlippedCard>
-            <svg class="line" width="50" height="300">
+            <svg class="line" width="10" height="300">
               <!-- Linie -->
               <line
                 v-show="index === this.numberOfSwaps"
@@ -263,7 +263,7 @@ export default {
           //automatisches Zudecken der Karte
           let willBeFlipped = null;
           willBeFlipped = this.startigCardIds[this.trueCardRef[store.pivotElementIndex]];
-          setTimeout(() => {willBeFlipped.toggleFlip();}, 200);
+          setTimeout(() => {willBeFlipped.toggleFlip();}, 30);
           // this.startigCardIds[this.trueCardRef[store.pivotElementIndex]].toggleFlip()
           store.selectedCards = store.selectedCards.filter(
             (card) => card !== store.pivotElementIndex,
