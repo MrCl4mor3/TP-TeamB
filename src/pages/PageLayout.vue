@@ -159,10 +159,6 @@ export default {
           )
 
         }
-        // canSort = !!(
-        //   store.correctSortingOrder[this.numberOfSwaps].includes(store.selectedCards[0]) &&
-        //   store.correctSortingOrder[this.numberOfSwaps].includes(store.selectedCards[1])
-        // )
       }
       if (store.selectedCards.length === 2 && canSort) {
         const [firstIndex, secondIndex] = store.selectedCards
