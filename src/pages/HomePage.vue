@@ -53,7 +53,7 @@ function goToSortingPage() {
   }
 
   // Karten generieren und weiterleiten
-  generateCards(selectedCategory.value, selectedMode.value, numberOfCards.value, false)
+  generateCards(selectedCategory.value, selectedMode.value, numberOfCards.value)
   if (selectedCategory.value === 'Quick Sort') {
     router.push('/quickSortPage')
   } else if (selectedCategory.value === 'Merge Sort') {
@@ -63,18 +63,11 @@ function goToSortingPage() {
   }
 }
 
-function goToTestPage() {
-  generateCards(selectedCategory.value, selectedMode.value, numberOfCards.value, true)
-  router.push('/testPage')
-}
 
 // Event-Handler für Tasten
 function handleKeyPress(event) {
   if (event.key === 'Enter') {
     goToSortingPage()
-  }
-  if (event.key === 't') {
-    goToTestPage()
   }
 }
 

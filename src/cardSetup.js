@@ -17,7 +17,7 @@ const algorithmMap = {
   'Quick Sort': quickSortWithScore,
 }
 
-export function generateCards(selectedCategory, selectedMode, numberOfCards, testMode) {
+export function generateCards(selectedCategory, selectedMode, numberOfCards) {
   store.selectedMode = selectedMode
   store.selectedCategory = selectedCategory
   store.numberOfCards = numberOfCards
@@ -105,11 +105,6 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards, tes
       store.containers.push(store.startingCards)
 
       algorithmMap[store.selectedCategory](store.startingCards)
-
-      if (testMode) {
-        store.cards = store.correctCards
-        store.startingCards = store.correctCards
-      }
     })
 
     .catch((error) => {
