@@ -9,7 +9,7 @@ export function bubbleSortWithScore(cards, returnSorted = false) {
   do {
     swapped = false
     for (let i = 0; i < sortingCards.length - 1; i++) {
-      scoreLook++
+      scoreLook = scoreLook + 2 // da zwei Elemente betrachtet werden
       if (sortingCards[i].id > sortingCards[i + 1].id) {
         store.correctSortingOrder.push([i, i + 1])
 
@@ -19,7 +19,6 @@ export function bubbleSortWithScore(cards, returnSorted = false) {
         swapped = true
         scoreSwap++
       }
-      scoreLook++ // da nur bis zur Länge - 1 iteriert wird aber die letzte Karte trotzdem angeschaut wird
     }
   } while (swapped)
 
@@ -36,9 +35,8 @@ export function selectionSortWithScore(cards, returnSorted = false) {
 
   for (let i = 0; i < sortingCards.length; i++) {
     let minIndex = i
-    scoreLook++ // da i auch betrachtet wird
     for (let j = i + 1; j < sortingCards.length; j++) {
-      scoreLook++
+      scoreLook = scoreLook + 2 // da zwei Elemente betrachtet werden
       if (sortingCards[j].id < sortingCards[minIndex].id) {
         minIndex = j
       }
