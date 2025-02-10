@@ -101,13 +101,12 @@ onBeforeUnmount(() => {
   <div class="content">
     <!-- Beschreibung des Spiels -->
     <Dialog v-model:visible="visibleTutorial" :header="`SortLab Anleitung`" class="dialog" @update:visible="resetStore">
-      <div class="dialog-content">
         <TutorialDialog />
-      </div>
     </Dialog>
 
     <!-- Flexbox für die Auswahl von Algorithmen und Modi -->
     <div class="flex-container-row">
+
       <!-- Auswahl des Modus -->
       <fieldset class="radio-box">
         <legend>{{ description.selectMode }}</legend>
