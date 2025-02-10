@@ -42,14 +42,15 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     @update:visible="prepareReset">
     <div class="dialog-content">
       <div>
-        <p>Score: {{ store.score }}</p>
-        <P>vertauschungen: {{store.vertauschteKartenScore}}
-          angeschaute Karten: {{store.angeschauteKartenScore}}</P>
-        <p>BubbleSort: {{ this.bubbleSortResult.score }} and {{this.bubbleSortResult.scoreSwap}}</p>
-        <p>SelectionSort: {{ this.selectionSortResult.score }}</p>
-        <p>InsertionSort: {{ this.insertionSortResult.score }}</p>
-        <p>QuickSort: {{ this.quickSortResult.score }}</p>
-        <p>MergeSort: {{ this.mergeSortResult.score }}</p>
+
+        <P>Du hast {{store.score}} Karten angeschaut und {{this.numberOfSwaps}} vertauscht</p>
+        <p> </p>
+
+        <p>BubbleSort: {{ this.bubbleSortResult.scoreLook }} Karten angeschaut und {{this.bubbleSortResult.scoreSwap}} vertauscht</p>
+        <p>SelectionSort: {{ this.selectionSortResult.scoreLook }} Karten angeschaut und {{this.selectionSortResult.scoreSwap}} vertauscht</p>
+        <p>InsertionSort: {{ this.insertionSortResult.scoreLook }} Karten angeschaut und {{this.insertionSortResult.scoreSwap}} vertauscht</p>
+        <p>QuickSort: {{ this.quickSortResult.scoreLook }} Karten angeschaut und {{this.quickSortResult.scoreSwap}} vertauscht</p>
+        <p>MergeSort: {{ this.mergeSortResult.scoreLook }} Karten angeschaut und {{this.mergeSortResult.scoreSwap}} vertauscht</p>
       </div>
       <div class="button-container">
         <ButtonPress icon="pi pi-home" @click="goToHomePage" />
@@ -69,9 +70,8 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
   <footer>
     <!--Einfügen des Scores -->
     <div class="score">
-      <h2>Score: {{ store.score }}</h2>
-      <P>vertauschungen: {{store.vertauschteKartenScore}}
-        angeschaute Karten: {{store.angeschauteKartenScore}}</P>
+      <h2>Score: Angeschaut: {{ store.score }}, Vertauscht: {{this.numberOfSwaps}}</h2>
+
     </div>
     <!-- hier werden die zusätzlichen Knöpfe hinzugefügt -->
     <div class="button-container">

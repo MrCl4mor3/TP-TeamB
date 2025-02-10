@@ -11,7 +11,7 @@ export function bubbleSortWithScore(cards, returnSorted = false) {
     swapped = false
     for (let i = 0; i < sortingCards.length - 1; i++) {
       score++ // Ein Element wird betrachtet
-      store.angeschauteKartenScore++
+      scoreLook++
       //console.log(score)
       if (sortingCards[i].id > sortingCards[i + 1].id) {
         store.correctSortingOrder.push([i, i + 1])
@@ -30,7 +30,7 @@ export function bubbleSortWithScore(cards, returnSorted = false) {
     return { score,scoreSwap, scoreLook, sortedArray: sortingCards }
   }
 
-  return { score }
+  return { score, scoreSwap, scoreLook }
 }
 export function selectionSortWithScore(cards, returnSorted = false) {
   let sortingCards = cards.slice()
@@ -41,7 +41,7 @@ export function selectionSortWithScore(cards, returnSorted = false) {
   for (let i = 0; i < sortingCards.length; i++) {
     let minIndex = i
     for (let j = i + 1; j < sortingCards.length; j++) {
-      store.angeschauteKartenScore++
+      scoreLook++
       score++ // Ein Element wird betrachtet
       if (sortingCards[j].id < sortingCards[minIndex].id) {
         minIndex = j
@@ -61,7 +61,7 @@ export function selectionSortWithScore(cards, returnSorted = false) {
     return { score, sortedArray: sortingCards }
   }
 
-  return { score }
+  return { score, scoreSwap, scoreLook }
 }
 
 export function insertionSortWithScore(cards, returnSorted = false) {
@@ -75,13 +75,14 @@ export function insertionSortWithScore(cards, returnSorted = false) {
     let j = i - 1
     while (j >= 0 && sortingCards[j].id > current.id) {
       score++ // Ein Element wird betrachtet
-      store.angeschauteKartenScore++
+      scoreLook++
       store.correctSortingOrder.push([j, j + 1])
       sortingCards[j + 1] = sortingCards[j]
+      scoreSwap++
       j--
     }
     score++ // Auch wenn die Schleife abbricht, wird ein Element betrachtet
-    store.angeschauteKartenScore++
+    scoreLook++
     sortingCards[j + 1] = current
   }
 
@@ -89,7 +90,7 @@ export function insertionSortWithScore(cards, returnSorted = false) {
     return { score, sortedArray: sortingCards }
   }
 
-  return { score }
+  return { score, scoreSwap, scoreLook }
 }
 
 export function quickSortWithScore(cards, returnSorted = false) {
@@ -103,17 +104,20 @@ export function quickSortWithScore(cards, returnSorted = false) {
     }
 
     score++; //pivotelement wird betrachtet
-    store.angeschauteKartenScore++
+    scoreLook++
     const pivot = array[array.length - 1]
     const left = []
     const right = []
 
     for (let i = 0; i < array.length - 1; i++) {
 
-      score++ // Ein Element wird betrachtet
+      scoreLook++ // Ein Element wird betrachtet
       if (array[i].id < pivot.id) {
+        scoreSwap++
         left.push(array[i])
       } else {
+        scoreSwap++
+
         right.push(array[i])
       }
     }
@@ -127,7 +131,7 @@ export function quickSortWithScore(cards, returnSorted = false) {
     return { score, sortedArray }
   }
 
-  return { score }
+  return { score, scoreSwap, scoreLook }
 }
 
 export function mergeSortWithScore(cards, returnSorted = false) {
@@ -140,6 +144,8 @@ export function mergeSortWithScore(cards, returnSorted = false) {
 
     while (left.length && right.length) {
       score++ // Ein Element wird betrachtet
+      scoreLook++
+      scoreSwap++
       if (left[0].id <= right[0].id) {
         result.push(left.shift())
       } else {
@@ -168,5 +174,5 @@ export function mergeSortWithScore(cards, returnSorted = false) {
     return { score, sortedArray }
   }
 
-  return { score }
+  return { score, scoreSwap, scoreLook }
 }
