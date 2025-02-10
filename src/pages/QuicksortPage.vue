@@ -53,7 +53,7 @@ import StandardLayout from './PageLayout.vue'
 import { store } from '@/store.js'
 import FlippedCard from '@/components/FlippedCard.vue'
 import { useToast} from "primevue/usetoast"
-import messages from '@descriptions/messages.json'
+import messages from '@/descriptions/messages.json'
 
 export default {
   name: 'GamePage',
