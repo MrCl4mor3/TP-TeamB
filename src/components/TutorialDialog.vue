@@ -41,7 +41,7 @@ const cardBigger = computed(() => store.correctCards[1])
     <!-- Beispielkarten mit einfügen -->
     <div class="flex-container-row">
       <!-- Karten mit weniger Strichen -->
-      <div class="card-with-description">
+      <div class="flex-container-column">
         <div
           class="example-card"
           v-if="cardBigger && cardBigger.svg"
@@ -50,7 +50,7 @@ const cardBigger = computed(() => store.correctCards[1])
         <p><strong>kleiner</strong></p>
       </div>
       <!-- Karten mit mehr Strichen -->
-      <div class="card-with-description">
+      <div class="flex-container-column">
         <div
           class="example-card"
           v-if="cardSmaller && cardSmaller.svg"
@@ -90,6 +90,10 @@ const cardBigger = computed(() => store.correctCards[1])
 </template>
 
 <style scoped>
+.flex-container-column {
+  align-items: center;
+}
+
 .dialog-content {
   padding: 20px;
   line-height: 1.5;

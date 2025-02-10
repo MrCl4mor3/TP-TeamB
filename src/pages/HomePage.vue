@@ -218,7 +218,6 @@ label:hover .tooltip {
 
 footer {
   justify-content: right;
-  font-size: 1em;
 }
 
 .number-selection {
