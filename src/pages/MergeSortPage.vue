@@ -49,23 +49,26 @@ function drop(targetIndex) {
         >
           <div class="card-grid">
             <div v-for="(card, index) in container" :key="card.id" class="card-and-line">
-              <FlippedCard
-                :card-id="card.id"
-                :ref="'singlecard'"
-                @click="selectCardsInContainer(containerIndex, index)"
-              >
-                <template #front>
-                  <div class="frontsite">
-                    <h1>{{ card.id }}</h1>
-                  </div>
-                </template>
-                <template #back>
-                  <div class="backsite">
-                    <div v-html="card.svg.outerHTML"></div>
-                  </div>
-                </template>
-              </FlippedCard>
-              <DividingLine
+              <div class="card-with-position">
+                <FlippedCard
+                  :card-id="card.id"
+                  :ref="'singlecard'"
+                  @click="selectCardsInContainer(containerIndex, index)"
+                >
+                  <template #front>
+                    <div class="frontsite">
+                      <h1>{{ card.id }}</h1>
+                    </div>
+                  </template>
+                  <template #back>
+                    <div class="backsite">
+                      <div v-html="card.svg.outerHTML"></div>
+                    </div>
+                  </template>
+                </FlippedCard>
+                <div class="card-description">Position: {{ index + 1 }}</div>
+              </div>
+                <DividingLine
                 :container-index="containerIndex"
                 :line-index="index"
                 v-if="index < container.length - 1"
