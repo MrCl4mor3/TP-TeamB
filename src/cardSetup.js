@@ -17,6 +17,7 @@ const algorithmMap = {
   'Quick Sort': quickSortWithScore,
 }
 
+
 export function generateCards(selectedCategory, selectedMode, numberOfCards) {
   store.selectedMode = selectedMode
   store.selectedCategory = selectedCategory
@@ -33,7 +34,6 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
 
       //Min und Max Werte für die Zufallszahlen der zu entfernenden ids
       const {min, max} = findMinMaxIds(svgTemplate)
-      console.log('min:', min, 'max:', max)
       let cards = []
       let removedParts = []
 
