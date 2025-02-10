@@ -46,7 +46,7 @@ function drop(targetIndex) {
             }
           "
         >
-          <div class="card-grid">
+          <div class="flex-container-row">
             <div v-for="(card, index) in container" :key="card.id" class="card-and-line">
               <FlippedCard
                 :card-id="card.id"
@@ -250,7 +250,7 @@ export default {
 </script>
 
 <style scoped>
-.card-grid {
+.flex-container-row {
   border: 4px solid mediumvioletred; /* Fügt eine weiße Umrandung hinzu */
   padding: 10px; /* Abstand zwischen Inhalt und Rahmen */
   margin-bottom: 20px; /* Abstand zwischen einzelnen Grids */

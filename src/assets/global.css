@@ -11,6 +11,7 @@
 }
 body {
   font-family: Arial, sans-serif;
+  font-size: 20px;
 }
 
 header {
@@ -47,12 +48,21 @@ footer {
   align-items: center;
 }
 
+legend {
+  font-size: 40px;
+  font-weight: bold; /* Fett gedruckt */
+  margin-bottom: 8px; /* Abstand nach unten */
+  text-align: center; /* Zentriert den Text */
+}
+
 header h1 {
   color: #10b981;
   flex-grow: 1;
   text-align: center;
+  font-size: 80px;
 }
 h2 {
+  font-size: 40px;
   color: #10b981;
 }
 
@@ -64,43 +74,55 @@ h2 {
   margin: 10px;
 }
 
-.button-container-meta {
-  display: flex;
-  gap: 10px;
-}
 
-/*Hier wird definiert wie die Karten angeordnet werden sollen*/
-.card-grid {
+.flex-container-row {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   justify-items: center;
   column-gap: 20px;
   row-gap: 30px;
+  width: 100%;
 }
 
-
-.card-with-position {
+.flex-container-column {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 10px;
 }
 
 .card-description {
-  margin-top: 16px;
   font-weight: bold;
 }
 
+.radio-box {
+  display: flex; /* Macht die Box zur Flexbox */
+  max-width: 30%; /* Maximale Breite der Box */
+  flex: 1; /* Füllt den verfügbaren Platz aus */
+  flex-direction: column; /* Anordnung der Elemente */
+  justify-content: space-evenly;
+  align-items: flex-start; /* Links ausgerichtet */
+  padding: 10px; /* Innenabstand */
+  border: 1px solid black; /* Rahmen */
+  border-radius: 8px; /* Abrundung der Ecken */
+  margin: 20px; /* Außenabstand */
+  accent-color: #10b981;
+}
+
+.radio-label {
+  position: relative;
+  cursor: pointer;
+  padding-left: 30px;
+}
 
 /* Dialog-Header Anpassung */
 .p-dialog .p-dialog-header {
   font-weight: bold; /* Oder andere Schriftattribute */
   background-color: #10b981; /* Hintergrundfarbe des Headers */
   border-radius: 12px; /* Abrundung des Headers */
-  font-size: 30px; /* Schriftgröße des Headers */
   color: white; /* Schriftfarbe des Headers */
 }
 
 .p-toast.p-toast-top-right {
-  top: 100px !important;
+  top: 110px !important;
 }

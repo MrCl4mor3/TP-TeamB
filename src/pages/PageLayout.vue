@@ -9,11 +9,11 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
 <template>
   <header>
     <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage" />
-    <h1>
+    <h2>
       <span v-if="noAlgorithmNeeded">{{ store.selectedMode }}</span>
       <span v-else>{{ store.selectedCategory }}</span>
-    </h1>
-    <div class="button-container-meta">
+    </h2>
+    <div class="button-container">
       <ButtonPress label="?" @click="openTutorial"></ButtonPress>
       <ButtonPress icon="pi pi-refresh" @click="shuffel"></ButtonPress>
     </div>
@@ -229,7 +229,7 @@ export default {
 
         this.visibleEndScreen = false
         this.toast.add({ severity: 'success', summary: messages["shuffleCards"], life: 3000 })
-      }, 400)
+      }, 450)
     },
 
     checkIfCorrect() {
@@ -325,7 +325,6 @@ export default {
   display: flex;
   flex-direction: column;
   padding: 1rem;
-  font-size: 1.2em;
   line-height: 1.6;
 }
 

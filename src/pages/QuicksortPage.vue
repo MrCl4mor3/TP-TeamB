@@ -5,7 +5,7 @@
     <template #cards="{}">
       <!-- übergibt die benötigten Methoden und variablen -->
       <div>
-        <div class="card-grid">
+        <div class="flex-container-row">
           <div
             v-for="(card, index) in store.cards"
             :key="card.id"
@@ -362,7 +362,7 @@ export default {
   justify-content: center;
 }
 
-.card-grid {
+.flex-container-row {
   margin-left: 24px;
 }
 </style>
