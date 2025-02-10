@@ -141,10 +141,28 @@ export default {
         store.selectedMode === 'Vorgegebenes Sortieren' &&
         store.selectedCategory !== 'Merge Sort'
       ) {
-        canSort = !!(
-          store.correctSortingOrder[this.numberOfSwaps].includes(store.selectedCards[0]) &&
-          store.correctSortingOrder[this.numberOfSwaps].includes(store.selectedCards[1])
-        )
+        if (store.selectedCategory === 'Bubble Sort') {
+          canSort = !!(
+            store.correctSortingOrderBubble[this.numberOfSwaps].includes(store.selectedCards[0]) &&
+            store.correctSortingOrderBubble[this.numberOfSwaps].includes(store.selectedCards[1])
+          )
+        } else if (store.selectedCategory === 'Selection Sort') {
+          canSort = !!(
+            store.correctSortingOrderSelect[this.numberOfSwaps].includes(store.selectedCards[0]) &&
+            store.correctSortingOrderSelect[this.numberOfSwaps].includes(store.selectedCards[1])
+          )
+
+        } else if (store.selectedCategory === 'InsertionSort') {
+          canSort = !!(
+            store.correctSortingOrderInsert[this.numberOfSwaps].includes(store.selectedCards[0]) &&
+            store.correctSortingOrderInsert[this.numberOfSwaps].includes(store.selectedCards[1])
+          )
+
+        }
+        // canSort = !!(
+        //   store.correctSortingOrder[this.numberOfSwaps].includes(store.selectedCards[0]) &&
+        //   store.correctSortingOrder[this.numberOfSwaps].includes(store.selectedCards[1])
+        // )
       }
       if (store.selectedCards.length === 2 && canSort) {
         const [firstIndex, secondIndex] = store.selectedCards
@@ -262,6 +280,8 @@ export default {
         card.closeCard()
         card.colour = '#10b981'
       })
+      this.numberOfSwaps = 0;
+      this.selectedCards.splice(0);
       store.reloadPage = true
       store.dividingLinePosition = -1
       store.dividingContainerPosition = -1
@@ -280,6 +300,7 @@ export default {
       if (this.store.selectedMode === 'Freies Sortieren') {
         category = 'Free Sort'
       }
+      this.calculateScore();
 
       // Wenn die Kategorie keine Beschreibung hat, gib einen leeren String zurück
       if (!this.descriptionToAlgorithm[category]) return ''

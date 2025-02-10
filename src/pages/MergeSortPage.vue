@@ -147,7 +147,7 @@ export default {
           store.containers[store.currentSelectedContainer][secondIndex]
         store.containers[store.currentSelectedContainer][secondIndex] = temp
         this.numberOfSwaps++
-        setTimeout(() => {this.flipAllCards();}, 50);
+        setTimeout(() => {this.flipAllCards();}, 200);
       } else {
         toast.add({
           severity: 'error',

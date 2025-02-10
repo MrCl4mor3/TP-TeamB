@@ -3,6 +3,7 @@ import { store } from './store'
 export function bubbleSortWithScore(cards, returnSorted = false) {
   let sortingCards = cards.slice()
   let score = 0 // Score-Variable, um die Anzahl der Betrachtungen zu zählen
+  store.correctSortingOrderBubble.splice(0);
   let swapped
 
   do {
@@ -11,7 +12,7 @@ export function bubbleSortWithScore(cards, returnSorted = false) {
       score++ // Ein Element wird betrachtet
       //console.log(score)
       if (sortingCards[i].id > sortingCards[i + 1].id) {
-        store.correctSortingOrder.push([i, i + 1])
+        store.correctSortingOrderBubble.push([i, i + 1])
 
         // Elemente vertauschen
         const temp = sortingCards[i]
@@ -31,6 +32,7 @@ export function bubbleSortWithScore(cards, returnSorted = false) {
 export function selectionSortWithScore(cards, returnSorted = false) {
   let sortingCards = cards.slice()
   let score = 0
+  store.correctSortingOrderSelect.splice(0);
 
   for (let i = 0; i < sortingCards.length; i++) {
     let minIndex = i
@@ -41,7 +43,7 @@ export function selectionSortWithScore(cards, returnSorted = false) {
       }
     }
     if (minIndex !== i) {
-      store.correctSortingOrder.push([i, minIndex])
+      store.correctSortingOrderSelect.push([i, minIndex])
 
       const temp = sortingCards[i]
       sortingCards[i] = sortingCards[minIndex]
@@ -59,13 +61,14 @@ export function selectionSortWithScore(cards, returnSorted = false) {
 export function insertionSortWithScore(cards, returnSorted = false) {
   let sortingCards = cards.slice()
   let score = 0
+  store.correctSortingOrderInsert.splice(0);
 
   for (let i = 1; i < sortingCards.length; i++) {
     let current = sortingCards[i]
     let j = i - 1
     while (j >= 0 && sortingCards[j].id > current.id) {
       score++ // Ein Element wird betrachtet
-      store.correctSortingOrder.push([j, j + 1])
+      store.correctSortingOrderInsert.push([j, j + 1])
       sortingCards[j + 1] = sortingCards[j]
       j--
     }

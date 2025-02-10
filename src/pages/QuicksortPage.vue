@@ -195,13 +195,15 @@ export default {
           }
         }
         store.score++
+
+        this.toast.add({ severity: 'info', summary: 'Das neue Pivotelement ist ausgewählt', life: 3000 })
       }
     },
     //für Quicksort, es werden Pivotelement erkannt und anders behandelt
     SelectCardQuick(index) {
       //hier muss abgefangen werden wenn zuerst auf Karten geklickt wird, ohne das Quicksort initialisiert wurde durch erstes pivotelement drücken
       if (this.firsttime) {
-        this.toast.add({ severity: 'error', summary: 'Zum Starten auf "Pivotelement" klicken', life: 3000 })
+        this.toast.add({ severity: 'info', summary: 'Zum Starten auf "Pivotelement" klicken', life: 3000 })
 
         let tempcards = this.$refs.singlecard
         this.startigCardIds.slice(0)
@@ -246,7 +248,7 @@ export default {
         store.reloadPage = false
       }
       if (this.firsttime) {
-        this.toast.add({ severity: 'error', summary: 'Zum Starten auf "Pivotelement" klicken', life: 3000 })
+        this.toast.add({ severity: 'info', summary: 'Zum Starten auf "Pivotelement" klicken', life: 3000 })
       } else {
         if (store.selectedCards.length === 2) {
           //tausch von Pivotelement und kleinerem Element
@@ -262,7 +264,7 @@ export default {
           //automatisches Zudecken der Karte
           let willBeFlipped = null;
           willBeFlipped = this.startigCardIds[this.trueCardRef[store.pivotElementIndex]];
-          setTimeout(() => {willBeFlipped.toggleFlip();}, 50);
+          setTimeout(() => {willBeFlipped.toggleFlip();}, 200);
           // this.startigCardIds[this.trueCardRef[store.pivotElementIndex]].toggleFlip()
           store.selectedCards = store.selectedCards.filter(
             (card) => card !== store.pivotElementIndex,
@@ -304,7 +306,7 @@ export default {
         store.reloadPage = false
       }
       if (this.firsttime) {
-        this.toast.add({ severity: 'error', summary: 'Zum Starten auf "Pivotelement" klicken', life: 3000 })
+        this.toast.add({ severity: 'info', summary: 'Zum Starten auf "Pivotelement" klicken', life: 3000 })
       } else {
         if (store.selectedCards.length === 2) {
           this.biggerCards++
