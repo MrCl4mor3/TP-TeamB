@@ -11,6 +11,7 @@ import SplitButton from 'primevue/splitbutton'
 import ToastService from 'primevue/toastservice'
 
 import './assets/global.css'
+import 'primeicons/primeicons.css'
 
 const app = createApp(App)
 app.use(PrimeVue, {
