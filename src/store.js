@@ -11,6 +11,19 @@ function getDefaultStore() {
     score: 0,
     selectedCategory: null,
     selectedMode: null,
+    correctSortingOrder: [],
+    selectedCards: [],
+    pivotIndices: [],
+    lookingIndex: -1,
+    pivotElementIndex: -1,
+    selectedLines: 0,
+    containers: [],
+    currentSelectedContainer: -1,
+    dividingContainerPosition: -1,
+    dividingLinePosition: -1,
+    currentCards: [],
+    reloadPage: false,
+    quickReshuffle: false,
   }
 }
 
@@ -19,4 +32,10 @@ export const store = reactive(getDefaultStore())
 
 export function resetStore() {
   Object.assign(store, getDefaultStore())
+}
+
+export function resetStartValues() {
+  store.numberOfFlippedCards = getDefaultStore().numberOfFlippedCards
+  store.score = getDefaultStore().score
+  store.selectedCards = getDefaultStore().selectedCards
 }

@@ -1,0 +1,93 @@
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: Arial, sans-serif;
+}
+
+header {
+  padding: 25px 10px;
+  position: sticky;
+  top: 0;
+  background-color: lightgray;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  margin-bottom: 20px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+footer {
+  display: flex;
+  bottom: 0;
+  position: sticky;
+  z-index: 1000;
+  background-color: lightgray;
+  padding: 25px 10px;
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.7);
+  margin-top: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+header h1 {
+  color: #10b981;
+  flex-grow: 1;
+  text-align: center;
+}
+h2 {
+  color: #10b981;
+}
+
+.button-container {
+  display: flex;
+  gap: 10px;
+  text-align: center;
+  justify-content: center;
+  margin: 10px;
+}
+
+.button-container-meta {
+  display: flex;
+  gap: 10px;
+}
+
+/*Hier wird definiert wie die Karten angeordnet werden sollen*/
+.card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  justify-items: center;
+  column-gap: 20px;
+  row-gap: 45px;
+}
+
+/* Dialog-Header Anpassung */
+.p-dialog .p-dialog-header {
+  font-weight: bold; /* Oder andere Schriftattribute */
+  background-color: #10b981; /* Hintergrundfarbe des Headers */
+  border-radius: 12px; /* Abrundung des Headers */
+  font-size: 30px; /* Schriftgröße des Headers */
+  color: white; /* Schriftfarbe des Headers */
+}
+
+.p-toast.p-toast-top-right {
+  top: 100px !important;
+}

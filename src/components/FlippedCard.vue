@@ -25,19 +25,51 @@ export default {
     //variablen die in der Komponente verwendet werden
     return {
       isFlipped: false,
+      colour: '#10b981',
     }
+  },
+  props: {
+    cardId: {
+      type: Number,
+      required: true,
+    },
+  },
+  mounted() {
+    store.currentCards.push(this)
   },
   methods: {
     // Methode um die Karte zu drehen. Hier kann nur umgedreht werden wenn weniger als 2 Karten
     // umgedreht sind. Wenn die Karte schon umgedreht ist wird die Anzahl der umgedrehten karten
     // um eins reduziert.
     toggleFlip() {
-      if (store.numberOfFlippedCards < 2 && !this.isFlipped) {
-        this.isFlipped = !this.isFlipped
-        store.numberOfFlippedCards++
-      } else if (this.isFlipped) {
-        this.isFlipped = !this.isFlipped
-        store.numberOfFlippedCards--
+      if (
+        store.numberOfFlippedCards === 0 ||
+        store.selectedCategory !== 'Merge Sort' ||
+        store.containers[store.currentSelectedContainer].some((card) => card.id === this.cardId)
+      ) {
+        if (store.numberOfFlippedCards < 2 && !this.isFlipped) {
+          this.isFlipped = !this.isFlipped
+          store.numberOfFlippedCards++
+        } else if (this.isFlipped) {
+          this.isFlipped = !this.isFlipped
+          store.numberOfFlippedCards--
+        }
+      }
+    },
+
+    openCard() {
+      this.isFlipped = true
+    },
+
+    closeCard() {
+      this.isFlipped = false
+    },
+
+    colourchange() {
+      if (this.colour === 'grey') {
+        this.colour = '#10b981'
+      } else {
+        this.colour = 'grey'
       }
     },
   },
@@ -60,6 +92,9 @@ export default {
   transform-style: preserve-3d;
   transition: transform 0.6s;
 }
+.card:hover {
+  transform: scale(1.1);
+}
 
 .card.flipped {
   transform: rotateY(180deg); /* Dreht die Karte um 180 Grad um die Y-Achse */
@@ -74,12 +109,14 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #eee;
-  border: 1px solid #ccc;
+  background: v-bind(colour);
+  border: 2px solid black;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .card-back {
   transform: rotateY(180deg); /*dreht die Rückseite der Karte um 180 Grad*/
-  background: #ddd;
+  background: white;
 }
 </style>
