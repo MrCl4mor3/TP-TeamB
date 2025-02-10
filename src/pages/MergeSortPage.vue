@@ -132,10 +132,8 @@ export default {
         toast.add({ severity: 'error', summary: 'falscher Container', life: 3000 })
       }
     },
-    //TODO canSort? sicher das diese methode voll funktionsfähig ist?
-    canSwapInContainer() {
-      const canSort = true
 
+    canSwapInContainer() {
       if (this.selectedCards.length === 2) {
         console.log('test 2')
         const [firstIndex, secondIndex] = this.selectedCards
