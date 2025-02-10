@@ -68,8 +68,6 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     </div>
     <!-- hier werden die zusätzlichen Knöpfe hinzugefügt -->
     <div class="button-container">
-      <ButtonPress label="auf" @click="openAllCards" />
-      <ButtonPress label="zu" @click="prepareReset" />
       <slot name="extraButtons" :swap-cards="SwapCards" />
       <ButtonPress label="fertig sortiert" @click="checkIfCorrect" />
     </div>
