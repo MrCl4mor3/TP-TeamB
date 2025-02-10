@@ -54,7 +54,7 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
   </Dialog>
 
 
-  <Toast :position="'top-right'" :pt="{ root: { style: 'top: 100px !important;' } }" />
+  <Toast :position="'top-right'"/>
 
 
   <div class="content">

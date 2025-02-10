@@ -87,3 +87,7 @@ h2 {
   font-size: 30px; /* Schriftgröße des Headers */
   color: white; /* Schriftfarbe des Headers */
 }
+
+.p-toast.p-toast-top-right {
+  top: 100px !important;
+}
