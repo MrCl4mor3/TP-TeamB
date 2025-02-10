@@ -107,7 +107,7 @@ onBeforeUnmount(() => {
 
   <div class="content">
     <!-- Beschreibung des Spiels -->
-    <Dialog v-model:visible="visibleTutorial" :header="`SortLab Anleitung`" class="dialog">
+    <Dialog v-model:visible="visibleTutorial" :header="`SortLab Anleitung`" class="dialog" @update:visible="resetStore">
       <div class="dialog-content">
         <TutorialDialog />
       </div>
