@@ -197,7 +197,6 @@ h1 {
   align-items: center;
   margin-top: 20px;
   margin-bottom: 20px;
-  font-size: 20px;
   width: 100%;
 }
 
@@ -241,7 +240,7 @@ h1 {
 }
 
 legend {
-  font-size: 1.7em; /* Größe der Überschrift */
+  font-size: 40px;
   font-weight: bold; /* Fett gedruckt */
   margin-bottom: 8px; /* Abstand nach unten */
   text-align: center; /* Zentriert den Text */
@@ -259,13 +258,9 @@ legend {
 .start-container button {
   width: 200px; /* Breite des Buttons */
   height: 50px; /* Höhe des Buttons */
-  font-size: 1.7em; /* Größe des Textes */
+  font-size: 30px; /* Größe des Textes */
 }
 
-.cards-container h2 {
-  margin-bottom: 8px; /* Abstand zwischen Überschrift und Input-Feld */
-  font-size: 1.7em; /* Größe der Überschrift */
-}
 
 .description-container {
   display: flex; /* Macht den Container zur Flexbox */
