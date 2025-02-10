@@ -12,19 +12,21 @@
             ref="cardlist"
             class="card-and-line"
           >
-            <FlippedCard @click="SelectCardQuick(index)" :card-id="card.id" ref="singlecard">
-              <template #front>
-                <div class="frontsite" >
-                  <h1 style="color: black">{{ card.id }}</h1>
-                </div>
-              </template>
-              <template #back>
-                <div class="backsite">
-                  <div v-html="card.svg.outerHTML"></div>
-                </div>
-              </template>
-            </FlippedCard>
-
+            <div class="card-with-position">
+              <FlippedCard @click="SelectCardQuick(index)" :card-id="card.id" ref="singlecard">
+                <template #front>
+                  <div class="frontsite" >
+                    <h1 style="color: black">{{ card.id }}</h1>
+                  </div>
+                </template>
+                <template #back>
+                  <div class="backsite">
+                    <div v-html="card.svg.outerHTML"></div>
+                  </div>
+                </template>
+              </FlippedCard>
+              <div class="card-description">Position: {{ index + 1 }}</div>
+            </div>
             <svg class="line" width="50" height="300">
               <!-- Linie -->
               <line
