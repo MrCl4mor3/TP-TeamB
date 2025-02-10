@@ -78,7 +78,7 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
 <script>
 import { useToast } from 'primevue/usetoast'
 import algorithmDescription from '@/descriptions/algorithmDescriptions.json'
-import errorMessages from '@/descriptions/ErrorMessages.json'
+import messages from '@/descriptions/messages.json'
 import { store, resetStartValues } from '@/store.js'
 import {
   bubbleSortWithScore,
@@ -178,7 +178,7 @@ export default {
         this.toast.add({
           severity: 'error',
           summary: 'Fehler',
-          detail: errorMessages['wrongAlgorithmStep'],
+          detail: messages['wrongAlgorithmStep'],
           life: 3000,
         })
       }
@@ -211,7 +211,7 @@ export default {
         store.containers.push(store.startingCards);
         this.visibleEndScreen = false;
         this.visibleEndScreen = false
-        this.toast.add({ severity: 'success', summary: 'Spiel wurde zurückgesetzt', life: 3000 })
+        this.toast.add({ severity: 'success', summary: messages["restartGame"], life: 3000 })
       }, 400)
     },
 
@@ -228,7 +228,7 @@ export default {
         }
 
         this.visibleEndScreen = false
-        this.toast.add({ severity: 'success', summary: 'Karten wurden gemischt', life: 3000 })
+        this.toast.add({ severity: 'success', summary: messages["shuffleCards"], life: 3000 })
       }, 400)
     },
 
@@ -246,7 +246,7 @@ export default {
         this.toast.add({
           severity: 'error',
           summary: 'Fehler',
-          detail: 'Die Karten sind noch nicht korrekt sortiert',
+          detail: messages['wrongOrder'],
           life: 3000,
         })
       }

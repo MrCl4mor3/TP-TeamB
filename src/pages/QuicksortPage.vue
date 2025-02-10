@@ -53,6 +53,7 @@ import StandardLayout from './PageLayout.vue'
 import { store } from '@/store.js'
 import FlippedCard from '@/components/FlippedCard.vue'
 import { useToast} from "primevue/usetoast"
+import messages from '@descriptions/messages.json'
 
 export default {
   name: 'GamePage',
@@ -105,7 +106,7 @@ export default {
             this.startigCardIds.push(card)
           })
         } else {
-          this.toast.add({ severity: 'error', summary: 'Gerade existiert maximal eine Karte, etwas ist schief gelaufen', life: 3000 })
+          this.toast.add({ severity: 'error', summary: messages['oneCard'], life: 3000 })
         }
 
         if (store.quickReshuffle) {

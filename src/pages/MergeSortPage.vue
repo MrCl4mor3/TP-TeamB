@@ -19,7 +19,7 @@ function drop(targetIndex) {
       draggedIndex.value = null
     }
   } else {
-    toast.add({ severity: 'error', summary: 'Karten müssen umgedreht sein', life: 3000 })
+    toast.add({ severity: 'error', summary: messages["allCardsClose"], life: 3000 })
   }
 }
 </script>
@@ -87,7 +87,7 @@ function drop(targetIndex) {
 import StandardLayout from './PageLayout.vue'
 import { store } from '@/store.js'
 import FlippedCard from '@/components/FlippedCard.vue'
-import errorMessages from '@/descriptions/errorMessages.json'
+import messages from '@/descriptions/messages.json'
 import { useToast } from 'primevue/usetoast'
 
 export default {
@@ -97,7 +97,6 @@ export default {
   },
   data() {
     return {
-      toasty: useToast(),
       store,
       linePositionContainer: null,
       linePositionCard: null,
@@ -134,7 +133,7 @@ export default {
         }
       } else {
         store.allowedToFlip = false
-        this.toasty.add({ severity: 'error', summary: 'falscher Container', life: 3000 })
+        toast.add({ severity: 'error', summary: messages["wrongContainer"], life: 3000 })
       }
     },
 
@@ -151,7 +150,7 @@ export default {
       } else {
         this.toasty.add({
           severity: 'error',
-          summary: errorMessages['selectTwoCards'],
+          summary: messages['wrongAlgorithmStep'],
           life: 3000,
         })
       }
