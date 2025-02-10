@@ -43,9 +43,9 @@ const cardBigger = computed(() => store.correctCards[1])
       Quicksort gibt es algorithmenspezifische Zusatzfunktionen.
     </p>
     <!-- Beispielkarten mit einfügen -->
-    <div class="example-cards">
+    <div class="card-grid">
       <!-- Karten mit weniger Strichen -->
-      <div class="card-with-text">
+      <div class="card-with-position">
         <div
           class="example-card"
           v-if="cardBigger && cardBigger.svg"
@@ -54,7 +54,7 @@ const cardBigger = computed(() => store.correctCards[1])
         <p><strong>kleiner</strong></p>
       </div>
       <!-- Karten mit mehr Strichen -->
-      <div class="card-with-text">
+      <div class="card-with-position">
         <div
           class="example-card"
           v-if="cardSmaller && cardSmaller.svg"
@@ -115,13 +115,6 @@ ul li {
   line-height: 1.5;
 }
 
-.example-cards {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 20px;
-}
-
 .example-card {
   width: 200px;
   height: 300px;
@@ -131,17 +124,5 @@ ul li {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.example-card svg {
-  width: 100%;
-  height: 100%;
-}
-
-.card-with-text {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
 }
 </style>

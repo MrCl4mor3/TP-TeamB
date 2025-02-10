@@ -66,12 +66,12 @@ function drop(targetIndex) {
                 </template>
               </FlippedCard>
               <DividingLine
-                :container-index="containerIndex"
-                :line-index="index"
-                v-if="index < container.length - 1"
-                @click="selectALine(containerIndex, index)"
-                ref="linie"
-              />
+              :container-index="containerIndex"
+              :line-index="index"
+              v-if="index < container.length - 1"
+              @click="selectALine(containerIndex, index)"
+              ref="linie"
+            />
             </div>
           </div>
         </div>

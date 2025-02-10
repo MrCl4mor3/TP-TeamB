@@ -3,23 +3,24 @@
     <template #cards="{ selectCards }">
       <div class="card-grid">
         <!-- Hier wird für jede Karte ein FlippedCard erstellt -->
-        <FlippedCard
-            v-for="(card, index) in store.cards"
-            :key="card.id"
-            @click="selectCards(index)"
-            :card-id="card.id"
-            ref="singlecard"
-        >
-          <template #front>
-            <div class="frontside"></div>
-          </template>
-          <template #back>
-            <div class="backside">
-              <div v-html="card.svg.outerHTML"></div>
-            </div>
-          </template>
-        </FlippedCard>
-
+        <div v-for="(card, index) in store.cards" :key="card.id" class="card-with-position">
+          <FlippedCard
+              @click="selectCards(index)"
+              :card-id="card.id"
+              ref="singlecard"
+          >
+            <template #front>
+              <div class="frontside"></div>
+            </template>
+            <template #back>
+              <div class="backside">
+                <div v-html="card.svg.outerHTML"></div>
+              </div>
+            </template>
+          </FlippedCard>
+          <!-- Position unter der Karte -->
+          <div class="card-description">Position: {{ index + 1 }}</div>
+        </div>
       </div>
     </template>
 

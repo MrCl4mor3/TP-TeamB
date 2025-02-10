@@ -24,7 +24,6 @@
                 </div>
               </template>
             </FlippedCard>
-
             <svg class="line" width="50" height="300">
               <!-- Linie -->
               <line
