@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from './pages/HomePage.vue'
 import SortingPage from './pages/SortingPage2.vue'
 import FinishPage from './pages/FinishPage.vue'
-import TestPage from './pages/TestPage.vue'
 import QuicksortPage from './pages/QuicksortPage.vue'
 import MergeSortPage from './pages/MergeSortPage.vue'
 
@@ -22,11 +21,6 @@ const routes = [
     path: '/finishPage',
     name: 'FinishPage',
     component: FinishPage,
-  },
-  {
-    path: '/TestPage',
-    name: 'TestPage',
-    component: TestPage,
   },
   {
     path: '/quickSortPage',
