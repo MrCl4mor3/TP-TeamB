@@ -260,7 +260,10 @@ export default {
           this.trueCardRef[store.pivotElementIndex] = tempref
 
           //automatisches Zudecken der Karte
-          this.startigCardIds[this.trueCardRef[store.pivotElementIndex]].toggleFlip()
+          let willBeFlipped = null;
+          willBeFlipped = this.startigCardIds[this.trueCardRef[store.pivotElementIndex]];
+          setTimeout(() => {willBeFlipped.toggleFlip();}, 50);
+          // this.startigCardIds[this.trueCardRef[store.pivotElementIndex]].toggleFlip()
           store.selectedCards = store.selectedCards.filter(
             (card) => card !== store.pivotElementIndex,
           )

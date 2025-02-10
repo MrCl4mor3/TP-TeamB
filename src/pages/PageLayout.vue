@@ -152,6 +152,14 @@ export default {
         store.cards[firstIndex] = store.cards[secondIndex]
         store.cards[secondIndex] = temp
         this.numberOfSwaps++
+
+        setTimeout(() => {
+          store.currentCards.forEach((card) => {
+            card.closeCard()
+            store.selectedCards.splice(0);
+            store.numberOfFlippedCards = 0;
+          })},100)
+
       } else {
         this.toast.add({
           severity: 'error',
@@ -164,7 +172,16 @@ export default {
 
     SelectCard(index) {
       if (store.selectedCards.includes(index)) {
-        store.selectedCards = store.selectedCards.filter((card) => card !== index)
+        if (store.selectedCards.length === 2) {
+          setTimeout(() => {
+            store.currentCards.forEach((card) => {
+              card.closeCard()
+              store.selectedCards.splice(0);
+              store.numberOfFlippedCards = 0;
+            })},100)
+        } else {
+          store.selectedCards = store.selectedCards.filter((card) => card !== index)
+        }
       } else if (store.selectedCards.length < 2) {
         store.selectedCards.push(index)
         store.score++

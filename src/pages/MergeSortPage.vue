@@ -89,6 +89,7 @@ import StandardLayout from './PageLayout.vue'
 import { store } from '@/store.js'
 import FlippedCard from '@/components/FlippedCard.vue'
 import errorMessages from '@/descriptions/errorMessages.json'
+import { useToast } from 'primevue/usetoast'
 
 export default {
   components: {
@@ -122,7 +123,11 @@ export default {
       ) {
         store.currentSelectedContainer = containerIndex
         if (this.selectedCards.includes(cardIndex)) {
-          this.selectedCards = this.selectedCards.filter((card) => card !== cardIndex) //nach entfernen des container index hinzufügen
+          if (this.selectedCards.length === 2) {
+            this.flipAllCards();
+          } else {
+            this.selectedCards = this.selectedCards.filter((card) => card !== cardIndex) //nach entfernen des container index hinzufügen
+          }
         } else if (this.selectedCards.length < 2) {
           this.selectedCards.push(cardIndex)
           store.score++
@@ -142,6 +147,7 @@ export default {
           store.containers[store.currentSelectedContainer][secondIndex]
         store.containers[store.currentSelectedContainer][secondIndex] = temp
         this.numberOfSwaps++
+        setTimeout(() => {this.flipAllCards();}, 50);
       } else {
         toast.add({
           severity: 'error',
@@ -211,6 +217,8 @@ export default {
       }
       store.numberOfFlippedCards = 0
       store.currentSelectedContainer = null
+      store.selectedCards.splice(0);
+      this.selectedCards.splice(0);
     },
     resetMergePage() {
       //reset store Variablen
@@ -219,11 +227,12 @@ export default {
       store.selectedLines = 0
       store.dividingLinePosition = -1
       store.dividingContainerPosition = -1
+      store.selectedCards.splice(0);
       //reset lokale Variablen
       this.linePositionContainer = null
       this.linePositionCard = null
       this.selectedContainerIndex = null
-      this.selectedCards.slice(0)
+      this.selectedCards.splice(0)
       this.draggedContainersize = 0
 
       let allLines = this.$refs.linie
