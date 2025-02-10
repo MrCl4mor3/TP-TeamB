@@ -34,13 +34,9 @@ const cardBigger = computed(() => store.correctCards[1])
 
     <h2>Wie funktioniert das Sortieren?</h2>
     <p>
+      Deine Aufgabe ist es, die Karten in aufsteigender Reihenfolge zu sortieren.<br>
       Die Karten enthalten Bilder mit Strichen. "Kleiner" bedeutet, dass eine Karte weniger Striche
-      hat als eine andere. Deine Aufgabe ist es, die Karten in der richtigen Reihenfolge zu
-      sortieren.
-    </p>
-    <p>
-      Hierfür kannst du bis zu zwei aufdecken und nachdem vergleichen vertauschen. Bei Mergesort und
-      Quicksort gibt es algorithmenspezifische Zusatzfunktionen.
+      hat als eine andere:
     </p>
     <!-- Beispielkarten mit einfügen -->
     <div class="card-grid">
@@ -63,6 +59,12 @@ const cardBigger = computed(() => store.correctCards[1])
         <p><strong>größer</strong></p>
       </div>
     </div>
+    <p>
+      Hierfür kannst du bis zu zwei Karten aufdecken, indem du diese mit der Maus anklickst und nachdem Vergleichen vertauschen. <br>
+      Bei Mergesort und
+      Quicksort gibt es algorithmenspezifische Zusatzfunktionen. Diese werden dir im Spiel erklärt. <br> <br>
+      Wenn du fertig bist, klicke auf "Fertig sortiert".
+    </p>
     <h2>Hilfreiche Funktionen:</h2>
     <ul>
       <li>
@@ -91,18 +93,18 @@ const cardBigger = computed(() => store.correctCards[1])
 .dialog-content {
   font-size: 1.2em;
   padding: 20px;
-  line-height: 1.5; /* Angenehme Zeilenhöhe für den Fließtext */
+  line-height: 1.5;
 }
 
 h2 {
   font-weight: bold;
   line-height: 1.3;
-  margin-top: 24px; /* Mehr Abstand nach oben */
-  margin-bottom: 16px; /* Klarer Abstand zur nächsten Zeile */
+  margin-top: 24px;
+  margin-bottom: 16px;
 }
 
 p {
-  margin-bottom: 12px; /* Geringerer Abstand zwischen Absätzen */
+  margin-bottom: 12px;
 }
 
 ul {
@@ -111,7 +113,7 @@ ul {
 }
 
 ul li {
-  margin-bottom: 8px; /* Geringer Abstand für bessere Lesbarkeit */
+  margin-bottom: 8px;
   line-height: 1.5;
 }
 
