@@ -44,8 +44,6 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
       <div>
 
         <P>Du hast {{store.score}} Karten angeschaut und {{this.numberOfSwaps}} vertauscht</p>
-        <p> </p>
-
         <p>BubbleSort: {{ this.bubbleSortResult.scoreLook }} Karten angeschaut und {{this.bubbleSortResult.scoreSwap}} vertauscht</p>
         <p>SelectionSort: {{ this.selectionSortResult.scoreLook }} Karten angeschaut und {{this.selectionSortResult.scoreSwap}} vertauscht</p>
         <p>InsertionSort: {{ this.insertionSortResult.scoreLook }} Karten angeschaut und {{this.insertionSortResult.scoreSwap}} vertauscht</p>
@@ -70,7 +68,7 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
   <footer>
     <!--Einfügen des Scores -->
     <div class="score">
-      <h2>Score: Angeschaut: {{ store.score }}, Vertauscht: {{this.numberOfSwaps}}</h2>
+      <h2>Angeschaut: {{ store.score }}, Vertauscht: {{this.numberOfSwaps}}</h2>
 
     </div>
     <!-- hier werden die zusätzlichen Knöpfe hinzugefügt -->
