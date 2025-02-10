@@ -54,7 +54,8 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
   </Dialog>
 
 
-  <Toast />
+  <Toast :position="'top-right'" :pt="{ root: { style: 'top: 100px !important;' } }" />
+
 
   <div class="content">
     <!-- hier werden die Karten in den einzelnen Seiten hinzugefügt -->
@@ -288,4 +289,5 @@ export default {
   font-size: 1.2em;
   line-height: 1.6;
 }
+
 </style>
