@@ -156,7 +156,7 @@ onBeforeUnmount(() => {
     </div>
 
     <!-- Auswahl der Anzahl der Karten -->
-    <div class="flex-container-column">
+    <div class="flex-container-column number-selection">
       <label for="AnzahlKarten">{{ description.selectNumber }}</label>
       <InputNumber
         v-model="slideNumber"
@@ -221,4 +221,17 @@ footer {
   justify-content: right;
   font-size: 1em;
 }
+
+.number-selection {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  align-items: center;
+  width: 100%;
+}
+
+.slider {
+  margin-bottom: 10px;
+  width: 14%;
+}
+
 </style>
