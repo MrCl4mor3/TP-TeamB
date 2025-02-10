@@ -3,12 +3,15 @@ import { store } from './store'
 export function bubbleSortWithScore(cards, returnSorted = false) {
   let sortingCards = cards.slice()
   let score = 0 // Score-Variable, um die Anzahl der Betrachtungen zu zählen
+  let scoreSwap = 0
+  let scoreLook = 0
   let swapped
 
   do {
     swapped = false
     for (let i = 0; i < sortingCards.length - 1; i++) {
       score++ // Ein Element wird betrachtet
+      store.angeschauteKartenScore++
       //console.log(score)
       if (sortingCards[i].id > sortingCards[i + 1].id) {
         store.correctSortingOrder.push([i, i + 1])
@@ -18,23 +21,27 @@ export function bubbleSortWithScore(cards, returnSorted = false) {
         sortingCards[i] = sortingCards[i + 1]
         sortingCards[i + 1] = temp
         swapped = true
+        scoreSwap++
       }
     }
   } while (swapped)
 
   if (returnSorted) {
-    return { score, sortedArray: sortingCards }
+    return { score,scoreSwap, scoreLook, sortedArray: sortingCards }
   }
 
   return { score }
 }
 export function selectionSortWithScore(cards, returnSorted = false) {
   let sortingCards = cards.slice()
+  let scoreSwap = 0
+  let scoreLook = 0
   let score = 0
 
   for (let i = 0; i < sortingCards.length; i++) {
     let minIndex = i
     for (let j = i + 1; j < sortingCards.length; j++) {
+      store.angeschauteKartenScore++
       score++ // Ein Element wird betrachtet
       if (sortingCards[j].id < sortingCards[minIndex].id) {
         minIndex = j
@@ -46,6 +53,7 @@ export function selectionSortWithScore(cards, returnSorted = false) {
       const temp = sortingCards[i]
       sortingCards[i] = sortingCards[minIndex]
       sortingCards[minIndex] = temp
+      scoreSwap++
     }
   }
 
@@ -59,17 +67,21 @@ export function selectionSortWithScore(cards, returnSorted = false) {
 export function insertionSortWithScore(cards, returnSorted = false) {
   let sortingCards = cards.slice()
   let score = 0
+  let scoreSwap = 0
+  let scoreLook = 0
 
   for (let i = 1; i < sortingCards.length; i++) {
     let current = sortingCards[i]
     let j = i - 1
     while (j >= 0 && sortingCards[j].id > current.id) {
       score++ // Ein Element wird betrachtet
+      store.angeschauteKartenScore++
       store.correctSortingOrder.push([j, j + 1])
       sortingCards[j + 1] = sortingCards[j]
       j--
     }
     score++ // Auch wenn die Schleife abbricht, wird ein Element betrachtet
+    store.angeschauteKartenScore++
     sortingCards[j + 1] = current
   }
 
@@ -82,6 +94,8 @@ export function insertionSortWithScore(cards, returnSorted = false) {
 
 export function quickSortWithScore(cards, returnSorted = false) {
   let score = 0
+  let scoreSwap = 0
+  let scoreLook = 0
 
   function quickSort(array) {
     if (array.length <= 1) {
@@ -89,11 +103,13 @@ export function quickSortWithScore(cards, returnSorted = false) {
     }
 
     score++; //pivotelement wird betrachtet
+    store.angeschauteKartenScore++
     const pivot = array[array.length - 1]
     const left = []
     const right = []
 
     for (let i = 0; i < array.length - 1; i++) {
+
       score++ // Ein Element wird betrachtet
       if (array[i].id < pivot.id) {
         left.push(array[i])
@@ -116,6 +132,8 @@ export function quickSortWithScore(cards, returnSorted = false) {
 
 export function mergeSortWithScore(cards, returnSorted = false) {
   let score = 0
+  let scoreSwap = 0
+  let scoreLook = 0
 
   function merge(left, right) {
     const result = []
