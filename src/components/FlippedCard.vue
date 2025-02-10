@@ -91,6 +91,7 @@ export default {
   position: relative;
   transform-style: preserve-3d;
   transition: transform 0.6s;
+
 }
 .card:hover {
   transform: scale(1.1);
