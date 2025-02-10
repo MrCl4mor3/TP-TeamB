@@ -17,5 +17,6 @@
   "choosingNewPivot" : "Das neue Pivotelement ist ausgewählt",
   "clickPivotToStart" : "Zum Starten auf 'Pivotelement' klicken",
   "pivotelement" : "Dies ist ein Pivotelement",
-  "missingNonPivot" : "Decke noch eine nicht-pivot Karte auf, um vergleichen zu können"
+  "missingNonPivot" : "Decke noch eine nicht-pivot Karte auf, um vergleichen zu können",
+  "vorgegebenerSuccess" : "Der Algorithmus ist bereits fertig, schau ob du richtig sortiert hast"
 }

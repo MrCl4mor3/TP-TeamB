@@ -136,27 +136,42 @@ export default {
 
     SwapCards() {
       let canSort = true
+      let finished = false
 
       if (
         store.selectedMode === 'Vorgegebenes Sortieren' &&
         store.selectedCategory !== 'Merge Sort'
       ) {
         if (store.selectedCategory === 'Bubble Sort') {
-          canSort = !!(
-            store.correctSortingOrderBubble[this.numberOfSwaps].includes(store.selectedCards[0]) &&
-            store.correctSortingOrderBubble[this.numberOfSwaps].includes(store.selectedCards[1])
-          )
+          if (this.numberOfSwaps < store.correctSortingOrderBubble.length) {
+            canSort = !!(
+              store.correctSortingOrderBubble[this.numberOfSwaps].includes(store.selectedCards[0]) &&
+              store.correctSortingOrderBubble[this.numberOfSwaps].includes(store.selectedCards[1])
+            )
+          } else {
+            canSort = false;
+            finished = true;
+          }
         } else if (store.selectedCategory === 'Selection Sort') {
-          canSort = !!(
-            store.correctSortingOrderSelect[this.numberOfSwaps].includes(store.selectedCards[0]) &&
-            store.correctSortingOrderSelect[this.numberOfSwaps].includes(store.selectedCards[1])
-          )
-
-        } else if (store.selectedCategory === 'InsertionSort') {
-          canSort = !!(
-            store.correctSortingOrderInsert[this.numberOfSwaps].includes(store.selectedCards[0]) &&
-            store.correctSortingOrderInsert[this.numberOfSwaps].includes(store.selectedCards[1])
-          )
+          if (this.numberOfSwaps < store.correctSortingOrderSelect.length) {
+            canSort = !!(
+              store.correctSortingOrderSelect[this.numberOfSwaps].includes(store.selectedCards[0]) &&
+              store.correctSortingOrderSelect[this.numberOfSwaps].includes(store.selectedCards[1])
+            )
+          } else {
+            canSort = false;
+            finished = true;
+          }
+        } else if (store.selectedCategory === 'Insertion Sort') {
+          if (this.numberOfSwaps < store.correctSortingOrderInsert.length) {
+            canSort = !!(
+              store.correctSortingOrderInsert[this.numberOfSwaps].includes(store.selectedCards[0]) &&
+              store.correctSortingOrderInsert[this.numberOfSwaps].includes(store.selectedCards[1])
+            )
+          } else {
+            canSort = false;
+            finished = true;
+          }
 
         }
       }
@@ -175,12 +190,16 @@ export default {
           })},300)
 
       } else {
-        this.toast.add({
-          severity: 'error',
-          summary: 'Fehler',
-          detail: messages['wrongAlgorithmStep'],
-          life: 3000,
-        })
+        if (finished) {
+          this.toast.add({ severity: 'success', summary: messages['vorgegebenerSuccess'], life: 3000 })
+        }else {
+          this.toast.add({
+            severity: 'error',
+            summary: 'Fehler',
+            detail: messages['wrongAlgorithmStep'],
+            life: 3000,
+          })
+        }
       }
     },
 
@@ -227,6 +246,7 @@ export default {
           store.startingCards = store.cards.slice()
         }
 
+        this.calculateScore();
         this.visibleEndScreen = false
         this.toast.add({ severity: 'success', summary: messages["shuffleCards"], life: 3000 })
       }, 450)
@@ -296,7 +316,6 @@ export default {
       if (this.store.selectedMode === 'Freies Sortieren') {
         category = 'Free Sort'
       }
-      this.calculateScore();
 
       // Wenn die Kategorie keine Beschreibung hat, gib einen leeren String zurück
       if (!this.descriptionToAlgorithm[category]) return ''
