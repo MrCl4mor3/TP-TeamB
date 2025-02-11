@@ -141,7 +141,7 @@ export default {
         ) {
           //Nicht das erste mal gedrückt, also muss das alte Pivotelement als fertig sortiert gespeichert werden
           store.pivotIndices.push(store.pivotElementIndex)
-          this.startigCardIds[this.trueCardRef[store.pivotElementIndex]].colourchange()
+          this.startigCardIds[this.trueCardRef[store.pivotElementIndex]].changeColour()
           this.$refs.cardlist[
             this.trueCardRef[store.pivotElementIndex]
           ].firstChild.firstChild.style.border = null
@@ -155,11 +155,11 @@ export default {
           //einelementige Teilmengen sind auch schon sortiert, also müssen dementsprechend makiert werden
           if (this.biggerCards === 1) {
             store.pivotIndices.push(store.pivotElementIndex + 1)
-            this.startigCardIds[this.trueCardRef[store.pivotElementIndex + 1]].colourchange()
+            this.startigCardIds[this.trueCardRef[store.pivotElementIndex + 1]].changeColour()
           }
           if (this.smallerCards === 1) {
             store.pivotIndices.push(store.pivotElementIndex - 1)
-            this.startigCardIds[this.trueCardRef[store.pivotElementIndex - 1]].colourchange()
+            this.startigCardIds[this.trueCardRef[store.pivotElementIndex - 1]].changeColour()
           }
           //geht weiter bis zum nächsten Element das noch nicht sortiert wurde oder pivotelement war.
           //Dieses ist dann das linke vom nächsten Abschnitt und damit neues Pivot
