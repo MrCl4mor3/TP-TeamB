@@ -135,6 +135,18 @@ export default {
     },
 
     SwapCards() {
+
+      if (store.selectedCards.length !== 2) {
+        this.toast.add({
+          severity: 'error',
+          summary: 'Fehler',
+          detail: messages['selectTwoCards'],
+          life: 3000,
+        })
+        return
+      }
+
+
       let canSort = true
       let finished = false
 

@@ -253,7 +253,6 @@ export default {
 .flex-container-row {
   border: 4px solid mediumvioletred; /* Fügt eine weiße Umrandung hinzu */
   padding: 10px; /* Abstand zwischen Inhalt und Rahmen */
-  margin-bottom: 20px; /* Abstand zwischen einzelnen Grids */
   border-radius: 10px; /* Optional: Abgerundete Ecken */
   max-width: 100%;
 }
