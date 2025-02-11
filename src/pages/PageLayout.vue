@@ -41,15 +41,44 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     class="dialog"
     @update:visible="prepareReset">
     <div class="dialog-content">
-      <div>
-
-        <P>Du hast {{store.score}} Karten angeschaut und {{this.numberOfSwaps}} vertauscht</p>
-        <p>BubbleSort: {{ this.bubbleSortResult.scoreLook }} Karten angeschaut und {{this.bubbleSortResult.scoreSwap}} vertauscht</p>
-        <p>SelectionSort: {{ this.selectionSortResult.scoreLook }} Karten angeschaut und {{this.selectionSortResult.scoreSwap}} vertauscht</p>
-        <p>InsertionSort: {{ this.insertionSortResult.scoreLook }} Karten angeschaut und {{this.insertionSortResult.scoreSwap}} vertauscht</p>
-        <p>QuickSort: {{ this.quickSortResult.scoreLook }} Karten angeschaut und {{this.quickSortResult.scoreSwap}} vertauscht</p>
-        <p>MergeSort: {{ this.mergeSortResult.scoreLook }} Karten angeschaut und {{this.mergeSortResult.scoreSwap}} vertauscht</p>
-      </div>
+      <p>Du hast {{ store.score }} Karten angeschaut und {{ this.numberOfSwaps }} Karten vertauscht.</p>
+      <p>Ein Computer würde mit den folgenden Algorithmen so viele Operationen benötigen:</p>
+      <table border="1" style="width: 100%; text-align: center; border-collapse: collapse;">
+        <thead>
+        <tr>
+          <th>Sortieralgorithmus</th>
+          <th>Karten angeschaut</th>
+          <th>Karten vertauscht</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>BubbleSort</td>
+          <td>{{ this.bubbleSortResult.scoreLook }}</td>
+          <td>{{ this.bubbleSortResult.scoreSwap }}</td>
+        </tr>
+        <tr>
+          <td>SelectionSort</td>
+          <td>{{ this.selectionSortResult.scoreLook }}</td>
+          <td>{{ this.selectionSortResult.scoreSwap }}</td>
+        </tr>
+        <tr>
+          <td>InsertionSort</td>
+          <td>{{ this.insertionSortResult.scoreLook }}</td>
+          <td>{{ this.insertionSortResult.scoreSwap }}</td>
+        </tr>
+        <tr>
+          <td>QuickSort</td>
+          <td>{{ this.quickSortResult.scoreLook }}</td>
+          <td>{{ this.quickSortResult.scoreSwap }}</td>
+        </tr>
+        <tr>
+          <td>MergeSort</td>
+          <td>{{ this.mergeSortResult.scoreLook }}</td>
+          <td>{{ this.mergeSortResult.scoreSwap }}</td>
+        </tr>
+        </tbody>
+      </table>
       <div class="button-container">
         <ButtonPress icon="pi pi-home" @click="goToHomePage" />
         <ButtonPress label="Neustart" @click="startOver" />
