@@ -3,15 +3,18 @@ import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { resetStore } from '@/store.js'
 import { generateCards } from '@/cardSetup.js'
 import startConfig from '../configs/startConfig.json'
-import errorMessages from '../descriptions/errorMessages.json'
+import errorMessages from '../descriptions/messages.json'
 import descriptions from '../descriptions/homePageDescriptions.json'
 import router from '@/router.js'
 import Slider from 'primevue/slider'
+import Dialog from 'primevue/dialog'
+import TutorialDialog from '@/components/TutorialDialog.vue'
 
 // Reset des Stores
 resetStore()
 
 // Daten-Variablen
+const visibleTutorial = ref(false)
 const selectedCategory = ref(startConfig.startAlgorithm)
 const selectedMode = ref(startConfig.startMode)
 const description = ref(descriptions)
@@ -50,35 +53,37 @@ function goToSortingPage() {
   }
 
   // Karten generieren und weiterleiten
-  generateCards(selectedCategory.value, selectedMode.value, numberOfCards.value, false)
+  generateCards(selectedCategory.value, selectedMode.value, numberOfCards.value)
   if (selectedCategory.value === 'Quick Sort') {
     router.push('/quickSortPage')
   } else if (selectedCategory.value === 'Merge Sort') {
     router.push('/mergeSortPage')
-  }
-  else {
+  } else {
     router.push('/sortingPage')
   }
 }
 
-function goToTestPage() {
-  generateCards(selectedCategory.value, selectedMode.value, numberOfCards.value, true)
-  router.push('/testPage')
-}
 
 // Event-Handler für Tasten
 function handleKeyPress(event) {
   if (event.key === 'Enter') {
     goToSortingPage()
   }
-  if (event.key === 't') {
-    goToTestPage()
-  }
+}
+
+function openTutorial() {
+  visibleTutorial.value = true
 }
 
 // Lifecycle-Hooks
 onMounted(() => {
   window.addEventListener('keyup', handleKeyPress)
+
+  //Überprüft, ob der Nutzer die Seite schon einmal besucht hat
+  if (sessionStorage.getItem('visited') === null) {
+    sessionStorage.setItem('visited', 'true')
+    openTutorial()
+  }
 })
 
 onBeforeUnmount(() => {
@@ -87,202 +92,115 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
+  <!-- Überschrift -->
   <header>
     <h1>{{ description.headline }}</h1>
+    <ButtonPress class="tutorial-button" label="?" @click="openTutorial"></ButtonPress>
   </header>
 
-  <!-- Beschreibung des Spiels -->
-  <div class="description-container">
-    <details>
-      <summary>{{ description.instructionHeader }}</summary>
-      <p>{{ description.instructions }}</p>
-    </details>
-  </div>
+  <div class="content">
+    <!-- Beschreibung des Spiels -->
+    <Dialog v-model:visible="visibleTutorial" :header="`SortLab Anleitung`" class="dialog" @update:visible="resetStore">
+        <TutorialDialog />
+    </Dialog>
 
-  <!-- Flexbox für die Auswahl von Algorithmen und Modi -->
-  <div class="modi-algo-container">
-    <!-- Auswahl des Modus -->
-    <fieldset class="radio-box">
-      <legend>{{ description.selectMode }}</legend>
-      <div class="radio-group-modes">
-        <div v-for="category in modes" :key="category.key" class="flex items-center gap-2">
-          <input
-            type="radio"
-            :id="category.key"
-            v-model="selectedMode"
-            name="mode"
-            :value="category.name"
-          />
-          <label :for="category.key" class="radio-label">{{ category.name }}</label>
+    <!-- Flexbox für die Auswahl von Algorithmen und Modi -->
+    <div class="flex-container-row">
+
+      <!-- Auswahl des Modus -->
+      <fieldset class="radio-box">
+        <legend>{{ description.selectMode }}</legend>
+        <div class="flex-container-column">
+          <div v-for="category in modes" :key="category.key">
+            <input
+              type="radio"
+              :id="category.key"
+              v-model="selectedMode"
+              name="mode"
+              :value="category.name"
+            />
+            <label :for="category.key" class="radio-label">{{ category.name }}</label>
+          </div>
         </div>
-      </div>
-    </fieldset>
+      </fieldset>
 
-    <!-- Auswahl des Algorithmus -->
-    <fieldset class="radio-box">
-      <legend :class="{ 'disabled-text': selectedMode === 'Freies Sortieren' }">
-        {{ description.selectAlgorithm }}
-      </legend>
-      <div class="radio-group-algorithms">
-        <div
-          v-for="category in algorithms"
-          :key="category.key"
-          class="flex items-center gap-2"
-          :class="{ 'disabled-text': selectedMode === 'Freies Sortieren' }"
-        >
-          <input
-            type="radio"
-            :id="category.key"
-            v-model="selectedCategory"
-            name="category"
-            :value="category.name"
-            :disabled="selectedMode === 'Freies Sortieren'"
-          />
-          <label :for="category.key" class="radio-label">
-            {{ category.name }}
-            <span v-if="selectedMode === 'Freies Sortieren'" class="tooltip">
-              {{ description.wrongMode }}
-            </span>
-          </label>
+      <!-- Auswahl des Algorithmus -->
+      <fieldset class="radio-box">
+        <legend :class="{ 'disabled-text': selectedMode === 'Freies Sortieren' }">
+          {{ description.selectAlgorithm }}
+        </legend>
+        <div class="flex-container-column">
+          <div
+            v-for="category in algorithms"
+            :key="category.key"
+            :class="{ 'disabled-text': selectedMode === 'Freies Sortieren' }"
+          >
+            <input
+              type="radio"
+              :id="category.key"
+              v-model="selectedCategory"
+              name="category"
+              :value="category.name"
+              :disabled="selectedMode === 'Freies Sortieren'"
+            />
+            <label :for="category.key" class="radio-label">
+              {{ category.name }}
+              <span v-if="selectedMode === 'Freies Sortieren'" class="tooltip">
+                {{ description.wrongMode }}
+              </span>
+            </label>
+          </div>
         </div>
-      </div>
-    </fieldset>
+      </fieldset>
+    </div>
+
+    <!-- Auswahl der Anzahl der Karten -->
+    <div class="flex-container-column number-selection">
+      <label for="AnzahlKarten">{{ description.selectNumber }}</label>
+      <InputNumber
+        v-model="slideNumber"
+        inputId="AnzahlKarten"
+        showButtons
+        :min="startConfig.minNumberOfCards"
+        :max="startConfig.maxNumberOfCards"
+      />
+      <Slider v-model="slideNumber" class="slider" :min="4" :max="20" />
+    </div>
+
+    <!-- Start-Button -->
+      <ButtonPress class="start-button" label="Start" @click="goToSortingPage" />
   </div>
 
-  <!-- Auswahl der Anzahl der Karten -->
-  <div class="NumberSelect">
-    <label for="AnzahlKarten">{{ description.selectNumber }}</label>
-    <InputNumber
-      v-model="slideNumber"
-      inputId="AnzahlKarten"
-      showButtons
-      :min="startConfig.minNumberOfCards"
-      :max="startConfig.maxNumberOfCards"
-    />
-    <Slider v-model="slideNumber" class="slider" :min="4" :max="20" />
-  </div>
-  <div class="start-container">
-    <ButtonPress label="Start" @click="goToSortingPage" />
-  </div>
-
+  <!-- Fußzeile -->
   <footer>
     <p>{{ description.impressum }}</p>
   </footer>
 </template>
 
 <style scoped>
-/*Styling für die Überschrift*/
-h1 {
-  font-size: 80px; /* Größe der Überschrift */
-}
 
-.slider {
-  width: 15%;
-  margin: 20px;
-}
-.NumberSelect {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  font-family: Arial, sans-serif;
-  font-size: 20px;
-}
-
-.modi-algo-container {
-  display: flex; /* Macht den Container zur Flexbox */
-  justify-content: center; /* Zentriert die Boxen */
-  gap: 1px; /* Abstand zwischen den Boxen */
-  font-family: Arial, sans-serif;
-}
-
-.radio-box {
-  display: flex; /* Macht die Box zur Flexbox */
-  max-width: 30%; /* Maximale Breite der Box */
-  flex: 1; /* Füllt den verfügbaren Platz aus */
-  flex-direction: column; /* Anordnung der Elemente */
-  justify-content: space-evenly;
-  align-items: flex-start; /* Links ausgerichtet */
-  padding: 10px; /* Innenabstand */
-  border: 1px solid black; /* Rahmen */
-  border-radius: 8px; /* Abrundung der Ecken */
-  margin: 20px; /* Außenabstand */
-  font-family: Arial, sans-serif;
-  accent-color: #10b981;
-}
-
-.radio-label {
-  position: relative;
-  cursor: pointer;
-  padding-left: 30px;
-  font-family: Arial, sans-serif;
-}
-
-.radio-group-algorithms {
-  display: flex; /* Macht die Gruppe zur Flexbox */
-  flex-direction: column; /* Anordnung der Elemente */
-  gap: 10px; /* Abstand zwischen den Elementen */
-  font-family: Arial, sans-serif;
-}
-
-.radio-group-modes {
-  display: flex; /* Macht die Gruppe zur Flexbox */
-  flex-direction: column; /* Anordnung der Elemente */
-  gap: 10px; /* Abstand zwischen den Elementen */
-  font-family: Arial, sans-serif;
-}
-
-legend {
-  font-size: 1.7em; /* Größe der Überschrift */
-  font-weight: bold; /* Fett gedruckt */
-  margin-bottom: 8px; /* Abstand nach unten */
-  text-align: center; /* Zentriert den Text */
-  font-family: Arial, sans-serif;
-}
-
-.start-container {
-  display: flex; /* Macht den Container zur Flexbox */
-  flex-direction: column; /* Anordnung der Elemente */
-  justify-content: center; /* Zentriert die Elemente */
-  align-items: center; /* Zentriert die Elemente */
-  gap: 20px; /* Abstand zwischen den Elementen */
-  font-family: Arial, sans-serif;
+.start-button {
+  width: 200px; /* Breite des Buttons */
+  height: 50px; /* Höhe des Buttons */
+  font-size: 30px; /* Größe des Textes */
   margin-top: 10px; /* Abstand nach oben */
 }
 
-.start-container button {
-  width: 200px; /* Breite des Buttons */
-  height: 50px; /* Höhe des Buttons */
-  font-size: 1.7em; /* Größe des Textes */
-  font-family: Arial, sans-serif;
-}
-
-.cards-container h2 {
-  margin-bottom: 8px; /* Abstand zwischen Überschrift und Input-Feld */
-  font-size: 1.7em; /* Größe der Überschrift */
-  font-family: Arial, sans-serif;
-}
-
-.description-container {
-  display: flex; /* Macht den Container zur Flexbox */
-  justify-content: center; /* Zentriert den Inhalt */
-  text-align: center; /* Zentriert den gesamten Inhalt horizontal */
-  margin-top: 24px; /* Abstand nach oben */
-  margin-bottom: 24px; /* Abstand nach unten */
-  font-family: Arial, sans-serif;
-  font-weight: bold;
-  font-size: 20px;
+.tutorial-button {
+  font-size: 1.7em;
+  padding: 8px 14px;
 }
 
 input:disabled + label {
   color: gray;
   opacity: 0.6; /* verringert die Sichtbarkeit */
 }
+
 .disabled-text {
   color: gray;
   opacity: 0.6; /* verringert die Sichtbarkeit */
 }
+
 .tooltip {
   display: none;
   position: absolute;
@@ -293,13 +211,25 @@ input:disabled + label {
   white-space: nowrap;
   z-index: 1000;
 }
+
 label:hover .tooltip {
   display: inline-block;
 }
 
 footer {
   justify-content: right;
-  font-family: Arial, sans-serif;
-  font-size: 1em;
 }
+
+.number-selection {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  align-items: center;
+  width: 100%;
+}
+
+.slider {
+  margin-bottom: 10px;
+  width: 14%;
+}
+
 </style>

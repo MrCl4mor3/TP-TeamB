@@ -1,11 +1,12 @@
-# tp-sortierprojekt
+# SortLab
 
-This template should help get you started developing with Vue 3 in Vite.
+Das Produkt ist eine interaktive und verständliche Webanwendung, welche die gängigsten Sortieralgorithmen erklärt und Nutzern ermöglicht, deren Funktionsweise selbst auszuprobieren. Hierbei übernehmen die Nutzer die Rolle und Sichtweise des PCs beim Sortieren, und lernen so Computational Thinking und die Grundlagen des Sortierens.
+## License
 
-## Recommended IDE Setup
+[GNU GLPv2](https://www.gnu.org/licenses/old-licenses/gpl-2.0)
+## Links
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
+Dieses und weitere tolle didaktische Projekte für den Informatikunterricht findet ihr online gehostet beim [Lehr-Lern-Labor](https://lehr-lern-labor.info) des KIT und der PH Karlsruhe. 
 ## Customize configuration
 
 See [Vite Configuration Reference](https://vite.dev/config/).
@@ -34,8 +35,3 @@ npm run build
 npm run test:unit
 ```
 
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
