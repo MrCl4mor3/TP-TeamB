@@ -15,7 +15,6 @@
             <FlippedCard @click="this.SelectCardQuick(index)" :card-id="card.id" ref="singlecard">
               <template #front>
                 <div class="frontsite" >
-                  <h1 style="color: black">{{ card.id }}</h1>
                 </div>
               </template>
               <template #back>
