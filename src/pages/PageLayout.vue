@@ -33,11 +33,12 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     v-model:visible="visibleEndScreen"
     :header="'Bravo - Die Karten sind richtig sortiert!'"
     class="dialog"
+    :modal = "true"
     @update:visible="prepareReset">
     <div class="dialog-content">
-      <p>Du hast {{ store.score }} Karten angeschaut und {{ this.numberOfSwaps }} Karten vertauscht.</p>
+      <p>Du hast {{ store.score }} Karten angeschaut und {{ store.numberOfSwaps }} Karten vertauscht.</p>
       <p>Ein Computer würde mit den folgenden Algorithmen so viele Operationen benötigen:</p>
-      <table border="1" style="width: 100%; text-align: center; border-collapse: collapse;">
+      <table class="finish-page-table">
         <thead>
         <tr>
           <th>Sortieralgorithmus</th>
@@ -46,30 +47,10 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
         </tr>
         </thead>
         <tbody>
-        <tr>
-          <td>BubbleSort</td>
-          <td>{{ this.bubbleSortResult.scoreLook }}</td>
-          <td>{{ this.bubbleSortResult.scoreSwap }}</td>
-        </tr>
-        <tr>
-          <td>SelectionSort</td>
-          <td>{{ this.selectionSortResult.scoreLook }}</td>
-          <td>{{ this.selectionSortResult.scoreSwap }}</td>
-        </tr>
-        <tr>
-          <td>InsertionSort</td>
-          <td>{{ this.insertionSortResult.scoreLook }}</td>
-          <td>{{ this.insertionSortResult.scoreSwap }}</td>
-        </tr>
-        <tr>
-          <td>QuickSort</td>
-          <td>{{ this.quickSortResult.scoreLook }}</td>
-          <td>{{ this.quickSortResult.scoreSwap }}</td>
-        </tr>
-        <tr>
-          <td>MergeSort</td>
-          <td>{{ this.mergeSortResult.scoreLook }}</td>
-          <td>{{ this.mergeSortResult.scoreSwap }}</td>
+        <tr v-for="algorithm in algorithms" :key="algorithm.name">
+          <td>{{ algorithm.name }}</td>
+          <td>{{ algorithm.result?.scoreLook ?? '-' }}</td>
+          <td>{{ algorithm.result?.scoreSwap ?? '-' }}</td>
         </tr>
         </tbody>
       </table>
@@ -79,6 +60,7 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
         <ButtonPress label="Neu mischen" @click="shuffel" />
       </div>
     </div>
+
   </Dialog>
 
 
@@ -93,7 +75,7 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
   <footer>
     <!--Einfügen des Scores -->
     <div class="score">
-      <h3>Angeschaut: {{ store.score }}, Vertauscht: {{this.numberOfSwaps}}</h3>
+      <h3>Angeschaut: {{ store.score }}, Vertauscht: {{store.numberOfSwaps}}</h3>
 
     </div>
     <!-- hier werden die zusätzlichen Knöpfe hinzugefügt -->
@@ -133,11 +115,6 @@ export default {
   data() {
     return {
       isScoreCalculated: false,
-      bubbleSortResult: null,
-      selectionSortResult: null,
-      insertionSortResult: null,
-      quickSortResult: null,
-      mergeSortResult: null,
       toast: null,
       visibleTutorial: false,
       visibleEndScreen: false,
@@ -184,30 +161,30 @@ export default {
         store.selectedCategory !== 'Merge Sort'
       ) {
         if (store.selectedCategory === 'Bubble Sort') {
-          if (this.numberOfSwaps < store.correctSortingOrderBubble.length) {
+          if (store.numberOfSwaps < store.correctSortingOrderBubble.length) {
             canSort = !!(
-              store.correctSortingOrderBubble[this.numberOfSwaps].includes(store.selectedCards[0]) &&
-              store.correctSortingOrderBubble[this.numberOfSwaps].includes(store.selectedCards[1])
+              store.correctSortingOrderBubble[store.numberOfSwaps].includes(store.selectedCards[0]) &&
+              store.correctSortingOrderBubble[store.numberOfSwaps].includes(store.selectedCards[1])
             )
           } else {
             canSort = false;
             finished = true;
           }
         } else if (store.selectedCategory === 'Selection Sort') {
-          if (this.numberOfSwaps < store.correctSortingOrderSelect.length) {
+          if (store.numberOfSwaps < store.correctSortingOrderSelect.length) {
             canSort = !!(
-              store.correctSortingOrderSelect[this.numberOfSwaps].includes(store.selectedCards[0]) &&
-              store.correctSortingOrderSelect[this.numberOfSwaps].includes(store.selectedCards[1])
+              store.correctSortingOrderSelect[store.numberOfSwaps].includes(store.selectedCards[0]) &&
+              store.correctSortingOrderSelect[store.numberOfSwaps].includes(store.selectedCards[1])
             )
           } else {
             canSort = false;
             finished = true;
           }
         } else if (store.selectedCategory === 'Insertion Sort') {
-          if (this.numberOfSwaps < store.correctSortingOrderInsert.length) {
+          if (store.numberOfSwaps < store.correctSortingOrderInsert.length) {
             canSort = !!(
-              store.correctSortingOrderInsert[this.numberOfSwaps].includes(store.selectedCards[0]) &&
-              store.correctSortingOrderInsert[this.numberOfSwaps].includes(store.selectedCards[1])
+              store.correctSortingOrderInsert[store.numberOfSwaps].includes(store.selectedCards[0]) &&
+              store.correctSortingOrderInsert[store.numberOfSwaps].includes(store.selectedCards[1])
             )
           } else {
             canSort = false;
@@ -221,7 +198,7 @@ export default {
         const temp = store.cards[firstIndex]
         store.cards[firstIndex] = store.cards[secondIndex]
         store.cards[secondIndex] = temp
-        this.numberOfSwaps++
+        store.numberOfSwaps++
 
         setTimeout(() => {
           store.currentCards.forEach((card) => {
@@ -314,16 +291,16 @@ export default {
     },
 
     calculateScore() {
-      this.isScoreCalculated = false
-
-      this.bubbleSortResult = bubbleSortWithScore(store.startingCards)
-      this.selectionSortResult = selectionSortWithScore(store.startingCards)
-      this.insertionSortResult = insertionSortWithScore(store.startingCards)
-      this.quickSortResult = quickSortWithScore(store.startingCards)
-      this.mergeSortResult = mergeSortWithScore(store.startingCards)
-
+      this.algorithms = [
+        { name: 'Bubble Sort', result: bubbleSortWithScore(this.store.startingCards) },
+        { name: 'Selection Sort', result: selectionSortWithScore(this.store.startingCards) },
+        { name: 'Insertion Sort', result: insertionSortWithScore(this.store.startingCards) },
+        { name: 'Quick Sort', result: quickSortWithScore(this.store.startingCards) },
+        { name: 'Merge Sort', result: mergeSortWithScore(this.store.startingCards) }
+      ];
       this.isScoreCalculated = true
     },
+
 
     //Alle Karten werden aufgedeckt
     openAllCards() {
@@ -337,7 +314,7 @@ export default {
         card.closeCard()
         card.colour = '#10b981'
       })
-      this.numberOfSwaps = 0;
+      store.numberOfSwaps = 0;
       this.selectedCards.splice(0);
       store.reloadPage = true
       store.dividingLinePosition = -1
@@ -386,6 +363,17 @@ export default {
   flex-direction: column;
   padding: 1rem;
   line-height: 1.6;
+}
+.finish-page-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  border: 1px solid #ddd;
+  font-family: 'Arial', sans-serif;
+}
+.finish-page-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
 }
 
 </style>
