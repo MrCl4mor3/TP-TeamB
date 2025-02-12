@@ -33,6 +33,7 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     v-model:visible="visibleEndScreen"
     :header="'Bravo - Die Karten sind richtig sortiert!'"
     class="dialog"
+    :modal = "true"
     @update:visible="prepareReset">
     <div class="dialog-content">
       <p>Du hast {{ store.score }} Karten angeschaut und {{ store.numberOfSwaps }} Karten vertauscht.</p>
