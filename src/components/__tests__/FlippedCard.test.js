@@ -76,13 +76,34 @@ describe('FlippedCard Component', () => {
     expect(wrapper.vm.isFlipped).toBe(false)
   })
 
-  it('should toggle the card colour when colourchange() is called', () => {
-    expect(wrapper.vm.colour).toBe('#10b981')
+  // Test für checkHover
+  it('should show tooltip when hover and 2 cards are flipped', async () => {
+    store.numberOfFlippedCards = 2
 
-    wrapper.vm.colourchange()
-    expect(wrapper.vm.colour).toBe('grey')
+    // Über die Karte "hovern"
+    await wrapper.trigger('mouseover')
 
-    wrapper.vm.colourchange()
-    expect(wrapper.vm.colour).toBe('#10b981')
+    // Teste showTooltip.value
+    expect(wrapper.vm.showTooltip.value).toBe(true)
+  })
+
+  it('should hide tooltip when hover is removed', async () => {
+    wrapper.vm.showTooltip.value = true
+
+    // Entferne den "hover" durch ein "mouseout"
+    await wrapper.trigger('mouseout')
+
+    // Teste showTooltip.value
+    expect(wrapper.vm.showTooltip.value).toBe(false)
+  })
+
+  // Test für changeColour
+  it('should change the colour of the card when changeColour is called', () => {
+    expect(wrapper.vm.colour).toBe('#10b981')  // Anfangszustand ist grün
+    wrapper.vm.changeColour()
+    expect(wrapper.vm.colour).toBe('grey')  // Nach dem Aufruf sollte die Farbe grau sein
+
+    wrapper.vm.changeColour()
+    expect(wrapper.vm.colour).toBe('#10b981')  // Nach einem weiteren Aufruf sollte sie wieder grün sein
   })
 })

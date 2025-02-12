@@ -1,14 +1,15 @@
 import { mount } from '@vue/test-utils'
 import { nextTick } from 'vue'
-import HomePage from '@/pages/HomePage.vue';
+import HomePage from '@/pages/HomePage.vue'
 import { resetStore } from '@/store.js'
 import { generateCards } from '@/cardSetup.js'
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 
-// Mocks
+// Mocking der Funktionen
 vi.mock('@/store.js', () => ({
   resetStore: vi.fn(),
 }))
+
 vi.mock('@/cardSetup.js', () => ({
   generateCards: vi.fn(),
 }))
@@ -30,7 +31,7 @@ describe('HomePage.vue', () => {
   })
 
   afterEach(() => {
-    // Cleanup: reset the store after each test
+    // Cleanup: reset mocks after each test
     vi.clearAllMocks()
   })
 
@@ -72,4 +73,22 @@ describe('HomePage.vue', () => {
     expect(generateCards).toHaveBeenCalledWith('bubble-sort', 'free-sort', 10)
   })
 
+  it('should show tutorial if user is visiting for the first time', () => {
+    // Simulate first visit by clearing sessionStorage
+    sessionStorage.clear()
+
+    // Re-mount the wrapper
+    wrapper = mount(HomePage, {
+      global: {
+        mocks: {
+          $router: {
+            push: vi.fn(),
+          },
+        },
+      },
+    })
+
+    // Assert that the tutorial modal is shown
+    expect(wrapper.vm.visibleTutorial).toBe(true)
+  })
 })
