@@ -17,7 +17,7 @@ body {
 
 /* Header*/
 header {
-  padding: 25px 10px;
+  padding: 15px 20px;
   position: sticky;
   top: 0;
   background-color: lightgray;
@@ -45,7 +45,7 @@ footer {
   position: sticky;
   z-index: 1000;
   background-color: lightgray;
-  padding: 25px 10px;
+  padding: 15px 10px;
   box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.7);
   margin-top: 20px;
   justify-content: center;
@@ -70,20 +70,25 @@ h1 {
 h2 {
   font-size: 40px;
   color: #10b981;
+  text-align: center;
 }
 h3 {
   font-size: 30px;
   color: #10b981;
 }
 
-/* Buttons */
+/* Button Container */
 .button-container {
   display: flex;
   gap: 10px;
   text-align: center;
   justify-content: center;
-  margin: 10px;
+  padding: 10px 0px;
 }
+.button-container .p-button {
+  font-size: 20px;
+}
+
 
 /* Flexbox-Container, Anordnung in Reihe */
 .flex-container-row {
