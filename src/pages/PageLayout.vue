@@ -35,7 +35,8 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     class="dialog"
     @update:visible="prepareReset">
     <div class="dialog-content">
-      <p>Du hast {{ store.score }} Karten angeschaut und {{ this.numberOfSwaps }} Karten vertauscht.</p>
+      <p>Du hast <span class="highlight">{{ store.score }}</span> Karten angeschaut und
+        <span class="highlight">{{ this.numberOfSwaps }}</span> Karten vertauscht.</p>
       <p>Ein Computer würde mit den folgenden Algorithmen so viele Operationen benötigen:</p>
       <table class="finish-page-table">
         <thead>
@@ -373,6 +374,12 @@ export default {
 .finish-page-table td {
   border: 1px solid #ddd;
   padding: 8px;
+}
+
+.highlight {
+  font-weight: bold;
+  color: #10b981;
+  font-size: 1.5em;
 }
 
 </style>
