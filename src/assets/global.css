@@ -9,13 +9,15 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 body {
   font-family: Arial, sans-serif;
   font-size: 20px;
 }
 
+/* Header*/
 header {
-  padding: 25px 10px;
+  padding: 15px 20px;
   position: sticky;
   top: 0;
   background-color: lightgray;
@@ -27,6 +29,7 @@ header {
   margin-bottom: 20px;
 }
 
+/* Der gesamte Content zwischen Header und Footer */
 .content {
   display: flex;
   flex-direction: column;
@@ -35,27 +38,30 @@ header {
   flex-grow: 1;
 }
 
+/* Footer */
 footer {
   display: flex;
   bottom: 0;
   position: sticky;
   z-index: 1000;
   background-color: lightgray;
-  padding: 25px 10px;
+  padding: 15px 10px;
   box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.7);
   margin-top: 20px;
   justify-content: center;
   align-items: center;
 }
 
+/* Legende für Algo & Modi */
 legend {
   font-size: 40px;
-  font-weight: bold; /* Fett gedruckt */
-  margin-bottom: 8px; /* Abstand nach unten */
-  text-align: center; /* Zentriert den Text */
+  font-weight: bold;
+  margin-bottom: 8px;
+  text-align: center;
 }
 
-header h1 {
+/* Überschriften */
+h1 {
   color: #10b981;
   flex-grow: 1;
   text-align: center;
@@ -65,21 +71,25 @@ h2 {
   font-size: 40px;
   color: #10b981;
 }
-
 h3 {
-  font-size: 30px;
+  font-size: 25px;
   color: #10b981;
 }
 
+/* Button Container */
 .button-container {
   display: flex;
   gap: 10px;
   text-align: center;
   justify-content: center;
-  margin: 10px;
+  padding: 10px 0px;
+}
+.button-container .p-button {
+  font-size: 20px;
 }
 
 
+/* Flexbox-Container, Anordnung in Reihe */
 .flex-container-row {
   display: flex;
   flex-wrap: wrap;
@@ -90,19 +100,22 @@ h3 {
   width: 100%;
 }
 
+/* Flexbox-Container, Anordnung in Spalte */
 .flex-container-column {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
+/* Text unter der Karte */
 .card-description {
   font-weight: bold;
 }
 
+/* Container für Radio Buttons */
 .radio-box {
   display: flex; /* Macht die Box zur Flexbox */
-  max-width: 30%; /* Maximale Breite der Box */
+  max-width: 35%; /* Maximale Breite der Box */
   flex: 1; /* Füllt den verfügbaren Platz aus */
   flex-direction: column; /* Anordnung der Elemente */
   justify-content: space-evenly;
@@ -114,6 +127,7 @@ h3 {
   accent-color: #10b981;
 }
 
+/* Radio-Button  */
 .radio-label {
   position: relative;
   cursor: pointer;
@@ -122,12 +136,24 @@ h3 {
 
 /* Dialog-Header Anpassung */
 .p-dialog .p-dialog-header {
-  font-weight: bold; /* Oder andere Schriftattribute */
-  background-color: #10b981; /* Hintergrundfarbe des Headers */
-  border-radius: 12px; /* Abrundung des Headers */
-  color: white; /* Schriftfarbe des Headers */
+  font-weight: bold;
+  background-color: #10b981;
+  border-radius: 12px;
+  color: white;
 }
 
+/* Toast minimal nach unten verschieben, sodass Nachricht nicht über dem Header erscheint*/
 .p-toast.p-toast-top-right {
   top: 110px !important;
+}
+
+/* Tooltip */
+.tooltip {
+  position: absolute;
+  color: red;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 16px;
+  white-space: nowrap;
+  z-index: 1000;
 }

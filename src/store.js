@@ -26,6 +26,8 @@ function getDefaultStore() {
     currentCards: [],
     reloadPage: false,
     quickReshuffle: false,
+    swapedScore: 0,
+    lookedScore: 0,
   }
 }
 

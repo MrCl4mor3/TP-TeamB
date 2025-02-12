@@ -6,6 +6,7 @@
   "noAlgorithmSelected": "Du musst einen Algorithmus auswählen, um das Spiel zu starten.",
   "noModeSelected": "Du musst einen Modus auswählen, um das Spiel zu starten.",
   "outOfRange": "Die Anzahl der Karten muss zwischen 4 und 20 liegen.",
+  "selectTwoCards": "Wähle genau zwei Karten aus, um sie zu tauschen.",
   "wrongAlgorithmStep": "Das ist ein falscher Schritt, schau dir nochmals die Funktionsweise des ausgewählten Algorithmus an",
   "wrongContainer": "Falscher Container",
   "allCardsClose": "Alle Karten müssen umgedreht sein!",

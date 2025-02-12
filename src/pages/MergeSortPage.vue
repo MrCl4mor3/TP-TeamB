@@ -55,7 +55,6 @@ function drop(targetIndex) {
               >
                 <template #front>
                   <div class="frontsite">
-                    <h1>{{ card.id }}</h1>
                   </div>
                 </template>
                 <template #back>
@@ -250,12 +249,13 @@ export default {
 </script>
 
 <style scoped>
+
 .flex-container-row {
-  border: 4px solid mediumvioletred; /* Fügt eine weiße Umrandung hinzu */
-  padding: 10px; /* Abstand zwischen Inhalt und Rahmen */
-  margin-bottom: 20px; /* Abstand zwischen einzelnen Grids */
+  border: 4px solid mediumvioletred; /* Rahmen um den Container */
+  padding: 20px; /* Abstand zwischen Inhalt und Rahmen */
   border-radius: 10px; /* Optional: Abgerundete Ecken */
   max-width: 100%;
+  margin: 10px;
 }
 .card-and-line {
   display: flex;
