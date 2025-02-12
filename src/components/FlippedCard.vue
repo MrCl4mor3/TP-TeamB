@@ -1,5 +1,6 @@
+
 <template>
-  <div class="card-container" @click="toggleFlip">
+  <div class="card-container" @click="toggleFlip" @mouseover="checkHover" @mouseout="hideTooltip">
     <div class="card" :class="{ flipped: isFlipped }">
       <!-- Vorderseite der Karte -->
       <div class="card-face card-front">
@@ -12,11 +13,14 @@
         <!-- Hier wird der Inhalt der Rückseite der Karte angezeigt -->
       </div>
     </div>
+    <div v-if="showTooltip" class="tooltip">Maximal 2 Karten gleichzeitig!</div>
   </div>
+
 </template>
 
 <script>
 import { store } from '../store'
+import { ref } from 'vue'
 export default {
   setup() {
     return { store } //Setup, damit auf store zugegriffen werden kann
@@ -26,6 +30,7 @@ export default {
     return {
       isFlipped: false,
       colour: '#10b981',
+      showTooltip: ref(false),
     }
   },
   props: {
@@ -35,16 +40,18 @@ export default {
     },
   },
   mounted() {
-    store.currentCards.push(this);
+    store.currentCards.push(this)
   },
   methods: {
     // Methode um die Karte zu drehen. Hier kann nur umgedreht werden wenn weniger als 2 Karten
     // umgedreht sind. Wenn die Karte schon umgedreht ist wird die Anzahl der umgedrehten karten
     // um eins reduziert.
     toggleFlip() {
-
-      if (store.numberOfFlippedCards === 0 || store.selectedCategory !== 'Merge Sort'
-        || store.containers[store.currentSelectedContainer].some(card => card.id === this.cardId)) {
+      if (
+        store.numberOfFlippedCards === 0 ||
+        store.selectedCategory !== 'Merge Sort' ||
+        store.containers[store.currentSelectedContainer].some((card) => card.id === this.cardId)
+      ) {
         if (store.numberOfFlippedCards < 2 && !this.isFlipped) {
           this.isFlipped = !this.isFlipped
           store.numberOfFlippedCards++
@@ -55,6 +62,16 @@ export default {
       }
     },
 
+    checkHover() {
+      if (store.numberOfFlippedCards === 2 && !this.isFlipped) {
+        this.showTooltip = true
+      }
+    },
+
+    hideTooltip() {
+      this.showTooltip = false
+    },
+
     openCard() {
       this.isFlipped = true
     },
@@ -63,11 +80,11 @@ export default {
       this.isFlipped = false
     },
 
-    colourchange(){
+    changeColour() {
       if (this.colour === 'grey') {
-        this.colour = '#10b981';
+        this.colour = '#10b981'
       } else {
-        this.colour = 'grey';
+        this.colour = 'grey'
       }
     },
   },
@@ -75,7 +92,6 @@ export default {
 </script>
 
 <style scoped>
-
 /*Container für die Karte*/
 .card-container {
   perspective: 1000px;
@@ -90,6 +106,7 @@ export default {
   position: relative;
   transform-style: preserve-3d;
   transition: transform 0.6s;
+
 }
 .card:hover {
   transform: scale(1.1);
@@ -119,4 +136,9 @@ export default {
   background: white;
 }
 
+.tooltip {
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+}
 </style>
