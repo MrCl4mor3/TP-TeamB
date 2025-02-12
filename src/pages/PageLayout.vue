@@ -35,7 +35,7 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     class="dialog"
     @update:visible="prepareReset">
     <div class="dialog-content">
-      <p>Du hast {{ store.score }} Karten angeschaut und {{ this.numberOfSwaps }} Karten vertauscht.</p>
+      <p>Du hast {{ store.score }} Karten angeschaut und {{ store.numberOfSwaps }} Karten vertauscht.</p>
       <p>Ein Computer würde mit den folgenden Algorithmen so viele Operationen benötigen:</p>
       <table class="finish-page-table">
         <thead>
@@ -74,7 +74,7 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
   <footer>
     <!--Einfügen des Scores -->
     <div class="score">
-      <h3>Angeschaut: {{ store.score }}, Vertauscht: {{this.numberOfSwaps}}</h3>
+      <h3>Angeschaut: {{ store.score }}, Vertauscht: {{store.numberOfSwaps}}</h3>
 
     </div>
     <!-- hier werden die zusätzlichen Knöpfe hinzugefügt -->
@@ -160,30 +160,30 @@ export default {
         store.selectedCategory !== 'Merge Sort'
       ) {
         if (store.selectedCategory === 'Bubble Sort') {
-          if (this.numberOfSwaps < store.correctSortingOrderBubble.length) {
+          if (store.numberOfSwaps < store.correctSortingOrderBubble.length) {
             canSort = !!(
-              store.correctSortingOrderBubble[this.numberOfSwaps].includes(store.selectedCards[0]) &&
-              store.correctSortingOrderBubble[this.numberOfSwaps].includes(store.selectedCards[1])
+              store.correctSortingOrderBubble[store.numberOfSwaps].includes(store.selectedCards[0]) &&
+              store.correctSortingOrderBubble[store.numberOfSwaps].includes(store.selectedCards[1])
             )
           } else {
             canSort = false;
             finished = true;
           }
         } else if (store.selectedCategory === 'Selection Sort') {
-          if (this.numberOfSwaps < store.correctSortingOrderSelect.length) {
+          if (store.numberOfSwaps < store.correctSortingOrderSelect.length) {
             canSort = !!(
-              store.correctSortingOrderSelect[this.numberOfSwaps].includes(store.selectedCards[0]) &&
-              store.correctSortingOrderSelect[this.numberOfSwaps].includes(store.selectedCards[1])
+              store.correctSortingOrderSelect[store.numberOfSwaps].includes(store.selectedCards[0]) &&
+              store.correctSortingOrderSelect[store.numberOfSwaps].includes(store.selectedCards[1])
             )
           } else {
             canSort = false;
             finished = true;
           }
         } else if (store.selectedCategory === 'Insertion Sort') {
-          if (this.numberOfSwaps < store.correctSortingOrderInsert.length) {
+          if (store.numberOfSwaps < store.correctSortingOrderInsert.length) {
             canSort = !!(
-              store.correctSortingOrderInsert[this.numberOfSwaps].includes(store.selectedCards[0]) &&
-              store.correctSortingOrderInsert[this.numberOfSwaps].includes(store.selectedCards[1])
+              store.correctSortingOrderInsert[store.numberOfSwaps].includes(store.selectedCards[0]) &&
+              store.correctSortingOrderInsert[store.numberOfSwaps].includes(store.selectedCards[1])
             )
           } else {
             canSort = false;
@@ -197,7 +197,7 @@ export default {
         const temp = store.cards[firstIndex]
         store.cards[firstIndex] = store.cards[secondIndex]
         store.cards[secondIndex] = temp
-        this.numberOfSwaps++
+        store.numberOfSwaps++
 
         setTimeout(() => {
           store.currentCards.forEach((card) => {
@@ -313,7 +313,7 @@ export default {
         card.closeCard()
         card.colour = '#10b981'
       })
-      this.numberOfSwaps = 0;
+      store.numberOfSwaps = 0;
       this.selectedCards.splice(0);
       store.reloadPage = true
       store.dividingLinePosition = -1

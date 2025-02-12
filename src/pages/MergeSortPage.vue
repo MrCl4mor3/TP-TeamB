@@ -147,7 +147,7 @@ export default {
         store.containers[store.currentSelectedContainer][firstIndex] =
           store.containers[store.currentSelectedContainer][secondIndex]
         store.containers[store.currentSelectedContainer][secondIndex] = temp
-        this.numberOfSwaps++
+        store.numberOfSwaps++
         setTimeout(() => {this.flipAllCards();}, 200);
       } else {
         this.toasty.add({
