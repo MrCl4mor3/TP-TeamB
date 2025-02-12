@@ -63,4 +63,26 @@ describe('FlippedCard Component', () => {
     expect(wrapper.vm.isFlipped).toBe(false)
     expect(store.numberOfFlippedCards).toBe(0)
   })
+
+  it('should open the card when openCard() is called', () => {
+    expect(wrapper.vm.isFlipped).toBe(false)
+    wrapper.vm.openCard()
+    expect(wrapper.vm.isFlipped).toBe(true)
+  })
+
+  it('should close the card when closeCard() is called', () => {
+    wrapper.vm.isFlipped = true
+    wrapper.vm.closeCard()
+    expect(wrapper.vm.isFlipped).toBe(false)
+  })
+
+  it('should toggle the card colour when colourchange() is called', () => {
+    expect(wrapper.vm.colour).toBe('#10b981')
+
+    wrapper.vm.colourchange()
+    expect(wrapper.vm.colour).toBe('grey')
+
+    wrapper.vm.colourchange()
+    expect(wrapper.vm.colour).toBe('#10b981')
+  })
 })

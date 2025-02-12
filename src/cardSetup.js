@@ -113,7 +113,7 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
 }
 
 //Entfernt ein Element aus dem SVG
-function removePart(id, svgContent) {
+export function removePart(id, svgContent) {
   const element = svgContent.querySelector(`#${id}`)
   if (element) {
     element.parentNode.removeChild(element)
@@ -122,7 +122,7 @@ function removePart(id, svgContent) {
 }
 
 // Gibt eine Zufallszahl zwischen min und max zurück (inklusive) und rundet auf die nächste ganze Zahl ab
-function getRandomInt(min, max) {
+export function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
@@ -132,7 +132,7 @@ function getRandomInt(min, max) {
  * @param {string} newId Die neue ID.
  * @returns {Element} Das SVG-Element mit der neuen ID.
  */
-function updateSvgID(svgContent, newId) {
+export function updateSvgID(svgContent, newId) {
   // Entferne die ID des Haupt-SVG-Elements, falls vorhanden
   if (svgContent.hasAttribute('id')) {
     svgContent.removeAttribute('id')
@@ -161,7 +161,7 @@ function updateSvgID(svgContent, newId) {
 /*
 Prüft, ob beide arrays identisch sind
  */
-function arraysAreEqual(arr1, arr2) {
+export function arraysAreEqual(arr1, arr2) {
   for (let i = 0; i < arr1.length; i++) {
     if (arr1[i] !== arr2[i]) {
       return false
@@ -170,7 +170,7 @@ function arraysAreEqual(arr1, arr2) {
   return true
 }
 
-function findMinMaxIds(svgContent) {
+export function findMinMaxIds(svgContent) {
   let min = 0
   let max = 0
 

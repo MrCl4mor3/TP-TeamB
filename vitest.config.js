@@ -11,9 +11,12 @@ export default mergeConfig(
       root: fileURLToPath(new URL('./', import.meta.url)),
       coverage: {
         provider: 'istanbul',
+        reportOnFailure: true,
         reporter: ['text', 'json', 'html'],
         reportsDirectory: "dist/SortLab/coverage",  // Setzt das Coverage-Verzeichnis auf den richtigen Pfad
       },
     },
   }),
 )
+
+

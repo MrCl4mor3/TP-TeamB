@@ -61,6 +61,7 @@ algorithms.forEach(({ name, fn }) => {
   test(`${name} gibt einen Score von 0 zurück, wenn der Array nur ein Element enthält`, () => {
     const arr = [{ id: 1 }]
     const { score } = fn(arr)
+    bubbleSortWithScore([{ id: 2 }, { id: 1 }], true)
     expect(score).toEqual(0)
   })
 })
