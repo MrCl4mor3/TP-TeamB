@@ -136,4 +136,9 @@ export default {
   background: white;
 }
 
+.tooltip {
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+}
 </style>
