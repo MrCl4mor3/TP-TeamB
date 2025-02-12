@@ -4,7 +4,7 @@ export function bubbleSortWithScore(cards, returnSorted = false) {
   let sortingCards = cards.slice()
   let scoreSwap = 0
   let scoreLook = 0
-  store.correctSortingOrderBubble.slice(0);
+  store.correctSortingOrderBubble.splice(0);
   let swapped
 
   do {
@@ -64,7 +64,7 @@ export function insertionSortWithScore(cards, returnSorted = false) {
   let sortingCards = cards.slice()
   let scoreSwap = 0
   let scoreLook = 0
-  store.correctSortingOrderSelect.splice(0);
+  store.correctSortingOrderInsert.splice(0);
 
   for (let i = 1; i < sortingCards.length; i++) {
     scoreLook++ //
