@@ -33,24 +33,52 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     v-model:visible="visibleEndScreen"
     :header="'Bravo - Die Karten sind richtig sortiert!'"
     class="dialog"
-    @update:visible="prepareReset"
-    v-if="isScoreCalculated"
-  >
-  <div class="dialog-content">
-    <div>
-      <p>Score: {{ store.score }}</p>
-      <p v-if="bubbleSortResult">BubbleSort: {{ bubbleSortResult.score }}</p>
-      <p v-if="selectionSortResult">SelectionSort: {{ selectionSortResult.score }}</p>
-      <p v-if="insertionSortResult">InsertionSort: {{ insertionSortResult.score }}</p>
-      <p v-if="quickSortResult">QuickSort: {{ quickSortResult.score }}</p>
-      <p v-if="mergeSortResult">MergeSort: {{ mergeSortResult.score }}</p>
+    @update:visible="prepareReset">
+    <div class="dialog-content">
+      <p>Du hast {{ store.score }} Karten angeschaut und {{ this.numberOfSwaps }} Karten vertauscht.</p>
+      <p>Ein Computer würde mit den folgenden Algorithmen so viele Operationen benötigen:</p>
+      <table border="1" style="width: 100%; text-align: center; border-collapse: collapse;">
+        <thead>
+        <tr>
+          <th>Sortieralgorithmus</th>
+          <th>Karten angeschaut</th>
+          <th>Karten vertauscht</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>BubbleSort</td>
+          <td>{{ this.bubbleSortResult.scoreLook }}</td>
+          <td>{{ this.bubbleSortResult.scoreSwap }}</td>
+        </tr>
+        <tr>
+          <td>SelectionSort</td>
+          <td>{{ this.selectionSortResult.scoreLook }}</td>
+          <td>{{ this.selectionSortResult.scoreSwap }}</td>
+        </tr>
+        <tr>
+          <td>InsertionSort</td>
+          <td>{{ this.insertionSortResult.scoreLook }}</td>
+          <td>{{ this.insertionSortResult.scoreSwap }}</td>
+        </tr>
+        <tr>
+          <td>QuickSort</td>
+          <td>{{ this.quickSortResult.scoreLook }}</td>
+          <td>{{ this.quickSortResult.scoreSwap }}</td>
+        </tr>
+        <tr>
+          <td>MergeSort</td>
+          <td>{{ this.mergeSortResult.scoreLook }}</td>
+          <td>{{ this.mergeSortResult.scoreSwap }}</td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="button-container">
+        <ButtonPress icon="pi pi-home" @click="goToHomePage" />
+        <ButtonPress label="Neustart" @click="startOver" />
+        <ButtonPress label="Neu mischen" @click="shuffel" />
+      </div>
     </div>
-    <div class="button-container">
-      <ButtonPress icon="pi pi-home" @click="goToHomePage" />
-      <ButtonPress label="Neustart" @click="startOver" />
-      <ButtonPress label="Neu mischen" @click="shuffel" />
-    </div>
-  </div>
   </Dialog>
 
 
@@ -65,7 +93,8 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
   <footer>
     <!--Einfügen des Scores -->
     <div class="score">
-      <h3>Score: {{ store.score }}</h3>
+      <h3>Angeschaut: {{ store.score }}, Vertauscht: {{this.numberOfSwaps}}</h3>
+
     </div>
     <!-- hier werden die zusätzlichen Knöpfe hinzugefügt -->
     <div class="button-container">
