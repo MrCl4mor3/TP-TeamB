@@ -136,18 +136,4 @@ export default {
   background: white;
 }
 
-/* Tooltip Styling */
-.tooltip {
-  position: absolute;
-  top: -30px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(255, 0, 0, 0.8);
-  color: white;
-  padding: 5px 10px;
-  border-radius: 4px;
-  font-size: 0.9em;
-  white-space: nowrap;
-  z-index: 1000;
-}
 </style>

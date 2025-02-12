@@ -142,3 +142,14 @@ h3 {
 .p-toast.p-toast-top-right {
   top: 110px !important;
 }
+
+/* Tooltip */
+.tooltip {
+  position: absolute;
+  color: red;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 16px;
+  white-space: nowrap;
+  z-index: 1000;
+}
