@@ -201,21 +201,6 @@ input:disabled + label {
   opacity: 0.6; /* verringert die Sichtbarkeit */
 }
 
-.tooltip {
-  display: none;
-  position: absolute;
-  color: red;
-  padding: 5px 10px;
-  border-radius: 4px;
-  font-size: 0.9em;
-  white-space: nowrap;
-  z-index: 1000;
-}
-
-label:hover .tooltip {
-  display: inline-block;
-}
-
 footer {
   justify-content: right;
 }
@@ -232,4 +217,12 @@ footer {
   width: 14%;
 }
 
+/* Tooltip */
+.tooltip {
+  display: none;
+}
+
+label:hover .tooltip {
+  display: inline-block;
+}
 </style>

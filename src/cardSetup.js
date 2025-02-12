@@ -17,7 +17,13 @@ const algorithmMap = {
   'Quick Sort': quickSortWithScore,
 }
 
-
+/**
+ * Generiert die Karten für das Spiel.
+ * Die Karten werden aus einer SVG-Datei generiert, indem zufällig Elemente entfernt werden.
+ * @param selectedCategory Die ausgewählte Kategorie
+ * @param selectedMode Der ausgewählte Modus
+ * @param numberOfCards Die Anzahl der Karten, die generiert werden sollen
+ */
 export function generateCards(selectedCategory, selectedMode, numberOfCards) {
   store.selectedMode = selectedMode
   store.selectedCategory = selectedCategory
@@ -96,7 +102,7 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
       store.correctCards = cards.slice()
       store.cards = cards.slice()
 
-      //Mische die Karten, falls sie gleich sind
+      //Mische die Karten solange, bis sie nicht mehr gleich sind
       while (arraysAreEqual(store.cards, store.correctCards)) {
         store.cards = store.cards.sort(() => Math.random() - 0.5)
       }
@@ -112,7 +118,12 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
     })
 }
 
-//Entfernt ein Element aus dem SVG
+/**
+ * Entfernt ein Element aus dem SVG-Element
+ * @param id Die ID des zu entfernenden Elements
+ * @param svgContent Das SVG-Element, aus dem das Element entfernt werden soll
+ * @returns {Element} Das SVG-Element ohne das entfernte Element
+ */
 function removePart(id, svgContent) {
   const element = svgContent.querySelector(`#${id}`)
   if (element) {
@@ -121,7 +132,12 @@ function removePart(id, svgContent) {
   return svgContent
 }
 
-// Gibt eine Zufallszahl zwischen min und max zurück (inklusive) und rundet auf die nächste ganze Zahl ab
+/**
+ * Gibt eine zufällige Ganzzahl zwischen min und max zurück (inklusive).
+ * @param min
+ * @param max
+ * @returns {number}
+ */
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
@@ -158,8 +174,8 @@ function updateSvgID(svgContent, newId) {
   return svgContent
 }
 
-/*
-Prüft, ob beide arrays identisch sind
+/**
+ * Überprüft, ob zwei Arrays gleich sind.
  */
 function arraysAreEqual(arr1, arr2) {
   for (let i = 0; i < arr1.length; i++) {
@@ -170,6 +186,11 @@ function arraysAreEqual(arr1, arr2) {
   return true
 }
 
+/**
+ * Findet die minimale und maximale ID der SVG-Elemente
+ * @param {Element} svgContent Das SVG-Element, dessen IDs geprüft werden sollen.
+ * @returns {Object} Ein Objekt mit den minimalen und maximalen IDs.
+ */
 function findMinMaxIds(svgContent) {
   let min = 0
   let max = 0

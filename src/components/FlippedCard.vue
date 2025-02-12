@@ -1,5 +1,6 @@
+
 <template>
-  <div class="card-container" @click="toggleFlip">
+  <div class="card-container" @click="toggleFlip" @mouseover="checkHover" @mouseout="hideTooltip">
     <div class="card" :class="{ flipped: isFlipped }">
       <!-- Vorderseite der Karte -->
       <div class="card-face card-front">
@@ -12,11 +13,14 @@
         <!-- Hier wird der Inhalt der Rückseite der Karte angezeigt -->
       </div>
     </div>
+    <div v-if="showTooltip" class="tooltip">Maximal 2 Karten gleichzeitig!</div>
   </div>
+
 </template>
 
 <script>
 import { store } from '../store'
+import { ref } from 'vue'
 export default {
   setup() {
     return { store } //Setup, damit auf store zugegriffen werden kann
@@ -26,6 +30,7 @@ export default {
     return {
       isFlipped: false,
       colour: '#10b981',
+      showTooltip: ref(false),
     }
   },
   props: {
@@ -57,6 +62,16 @@ export default {
       }
     },
 
+    checkHover() {
+      if (store.numberOfFlippedCards === 2 && !this.isFlipped) {
+        this.showTooltip = true
+      }
+    },
+
+    hideTooltip() {
+      this.showTooltip = false
+    },
+
     openCard() {
       this.isFlipped = true
     },
@@ -65,7 +80,7 @@ export default {
       this.isFlipped = false
     },
 
-    colourchange() {
+    changeColour() {
       if (this.colour === 'grey') {
         this.colour = '#10b981'
       } else {
@@ -119,5 +134,11 @@ export default {
 .card-back {
   transform: rotateY(180deg); /*dreht die Rückseite der Karte um 180 Grad*/
   background: white;
+}
+
+.tooltip {
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
 }
 </style>
