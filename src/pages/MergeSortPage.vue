@@ -102,7 +102,8 @@ export default {
       selectedContainerIndex: null,
       selectedCards: [],
       draggedContainersize: 0,
-      toasty : useToast()
+      toasty : useToast(),
+      draggedContainerIndex: -1
     }
   },
   methods: {
@@ -148,6 +149,13 @@ export default {
           store.containers[store.currentSelectedContainer][secondIndex]
         store.containers[store.currentSelectedContainer][secondIndex] = temp
         store.numberOfSwaps++
+        if (store.currentSelectedContainer === store.dividingContainerPosition) {
+          if (firstIndex === store.dividingLinePosition) {
+            store.dividingLinePosition = secondIndex
+          } else if (secondIndex === store.dividingLinePosition) {
+            store.dividingLinePosition = firstIndex
+          }
+        }
         setTimeout(() => {this.flipAllCards();}, 200);
       } else {
         this.toasty.add({
@@ -160,15 +168,24 @@ export default {
     //die Länge des gezogenen Containers muss gespeichert werden
     dragging(draggedContainer) {
       this.draggedContainersize = store.containers[draggedContainer].length
+      this.draggedContainerIndex = draggedContainer
     },
     //hier wird die Position der Linie gespeichert, die genau da ist wo die zwei fusionierten Container aufeinader treffen
     dividingMark(targetContainer) {
-      //reset um von allen anderen Linien die Markierung wegzumachen
-      store.dividingLinePosition = -1
-      store.dividingContainerPosition = -1
-      store.dividingLinePosition =
-        store.containers[targetContainer].length - this.draggedContainersize - 1
-      store.dividingContainerPosition = targetContainer
+      if (this.draggedContainerIndex !== targetContainer) {
+        //reset um von allen anderen Linien die Markierung wegzumachen
+        store.dividingLinePosition = -1
+        store.dividingContainerPosition = -1
+        if (this.draggedContainerIndex > targetContainer) {
+          store.dividingLinePosition =
+            store.containers[targetContainer].length - this.draggedContainersize - 1
+          store.dividingContainerPosition = targetContainer
+        } else {
+          store.dividingLinePosition =
+            store.containers[targetContainer-1].length - this.draggedContainersize - 1
+          store.dividingContainerPosition = targetContainer-1
+        }
+      }
 
       let allLines = this.$refs.linie
       // Prüfen, ob es ein Array von Instanzen ist
