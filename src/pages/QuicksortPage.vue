@@ -92,13 +92,13 @@ export default {
         store.numberOfSwaps = 0
         //in der ersten Aktion wird trueCardRef aufgesetzt. Dieser ist nötig damit karten korrekt umrandet werder können,
         //da sich bei vertauschen die Position der Karten verändern, aber die Id gleich bleibt
-        this.trueCardRef.slice(0)
+        this.trueCardRef.splice(0)
         for (let i = 0; i < store.cards.length; i++) {
           this.trueCardRef.push(i)
         }
         //für korrektes späteres ändern der Kartenrückseiten wird die die Originalreihenfolge der Karten-ids gespeichert
         const allCards = this.$refs.singlecard
-        this.startigCardIds.slice(0)
+        this.startigCardIds.splice(0)
         // Sichergehen, dass es ein Array von Instanzen ist
         if (Array.isArray(allCards)) {
           allCards.forEach((card) => {
@@ -201,13 +201,18 @@ export default {
     },
     //für Quicksort, es werden Pivotelement erkannt und anders behandelt
     SelectCardQuick(index) {
+      //Beim Pagereload wird alles zurückgesetzt
+      if (store.reloadPage) {
+        this.resetQuickPage();
+        store.reloadPage = false;
+      }
       //hier muss abgefangen werden wenn zuerst auf Karten geklickt wird, ohne das Quicksort initialisiert wurde durch erstes pivotelement drücken
       //Dabei wird die gedrückte Karte wieder umgedreht und evtl bei reload der reset schonmal gemacht
       if (this.firsttime) {
         this.toast.add({ severity: 'info', summary: messages['clickPivotToStart'], life: 3000 })
 
         let tempcards = this.$refs.singlecard
-        this.startigCardIds.slice(0)
+        this.startigCardIds.splice(0)
         // Sichergehen, dass es ein Array von Instanzen ist
         if (Array.isArray(tempcards)) {
           tempcards.forEach((card) => {
@@ -217,11 +222,7 @@ export default {
           this.toast.add({ severity: 'error', summary: messages['oneCard'], life: 3000 })
         }
         this.startigCardIds[index].toggleFlip();
-        //Beim Pagereload wird alles zurückgesetzt
-        if (store.reloadPage) {
-          this.resetQuickPage();
-          store.reloadPage = false;
-        }
+
       } else {
         //ist geklickte Karte Pivotelement oder schon fest?
         if (store.pivotIndices.includes(index) || store.pivotElementIndex === index) {
