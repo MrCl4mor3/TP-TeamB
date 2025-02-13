@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach} from 'vitest'
 import { mount } from '@vue/test-utils'
 import QuicksortPage from '@/pages/QuicksortPage.vue'
 import { store } from '@/store'
@@ -61,8 +61,9 @@ describe('QuicksortPage.vue', () => {
 
   it('moveToSmaller correctly moves selected card to smaller section', async () => {
     // Vorbedingungen einrichten
-    store.selectedCards = [0, 1];  // Die ausgewählten Karten (z.B. mit den Indizes 0 und 1)
-    store.pivotElementIndex = 0;  // Setze Pivot-Index
+    store.Cards = [1,0];  // Die ausgewählten Karten (z.B. mit den Indizes 0 und 1)
+    store.selectedCards = [1,0];
+    store.pivotElementIndex = 1;  // Setze Pivot-Index
 
     // Funktion aufrufen
     await wrapper.vm.moveToSmaller();
@@ -71,7 +72,7 @@ describe('QuicksortPage.vue', () => {
     console.log("Selected Cards after moveToSmaller:", store.selectedCards);
 
     // Prüfen, dass die Karte 1 nicht mehr in selectedCards enthalten ist
-    expect(store.selectedCards).not.toContain(1);
+    expect(store.Cards).toEqual([0,1]);
   });
 
 
