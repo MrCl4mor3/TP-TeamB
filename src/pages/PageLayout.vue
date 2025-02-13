@@ -247,7 +247,7 @@ export default {
         store.containers.splice(0);
         store.containers.push(store.startingCards);
         this.visibleEndScreen = false;
-        this.visibleEndScreen = false
+        this.visibleEndScreen = false // entfernen?
         this.toast.add({ severity: 'success', summary: messages["restartGame"], life: 3000 })
       }, 400)
     },
@@ -291,12 +291,13 @@ export default {
     },
 
     calculateScore() {
+      let cards = store.startingCards.slice()
       this.algorithms = [
-        { name: 'Bubble Sort', result: bubbleSortWithScore(this.store.startingCards) },
-        { name: 'Selection Sort', result: selectionSortWithScore(this.store.startingCards) },
-        { name: 'Insertion Sort', result: insertionSortWithScore(this.store.startingCards) },
-        { name: 'Quick Sort', result: quickSortWithScore(this.store.startingCards) },
-        { name: 'Merge Sort', result: mergeSortWithScore(this.store.startingCards) }
+        { name: 'Bubble Sort', result: bubbleSortWithScore(cards) },
+        { name: 'Insertion Sort', result: insertionSortWithScore(cards) },
+        { name: 'Selection Sort', result: selectionSortWithScore(cards) },
+        { name: 'Quick Sort', result: quickSortWithScore(cards) },
+        { name: 'Merge Sort', result: mergeSortWithScore(cards) }
       ];
       this.isScoreCalculated = true
     },

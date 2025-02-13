@@ -99,22 +99,23 @@ export function quickSortWithScore(cards, returnSorted = false) {
     }
 
     scoreLook++
-    const pivot = array[array.length - 1]
+    const pivot = array[0]
     const left = []
     const right = []
 
     for (let i = 0; i < array.length - 1; i++) {
+      console.log("test")
 
-      scoreLook++ // Ein Element wird betrachtet
+      scoreLook++
       if (array[i].id < pivot.id) {
         scoreSwap++
         left.push(array[i])
       } else {
         scoreSwap++
-
         right.push(array[i])
       }
     }
+    scoreLook++ //da bei der if Bedingung das letzte Element nicht betrachtet wird
 
     return [...quickSort(left), pivot, ...quickSort(right)]
   }
@@ -129,43 +130,47 @@ export function quickSortWithScore(cards, returnSorted = false) {
 }
 
 export function mergeSortWithScore(cards, returnSorted = false) {
-  let score = 0
-  let scoreSwap = 0
-  let scoreLook = 0
+  let score = 0;
+  let scoreSwap = 0;
+  let scoreLook = 0;
 
-  function merge(left, right) {
-    const result = []
+  function insertionSort(array, start, end) {
+    for (let i = start + 1; i <= end; i++) {
+      let key = array[i];
+      let j = i - 1;
 
-    while (left.length && right.length) {
-      scoreLook++
-      scoreSwap++
-      if (left[0].id <= right[0].id) {
-        result.push(left.shift())
-      } else {
-        result.push(right.shift())
+      scoreLook++; // Betrachte das aktuelle Element
+
+      // Verschieben der Elemente nach rechts, um Platz für das Schlüssel-Element zu schaffen
+      while (j >= start && array[j].id > key.id) {
+        array[j + 1] = array[j];
+        j--;
+        scoreSwap++; // Dieser Swap zählt, da das Element tatsächlich verschoben wird
       }
-    }
 
-    return [...result, ...left, ...right]
+      array[j + 1] = key; // Füge das Schlüssel-Element ein
+    }
   }
 
-  function mergeSort(array) {
-    if (array.length <= 1) {
-      return array
+  function mergeSort(array, start, end) {
+    if (start >= end) {
+      return;
     }
 
-    const middle = Math.floor(array.length / 2)
-    const left = mergeSort(array.slice(0, middle))
-    const right = mergeSort(array.slice(middle))
+    const middle = Math.floor((start + end) / 2);
 
-    return merge(left, right)
+    mergeSort(array, start, middle);    // Linke Hälfte sortieren
+    mergeSort(array, middle + 1, end); // Rechte Hälfte sortieren
+
+    // Füge beide Hälften zusammen und führe InsertionSort durch
+    insertionSort(array, start, end);
   }
 
-  const sortedArray = mergeSort(cards.slice())
+  mergeSort(cards, 0, cards.length - 1);
 
   if (returnSorted) {
-    return { score, sortedArray }
+    return { score, sortedArray: cards };
   }
 
-  return { score, scoreSwap, scoreLook }
+  return { score, scoreSwap, scoreLook };
 }

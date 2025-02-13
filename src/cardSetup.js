@@ -109,8 +109,9 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
 
       store.startingCards = store.cards.slice()
       store.containers.push(store.startingCards)
+      let cardsCopy = store.startingCards.slice()
 
-      algorithmMap[store.selectedCategory](store.startingCards)
+      algorithmMap[store.selectedCategory](cardsCopy)
     })
 
     .catch((error) => {

@@ -26,7 +26,7 @@
             <svg class="line" width="10" height="300">
               <!-- Linie -->
               <line
-                v-show="index === store.numberOfSwaps"
+                v-show="index === this.numberOfSwaps"
                 x1="6"
                 y1="0"
                 x2="6"
@@ -89,7 +89,8 @@ export default {
         this.firsttime = false
         store.lookingIndex = 1
         store.pivotElementIndex = 0
-        store.numberOfSwaps = 0
+        this.numberOfSwaps = 0
+
         //in der ersten Aktion wird trueCardRef aufgesetzt. Dieser ist nötig damit karten korrekt umrandet werder können,
         //da sich bei vertauschen die Position der Karten verändern, aber die Id gleich bleibt
         this.trueCardRef.slice(0)
@@ -178,7 +179,7 @@ export default {
               ].firstChild.firstChild.style.border = '2px solid green'
               store.selectedCards.push(store.pivotElementIndex)
 
-              store.numberOfSwaps = store.lookingIndex
+              this.numberOfSwaps = store.lookingIndex
               this.biggerCards = 0
               this.smallerCards = 0
               checked = store.cards.length
@@ -297,6 +298,7 @@ export default {
           this.smallerCards++
           store.lookingIndex++
           store.numberOfSwaps++
+          this.numberOfSwaps++
         } else {
           this.toast.add({ severity: 'error', summary: messages['missingNonPivot'], life: 3000 })
         }
@@ -320,6 +322,7 @@ export default {
 
           store.lookingIndex++
           store.numberOfSwaps++
+          this.numberOfSwaps++
         } else {
           this.toast.add({ severity: 'error', summary: messages['missingNonPivot'], life: 3000 })
         }
@@ -343,6 +346,7 @@ export default {
       store.numberOfSwaps = 0
 
       //reset lokale variablen
+      this.numberOfSwaps = 0
       this.selectedCard = null
       this.pivotElement = null
       this.firsttime = true
