@@ -5,6 +5,7 @@ function getDefaultStore() {
   return {
     numberOfCards: 0,
     numberOfFlippedCards: 0,
+    numberOfSwaps:0,
     cards: [],
     startingCards: [],
     correctCards: [],

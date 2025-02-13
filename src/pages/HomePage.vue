@@ -94,6 +94,7 @@ onBeforeUnmount(() => {
 <template>
   <!-- Überschrift -->
   <header>
+    <img src="/logo.svg" type="image/svg+xml" alt="Meine SVG-Grafik" width="100" height="100">
     <h1>{{ description.headline }}</h1>
     <ButtonPress class="tutorial-button" label="?" @click="openTutorial"></ButtonPress>
   </header>
