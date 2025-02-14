@@ -62,8 +62,10 @@ legend {
 
 /* Überschriften */
 h1 {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   color: #10b981;
-  flex-grow: 1;
   text-align: center;
   font-size: 80px;
 }
@@ -82,7 +84,7 @@ h3 {
   gap: 10px;
   text-align: center;
   justify-content: center;
-  padding: 10px 0px;
+  padding: 10px 0;
 }
 .button-container .p-button {
   font-size: 20px;
