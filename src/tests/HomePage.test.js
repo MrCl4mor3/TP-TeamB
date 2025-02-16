@@ -91,4 +91,13 @@ describe('HomePage.vue', () => {
     // Assert that the tutorial modal is shown
     expect(wrapper.vm.visibleTutorial).toBe(true)
   })
+
+  it('goes To SortingPage if event.key === \'Enter\''), () => {
+    wrapper.vm.event.key === 'Enter'
+    wrapper.vm.handleKeyPress('Enter')
+    expect(wrapper.vm.goToSortingPage()).toBeCalledTimes(1);
+  }
+
+
+
 })
