@@ -95,7 +95,7 @@ onBeforeUnmount(() => {
   <!-- Überschrift -->
   <header>
     <img src="/logo.svg" type="image/svg+xml" alt="Meine SVG-Grafik" width="100" height="100">
-    <h1>{{ description.headline }}</h1>
+    <h1><span class="spezial">S</span>ort<span class="coloring"><span class="spezial">L</span>ab</span></h1>
     <ButtonPress class="tutorial-button" label="?" @click="openTutorial"></ButtonPress>
   </header>
 
@@ -180,6 +180,12 @@ onBeforeUnmount(() => {
 
 <style scoped>
 
+.spezial {
+  Font-Family: "Otto Font",serif;
+}
+.coloring {
+  color: #003200;
+}
 .start-button {
   width: 200px; /* Breite des Buttons */
   height: 50px; /* Höhe des Buttons */

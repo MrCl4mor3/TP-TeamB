@@ -32,7 +32,7 @@ const cardBigger = computed(() => store.correctCards[1])
       <li>Entscheide, wie viele Karten du sortieren möchtest.</li>
     </ul>
 
-    <h2>Wie funktioniert das Sortieren?</h2>
+    <h2>So funktioniert das Sortieren:</h2>
     <p>
       Deine Aufgabe ist es, die Karten in aufsteigender Reihenfolge zu sortieren.<br>
       Die Karten enthalten Bilder mit Strichen. "Kleiner" bedeutet, dass eine Karte weniger Striche
@@ -60,7 +60,7 @@ const cardBigger = computed(() => store.correctCards[1])
       </div>
     </div>
     <p>
-      Hierfür kannst du bis zu zwei Karten aufdecken, indem du diese mit der Maus anklickst und nachdem Vergleichen vertauschen. <br>
+      Hierfür kannst du bis zu zwei Karten aufdecken, indem du diese mit der Maus anklickst und nach dem Vergleichen vertauschst. <br>
       Bei Mergesort und
       Quicksort gibt es algorithmenspezifische Zusatzfunktionen. Diese werden dir im Spiel erklärt. <br> <br>
       Wenn du fertig bist, klicke auf "Fertig sortiert".
@@ -79,10 +79,10 @@ const cardBigger = computed(() => store.correctCards[1])
       Dein Score zählt, wie oft du eine Karte aufdeckst. Je effizienter du sortierst, desto besser!
     </p>
 
-    <h2>Vergleich mit festen Algorithmen:</h2>
+    <h2>Vergleich mit bereits bekannten Algorithmen:</h2>
     <p>
       Wenn du fertig bist und auf "Fertig sortiert" geklickt hast, kannst du deinen Score mit dem
-      der festen Algorithmen vergleichen.
+      der bereits bekannten Algorithmen vergleichen.
     </p>
 
     <p>Viel Spaß mit SortLab!</p>

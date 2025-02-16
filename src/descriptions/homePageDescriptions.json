@@ -1,10 +1,9 @@
 {
-  "headline": "SortLab",
   "selectAlgorithm": "Wähle einen Algorithmus",
   "selectMode": "Wähle einen Modus",
   "selectNumber": "Anzahl an Karten: ",
   "instructionHeader": "Neu hier? Hier findest du eine Anweisungen:",
   "instructions": "Hier ist die Anleitung",
-  "wrongMode": "Wähle den Modus vorgegebenes Sortieren aus!",
+  "wrongMode": "Wähle den Modus \"Vorgegebenes Sortieren\" aus!",
   "impressum": "KIT - Lehr-Lern-Labor Informatik"
 }
