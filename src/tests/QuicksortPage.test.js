@@ -46,6 +46,9 @@ describe('QuicksortPage.vue', () => {
   })
 
   it('selectPivot() should initialize the sorting process', async () => {
+
+    //wrapper.vm.firsttime = true;
+    console.log("hey")
     await wrapper.vm.selectPivot()
 
     expect(wrapper.vm.firsttime).toBe(false)

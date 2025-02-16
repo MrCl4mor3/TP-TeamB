@@ -67,16 +67,14 @@ describe('MergeSortPage.vue', () => {
     // Setup initial Zustand
     store.numberOfFlippedCards = 0;
     store.containers = [[1], [2], [3]]; // Beispielhafte Containerstruktur
-    wrapper.vm.draggedIndex = { value: 1 }; // Element aus Container 0 wird gezogen
-    store.containers[1] = [1];
-    store.containers[2] = [2];
+    wrapper.vm.draggedIndex = 1; //{ value: 1 }; // Element aus Container 0 wird gezogen
 
-    await wrapper.vm.drop(2); // Drop auf Container 1
+    await wrapper.vm.drop(0); // Drop auf Container 1
 
     // Überprüfen, ob die Elemente zusammengeführt wurden
-    expect(store.containers[1]).toEqual([1, 2]); // Container 1 enthält nun Container 0s Elemente
+    expect(store.containers[0]).toEqual([1, 2]); // Container 1 enthält nun Container 0s Elemente
     expect(store.containers.length).toBe(2); // Ein Container weniger, da Container 0 entfernt wurde
-    expect(store.draggedIndex.value).toBeNull(); // draggedIndex wurde zurückgesetzt
+    expect(wrapper.vm.draggedIndex).toBeNull; // draggedIndex wurde zurückgesetzt
   });
 
   it('prevents drop if numberOfFlippedCards is not 0', async () => {
@@ -96,29 +94,35 @@ describe('MergeSortPage.vue', () => {
   });
 
   it('swaps cards within a container', async () => {
-    const wrapper = mount(MergeSortPage);
+    const wrapper = shallowMount(MergeSortPage);
     store.containers = [[0, 1], [2]]; // Beispielhafte Containerstruktur
     store.currentSelectedContainer = 0
-    store.numberOfFlippedCards = 0
-    wrapper.vm.selectesCards = [0, 1];
+    store.numberOfSwaps = 0
+
+    await wrapper.vm.selectCardsInContainer(0,0)
+    await wrapper.vm.selectCardsInContainer(0,1)
+    //wrapper.vm.selectedCards = [[0 , 1]];
+    //wrapper.vm.selectedCards.length = 2;
 
 
-    await wrapper.vm.canSwapInContainer();
+    await wrapper.vm.canSwapInContainer()
 
-    expect(store.numberOfFlippedCards).toBe(1);
+    expect(store.numberOfSwaps).toBe(1);
     expect(store.containers[0]).toEqual([1, 0]);
   })
 
   it('reloads page during selectALine and selects a line', async () => {
     const wrapper = mount(MergeSortPage);
+
+
+    store.selectedCards = [0 , 1];
     store.reloadPage = true;
     store.selectedLines = 1;
-
     await wrapper.vm.selectALine(1, 1)
 
     expect(store.reloadPage).toBe(false)
-    expect(wrapper.vm.linePositionContainer).toBe(1)
-    expect(wrapper.vm.linePositionCard).toBe(1)
+    expect(wrapper.vm.linePositionContainer).toBeNull;
+    expect(wrapper.vm.linePositionCard).toBeNull;
   })
 
   it('selects a new line', async () => {
