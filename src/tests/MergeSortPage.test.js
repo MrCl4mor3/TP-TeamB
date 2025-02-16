@@ -193,5 +193,17 @@ describe('MergeSortPage.vue', () => {
 
   })
 
+  it('should split container', async () => {
+    const wrapper = mount(MergeSortPage);
+
+    store.containers = [[1,2,3,4],[5]]
+    store.selectedLines = 1
+    await wrapper.vm.selectALine(0,1)
+
+    await wrapper.vm.splitContainer();
+
+    expect(store.containers[0]).toStrictEqual([1,2])
+
+  })
 
 });
