@@ -343,6 +343,7 @@ export default {
         .split('\n') // Splitte den Text an Zeilenumbrüchen
         .map((line) => `<p>${line}</p>`) // Wandle jede Zeile in ein <p>-Tag um
         .join('') // Füge alle Absätze wieder zusammen
+
     },
   },
 }
