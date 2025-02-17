@@ -149,7 +149,7 @@ export default {
           store.containers[store.currentSelectedContainer][secondIndex]
         store.containers[store.currentSelectedContainer][secondIndex] = temp
         store.numberOfSwaps++
-        if (store.currentSelectedContainer === store.dividingContainerPosition) {
+        if (store.currentSelectedContainer === store.dividingContainerPosition) { console.log("hey")
           if (firstIndex === store.dividingLinePosition) {
             store.dividingLinePosition = secondIndex
           } else if (secondIndex === store.dividingLinePosition) {

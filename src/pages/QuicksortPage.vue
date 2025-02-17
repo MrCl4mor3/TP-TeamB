@@ -138,10 +138,12 @@ export default {
           (store.lookingIndex >= store.cards.length ||
             store.pivotIndices.includes(store.lookingIndex)) &&
           checked < store.cards.length
-        ) {
+        ) {console.log("hey")
           //Nicht das erste mal gedrückt, also muss das alte Pivotelement als fertig sortiert gespeichert werden
           store.pivotIndices.push(store.pivotElementIndex)
+          console.log(this.startigCardIds[this.trueCardRef[store.pivotElementIndex]])
           this.startigCardIds[this.trueCardRef[store.pivotElementIndex]].changeColour()
+          console.log("asd2")
           this.$refs.cardlist[
             this.trueCardRef[store.pivotElementIndex]
           ].firstChild.firstChild.style.border = null

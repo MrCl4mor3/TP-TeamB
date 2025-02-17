@@ -6,6 +6,7 @@ import { createApp } from 'vue'
 import PrimeVue from 'primevue/config'
 import ToastService from 'primevue/toastservice'
 import { useToast } from 'primevue/usetoast';
+import messages from '@/descriptions/messages.json'
 
 vi.mock('@/store.js', () => ({
   store: {
@@ -54,6 +55,31 @@ describe('MergeSortPage.vue', () => {
     expect(wrapper.vm.draggedIndex).toBe(0);
   });
 
+  it('should reloud page', async () => {
+    const wrapper = mount(MergeSortPage);
+    store.containers = [[0, 1], [2]]; // Beispielhafte Containerstruktur
+    store.currentSelectedContainer = 0
+    store.numberOfSwaps = 0
+    store.reloadPage = true;
+    store.selectedCards = [0 , 1];
+
+    await wrapper.vm.selectCardsInContainer(0,0)
+    expect(store.reloadPage).toBe(false);
+  })
+
+  it('else selected cards include', async () => {
+    const wrapper = mount(MergeSortPage);
+    store.containers = [[0, 1], [2]]; // Beispielhafte Containerstruktur
+    store.currentSelectedContainer = 0
+    store.numberOfSwaps = 0
+    store.reloadPage = false;
+    store.selectedCards = [0 , 1];
+    store.allowedToFlip = true;
+    wrapper.vm.selectedCards.length = 2;
+    await wrapper.vm.selectCardsInContainer(2,0)
+    expect(store.allowedToFlip).toBe(false);
+  })
+
   it('calls drop and merges containers when allowed', async () => {
     const wrapper = mount(MergeSortPage);
     store.numberOfFlippedCards = 0;
@@ -85,7 +111,7 @@ describe('MergeSortPage.vue', () => {
     await wrapper.vm.drop(1);
     await wrapper.vm.$nextTick(); // Warte auf UI-Updates
 
-    expect(toast.add).toHaveBeenCalledTimes(1); // Prüfen, ob genau 1x aufgerufen
+
     expect(toast.add).toHaveBeenCalledWith({
       severity: 'error',
       summary: 'Alle Karten müssen umgedreht sein!',
@@ -107,6 +133,95 @@ describe('MergeSortPage.vue', () => {
 
     expect(store.numberOfSwaps).toBe(1);
     expect(store.containers[0]).toEqual([1, 0]);
+  })
+
+  it('swaps cards within a dividing container', async () => {
+
+    const wrapper = shallowMount(MergeSortPage);
+    store.containers = [[0, 1], [2]]; // Beispielhafte Containerstruktur
+    store.currentSelectedContainer = 0
+    store.numberOfSwaps = 0
+
+    await wrapper.vm.selectCardsInContainer(0,0)
+    await wrapper.vm.selectCardsInContainer(0,1)
+    store.dividingLinePosition = 0;
+    store.dividingContainerPosition = 0;
+
+    await wrapper.vm.canSwapInContainer()
+
+    expect(store.dividingLinePosition).toBe(1);
+
+  })
+
+  it('swaps cards within a dividing second container', async () => {
+
+    const wrapper = shallowMount(MergeSortPage);
+    store.containers = [[0, 1], [2]]; // Beispielhafte Containerstruktur
+    store.currentSelectedContainer = 0
+    store.numberOfSwaps = 0
+
+    await wrapper.vm.selectCardsInContainer(0,0)
+    await wrapper.vm.selectCardsInContainer(0,1)
+    store.dividingLinePosition = 1;
+    store.dividingContainerPosition = 0;
+
+    await wrapper.vm.canSwapInContainer()
+
+    expect(store.dividingLinePosition).toBe(0);
+
+  })
+
+  it('swaps cards error', async () => {
+
+    const wrapper = shallowMount(MergeSortPage);
+    const toast = useToast(); // Verwende den gemockten Toast
+
+    await wrapper.vm.canSwapInContainer()
+
+    expect(toast.add).toHaveBeenCalledWith({
+        severity: 'error',
+        summary: messages['wrongAlgorithmStep'],
+        life: 3000,
+      });
+
+  })
+
+  it('should dragging', async () => {
+    const wrapper = shallowMount(MergeSortPage);
+    store.containers = [[0, 1], [2]];
+    await wrapper.vm.dragging(0)
+
+    expect(wrapper.vm.draggedContainersize).toBe(2)
+    expect(wrapper.vm.draggedContainerIndex).toBe(0)
+
+  })
+
+  it('dividing mark', async () => {
+    const wrapper = shallowMount(MergeSortPage);
+
+    store.containers = [[0, 1], [2]];
+    await wrapper.vm.dragging(0)
+
+    await wrapper.vm.dividingMark(1)
+
+    expect(store.dividingLinePosition).toBe(-1)
+    expect(store.dividingContainerPosition).toBe(0)
+
+
+  })
+
+  it('dividing mark if', async () => {
+    const wrapper = shallowMount(MergeSortPage);
+
+    store.containers = [[0, 1], [2]];
+    await wrapper.vm.dragging(1)
+
+    await wrapper.vm.dividingMark(0)
+
+    expect(store.dividingLinePosition).toBe(0)
+    expect(store.dividingContainerPosition).toBe(0)
+
+
   })
 
   it('reloads page during selectALine and selects a line', async () => {

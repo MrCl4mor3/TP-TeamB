@@ -3,6 +3,7 @@ import { mount } from '@vue/test-utils'
 import QuicksortPage from '@/pages/QuicksortPage.vue'
 import { store } from '@/store'
 import { createApp } from 'vue'
+import FlippedCard from '@/components/FlippedCard.vue'
 import PrimeVue from 'primevue/config'
 import ToastService from 'primevue/toastservice'
 import { vi } from 'vitest';
@@ -77,6 +78,33 @@ describe('QuicksortPage.vue', () => {
 
     expect(toastMock.add).toHaveBeenCalledWith({ severity: 'success', summary: messages['quicksortSuccess'], life: 3000 });
   })
+
+  it('select pivot else', async () => {
+    store.reloadPage = false;
+    wrapper.vm.firsttime = false;
+    store.cards = [
+      { id: 0, svg: { outerHTML: '<svg></svg>' },  colour: 'grey' },
+      { id: 1, svg: { outerHTML: '<svg></svg>' },  colour: 'grey'  },
+      { id: 2, svg: { outerHTML: '<svg></svg>' },  colour: 'grey'  }
+    ]
+    store.lookingIndex = 3
+    store.pivotIndices = [0,1];
+    store.pivotElementIndex = 1
+    wrapper.vm.startigCardIds = [
+      { id: 0, svg: { outerHTML: '<svg></svg>' },  colour: '#10b981' },
+      { id: 1, svg: { outerHTML: '<svg></svg>' },  colour: '#10b981'  },
+      { id: 2, svg: { outerHTML: '<svg></svg>' },  colour: '#10b981'  }
+    ]
+    wrapper.vm.trueCardRef = [0,1]
+
+    console.log("asd")
+    await wrapper.vm.selectPivot()
+
+
+
+
+  })
+
 
   it('selectCardQuick() should toggle card selection based on pivot', async () => {
     store.reloadPage = true

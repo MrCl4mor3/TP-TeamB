@@ -86,6 +86,18 @@ describe('PageLayout.vue', () => {
     )
   })
 
+  it('bubble sort', async () => {
+    store.cards = [0, 1, 2, 3]
+    store.selectedCards = [2, 0] // Reihenfolge angepasst
+    store.selectedCategory = 'Bubble Sort';
+    store.numberOfSwaps = 0; // Setzt den Startindex für correctSortingOrderSelect
+    store.correctSortingOrderBubble = [[2, 0]]; // Muss mit selectedCards übereinstimmen
+
+    await wrapper.vm.SwapCards()
+
+    expect(store.numberOfSwaps).toBe(1); // Sollte nun erfolgreich erhöht werden
+  });
+
   it('selectionSort', async () => {
     store.cards = [0, 1, 2, 3]
     store.selectedCards = [2, 0] // Reihenfolge angepasst
@@ -97,6 +109,52 @@ describe('PageLayout.vue', () => {
 
     expect(store.numberOfSwaps).toBe(1); // Sollte nun erfolgreich erhöht werden
   });
+
+  it('selectionSort else', async () => {
+    store.cards = [0, 1, 2, 3]
+    store.selectedCards = [2, 0] // Reihenfolge angepasst
+    store.selectedCategory = 'Selection Sort';
+    store.numberOfSwaps = 2; // Setzt den Startindex für correctSortingOrderSelect
+    store.correctSortingOrderSelect = [[2, 0]]; // Muss mit selectedCards übereinstimmen
+
+    await wrapper.vm.SwapCards()
+
+    expect(toast.add).toHaveBeenCalledWith(
+      expect.objectContaining({
+        severity: 'success',
+      }))
+
+  });
+
+  it('Insert Sort', async () => {
+    store.cards = [0, 1, 2, 3]
+    store.selectedCards = [2, 0] // Reihenfolge angepasst
+    store.selectedCategory = 'Insertion Sort';
+    store.numberOfSwaps = 0; // Setzt den Startindex für correctSortingOrderSelect
+    store.correctSortingOrderInsert = [[2, 0]]; // Muss mit selectedCards übereinstimmen
+
+    await wrapper.vm.SwapCards()
+
+    expect(store.numberOfSwaps).toBe(1); // Sollte nun erfolgreich erhöht werden
+  });
+
+  it('Insert Sort else', async () => {
+    store.cards = [0, 1, 2, 3]
+    store.selectedCards = [2, 0] // Reihenfolge angepasst
+    store.selectedCategory = 'Insertion Sort';
+    store.numberOfSwaps = 2; // Setzt den Startindex für correctSortingOrderSelect
+    store.correctSortingOrderInsert = [[2, 0]]; // Muss mit selectedCards übereinstimmen
+
+    await wrapper.vm.SwapCards()
+
+    expect(toast.add).toHaveBeenCalledWith(
+      expect.objectContaining({
+        severity: 'success',
+      }))
+
+  });
+
+
 
   it('startet das Spiel neu', async () => {
     wrapper.vm.startOver()
@@ -173,7 +231,6 @@ describe('PageLayout.vue', () => {
     wrapper.vm.store.startingCards = [{id: 0}, {id: 1}, {id: 2}];
     store.correctSortingOrderInsert = [{id: 0}, {id: 1}, {id: 2}];
 
-    console.log("hey")
     await wrapper.vm.checkIfCorrect()
 
     expect(wrapper.vm.visibleEndScreen).toBe(true)
@@ -208,28 +265,41 @@ describe('PageLayout.vue', () => {
     wrapper.vm.store.startingCards = [{id: 0}, {id: 1}, {id: 2}];
     store.correctSortingOrderInsert = [{id: 0}, {id: 1}, {id: 2}];
     store.currentCards = [
-      { id: 0, svg: { outerHTML: '<svg></svg>' } },
-      { id: 1, svg: { outerHTML: '<svg></svg>' } },
-      { id: 2, svg: { outerHTML: '<svg></svg>' } }
-    ]
-
+      { id: 0, svg: { outerHTML: '<svg></svg>' }, closeCard: vi.fn() },
+      { id: 1, svg: { outerHTML: '<svg></svg>' }, closeCard: vi.fn() },
+      { id: 2, svg: { outerHTML: '<svg></svg>' }, closeCard: vi.fn() }
+    ];
+    console.log("hey")
     store.selectedCategory = 'Quick Sort';
+   /* const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    const mockToast = { add: vi.fn() };
 
+// Instanz der Komponente erstellen
+    const componentInstance = new PageLayout();
+    componentInstance.toast = mockToast;
+
+
+    wrapper.vm.shuffel()
+    await wait(500)*/
     await wrapper.vm.shuffel()
+    await new Promise((resolve) => setTimeout(resolve, 500))
+
+
+
     expect(store.quickReshuffle).toBe(true)
     expect(store.startingCards).toEqual([0, 1, 2]);
   })
 
   it('ruft prepareReset() auf', () => {
     wrapper.vm.shuffel();
-    expect(wrapper.prepareReset).toHaveBeenCalled();
+    expect(store.numberOfSwaps).toBe(0);
   });
 
   it('setzt quickReshuffle auf true und setzt Karten zurück, wenn Kategorie "Quick Sort" ist', async () => {
     store.selectedCategory = 'Quick Sort';
-    wrapper.vm.shuffle();
+    wrapper.vm.shuffel();
 
-    await new Promise((resolve) => setTimeout(resolve, 500)); // Warten, bis Timeout durch ist
+    await new Promise((resolve) => setTimeout(resolve, 100)); // Warten, bis Timeout durch ist
 
     expect(store.quickReshuffle).toBe(true);
     expect(store.cards).toEqual(store.startingCards);

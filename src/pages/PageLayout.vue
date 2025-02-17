@@ -254,10 +254,12 @@ export default {
 
     shuffel() {
       this.prepareReset()
-
+      console.log("asd")
       setTimeout(() => {
+        console.log(store.selectedCategory)
         if (store.selectedCategory === 'Quick Sort') {
           store.quickReshuffle = true;
+          console.log("asd " + store.quickReshuffle)
           store.cards = store.startingCards.slice();
         } else {
           store.cards = store.cards.sort(() => Math.random() - 0.5)
