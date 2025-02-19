@@ -90,6 +90,9 @@ h3 {
   font-size: 20px;
 }
 
+.button-container .pi {
+  font-size: 20px;
+}
 
 /* Flexbox-Container, Anordnung in Reihe */
 .flex-container-row {

@@ -13,7 +13,7 @@
         <!-- Hier wird der Inhalt der Rückseite der Karte angezeigt -->
       </div>
     </div>
-    <div v-if="showTooltip" class="tooltip">{{"Maximal 2 Karten zum Tausch"}}</div>
+    <div v-if="showTooltip" class="tooltip">Maximal 2 Karten</div>
   </div>
 
 </template>

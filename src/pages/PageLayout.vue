@@ -8,7 +8,9 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
 
 <template>
   <header>
-    <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage" />
+    <div class="button-container">
+      <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage" />
+    </div>
     <h2>
       <span v-if="noAlgorithmNeeded">{{ store.selectedMode }}</span>
       <span v-else>{{ store.selectedCategory }}</span>
