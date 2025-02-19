@@ -1,6 +1,3 @@
-<script setup>
-import messages from '@/descriptions/messages.json'
-</script>
 
 <template>
   <div class="card-container" @click="toggleFlip" @mouseover="checkHover" @mouseout="hideTooltip">
@@ -16,7 +13,7 @@ import messages from '@/descriptions/messages.json'
         <!-- Hier wird der Inhalt der Rückseite der Karte angezeigt -->
       </div>
     </div>
-    <div v-if="showTooltip" class="tooltip">{{messages.maxTwoCards}}</div>
+    <div v-if="showTooltip" class="tooltip">{{"Maximal 2 Karten zum Tausch"}}</div>
   </div>
 
 </template>
