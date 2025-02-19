@@ -92,11 +92,23 @@ describe('HomePage.vue', () => {
     expect(wrapper.vm.visibleTutorial).toBe(true)
   })
 
-  it('goes To SortingPage if event.key === \'Enter\''), () => {
-    wrapper.vm.event.key === 'Enter'
-    wrapper.vm.handleKeyPress('Enter')
-    expect(wrapper.vm.goToSortingPage()).toBeCalledTimes(1);
-  }
+  it('goes To SortingPage if event.key === \'Enter\'', () => {
+    const event = {key: 'Enter'}
+    wrapper.vm.selectedCategory = 'bubble-sort'
+    wrapper.vm.selectedMode = null
+    wrapper.vm.slideNumber = 30 // outside valid range
+
+
+
+
+
+    wrapper.vm.handleKeyPress(event)
+
+    // Assert that generateCards was not called
+    expect(generateCards).not.toHaveBeenCalled()
+
+  })
+
 
 
 

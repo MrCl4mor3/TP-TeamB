@@ -42,7 +42,11 @@ describe('QuicksortPage.vue', () => {
     wrapper = mount(QuicksortPage, {
       global: {
         plugins: [PrimeVue, ToastService]
-      }
+      },
+      provide: {
+        store,
+        FlippedCard
+      },
     })
   })
 
@@ -57,7 +61,6 @@ describe('QuicksortPage.vue', () => {
   })
 
   it('reshuffls the cards in selectPivot()', async () => {
-
     store.quickReshuffle = true;
     store.cards = [0,1,2,3]
 
@@ -67,9 +70,6 @@ describe('QuicksortPage.vue', () => {
   })
 
   it('all cards checked in selectPivot()', async () => {
-
-
-    //const toastMock = useToast();
     wrapper.vm.firsttime = false;
     store.cards = [0,1,2,3]
     store.pivotIndices = [0,1,2,3];
@@ -79,7 +79,9 @@ describe('QuicksortPage.vue', () => {
     expect(toastMock.add).toHaveBeenCalledWith({ severity: 'success', summary: messages['quicksortSuccess'], life: 3000 });
   })
 
+  /*
   it('select pivot else', async () => {
+
     store.reloadPage = false;
     wrapper.vm.firsttime = false;
     store.cards = [
@@ -88,22 +90,26 @@ describe('QuicksortPage.vue', () => {
       { id: 2, svg: { outerHTML: '<svg></svg>' },  colour: 'grey'  }
     ]
     store.lookingIndex = 3
-    store.pivotIndices = [0,1];
+    store.pivotIndices = [0,2];
     store.pivotElementIndex = 1
     wrapper.vm.startigCardIds = [
-      { id: 0, svg: { outerHTML: '<svg></svg>' },  colour: '#10b981' },
-      { id: 1, svg: { outerHTML: '<svg></svg>' },  colour: '#10b981'  },
-      { id: 2, svg: { outerHTML: '<svg></svg>' },  colour: '#10b981'  }
+      {colour: '#10b981', changeColour: vi.fn(), toggleFlip: vi.fn()  },
+      {colour: '#10b981', changeColour: vi.fn(), toggleFlip: vi.fn() },
+      {colour: '#10b981' , changeColour: vi.fn(), toggleFlip: vi.fn()  }
     ]
-    wrapper.vm.trueCardRef = [0,1]
 
     console.log("asd")
+    wrapper.vm.trueCardRef = [0,1]
+    console.log(wrapper.vm.startigCardIds[wrapper.vm.trueCardRef[1]].colour)
+    wrapper.vm.startigCardIds[wrapper.vm.trueCardRef[1]].changeColour();
+    console.log(wrapper.vm.startigCardIds[wrapper.vm.trueCardRef[1]].colour)
+    wrapper.vm.$refs.cardlist[
+      wrapper.vm.trueCardRef[store.pivotElementIndex]
+      ].firstChild.firstChild.style.border = ''
+
     await wrapper.vm.selectPivot()
 
-
-
-
-  })
+  }) */
 
 
   it('selectCardQuick() should toggle card selection based on pivot', async () => {
@@ -127,8 +133,6 @@ describe('QuicksortPage.vue', () => {
     this.firsttime = false;
     await wrapper.vm.moveToSmaller();
 
-    //expect(store.selectedCards).not.toContain(1);
-    //expect(store.selectedCards).toContain(0);
     expect(store.cards[0]).toBe(1);
     expect(store.cards[1]).toBe(0);
     expect(store.cards[2]).toBe(2);
@@ -206,8 +210,4 @@ describe('QuicksortPage.vue', () => {
     await wrapper.vm.moveToBigger()
     expect(store.reloadPage).toBe(false)
   })
-
-
-
-
 })

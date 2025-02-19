@@ -254,18 +254,16 @@ export default {
 
     shuffel() {
       this.prepareReset()
-      console.log("asd")
+
       setTimeout(() => {
-        console.log(store.selectedCategory)
         if (store.selectedCategory === 'Quick Sort') {
           store.quickReshuffle = true;
-          console.log("asd " + store.quickReshuffle)
           store.cards = store.startingCards.slice();
         } else {
           store.cards = store.cards.sort(() => Math.random() - 0.5)
           store.startingCards = store.cards.slice()
         }
-
+        console.log("sucess")
         this.calculateScore();
         this.visibleEndScreen = false
         this.toast.add({ severity: 'success', summary: messages["shuffleCards"], life: 3000 })

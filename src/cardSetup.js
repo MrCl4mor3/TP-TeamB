@@ -29,10 +29,14 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
   store.selectedCategory = selectedCategory
   store.numberOfCards = numberOfCards
 
+  console.log(cardSvg);
   //lade zunächst die svg Datei
   fetch(cardSvg)
-    .then((response) => response.text())
-    .then((svgContent) => {
+    .then((response) => {
+      console.log("Fetch abgeschlossen");
+      return response.text();
+    })
+    .then((svgContent) => {console.log("hey")
       //Parse die SVG Datei und speichere sie in einer Variable
       const parser = new DOMParser()
       const svgDocument = parser.parseFromString(svgContent, 'image/svg+xml')
@@ -138,7 +142,7 @@ function removePart(id, svgContent) {
  * @param max
  * @returns {number}
  */
-function getRandomInt(min, max) {
+export function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
@@ -177,7 +181,7 @@ function updateSvgID(svgContent, newId) {
 /**
  * Überprüft, ob zwei Arrays gleich sind.
  */
-function arraysAreEqual(arr1, arr2) {
+export function arraysAreEqual(arr1, arr2) {
   for (let i = 0; i < arr1.length; i++) {
     if (arr1[i] !== arr2[i]) {
       return false
@@ -191,13 +195,15 @@ function arraysAreEqual(arr1, arr2) {
  * @param {Element} svgContent Das SVG-Element, dessen IDs geprüft werden sollen.
  * @returns {Object} Ein Objekt mit den minimalen und maximalen IDs.
  */
-function findMinMaxIds(svgContent) {
+export function findMinMaxIds(svgContent) {
   let min = 0
   let max = 0
 
   let ids = Array.from(svgContent.querySelectorAll('[id]')).map(elem => parseInt(elem.id.split('-')[1]))
   min = Math.min(...ids)
   max = Math.max(...ids)
+  console.log('min:  ' + min )
+  console.log('max:  ' + max)
 
   return {min, max}
 }

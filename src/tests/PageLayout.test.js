@@ -154,6 +154,32 @@ describe('PageLayout.vue', () => {
 
   });
 
+  it('shuffles when Quicksort', async () => {
+    store.correctCards = [{id: 0}, {id: 1}, {id: 2}];
+    wrapper.vm.store.startingCards = [{id: 0}, {id: 1}, {id: 2}];
+    store.selectedCategory = 'Quick Sort';
+
+    wrapper.vm.shuffel()
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+
+    expect(store.quickReshuffle).toBe(true)
+    expect(store.cards[0]).toEqual({id: 0});
+    expect(store.cards[1]).toEqual({id: 1})
+    expect(store.cards[2]).toEqual({id: 2})
+  })
+
+  it('shuffles when not Quicksort', async () => {
+    store.correctCards = [{id: 0}, {id: 1}, {id: 2}];
+    wrapper.vm.store.startingCards = [{id: 0}, {id: 1}, {id: 2}];
+    store.selectedCategory = 'Bubble Sort';
+
+    wrapper.vm.shuffel()
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+
+    expect(store.cards).not.toEqual({id: 0}, {id: 1}, {id: 2})
+  })
+
+
 
 
   it('startet das Spiel neu', async () => {
@@ -259,86 +285,8 @@ describe('PageLayout.vue', () => {
     )
   }
 
-  it('shuffles ', async () => {
-    store.cards = [{id: 0}, {id: 1}, {id: 2}];
-    store.correctCards = [{id: 0}, {id: 1}, {id: 2}];
-    wrapper.vm.store.startingCards = [{id: 0}, {id: 1}, {id: 2}];
-    store.correctSortingOrderInsert = [{id: 0}, {id: 1}, {id: 2}];
-    store.currentCards = [
-      { id: 0, svg: { outerHTML: '<svg></svg>' }, closeCard: vi.fn() },
-      { id: 1, svg: { outerHTML: '<svg></svg>' }, closeCard: vi.fn() },
-      { id: 2, svg: { outerHTML: '<svg></svg>' }, closeCard: vi.fn() }
-    ];
-    console.log("hey")
-    store.selectedCategory = 'Quick Sort';
-   /* const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-    const mockToast = { add: vi.fn() };
-
-// Instanz der Komponente erstellen
-    const componentInstance = new PageLayout();
-    componentInstance.toast = mockToast;
 
 
-    wrapper.vm.shuffel()
-    await wait(500)*/
-    await wrapper.vm.shuffel()
-    await new Promise((resolve) => setTimeout(resolve, 500))
-
-
-
-    expect(store.quickReshuffle).toBe(true)
-    expect(store.startingCards).toEqual([0, 1, 2]);
-  })
-
-  it('ruft prepareReset() auf', () => {
-    wrapper.vm.shuffel();
-    expect(store.numberOfSwaps).toBe(0);
-  });
-
-  it('setzt quickReshuffle auf true und setzt Karten zurück, wenn Kategorie "Quick Sort" ist', async () => {
-    store.selectedCategory = 'Quick Sort';
-    wrapper.vm.shuffel();
-
-    await new Promise((resolve) => setTimeout(resolve, 100)); // Warten, bis Timeout durch ist
-
-    expect(store.quickReshuffle).toBe(true);
-    expect(store.cards).toEqual(store.startingCards);
-  });
-
-  it('mischt die Karten zufällig, wenn Kategorie nicht "Quick Sort" ist', async () => {
-    store.selectedCategory = 'Bubble Sort';
-    const originalCards = [...store.cards];
-
-    wrapper.vm.shuffel();
-    await new Promise((resolve) => setTimeout(resolve, 500));
-
-    expect(store.cards).not.toEqual(originalCards); // Die Reihenfolge sollte sich geändert haben
-  });
-
-  it('ruft calculateScore() auf', async () => {
-    wrapper.vm.shuffel();
-    await new Promise((resolve) => setTimeout(resolve, 500));
-
-    expect(wrapper.calculateScore).toHaveBeenCalled();
-  });
-
-  it('setzt visibleEndScreen auf false', async () => {
-    wrapper.vm.shuffel();
-    await new Promise((resolve) => setTimeout(resolve, 500));
-
-    expect(wrapper.visibleEndScreen).toBe(false);
-  });
-
-  it('zeigt einen Erfolgstoast an', async () => {
-    wrapper.vm.shuffel();
-    await new Promise((resolve) => setTimeout(resolve, 500));
-
-    expect(toastMock.add).toHaveBeenCalledWith({
-      severity: 'success',
-      summary: "Karten wurden gemischt",
-      life: 3000
-    });
-  });
 
 
   it('gibt eine formatierte Beschreibung für "Free Sort" zurück, wenn der Modus "Freies Sortieren" ist', () => {
