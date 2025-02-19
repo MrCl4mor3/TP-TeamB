@@ -36,7 +36,7 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     :header="'Bravo - Die Karten sind richtig sortiert!'"
     class="dialog"
     :modal = "true"
-    @update:visible="prepareReset">
+    @update:visible="startOver">
     <div class="dialog-content">
       <p>Du hast {{ store.score }} Karten angeschaut und {{ store.numberOfSwaps }} Karten vertauscht.</p>
       <p>Ein Computer würde mit den folgenden Algorithmen so viele Operationen benötigen:</p>
