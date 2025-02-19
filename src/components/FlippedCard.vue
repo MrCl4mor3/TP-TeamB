@@ -68,6 +68,10 @@ export default {
       }
     },
 
+    checkId() {
+      return this.cardId
+    },
+
     hideTooltip() {
       this.showTooltip = false
     },

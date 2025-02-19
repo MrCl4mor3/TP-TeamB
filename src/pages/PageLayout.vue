@@ -293,16 +293,31 @@ export default {
     },
 
     calculateScore() {
-      this.algorithms = [
-        { name: 'Bubble Sort', result: bubbleSortWithScore(this.store.startingCards) },
-        { name: 'Selection Sort', result: selectionSortWithScore(this.store.startingCards) },
-        { name: 'Insertion Sort', result: insertionSortWithScore(this.store.startingCards) },
-        { name: 'Quick Sort', result: quickSortWithScore(this.store.startingCards) },
-        { name: 'Merge Sort', result: mergeSortWithScore(this.store.startingCards) }
-      ];
+      if (store.selectedCategory === 'Quick Sort') {
+        this.algorithms = [
+          { name: 'Bubble Sort', result: bubbleSortWithScore(this.store.startingCards) },
+          { name: 'Selection Sort', result: selectionSortWithScore(this.store.startingCards) },
+          { name: 'Insertion Sort', result: insertionSortWithScore(this.store.startingCards) },
+          { name: 'Quick Sort', result: this.quickScoreForQuickSort()},
+          { name: 'Merge Sort', result: mergeSortWithScore(this.store.startingCards) }
+        ];
+      } else {
+        this.algorithms = [
+          { name: 'Bubble Sort', result: bubbleSortWithScore(this.store.startingCards) },
+          { name: 'Selection Sort', result: selectionSortWithScore(this.store.startingCards) },
+          { name: 'Insertion Sort', result: insertionSortWithScore(this.store.startingCards) },
+          { name: 'Quick Sort', result: quickSortWithScore(this.store.startingCards) },
+          { name: 'Merge Sort', result: mergeSortWithScore(this.store.startingCards) }
+        ];
+      }
       this.isScoreCalculated = true
     },
 
+    quickScoreForQuickSort() {
+      let scoreSwap = store.numberOfSwaps
+      let scoreLook = store.score
+      return {scoreSwap , scoreLook}
+    },
 
     //Alle Karten werden aufgedeckt
     openAllCards() {
