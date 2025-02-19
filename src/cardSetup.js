@@ -128,7 +128,7 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
  * @param svgContent Das SVG-Element, aus dem das Element entfernt werden soll
  * @returns {Element} Das SVG-Element ohne das entfernte Element
  */
-function removePart(id, svgContent) {
+export function removePart(id, svgContent) {
   const element = svgContent.querySelector(`#${id}`)
   if (element) {
     element.parentNode.removeChild(element)
@@ -152,7 +152,7 @@ export function getRandomInt(min, max) {
  * @param {string} newId Die neue ID.
  * @returns {Element} Das SVG-Element mit der neuen ID.
  */
-function updateSvgID(svgContent, newId) {
+export function updateSvgID(svgContent, newId) {
   // Entferne die ID des Haupt-SVG-Elements, falls vorhanden
   if (svgContent.hasAttribute('id')) {
     svgContent.removeAttribute('id')

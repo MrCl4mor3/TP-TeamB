@@ -105,6 +105,34 @@ describe('cardSetup', () => {
     expect(max).toBe(10)
   })
 
+  it('entfernt ein vorhandenes Element aus dem SVG', () => {
+    const parser = new DOMParser()
+    const svgString = `<svg><rect id="removeMe"></rect><circle id="keepMe"></circle></svg>`
+    const svgDocument = parser.parseFromString(svgString, 'image/svg+xml')
+    const svgElement = svgDocument.documentElement
+
+    // Entferne das <rect>-Element mit der ID "removeMe"
+    const updatedSvg = removePart('removeMe', svgElement)
+
+    // Überprüfe, ob das Element entfernt wurde
+    expect(updatedSvg.querySelector('#removeMe')).toBeNull()
+
+    // Stelle sicher, dass das andere Element noch existiert
+    expect(updatedSvg.querySelector('#keepMe')).not.toBeNull()
+  })
+
+  it('ändert die ID des SVG-Haupt-Elements', () => {
+    const parser = new DOMParser()
+    const svgString = `<svg id="oldId"><rect id="oldId-1"></rect><circle id="oldId-2"></circle></svg>`
+    const svgDocument = parser.parseFromString(svgString, 'image/svg+xml')
+    const svgElement = svgDocument.documentElement
+
+    // Aktualisiere die SVG-ID
+    const updatedSvg = updateSvgID(svgElement, 'newId')
+
+    // Überprüfe, ob die ID des Haupt-SVG-Elements geändert wurde
+    expect(updatedSvg.getAttribute('id')).toBe('newId')
+  })
 })
 
 
