@@ -105,7 +105,6 @@ describe('cardSetup', () => {
     expect(max).toBe(10)
   })
 
-
 })
 
 

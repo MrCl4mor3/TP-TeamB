@@ -1,5 +1,4 @@
 import { mount } from '@vue/test-utils'
-import { nextTick } from 'vue'
 import HomePage from '@/pages/HomePage.vue'
 import { resetStore } from '@/store.js'
 import { generateCards } from '@/cardSetup.js'
@@ -98,18 +97,11 @@ describe('HomePage.vue', () => {
     wrapper.vm.selectedMode = null
     wrapper.vm.slideNumber = 30 // outside valid range
 
-
-
-
-
     wrapper.vm.handleKeyPress(event)
 
     // Assert that generateCards was not called
     expect(generateCards).not.toHaveBeenCalled()
 
   })
-
-
-
 
 })
