@@ -55,7 +55,7 @@ describe('MergeSortPage.vue', () => {
     expect(wrapper.vm.draggedIndex).toBe(0);
   });
 
-  it('should reloud page', async () => {
+  it('should reload page', async () => {
     const wrapper = mount(MergeSortPage);
     store.containers = [[0, 1], [2]]; // Beispielhafte Containerstruktur
     store.currentSelectedContainer = 0
