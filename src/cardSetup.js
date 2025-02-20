@@ -31,7 +31,9 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
 
   //lade zunächst die svg Datei
   fetch(cardSvg)
-    .then((response) => response.text())
+    .then((response) => {
+      return response.text();
+    })
     .then((svgContent) => {
       //Parse die SVG Datei und speichere sie in einer Variable
       const parser = new DOMParser()
@@ -124,7 +126,7 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
  * @param svgContent Das SVG-Element, aus dem das Element entfernt werden soll
  * @returns {Element} Das SVG-Element ohne das entfernte Element
  */
-function removePart(id, svgContent) {
+export function removePart(id, svgContent) {
   const element = svgContent.querySelector(`#${id}`)
   if (element) {
     element.parentNode.removeChild(element)
@@ -138,7 +140,7 @@ function removePart(id, svgContent) {
  * @param max
  * @returns {number}
  */
-function getRandomInt(min, max) {
+export function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
@@ -148,7 +150,7 @@ function getRandomInt(min, max) {
  * @param {string} newId Die neue ID.
  * @returns {Element} Das SVG-Element mit der neuen ID.
  */
-function updateSvgID(svgContent, newId) {
+export function updateSvgID(svgContent, newId) {
   // Entferne die ID des Haupt-SVG-Elements, falls vorhanden
   if (svgContent.hasAttribute('id')) {
     svgContent.removeAttribute('id')
@@ -177,7 +179,7 @@ function updateSvgID(svgContent, newId) {
 /**
  * Überprüft, ob zwei Arrays gleich sind.
  */
-function arraysAreEqual(arr1, arr2) {
+export function arraysAreEqual(arr1, arr2) {
   for (let i = 0; i < arr1.length; i++) {
     if (arr1[i] !== arr2[i]) {
       return false
@@ -191,7 +193,7 @@ function arraysAreEqual(arr1, arr2) {
  * @param {Element} svgContent Das SVG-Element, dessen IDs geprüft werden sollen.
  * @returns {Object} Ein Objekt mit den minimalen und maximalen IDs.
  */
-function findMinMaxIds(svgContent) {
+export function findMinMaxIds(svgContent) {
   let min = 0
   let max = 0
 

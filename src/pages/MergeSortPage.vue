@@ -107,6 +107,13 @@ export default {
     }
   },
   methods: {
+
+    /**
+     * Karte wird aufgedeckt. Dabei wird überprüft ob beide Karten im selben COntainer sind. Wenn bereits
+     * zwei Karten aufgedeckt sind werden beide Karten wieder zugedeckt
+     * @param containerIndex Der index des containers
+     * @param cardIndex Der index der Karte
+     */
     //Kartenaufdecken, mit check das nur Karten aus einem Container aufgedeckt werden dürfen
     selectCardsInContainer(containerIndex, cardIndex) {
       //Beim Pagereload wird alles zurückgesetzt
@@ -140,7 +147,9 @@ export default {
         this.toasty.add({ severity: 'error', summary: messages["wrongContainer"], life: 3000 })
       }
     },
-    //Vertauscht zwei Karten aus dem gleichen Container, und deckt sie danach wieder um
+    /**
+     * Vertauscht zwei Karten aus dem gleichen Container, und deckt sie danach wieder um.
+     */
     canSwapInContainer() {
       if (this.selectedCards.length === 2) {
         const [firstIndex, secondIndex] = this.selectedCards
@@ -170,7 +179,10 @@ export default {
       this.draggedContainersize = store.containers[draggedContainer].length
       this.draggedContainerIndex = draggedContainer
     },
-    //hier wird die Position der Linie gespeichert, die genau da ist wo die zwei fusionierten Container aufeinader treffen
+    /**
+     * Hier wird die Position der Linie gespeichert, die genau da ist wo die zwei fusionierten Container aufeinader treffen
+     * @param targetContainer Der index des Containers, auf den gemerged wird.
+     */
     dividingMark(targetContainer) {
       if (this.draggedContainerIndex !== targetContainer) {
         //reset um von allen anderen Linien die Markierung wegzumachen
@@ -195,7 +207,11 @@ export default {
         })
       }
     },
-    //Auswählen der Linie, festhalten der Position für den split
+    /**
+     * Auswählen der Linie, festhalten der Position für den split
+     * @param containerIndex Der index des Containers
+     * @param index Die Position der Linie
+     */
     selectALine(containerIndex, index) {
       //Beim Pagereload wird alles zurückgesetzt
       if (store.reloadPage) {
@@ -214,7 +230,10 @@ export default {
         this.linePositionCard = -1
       }
     },
-    //Splittet den Container an der gemerkten Position
+    /**
+     * Splittet den Container an der gemerkten Position
+     *
+     */
     splitContainer() {
       if (this.linePositionContainer === -1 || this.linePositionCard === -1) {
         this.toasty.add({ severity: 'error', summary: messages["noLine"], life: 3000 })
@@ -231,7 +250,9 @@ export default {
         this.flipAllCards()
       }
     },
-    //dreht alle Karten um
+    /**
+     * dreht alle Karten um
+     */
     flipAllCards() {
       const allCards = this.$refs.singlecard
 
@@ -248,6 +269,9 @@ export default {
       store.selectedCards.splice(0);
       this.selectedCards.splice(0);
     },
+    /**
+     * Setzt alle Variablen zurück, die MergePage beeinflussen.
+     */
     resetMergePage() {
       //reset store Variablen die von MergeSortPage benutzt werden
       store.numberOfFlippedCards = 0

@@ -1,4 +1,5 @@
 
+
 <template>
   <div class="card-container" @click="toggleFlip" @mouseover="checkHover" @mouseout="hideTooltip">
     <div class="card" :class="{ flipped: isFlipped }">

@@ -19,7 +19,7 @@
               </template>
               <template #back>
                 <div class="backsite">
-                  <div v-html="card.svg.outerHTML"></div>
+                  <div v-html="card.svg?.outerHTML"></div>
                 </div>
               </template>
             </FlippedCard>
@@ -79,6 +79,9 @@ export default {
     this.toast = useToast()
   },
   methods: {
+    /**
+     * Wählt das nächste Pivotelement aus und markiert alle sortierten Karten. Hier wird auch der Setup für Quicksort gemacht
+     */
     selectPivot() {
       //Beim Pagereload wird alles zurückgesetzt
       if (store.reloadPage) {
@@ -144,15 +147,18 @@ export default {
           //Nicht das erste mal gedrückt, also muss das alte Pivotelement als fertig sortiert gespeichert werden
           store.pivotIndices.push(store.pivotElementIndex)
           this.startigCardIds[this.trueCardRef[store.pivotElementIndex]].changeColour()
+
           this.$refs.cardlist[
             this.trueCardRef[store.pivotElementIndex]
           ].firstChild.firstChild.style.border = null
           //alle Karten werden zugedeckt
+
           for (let i = 0; i < store.cards.length; i++) {
             if (store.selectedCards.includes(i)) {
               this.startigCardIds[this.trueCardRef[i]].toggleFlip()
             }
           }
+
           store.selectedCards.splice(0)
           //einelementige Teilmengen sind auch schon sortiert, also müssen dementsprechend makiert werden
           if (this.biggerCards === 1) {
@@ -188,12 +194,14 @@ export default {
             }
             store.lookingIndex++
             checked++
+
           }
           if (this.newPivotFound === false){
             store.score--
           } else {
             this.newPivotFound = false
           }
+
         } else {
           //die Fälle das Pivotelementgedrückt wurde wenn entweder der Teilarray noch nicht soritert wurde oder jetzt alle Karten einsortiert sind
           if (checked < store.cards.length){
@@ -208,7 +216,10 @@ export default {
         this.toast.add({ severity: 'info', summary: messages['choosingNewPivot'], life: 3000 })
       }
     },
-    //für Quicksort, es werden Pivotelement erkannt und anders behandelt
+    /**
+     * für Quicksort, es werden Pivotelement und feste Elemente erkannt und anders behandelt
+     * @param {Number} index die Position der Karte, die gerade geklickt wurde.
+     */
     SelectCardQuick(index) {
       //Beim Pagereload wird alles zurückgesetzt
       if (store.reloadPage) {
@@ -260,7 +271,10 @@ export default {
         }
       }
     },
-    //das Element muss nach links vom Pivotelement getauscht werden
+    /**
+     * Die gerade aufgedeckte Karte wird nach Links vom Pivotelement getauscht, wenn es wirklich kleiner ist.
+     * Dabei müssen alle Karten die in "Bigger" einsortiert sind wieder in die korrekte Position gebracht werden
+     */
     moveToSmaller() {
       //Beim Pagereload wird alles zurückgesetzt
       if (store.reloadPage) {
@@ -322,7 +336,9 @@ export default {
         }
       }
     },
-    //wenn sie größer ist muss sich nur gemerkt werden wie viele in dem "Bigger" teil sind, keine Vertauschung notwendig
+    /**
+     * Wenn die gerade aufgedeckte Karte größer als das Pivotelement ist wird sie in dem "Bigger" Teil einsortiert, dabei ist kein vertauschen nötig (Karte bleibt rechts vom Pivot)
+     */
     moveToBigger() {
       //Beim Pagereload wird alles zurückgesetzt
       if (store.reloadPage) {
@@ -350,7 +366,9 @@ export default {
         }
       }
     },
-    //reset der ganze page zu dem Startzustand
+    /**
+     * reset der Quicksort page zu dem Startzustand
+     */
     resetQuickPage() {
       //pivotboarder weg
       if (!this.firsttime) {
