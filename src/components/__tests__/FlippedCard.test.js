@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import FlippedCard from '../FlippedCard.vue'
-import { store } from '../../store'
+import { store } from '@/store.js'
 
 describe('FlippedCard Component', () => {
   let wrapper
@@ -99,11 +99,11 @@ describe('FlippedCard Component', () => {
 
   // Test für changeColour
   it('should change the colour of the card when changeColour is called', () => {
-    expect(wrapper.vm.colour).toBe('#10b981')  // Anfangszustand ist grün
+    expect(wrapper.vm.colour).toBe('#10b981') // Anfangszustand ist grün
     wrapper.vm.changeColour()
-    expect(wrapper.vm.colour).toBe('grey')  // Nach dem Aufruf sollte die Farbe grau sein
+    expect(wrapper.vm.colour).toBe('grey') // Nach dem Aufruf sollte die Farbe grau sein
 
     wrapper.vm.changeColour()
-    expect(wrapper.vm.colour).toBe('#10b981')  // Nach einem weiteren Aufruf sollte sie wieder grün sein
+    expect(wrapper.vm.colour).toBe('#10b981') // Nach einem weiteren Aufruf sollte sie wieder grün sein
   })
 })

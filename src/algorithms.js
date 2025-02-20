@@ -4,7 +4,7 @@ export function bubbleSortWithScore(cards, returnSorted = false) {
   let sortingCards = cards.slice()
   let scoreSwap = 0
   let scoreLook = 0
-  store.correctSortingOrderBubble.splice(0);
+  store.correctSortingOrderBubble.splice(0)
   let swapped
 
   do {
@@ -24,7 +24,7 @@ export function bubbleSortWithScore(cards, returnSorted = false) {
   } while (swapped)
 
   if (returnSorted) {
-    return {scoreSwap, scoreLook, sortedArray: sortingCards }
+    return { scoreSwap, scoreLook, sortedArray: sortingCards }
   }
 
   return { scoreSwap, scoreLook }
@@ -33,7 +33,7 @@ export function selectionSortWithScore(cards, returnSorted = false) {
   let sortingCards = cards.slice()
   let scoreSwap = 0
   let scoreLook = 0
-  store.correctSortingOrderSelect.splice(0);
+  store.correctSortingOrderSelect.splice(0)
 
   for (let i = 0; i < sortingCards.length; i++) {
     let minIndex = i
@@ -64,7 +64,7 @@ export function insertionSortWithScore(cards, returnSorted = false) {
   let sortingCards = cards.slice()
   let scoreSwap = 0
   let scoreLook = 0
-  store.correctSortingOrderInsert.splice(0);
+  store.correctSortingOrderInsert.splice(0)
 
   for (let i = 1; i < sortingCards.length; i++) {
     scoreLook++ //
@@ -104,7 +104,6 @@ export function quickSortWithScore(cards, returnSorted = false) {
     const right = []
 
     for (let i = 1; i < array.length; i++) {
-
       scoreLook++ // Ein Element wird betrachtet
       if (array[i].id < pivot.id) {
         scoreSwap++

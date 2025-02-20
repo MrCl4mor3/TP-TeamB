@@ -37,6 +37,5 @@ describe('Main.js App Setup', () => {
     expect(app._context.components['ButtonPress']).toBeDefined()
     expect(app._context.components['InputNumber']).toBeDefined()
     expect(app._context.app).toBeDefined()
-
   })
 })

@@ -35,25 +35,28 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     v-model:visible="visibleEndScreen"
     :header="'Bravo - Die Karten sind richtig sortiert!'"
     class="dialog"
-    :modal = "true"
-    @update:visible="startOver">
+    :modal="true"
+    @update:visible="startOver"
+  >
     <div class="dialog-content">
-      <p>Du hast {{ store.score }} Karten angeschaut und {{ store.numberOfSwaps }} Karten vertauscht.</p>
+      <p>
+        Du hast {{ store.score }} Karten angeschaut und {{ store.numberOfSwaps }} Karten vertauscht.
+      </p>
       <p>Ein Computer würde mit den folgenden Algorithmen so viele Operationen benötigen:</p>
       <table class="finish-page-table">
         <thead>
-        <tr>
-          <th>Sortieralgorithmus</th>
-          <th>Karten angeschaut</th>
-          <th>Karten vertauscht</th>
-        </tr>
+          <tr>
+            <th>Sortieralgorithmus</th>
+            <th>Karten angeschaut</th>
+            <th>Karten vertauscht</th>
+          </tr>
         </thead>
         <tbody>
-        <tr v-for="algorithm in algorithms" :key="algorithm.name">
-          <td>{{ algorithm.name }}</td>
-          <td>{{ algorithm.result?.scoreLook ?? '-' }}</td>
-          <td>{{ algorithm.result?.scoreSwap ?? '-' }}</td>
-        </tr>
+          <tr v-for="algorithm in algorithms" :key="algorithm.name">
+            <td>{{ algorithm.name }}</td>
+            <td>{{ algorithm.result?.scoreLook ?? '-' }}</td>
+            <td>{{ algorithm.result?.scoreSwap ?? '-' }}</td>
+          </tr>
         </tbody>
       </table>
       <div class="button-container">
@@ -62,12 +65,9 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
         <ButtonPress label="Neu mischen" @click="shuffel" />
       </div>
     </div>
-
   </Dialog>
 
-
-  <Toast :position="'top-right'"/>
-
+  <Toast :position="'top-right'" />
 
   <div class="content">
     <!-- hier werden die Karten in den einzelnen Seiten hinzugefügt -->
@@ -77,8 +77,7 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
   <footer>
     <!--Einfügen des Scores -->
     <div class="score">
-      <h3>Angeschaut: {{ store.score }}, Vertauscht: {{store.numberOfSwaps}}</h3>
-
+      <h3>Angeschaut: {{ store.score }}, Vertauscht: {{ store.numberOfSwaps }}</h3>
     </div>
     <!-- hier werden die zusätzlichen Knöpfe hinzugefügt -->
     <div class="button-container">
@@ -100,7 +99,7 @@ import {
   quickSortWithScore,
   selectionSortWithScore,
 } from '@/algorithms.js'
-import { nextTick} from "vue";
+import { nextTick } from 'vue'
 
 export default {
   name: 'StandardLayout',
@@ -148,7 +147,6 @@ export default {
      */
 
     SwapCards() {
-
       if (store.selectedCards.length !== 2) {
         this.toast.add({
           severity: 'error',
@@ -166,37 +164,45 @@ export default {
         store.selectedMode === 'Vorgegebenes Sortieren' &&
         store.selectedCategory !== 'Merge Sort'
       ) {
-        if (store.selectedCategory === 'Bubble Sort') {        //kontrolliert für bubble Sort ob richtig sortiert wird
+        if (store.selectedCategory === 'Bubble Sort') {
+          //kontrolliert für bubble Sort ob richtig sortiert wird
           if (store.numberOfSwaps < store.correctSortingOrderBubble.length) {
             canSort = !!(
-              store.correctSortingOrderBubble[store.numberOfSwaps].includes(store.selectedCards[0]) &&
+              store.correctSortingOrderBubble[store.numberOfSwaps].includes(
+                store.selectedCards[0],
+              ) &&
               store.correctSortingOrderBubble[store.numberOfSwaps].includes(store.selectedCards[1])
             )
           } else {
-            canSort = false;
-            finished = true;
+            canSort = false
+            finished = true
           }
-        } else if (store.selectedCategory === 'Selection Sort') { //kontrolliert für selectionsort ob richtig sortiert wird
+        } else if (store.selectedCategory === 'Selection Sort') {
+          //kontrolliert für selectionsort ob richtig sortiert wird
           if (store.numberOfSwaps < store.correctSortingOrderSelect.length) {
             canSort = !!(
-              store.correctSortingOrderSelect[store.numberOfSwaps].includes(store.selectedCards[0]) &&
+              store.correctSortingOrderSelect[store.numberOfSwaps].includes(
+                store.selectedCards[0],
+              ) &&
               store.correctSortingOrderSelect[store.numberOfSwaps].includes(store.selectedCards[1])
             )
           } else {
-            canSort = false;
-            finished = true;
+            canSort = false
+            finished = true
           }
-        } else if (store.selectedCategory === 'Insertion Sort') { //kontrolliert für insertiosort ob richtig sortiert wird
+        } else if (store.selectedCategory === 'Insertion Sort') {
+          //kontrolliert für insertiosort ob richtig sortiert wird
           if (store.numberOfSwaps < store.correctSortingOrderInsert.length) {
             canSort = !!(
-              store.correctSortingOrderInsert[store.numberOfSwaps].includes(store.selectedCards[0]) &&
+              store.correctSortingOrderInsert[store.numberOfSwaps].includes(
+                store.selectedCards[0],
+              ) &&
               store.correctSortingOrderInsert[store.numberOfSwaps].includes(store.selectedCards[1])
             )
           } else {
-            canSort = false;
-            finished = true;
+            canSort = false
+            finished = true
           }
-
         }
       }
       //vertauscht die Karten
@@ -210,14 +216,18 @@ export default {
         setTimeout(() => {
           store.currentCards.forEach((card) => {
             card.closeCard()
-            store.selectedCards.splice(0);
-            store.numberOfFlippedCards = 0;
-          })},300)
-
+            store.selectedCards.splice(0)
+            store.numberOfFlippedCards = 0
+          })
+        }, 300)
       } else {
         if (finished) {
-          this.toast.add({ severity: 'success', summary: messages['vorgegebenerSuccess'], life: 3000 })
-        }else {
+          this.toast.add({
+            severity: 'success',
+            summary: messages['vorgegebenerSuccess'],
+            life: 3000,
+          })
+        } else {
           this.toast.add({
             severity: 'error',
             summary: 'Fehler',
@@ -234,9 +244,10 @@ export default {
           setTimeout(() => {
             store.currentCards.forEach((card) => {
               card.closeCard()
-              store.selectedCards.splice(0);
-              store.numberOfFlippedCards = 0;
-            })},100)
+              store.selectedCards.splice(0)
+              store.numberOfFlippedCards = 0
+            })
+          }, 100)
         } else {
           store.selectedCards = store.selectedCards.filter((card) => card !== index)
         }
@@ -251,11 +262,11 @@ export default {
 
       setTimeout(() => {
         store.cards = store.startingCards.slice()
-        store.containers.splice(0);
-        store.containers.push(store.startingCards);
-        this.visibleEndScreen = false;
+        store.containers.splice(0)
+        store.containers.push(store.startingCards)
         this.visibleEndScreen = false
-        this.toast.add({ severity: 'success', summary: messages["restartGame"], life: 3000 })
+        this.visibleEndScreen = false
+        this.toast.add({ severity: 'success', summary: messages['restartGame'], life: 3000 })
       }, 400)
     },
 
@@ -264,15 +275,15 @@ export default {
 
       setTimeout(() => {
         if (store.selectedCategory === 'Quick Sort') {
-          store.quickReshuffle = true;
-          store.cards = store.startingCards.slice();
+          store.quickReshuffle = true
+          store.cards = store.startingCards.slice()
         } else {
           store.cards = store.cards.sort(() => Math.random() - 0.5)
           store.startingCards = store.cards.slice()
         }
-        this.calculateScore();
+        this.calculateScore()
         this.visibleEndScreen = false
-        this.toast.add({ severity: 'success', summary: messages["shuffleCards"], life: 3000 })
+        this.toast.add({ severity: 'success', summary: messages['shuffleCards'], life: 3000 })
       }, 450)
     },
 
@@ -302,17 +313,17 @@ export default {
           { name: 'Bubble Sort', result: bubbleSortWithScore(this.store.startingCards) },
           { name: 'Selection Sort', result: selectionSortWithScore(this.store.startingCards) },
           { name: 'Insertion Sort', result: insertionSortWithScore(this.store.startingCards) },
-          { name: 'Quick Sort', result: this.quickScoreForQuickSort()},
-          { name: 'Merge Sort', result: mergeSortWithScore(this.store.startingCards) }
-        ];
+          { name: 'Quick Sort', result: this.quickScoreForQuickSort() },
+          { name: 'Merge Sort', result: mergeSortWithScore(this.store.startingCards) },
+        ]
       } else {
         this.algorithms = [
           { name: 'Bubble Sort', result: bubbleSortWithScore(this.store.startingCards) },
           { name: 'Selection Sort', result: selectionSortWithScore(this.store.startingCards) },
           { name: 'Insertion Sort', result: insertionSortWithScore(this.store.startingCards) },
           { name: 'Quick Sort', result: quickSortWithScore(this.store.startingCards) },
-          { name: 'Merge Sort', result: mergeSortWithScore(this.store.startingCards) }
-        ];
+          { name: 'Merge Sort', result: mergeSortWithScore(this.store.startingCards) },
+        ]
       }
       this.isScoreCalculated = true
     },
@@ -320,7 +331,7 @@ export default {
     quickScoreForQuickSort() {
       let scoreSwap = store.numberOfSwaps
       let scoreLook = store.score
-      return {scoreSwap , scoreLook}
+      return { scoreSwap, scoreLook }
     },
 
     //Alle Karten werden aufgedeckt
@@ -335,8 +346,8 @@ export default {
         card.closeCard()
         card.colour = '#10b981'
       })
-      store.numberOfSwaps = 0;
-      this.selectedCards.splice(0);
+      store.numberOfSwaps = 0
+      this.selectedCards.splice(0)
       store.reloadPage = true
       store.dividingLinePosition = -1
       store.dividingContainerPosition = -1
@@ -364,7 +375,6 @@ export default {
         .split('\n') // Splitte den Text an Zeilenumbrüchen
         .map((line) => `<p>${line}</p>`) // Wandle jede Zeile in ein <p>-Tag um
         .join('') // Füge alle Absätze wieder zusammen
-
     },
   },
 }
@@ -397,5 +407,4 @@ export default {
   border: 1px solid #ddd;
   padding: 8px;
 }
-
 </style>

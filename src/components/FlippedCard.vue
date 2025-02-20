@@ -1,5 +1,3 @@
-
-
 <template>
   <div class="card-container" @click="toggleFlip" @mouseover="checkHover" @mouseout="hideTooltip">
     <div class="card" :class="{ flipped: isFlipped }">
@@ -16,7 +14,6 @@
     </div>
     <div v-if="showTooltip" class="tooltip">Maximal 2 Karten</div>
   </div>
-
 </template>
 
 <script>
@@ -111,7 +108,6 @@ export default {
   position: relative;
   transform-style: preserve-3d;
   transition: transform 0.6s;
-
 }
 .card:hover {
   transform: scale(1.1);

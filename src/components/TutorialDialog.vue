@@ -34,7 +34,7 @@ const cardBigger = computed(() => store.correctCards[1])
 
     <h2>So funktioniert das Sortieren:</h2>
     <p>
-      Deine Aufgabe ist es, die Karten in aufsteigender Reihenfolge zu sortieren.<br>
+      Deine Aufgabe ist es, die Karten in aufsteigender Reihenfolge zu sortieren.<br />
       Die Karten enthalten Bilder mit Strichen. "Kleiner" bedeutet, dass eine Karte weniger Striche
       hat als eine andere:
     </p>
@@ -60,9 +60,11 @@ const cardBigger = computed(() => store.correctCards[1])
       </div>
     </div>
     <p>
-      Hierfür kannst du bis zu zwei Karten aufdecken, indem du diese mit der Maus anklickst und nach dem Vergleichen vertauschst. <br>
-      Bei Mergesort und
-      Quicksort gibt es algorithmenspezifische Zusatzfunktionen. Diese werden dir im Spiel erklärt. <br> <br>
+      Hierfür kannst du bis zu zwei Karten aufdecken, indem du diese mit der Maus anklickst und nach
+      dem Vergleichen vertauschst. <br />
+      Bei Mergesort und Quicksort gibt es algorithmenspezifische Zusatzfunktionen. Diese werden dir
+      im Spiel erklärt. <br />
+      <br />
       Wenn du fertig bist, klicke auf "Fertig sortiert".
     </p>
     <h2>Hilfreiche Funktionen:</h2>

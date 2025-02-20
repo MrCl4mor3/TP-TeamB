@@ -63,7 +63,6 @@ function goToSortingPage() {
   }
 }
 
-
 // Event-Handler für Tasten
 function handleKeyPress(event) {
   if (event.key === 'Enter') {
@@ -94,20 +93,28 @@ onBeforeUnmount(() => {
 <template>
   <!-- Überschrift -->
   <header>
-    <img src="/logo.svg" type="image/svg+xml" alt="Meine SVG-Grafik" width="100" height="100">
-    <h1><span class="spezial">S</span>ort<span class="coloring"><span class="spezial">L</span>ab</span></h1>
+    <img src="/logo.svg" type="image/svg+xml" alt="Meine SVG-Grafik" width="100" height="100" />
+    <h1>
+      <span class="spezial">S</span>ort<span class="coloring"
+        ><span class="spezial">L</span>ab</span
+      >
+    </h1>
     <ButtonPress class="tutorial-button" label="?" @click="openTutorial"></ButtonPress>
   </header>
 
   <div class="content">
     <!-- Beschreibung des Spiels -->
-    <Dialog v-model:visible="visibleTutorial" :header="`SortLab Anleitung`" class="dialog" @update:visible="resetStore">
-        <TutorialDialog />
+    <Dialog
+      v-model:visible="visibleTutorial"
+      :header="`SortLab Anleitung`"
+      class="dialog"
+      @update:visible="resetStore"
+    >
+      <TutorialDialog />
     </Dialog>
 
     <!-- Flexbox für die Auswahl von Algorithmen und Modi -->
     <div class="flex-container-row">
-
       <!-- Auswahl des Modus -->
       <fieldset class="radio-box">
         <legend>{{ description.selectMode }}</legend>
@@ -169,7 +176,7 @@ onBeforeUnmount(() => {
     </div>
 
     <!-- Start-Button -->
-      <ButtonPress class="start-button" label="Start" @click="goToSortingPage" />
+    <ButtonPress class="start-button" label="Start" @click="goToSortingPage" />
   </div>
 
   <!-- Fußzeile -->
@@ -179,9 +186,8 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-
 .spezial {
-  Font-Family: "Otto Font",serif;
+  font-family: 'Otto Font', serif;
 }
 .coloring {
   color: #003200;

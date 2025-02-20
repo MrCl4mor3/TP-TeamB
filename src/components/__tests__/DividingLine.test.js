@@ -1,10 +1,9 @@
-import { mount } from '@vue/test-utils';
-import { describe, it, expect, beforeEach } from 'vitest';
-import DividingLine from '../DividingLine.vue';
-import { store } from '../../store'
+import { mount } from '@vue/test-utils'
+import { describe, it, expect, beforeEach } from 'vitest'
+import DividingLine from '../DividingLine.vue'
+import { store } from '@/store.js'
 
 describe('LineComponent.vue', () => {
-
   let wrapper
 
   beforeEach(() => {
@@ -21,34 +20,34 @@ describe('LineComponent.vue', () => {
   })
 
   it('renders the SVG line correctly', () => {
-    const wrapper = mount(DividingLine);
-    const line = wrapper.find('line');
-    expect(line.exists()).toBe(true);
-  });
+    const wrapper = mount(DividingLine)
+    const line = wrapper.find('line')
+    expect(line.exists()).toBe(true)
+  })
 
   it('toggles selection state when clicked', async () => {
-    store.selectedLines = 0; // Stelle sicher, dass der Store-Status korrekt ist
-    const wrapper = mount(DividingLine);
-    const svg = wrapper.find('svg');
+    store.selectedLines = 0 // Stelle sicher, dass der Store-Status korrekt ist
+    const wrapper = mount(DividingLine)
+    const svg = wrapper.find('svg')
 
-    await svg.trigger('click');
-    expect(wrapper.vm.isSelected).toBe(true);
-    expect(store.selectedLines).toBe(1);
+    await svg.trigger('click')
+    expect(wrapper.vm.isSelected).toBe(true)
+    expect(store.selectedLines).toBe(1)
 
-    await svg.trigger('click');
-    expect(wrapper.vm.isSelected).toBe(false);
-    expect(store.selectedLines).toBe(0);
-  });
+    await svg.trigger('click')
+    expect(wrapper.vm.isSelected).toBe(false)
+    expect(store.selectedLines).toBe(0)
+  })
 
   it('does not select line if another line is selected', async () => {
-    store.selectedLines = 1; // Simuliere, dass bereits eine Linie ausgewählt ist
-    const wrapper = mount(DividingLine);
-    const svg = wrapper.find('svg');
+    store.selectedLines = 1 // Simuliere, dass bereits eine Linie ausgewählt ist
+    const wrapper = mount(DividingLine)
+    const svg = wrapper.find('svg')
 
-    await svg.trigger('click');
-    expect(wrapper.vm.isSelected).toBe(false);
-    expect(store.selectedLines).toBe(1);
-  });
+    await svg.trigger('click')
+    expect(wrapper.vm.isSelected).toBe(false)
+    expect(store.selectedLines).toBe(1)
+  })
 
   it('should set isDividingLine to true when the dividing line matches', async () => {
     // Simuliere, dass die Linie eine Trennlinie ist
@@ -69,4 +68,4 @@ describe('LineComponent.vue', () => {
 
     expect(wrapper.vm.isDividingLine).toBe(false) // Sollte rot sein
   })
-});
+})

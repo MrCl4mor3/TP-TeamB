@@ -5,7 +5,6 @@ import { generateCards } from '@/cardSetup.js'
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import PrimeVue from 'primevue/config'
 
-
 // Mocking der Funktionen
 vi.mock('@/store.js', () => ({
   store: {
@@ -21,7 +20,6 @@ vi.mock('@/cardSetup.js', () => ({
 describe('HomePage.vue', () => {
   let wrapper
 
-
   beforeEach(() => {
     wrapper = mount(HomePage, {
       global: {
@@ -34,7 +32,6 @@ describe('HomePage.vue', () => {
       },
     })
   })
-
 
   afterEach(() => {
     // Cleanup: reset mocks after each test
@@ -79,8 +76,8 @@ describe('HomePage.vue', () => {
     expect(generateCards).toHaveBeenCalledWith('bubble-sort', 'free-sort', 10)
   })
 
-  it('goes To SortingPage if event.key === \'Enter\'', () => {
-    const event = {key: 'Enter'}
+  it("goes To SortingPage if event.key === 'Enter'", () => {
+    const event = { key: 'Enter' }
     wrapper.vm.selectedCategory = 'bubble-sort'
     wrapper.vm.selectedMode = null
     wrapper.vm.slideNumber = 30 // outside valid range
@@ -89,7 +86,5 @@ describe('HomePage.vue', () => {
 
     // Assert that generateCards was not called
     expect(generateCards).not.toHaveBeenCalled()
-
   })
-
 })

@@ -1,18 +1,20 @@
 import { describe, it, expect } from 'vitest'
 import { store } from '../store'
-import { generateCards, removePart, getRandomInt, updateSvgID, arraysAreEqual, findMinMaxIds } from '@/cardSetup.js'
-
-
+import {
+  generateCards,
+  removePart,
+  getRandomInt,
+  updateSvgID,
+  arraysAreEqual,
+  findMinMaxIds,
+} from '@/cardSetup.js'
 
 
 describe('cardSetup', () => {
-
   it('should get cards', () => {
-    generateCards('Mode1','Bubble Sort',4)
-    expect(store.cards).not.toBeNull;
-
+    generateCards('Mode1', 'Bubble Sort', 4)
+    expect(store.cards).not.toBeNull
   })
-
 
   it('gets a random int', () => {
     const random = getRandomInt(2, 5)
@@ -22,16 +24,15 @@ describe('cardSetup', () => {
   })
 
   it('compares arrays', () => {
-    const arr1= [0,1,2]
-    const arr2 = [1,2,3]
-    const arr3 = [1,2,3]
+    const arr1 = [0, 1, 2]
+    const arr2 = [1, 2, 3]
+    const arr3 = [1, 2, 3]
 
     const comp1 = arraysAreEqual(arr1, arr2)
     const comp2 = arraysAreEqual(arr2, arr3)
 
     expect(comp1).toBe(false)
     expect(comp2).toBe(true)
-
   })
 
   it('findet die minimale und maximale ID korrekt', () => {
@@ -84,6 +85,4 @@ describe('cardSetup', () => {
     // Überprüfe, ob die ID des Haupt-SVG-Elements geändert wurde
     expect(updatedSvg.getAttribute('id')).toBe('newId')
   })
-
 })
-

@@ -32,7 +32,7 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
   //lade zunächst die svg Datei
   fetch(cardSvg)
     .then((response) => {
-      return response.text();
+      return response.text()
     })
     .then((svgContent) => {
       //Parse die SVG Datei und speichere sie in einer Variable
@@ -41,7 +41,7 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
       let svgTemplate = svgDocument.documentElement
 
       //Min und Max Werte für die Zufallszahlen der zu entfernenden ids
-      const {min, max} = findMinMaxIds(svgTemplate)
+      const { min, max } = findMinMaxIds(svgTemplate)
       let cards = []
       let removedParts = []
 
@@ -197,9 +197,11 @@ export function findMinMaxIds(svgContent) {
   let min = 0
   let max = 0
 
-  let ids = Array.from(svgContent.querySelectorAll('[id]')).map(elem => parseInt(elem.id.split('-')[1]))
+  let ids = Array.from(svgContent.querySelectorAll('[id]')).map((elem) =>
+    parseInt(elem.id.split('-')[1]),
+  )
   min = Math.min(...ids)
   max = Math.max(...ids)
 
-  return {min, max}
+  return { min, max }
 }

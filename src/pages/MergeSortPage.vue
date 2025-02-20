@@ -19,7 +19,7 @@ function drop(targetIndex) {
       draggedIndex.value = null
     }
   } else {
-    toast.add({ severity: 'error', summary: messages["allCardsClose"], life: 3000 })
+    toast.add({ severity: 'error', summary: messages['allCardsClose'], life: 3000 })
   }
 }
 </script>
@@ -36,13 +36,15 @@ function drop(targetIndex) {
           draggable="true"
           @dragstart="
             () => {
-              dragStart(containerIndex); dragging(containerIndex)
+              dragStart(containerIndex)
+              dragging(containerIndex)
             }
           "
           @dragover.prevent
           @drop="
             () => {
-              drop(containerIndex); dividingMark(containerIndex)
+              drop(containerIndex)
+              dividingMark(containerIndex)
             }
           "
         >
@@ -54,8 +56,7 @@ function drop(targetIndex) {
                 @click="selectCardsInContainer(containerIndex, index)"
               >
                 <template #front>
-                  <div class="frontsite">
-                  </div>
+                  <div class="frontsite"></div>
                 </template>
                 <template #back>
                   <div class="backsite">
@@ -64,12 +65,12 @@ function drop(targetIndex) {
                 </template>
               </FlippedCard>
               <DividingLine
-              :container-index="containerIndex"
-              :line-index="index"
-              v-if="index < container.length - 1"
-              @click="selectALine(containerIndex, index)"
-              ref="linie"
-            />
+                :container-index="containerIndex"
+                :line-index="index"
+                v-if="index < container.length - 1"
+                @click="selectALine(containerIndex, index)"
+                ref="linie"
+              />
             </div>
           </div>
         </div>
@@ -102,12 +103,11 @@ export default {
       selectedContainerIndex: null,
       selectedCards: [],
       draggedContainersize: 0,
-      toasty : useToast(),
-      draggedContainerIndex: -1
+      toasty: useToast(),
+      draggedContainerIndex: -1,
     }
   },
   methods: {
-
     /**
      * Karte wird aufgedeckt. Dabei wird überprüft ob beide Karten im selben COntainer sind. Wenn bereits
      * zwei Karten aufgedeckt sind werden beide Karten wieder zugedeckt
@@ -133,7 +133,7 @@ export default {
         //Karte wird zugedeckt, wenn zwei offen sind werden beide zugedeckt
         if (this.selectedCards.includes(cardIndex)) {
           if (this.selectedCards.length === 2) {
-            this.flipAllCards();
+            this.flipAllCards()
           } else {
             this.selectedCards = this.selectedCards.filter((card) => card !== cardIndex) //nach entfernen des container index hinzufügen
           }
@@ -144,7 +144,7 @@ export default {
         }
       } else {
         store.allowedToFlip = false
-        this.toasty.add({ severity: 'error', summary: messages["wrongContainer"], life: 3000 })
+        this.toasty.add({ severity: 'error', summary: messages['wrongContainer'], life: 3000 })
       }
     },
     /**
@@ -165,7 +165,9 @@ export default {
             store.dividingLinePosition = firstIndex
           }
         }
-        setTimeout(() => {this.flipAllCards();}, 200);
+        setTimeout(() => {
+          this.flipAllCards()
+        }, 200)
       } else {
         this.toasty.add({
           severity: 'error',
@@ -194,8 +196,8 @@ export default {
           store.dividingContainerPosition = targetContainer
         } else {
           store.dividingLinePosition =
-            store.containers[targetContainer-1].length - this.draggedContainersize - 1
-          store.dividingContainerPosition = targetContainer-1
+            store.containers[targetContainer - 1].length - this.draggedContainersize - 1
+          store.dividingContainerPosition = targetContainer - 1
         }
       }
 
@@ -223,7 +225,7 @@ export default {
           this.linePositionContainer = containerIndex
           this.linePositionCard = index
         } else {
-          this.toasty.add({ severity: 'info', summary: messages["doubleLine"], life: 3000 })
+          this.toasty.add({ severity: 'info', summary: messages['doubleLine'], life: 3000 })
         }
       } else {
         this.linePositionContainer = -1
@@ -236,7 +238,7 @@ export default {
      */
     splitContainer() {
       if (this.linePositionContainer === -1 || this.linePositionCard === -1) {
-        this.toasty.add({ severity: 'error', summary: messages["noLine"], life: 3000 })
+        this.toasty.add({ severity: 'error', summary: messages['noLine'], life: 3000 })
       } else {
         const containerToSplit = store.containers[this.linePositionContainer]
 
@@ -266,8 +268,8 @@ export default {
       }
       store.numberOfFlippedCards = 0
       store.currentSelectedContainer = null
-      store.selectedCards.splice(0);
-      this.selectedCards.splice(0);
+      store.selectedCards.splice(0)
+      this.selectedCards.splice(0)
     },
     /**
      * Setzt alle Variablen zurück, die MergePage beeinflussen.
@@ -279,7 +281,7 @@ export default {
       store.selectedLines = 0
       store.dividingLinePosition = -1
       store.dividingContainerPosition = -1
-      store.selectedCards.splice(0);
+      store.selectedCards.splice(0)
       //reset lokale Variablen
       this.linePositionContainer = -1
       this.linePositionCard = -1
@@ -300,7 +302,6 @@ export default {
 </script>
 
 <style scoped>
-
 .flex-container-row {
   border: 4px solid mediumvioletred; /* Rahmen um den Container */
   padding: 20px; /* Abstand zwischen Inhalt und Rahmen */

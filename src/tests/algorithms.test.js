@@ -50,19 +50,19 @@ algorithms.forEach(({ name, fn }) => {
     const arr = [{ id: 3 }, { id: 7 }, { id: 2 }, { id: 4 }, { id: 1 }]
     const { scoreSwap, scoreLook } = fn(arr)
 
-    if(name === 'bubbleSort'){
+    if (name === 'bubbleSort') {
       expect(scoreSwap).toBe(7)
       expect(scoreLook).toBe(40)
-    } else if (name === 'selectionSort'){
+    } else if (name === 'selectionSort') {
       expect(scoreSwap).toBe(3)
       expect(scoreLook).toBe(20)
-    } else if (name === 'insertionSort'){
+    } else if (name === 'insertionSort') {
       expect(scoreSwap).toBe(7)
       expect(scoreLook).toBe(15)
-    } else if (name === 'quickSort'){
+    } else if (name === 'quickSort') {
       expect(scoreSwap).toBe(6)
       expect(scoreLook).toBe(9)
-    } else if (name === 'mergeSort'){
+    } else if (name === 'mergeSort') {
       expect(scoreSwap).toBe(8)
       expect(scoreLook).toBe(8)
     }
@@ -74,7 +74,6 @@ algorithms.forEach(({ name, fn }) => {
 
     expect(scoreSwap).toEqual(0) // Keine Swaps erforderlich
     expect(scoreLook).toEqual(0) // Keine Vergleiche erforderlich
-
   })
 
   test(`${name} gibt einen Score von 0 zurück, wenn der Array nur ein Element enthält`, () => {

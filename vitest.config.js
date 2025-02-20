@@ -13,10 +13,8 @@ export default mergeConfig(
         provider: 'istanbul',
         reportOnFailure: true,
         reporter: ['text', 'json', 'html'],
-        reportsDirectory: "dist/SortLab/coverage",  // Setzt das Coverage-Verzeichnis auf den richtigen Pfad
+        reportsDirectory: 'dist/SortLab/coverage', // Setzt das Coverage-Verzeichnis auf den richtigen Pfad
       },
     },
   }),
 )
-
-
