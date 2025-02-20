@@ -1,3 +1,4 @@
+<!-- Jedes zu entfernende Element muss eine ID zugewiesen bekommen. Wie die ID benannt ist, ist völlig egal. -->
 <svg xmlns="http://www.w3.org/2000/svg" id="svgPicture" x="0px" y="0px" width="100%" viewBox="0 0 200 300" enable-background="new 0 0 200 300" xml:space="preserve">
     <!-- Weißer Hintergrund -->
     <rect x="0" y="0" width="200" height="300" fill="white"/>
