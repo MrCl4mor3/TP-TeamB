@@ -1,4 +1,5 @@
 
+
 <template>
   <div class="card-container" @click="toggleFlip" @mouseover="checkHover" @mouseout="hideTooltip">
     <div class="card" :class="{ flipped: isFlipped }">
@@ -85,6 +86,7 @@ export default {
     },
 
     changeColour() {
+      console.log("yey")
       if (this.colour === 'grey') {
         this.colour = '#10b981'
       } else {

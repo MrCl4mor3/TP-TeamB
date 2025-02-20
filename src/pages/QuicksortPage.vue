@@ -140,29 +140,34 @@ export default {
           (store.lookingIndex >= store.cards.length ||
             store.pivotIndices.includes(store.lookingIndex)) &&
           checked < store.cards.length
-        ) {
+        ) {console.log("hey")
           //Nicht das erste mal gedrückt, also muss das alte Pivotelement als fertig sortiert gespeichert werden
           store.pivotIndices.push(store.pivotElementIndex)
           this.startigCardIds[this.trueCardRef[store.pivotElementIndex]].changeColour()
+          console.log("asd2 ")
           this.$refs.cardlist[
             this.trueCardRef[store.pivotElementIndex]
           ].firstChild.firstChild.style.border = null
           //alle Karten werden zugedeckt
+          console.log("asd3")
           for (let i = 0; i < store.cards.length; i++) {
             if (store.selectedCards.includes(i)) {
               this.startigCardIds[this.trueCardRef[i]].toggleFlip()
             }
           }
+
           store.selectedCards.splice(0)
           //einelementige Teilmengen sind auch schon sortiert, also müssen dementsprechend makiert werden
           if (this.biggerCards === 1) {
             store.pivotIndices.push(store.pivotElementIndex + 1)
             this.startigCardIds[this.trueCardRef[store.pivotElementIndex + 1]].changeColour()
           }
+          console.log("asd4")
           if (this.smallerCards === 1) {
             store.pivotIndices.push(store.pivotElementIndex - 1)
             this.startigCardIds[this.trueCardRef[store.pivotElementIndex - 1]].changeColour()
           }
+          console.log("asd5")
           //geht weiter bis zum nächsten Element das noch nicht sortiert wurde oder pivotelement war.
           //Dieses ist dann das linke vom nächsten Abschnitt und damit neues Pivot
           while (store.pivotIndices.length < store.cards.length && checked < store.cards.length) {
@@ -188,12 +193,14 @@ export default {
             }
             store.lookingIndex++
             checked++
+
           }
           if (this.newPivotFound === false){
             store.score--
           } else {
             this.newPivotFound = false
           }
+
         } else {
           //die Fälle das Pivotelementgedrückt wurde wenn entweder der Teilarray noch nicht soritert wurde oder jetzt alle Karten einsortiert sind
           if (checked < store.cards.length){

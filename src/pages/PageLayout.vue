@@ -265,7 +265,7 @@ export default {
           store.cards = store.cards.sort(() => Math.random() - 0.5)
           store.startingCards = store.cards.slice()
         }
-
+        console.log("sucess")
         this.calculateScore();
         this.visibleEndScreen = false
         this.toast.add({ severity: 'success', summary: messages["shuffleCards"], life: 3000 })
@@ -360,6 +360,7 @@ export default {
         .split('\n') // Splitte den Text an Zeilenumbrüchen
         .map((line) => `<p>${line}</p>`) // Wandle jede Zeile in ein <p>-Tag um
         .join('') // Füge alle Absätze wieder zusammen
+
     },
   },
 }

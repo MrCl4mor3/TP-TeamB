@@ -186,6 +186,7 @@ onBeforeUnmount(() => {
 .coloring {
   color: #003200;
 }
+
 .start-button {
   width: 200px; /* Breite des Buttons */
   height: 50px; /* Höhe des Buttons */
