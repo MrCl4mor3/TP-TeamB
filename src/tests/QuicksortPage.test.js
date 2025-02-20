@@ -11,6 +11,19 @@ import messages from '@/descriptions/messages.json'
 
 const toastMock = { add: vi.fn() };
 
+vi.mock('@/store.js', () => ({
+  store: {
+    containers: [
+      [{ id: 1, svg: { outerHTML: '<svg>card1</svg>' } }],
+      [{ id: 2, svg: { outerHTML: '<svg>card2</svg>' } }],
+      [{ id: 3, svg: { outerHTML: '<svg>card3</svg>' } }],
+    ],
+    numberOfFlippedCards: 0,
+    selectedLines: 0,
+    currentCards: [],
+  },
+}));
+
 vi.mock("primevue/usetoast", () => ({
   useToast: vi.fn(() => toastMock),
 }));
