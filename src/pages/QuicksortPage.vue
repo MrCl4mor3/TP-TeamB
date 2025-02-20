@@ -79,7 +79,9 @@ export default {
     this.toast = useToast()
   },
   methods: {
-
+    /**
+     * Wählt das nächste Pivotelement aus und markiert alle sortierten Karten. Hier wird auch der Setup für Quicksort gemacht
+     */
     selectPivot() {
       //Beim Pagereload wird alles zurückgesetzt
       if (store.reloadPage) {
@@ -214,7 +216,10 @@ export default {
         this.toast.add({ severity: 'info', summary: messages['choosingNewPivot'], life: 3000 })
       }
     },
-    //für Quicksort, es werden Pivotelement erkannt und anders behandelt
+    /**
+     * für Quicksort, es werden Pivotelement und feste Elemente erkannt und anders behandelt
+     * @param {Number} index die Position der Karte, die gerade geklickt wurde.
+     */
     SelectCardQuick(index) {
       //Beim Pagereload wird alles zurückgesetzt
       if (store.reloadPage) {
@@ -266,7 +271,10 @@ export default {
         }
       }
     },
-    //das Element muss nach links vom Pivotelement getauscht werden
+    /**
+     * Die gerade aufgedeckte Karte wird nach Links vom Pivotelement getauscht, wenn es wirklich kleiner ist.
+     * Dabei müssen alle Karten die in "Bigger" einsortiert sind wieder in die korrekte Position gebracht werden
+     */
     moveToSmaller() {
       //Beim Pagereload wird alles zurückgesetzt
       if (store.reloadPage) {
@@ -328,7 +336,9 @@ export default {
         }
       }
     },
-    //wenn sie größer ist muss sich nur gemerkt werden wie viele in dem "Bigger" teil sind, keine Vertauschung notwendig
+    /**
+     * Wenn die gerade aufgedeckte Karte größer als das Pivotelement ist wird sie in dem "Bigger" Teil einsortiert, dabei ist kein vertauschen nötig (Karte bleibt rechts vom Pivot)
+     */
     moveToBigger() {
       //Beim Pagereload wird alles zurückgesetzt
       if (store.reloadPage) {
@@ -356,7 +366,9 @@ export default {
         }
       }
     },
-    //reset der ganze page zu dem Startzustand
+    /**
+     * reset der Quicksort page zu dem Startzustand
+     */
     resetQuickPage() {
       //pivotboarder weg
       if (!this.firsttime) {
