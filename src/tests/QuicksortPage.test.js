@@ -172,16 +172,17 @@ let wrapper
 
 
     it('moveToSmaller correctly moves selected card to smaller section', async () => {
-      //const wrapper = mount(QuickSortPage)
-
-      store.cards = [0,1,2]
+      wrapper.vm.trueCardRef = [1,0]
+      store.cards = [1,0,2]
       await wrapper.vm.selectPivot();
-      store.selectedCards = [0,1];
-      this.firsttime = false;
-      await wrapper.vm.moveToSmaller();
+      wrapper.vm.store.pivotElementIndex = 1;
+      store.selectedCards = [1,2];
+      store.lookingIndex = 0
 
-      expect(store.cards[0]).toBe(1);
-      expect(store.cards[1]).toBe(0);
+
+      await wrapper.vm.moveToSmaller();
+      expect(store.cards[0]).toBe(0);
+      expect(store.cards[1]).toBe(1);
       expect(store.cards[2]).toBe(2);
     });
 
@@ -191,11 +192,14 @@ let wrapper
       store.cards = [0, 1, 2, 3];
       await wrapper.vm.selectPivot();
 
-      store.selectedCards = [0, 1];
+      store.selectedCards = [2, 1];
       await wrapper.vm.moveToBigger();
+      wrapper.vm.store.pivotElementIndex = 2;
+      store.lookingIndex = 1;
 
-      store.selectedCards = [0, 2];
+      store.selectedCards = [2,1];
       await wrapper.vm.moveToSmaller();
+
 
       expect(store.cards[0]).toBe(2);
       expect(store.cards[1]).toBe(0);
