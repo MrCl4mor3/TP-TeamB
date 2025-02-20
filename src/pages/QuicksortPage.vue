@@ -19,7 +19,7 @@
               </template>
               <template #back>
                 <div class="backsite">
-                  <div v-html="card.svg.outerHTML"></div>
+                  <div v-html="card.svg?.outerHTML"></div>
                 </div>
               </template>
             </FlippedCard>
