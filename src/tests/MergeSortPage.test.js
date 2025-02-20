@@ -288,10 +288,6 @@ describe('MergeSortPage.vue', () => {
     const wrapper = mount(MergeSortPage);
     await wrapper.vm.resetMergePage();
 
-    // Hier auch direkt if-Zweig mit testen:
-    // alllines = [];    keine ahnung wie ich das initialisieren muss
-    // Array.istArray(alllines) = true
-
     // Überprüfe, ob alle Variablen zurückgesetzt wurden
     expect(store.numberOfFlippedCards).toBe(0);
     expect(store.currentSelectedContainer).toBe(null)

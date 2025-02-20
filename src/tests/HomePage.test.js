@@ -4,7 +4,6 @@ import { resetStore } from '@/store.js'
 import { generateCards } from '@/cardSetup.js'
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import PrimeVue from 'primevue/config'
-import Dialog from 'primevue/dialog'
 
 
 // Mocking der Funktionen
@@ -79,29 +78,7 @@ describe('HomePage.vue', () => {
     // Assert that generateCards was called with correct arguments
     expect(generateCards).toHaveBeenCalledWith('bubble-sort', 'free-sort', 10)
   })
-/*
-temporär entfernt
-  it('should show tutorial if user is visiting for the first time', () => {
-    // Simulate first visit by clearing sessionStorage
-    sessionStorage.clear()
 
-    // Re-mount the wrapper
-    wrapper = mount(HomePage, {
-      global: {
-        mocks: {
-          $router: {
-            push: vi.fn(),
-          },
-        },
-      },
-    })
-
-    // Assert that the tutorial modal is shown
-    expect(wrapper.vm.visibleTutorial).toBe(true)
-  })
-
-
- */
   it('goes To SortingPage if event.key === \'Enter\'', () => {
     const event = {key: 'Enter'}
     wrapper.vm.selectedCategory = 'bubble-sort'

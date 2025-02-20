@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import PageLayout from '@/pages/PageLayout.vue';
-import { store, resetStartValues } from '../../src/store';
+import { store, } from '../../src/store';
 import { useToast } from 'primevue/usetoast'
 import messages from '@/descriptions/messages.json'
 
@@ -38,15 +38,6 @@ describe('PageLayout.vue', () => {
     toast = useToast()
   })
 
-  /*
-  temporär entfernt
-  it('öffnet das Tutorial', () => {
-    expect(wrapper.vm.visibleTutorial).toBe(false)
-    wrapper.vm.openTutorial()
-    expect(wrapper.vm.visibleTutorial).toBe(true)
-  })
-
-   */
 
   it('tauscht Karten, wenn SwapCards erlaubt ist', () => {
 
@@ -187,26 +178,6 @@ describe('PageLayout.vue', () => {
     expect(store.cards).not.toEqual({id: 0}, {id: 1}, {id: 2})
   })
 
-
-
-/*
-temporär entfernt
-  it('startet das Spiel neu', async () => {
-    wrapper.vm.startOver()
-    await new Promise((resolve) => setTimeout(resolve, 500))
-
-    expect(store.cards).toEqual(store.startingCards)
-    expect(wrapper.vm.visibleEndScreen).toBe(false)
-    expect(resetStartValues).toHaveBeenCalled()
-    expect(toast.add).toHaveBeenCalledWith(
-      expect.objectContaining({
-        severity: 'success',
-      })
-    )
-  })
-
-
- */
   it('fügt eine Karte zur Auswahl hinzu und erhöht den Score', () => {
     store.selectedCards = []
     store.score = 0
@@ -266,32 +237,7 @@ temporär entfernt
     });
   });
 
-  /*
-  temporär entfernt
 
-  it('öffnet FinishScreen bei checkedIfCorrect()', async () => {
-    store.cards = [{id: 0}, {id: 1}, {id: 2}];
-    store.correctCards = [{id: 0}, {id: 1}, {id: 2}];
-    wrapper.vm.store.startingCards = [{id: 0}, {id: 1}, {id: 2}];
-    store.correctSortingOrderInsert = [{id: 0}, {id: 1}, {id: 2}];
-
-    await wrapper.vm.checkIfCorrect()
-
-    expect(wrapper.vm.visibleEndScreen).toBe(true)
-  })
-
-
-
-   */
-
-  //it('öffnet FinishScreen bei checkedIfCorrect() mit mehreren Containern', () => {
-  //  store.cards = [[{id: 0}, {id: 1}], {id: 2}];
- //   store.correctCards = [[{id: 0}, {id: 1}], {id: 2}];
-
-  //  wrapper.vm.checkIfCorrect()
-
-  //  expect(wrapper.vm.visibleEndScreen).toBe(true)
-  //})
 
   it('zeigt Fehlermeldung an, falls Karten noch nicht korrekt sortiert'), () => {
     store.cards = [{id: 0}, {id: 1}, {id: 2}];
@@ -343,8 +289,5 @@ temporär entfernt
     expect(result).toBe("<p>1. Vergleiche zwei benachbarte Elemente und tausche sie, wenn das linke Element größer ist als das rechte. Angefangen wird mit den Elementen in Position 1 und 2.</p><p>2. Wiederhole Schritt 1 mit den Elementen in Position 2 und 3, dann mit denen in Position 3 und 4, usw. Dies wird so lange wiederholt, bis man beim letzten Element angekommen ist, d.h. das größte Element befindet sich nun ganz am Ende und muss beim nächsten Schritt 2 nicht wieder getauscht werden.</p><p>3. Wiederhole Schritt 1 und 2 so lange, bis keine Elemente mehr getauscht werden müssen.</p><p> - Wie Blubberblasen (bubbles) im Wasser steigt also bei jedem Durchgang das größte Element zum Ende auf.</p>")
 
   });
-
-
-
 
 })

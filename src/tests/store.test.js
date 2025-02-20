@@ -36,7 +36,6 @@ describe('Store', () => {
     expect(store.numberOfCards).toBe(defaultState.numberOfCards)
     expect(store.numberOfFlippedCards).toBe(defaultState.numberOfFlippedCards)
     expect(store.cards).toEqual(defaultState.cards)
-    // Weitere Checks für alle Felder
   })
 
   it('should allow modifications to the store', () => {
@@ -62,7 +61,6 @@ describe('Store', () => {
     expect(store.selectedCategory).toBeNull()
     expect(store.numberOfFlippedCards).toBe(0)
     expect(store.cards).toEqual([])
-    // Weitere Überprüfungen des zurückgesetzten Zustands
   })
 
   it('should reset start values', () => {

@@ -1,7 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect, vi } from 'vitest';
 import TutorialDialog from '../TutorialDialog.vue';
-import { store } from '@/store.js';
 import { generateCards } from '@/cardSetup.js';
 
 vi.mock('@/store.js', () => ({

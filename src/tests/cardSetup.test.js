@@ -1,35 +1,11 @@
-import { describe, it, expect, vi} from 'vitest'
-import { mount} from '@vue/test-utils';
+import { describe, it, expect } from 'vitest'
 import { store } from '../store'
-import cardSvg from '../assets/card2.svg'
 import { generateCards, removePart, getRandomInt, updateSvgID, arraysAreEqual, findMinMaxIds } from '@/cardSetup.js'
-import cardSetup from '../cardSetup.js'
+
 
 
 
 describe('cardSetup', () => {
-
-  // let wrapper = mount(cardSetup)
-   let svgContent = cardSvg
-
-/*
-  it('should generate Cards', () => {
-    //const svg = cardSvg
-    //cardSetup.cardsvg = svg;
-    const card = '/src/assets/card2.svg'
-    fetch(card)
-      .then((response) => {
-        console.log("Fetch abgeschlossen");
-        return response.text();
-      })
-    generateCards('unfree-sort','Bubble Sort',4)
-    expect(store.selectedMode).toBe('Bubble Sort');                    GIBT UNHANDLED ERROR
-    expect(store.selectedCategory).toBe('unfree-sort');
-
-
-  })
-
- */
 
   it('should get cards', () => {
     generateCards('Mode1','Bubble Sort',4)
@@ -37,35 +13,6 @@ describe('cardSetup', () => {
 
   })
 
-
-
-/*
-  it('should remove parts', () => {
-    const parser = new DOMParser()
-    const svgDocument = parser.parseFromString(svgContent, 'image/svg+xml')
-    let svgTemplate = svgDocument.documentElement
-    let numberOfCards = 5
-    store.cards = []
-    let svg = svgTemplate.cloneNode(true)
-    //Update die ID's in "card + i", zb card1.
-    let newSvg = updateSvgID(svg, 'card' + (numberOfCards - 1))
-    store.cards[store.numberOfCards - 1] = {
-      id: store.numberOfCards,
-      svg: newSvg,
-    }
-
-    console.log('karten nach neuer svg:   ' + store.cards)
-  })
-
-
-  it('should remove parts', async () => {
-    store.cards = [
-
-    ]
-    await removePart(1, cardSvg)
-
-  })
-  */
 
   it('gets a random int', () => {
     const random = getRandomInt(2, 5)
@@ -137,7 +84,6 @@ describe('cardSetup', () => {
     // Überprüfe, ob die ID des Haupt-SVG-Elements geändert wurde
     expect(updatedSvg.getAttribute('id')).toBe('newId')
   })
-
 
 })
 

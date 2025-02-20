@@ -3,13 +3,12 @@ import { mount } from '@vue/test-utils'
 import QuickSortPage from '@/pages/QuicksortPage.vue'
 import { store } from '@/store'
 import { createApp } from 'vue'
-//import FlippedCard from '@/components/FlippedCard.vue'
 import PrimeVue from 'primevue/config'
 import ToastService from 'primevue/toastservice'
 import { vi } from 'vitest';
 import messages from '@/descriptions/messages.json'
 import FlippedCard from '@/components/FlippedCard.vue'
-//import MergeSortPage from '@/pages/MergeSortPage.vue'
+
 
 const toastMock = { add: vi.fn() };
 
@@ -35,7 +34,6 @@ let wrapper
 
   beforeEach(() => {
     // Store zurücksetzen vor jedem Test
-    //store.current = []
     store.numberOfSwaps = 0
     store.selectedCards = []
     store.pivotIndices = []
@@ -85,7 +83,6 @@ let wrapper
 
 
   it('reshuffls the cards in selectPivot()', async () => {
-    //const wrapper = mount(QuickSortPage)
 
     store.quickReshuffle = true;
     store.cards = [0,1,2,3]
@@ -96,7 +93,6 @@ let wrapper
   })
 
   it('all cards checked in selectPivot()', async () => {
-    //const wrapper = mount(QuickSortPage)
 
     console.log("this is a test")
     console.log(wrapper); // Falls null oder undefined → Mounting schlägt fehl
@@ -120,42 +116,9 @@ let wrapper
     expect(toastMock.add).toHaveBeenCalledWith({ severity: 'success', summary: messages['quicksortSuccess'], life: 3000 });
   })
 
-  /*
-  it('select pivot else', async () => {
-
-    store.reloadPage = false;
-    wrapper.vm.firsttime = false;
-    store.cards = [
-      { id: 0, svg: { outerHTML: '<svg></svg>' },  colour: 'grey' },
-      { id: 1, svg: { outerHTML: '<svg></svg>' },  colour: 'grey'  },
-      { id: 2, svg: { outerHTML: '<svg></svg>' },  colour: 'grey'  }
-    ]
-    store.lookingIndex = 3
-    store.pivotIndices = [0,2];
-    store.pivotElementIndex = 1
-    wrapper.vm.startigCardIds = [
-      {colour: '#10b981', changeColour: vi.fn(), toggleFlip: vi.fn()  },
-      {colour: '#10b981', changeColour: vi.fn(), toggleFlip: vi.fn() },
-      {colour: '#10b981' , changeColour: vi.fn(), toggleFlip: vi.fn()  }
-    ]
-
-    console.log("asd")
-    wrapper.vm.trueCardRef = [0,1]
-    console.log(wrapper.vm.startigCardIds[wrapper.vm.trueCardRef[1]].colour)
-    wrapper.vm.startigCardIds[wrapper.vm.trueCardRef[1]].changeColour();
-    console.log(wrapper.vm.startigCardIds[wrapper.vm.trueCardRef[1]].colour)
-    wrapper.vm.$refs.cardlist[
-      wrapper.vm.trueCardRef[store.pivotElementIndex]
-      ].firstChild.firstChild.style.border = ''
-
-    await wrapper.vm.selectPivot()
-
-  }) */
 
 
   it('selectCardQuick() should toggle card selection based on pivot', async () => {
-    //const wrapper = mount(QuickSortPage)
-
     store.reloadPage = true
     await wrapper.vm.selectPivot() // Initialisiere den Quicksort
 
@@ -179,7 +142,6 @@ let wrapper
       store.selectedCards = [1,2];
       store.lookingIndex = 0
 
-
       await wrapper.vm.moveToSmaller();
       expect(store.cards[0]).toBe(0);
       expect(store.cards[1]).toBe(1);
@@ -187,8 +149,6 @@ let wrapper
     });
 
     it('moveToSmaller correctly moves selected card to smaller section when there are already bigger Cards', async () => {
-      //const wrapper = mount(QuickSortPage)
-
       store.cards = [0, 1, 2, 3];
       await wrapper.vm.selectPivot();
 
@@ -200,7 +160,6 @@ let wrapper
       store.selectedCards = [2,1];
       await wrapper.vm.moveToSmaller();
 
-
       expect(store.cards[0]).toBe(2);
       expect(store.cards[1]).toBe(0);
       expect(store.cards[2]).toBe(1);
@@ -210,8 +169,6 @@ let wrapper
 
 
     it('moveToBigger() should move selected card to bigger section', async () => {
-      //const wrapper = mount(QuickSortPage)
-
       wrapper.vm.biggerCards = 0
       store.cards = [0,1,2]
       await wrapper.vm.selectPivot() // Initialisiere den Quicksort
@@ -222,13 +179,10 @@ let wrapper
       // Rufe moveToBigger auf
       await wrapper.vm.moveToBigger()
       // Überprüfe, ob der Move korrekt durchgeführt wurde
-      // expect(store.selectedCards).toBe([0])
       expect(wrapper.vm.biggerCards).toBe(1)
     })
 
     it('resetQuickPage() should reset the page to initial state', async () => {
-      //const wrapper = mount(QuickSortPage)
-
       store.selectedCards.push(1)
       expect(store.selectedCards.length).toBe(1)
 
@@ -244,43 +198,23 @@ let wrapper
       expect(wrapper.vm.firsttime).toBe(true)
     })
 
-  /*
-    it('resetQuickPage() on !firsttime'), async () => {
-      wrapper.vm.firsttime = false
-      await wrapper.vm.resetQuickPage()
-
-    }
-
-
-   */
-
 
     it('reloads page in selectPivot()', async () => {
-      //const wrapper = mount(QuickSortPage)
-
       store.reloadPage = true
       await wrapper.vm.selectPivot()
       expect(store.reloadPage).toBe(false)
     })
 
     it('reloads page in moveToSmaller()', async () => {
-      //const wrapper = mount(QuickSortPage)
-
       store.reloadPage = true
       await wrapper.vm.moveToSmaller()
       expect(store.reloadPage).toBe(false)
     })
 
     it('reloads page in moveToBigger()', async () => {
-      //const wrapper = mount(QuickSortPage)
-
       store.reloadPage = true
 
       await wrapper.vm.moveToBigger()
       expect(store.reloadPage).toBe(false)
     })
-
-
-
-
 })
