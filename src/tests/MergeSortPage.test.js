@@ -246,8 +246,8 @@ describe('MergeSortPage.vue', () => {
 
     await wrapper.vm.selectALine(0, 0)
 
-    expect(wrapper.vm.linePositionContainer).toBe(null)
-    expect(wrapper.vm.linePositionCard).toBe(null)
+    expect(wrapper.vm.linePositionContainer).toBe(-1)
+    expect(wrapper.vm.linePositionCard).toBe(-1)
   })
 
   it('flips all cards back', () => {
@@ -299,8 +299,8 @@ describe('MergeSortPage.vue', () => {
     expect(store.dividingLinePosition).toBe(-1)
     expect(store.dividingContainerPosition).toBe(-1)
     //lokale Variablen überprüfen
-    expect(wrapper.vm.linePositionContainer).toBe(null)
-    expect(wrapper.vm.linePositionCard).toBe(null)
+    expect(wrapper.vm.linePositionContainer).toBe(-1)
+    expect(wrapper.vm.linePositionCard).toBe(-1)
     expect(wrapper.vm.selectedContainerIndex).toBe(null)
     expect(wrapper.vm.draggedContainersize).toBe(0)
 

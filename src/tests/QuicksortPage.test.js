@@ -45,7 +45,10 @@ let wrapper
     store.cards = [
       { id: 0, svg: { outerHTML: '<svg></svg>' } },
       { id: 1, svg: { outerHTML: '<svg></svg>' } },
-      { id: 2, svg: { outerHTML: '<svg></svg>' } }
+      { id: 2, svg: { outerHTML: '<svg></svg>' } },
+      { id: 3, svg: { outerHTML: '<svg></svg>' } },
+      { id: 4, svg: { outerHTML: '<svg></svg>' } }
+
     ]
     store.quickReshuffle = false
     store.score = 0
@@ -74,7 +77,7 @@ let wrapper
 
     expect(wrapper.vm.firsttime).toBe(false)
     expect(store.pivotElementIndex).toBe(0)
-    expect(wrapper.vm.numberOfSwaps).toBe(0)
+    expect(store.numberOfSwaps).toBe(0)
     expect(store.selectedCards.length).toBe(1)
     expect(store.selectedCards[0]).toBe(0)
   })

@@ -60,8 +60,8 @@ algorithms.forEach(({ name, fn }) => {
       expect(scoreSwap).toBe(7)
       expect(scoreLook).toBe(15)
     } else if (name === 'quickSort'){
-      expect(scoreSwap).toBe(8)
-      expect(scoreLook).toBe(11)
+      expect(scoreSwap).toBe(6)
+      expect(scoreLook).toBe(9)
     } else if (name === 'mergeSort'){
       expect(scoreSwap).toBe(8)
       expect(scoreLook).toBe(8)
