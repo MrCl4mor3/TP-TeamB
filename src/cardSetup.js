@@ -29,14 +29,12 @@ export function generateCards(selectedCategory, selectedMode, numberOfCards) {
   store.selectedCategory = selectedCategory
   store.numberOfCards = numberOfCards
 
-  console.log(cardSvg);
   //lade zunächst die svg Datei
   fetch(cardSvg)
     .then((response) => {
-      console.log("Fetch abgeschlossen");
       return response.text();
     })
-    .then((svgContent) => {console.log("hey")
+    .then((svgContent) => {
       //Parse die SVG Datei und speichere sie in einer Variable
       const parser = new DOMParser()
       const svgDocument = parser.parseFromString(svgContent, 'image/svg+xml')
@@ -202,8 +200,6 @@ export function findMinMaxIds(svgContent) {
   let ids = Array.from(svgContent.querySelectorAll('[id]')).map(elem => parseInt(elem.id.split('-')[1]))
   min = Math.min(...ids)
   max = Math.max(...ids)
-  console.log('min:  ' + min )
-  console.log('max:  ' + max)
 
   return {min, max}
 }

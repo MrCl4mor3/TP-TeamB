@@ -86,7 +86,6 @@ export default {
     },
 
     changeColour() {
-      console.log("yey")
       if (this.colour === 'grey') {
         this.colour = '#10b981'
       } else {

@@ -142,6 +142,11 @@ export default {
       this.visibleTutorial = true
     },
 
+    /**
+     * Tauscht zwei Karten und überprüft, ob der vorgegebene Algorithmus richtig ausgeführt wird.
+     * Bei einem falschen Schritt wird eine Fehlermeldung ausgegeben.
+     */
+
     SwapCards() {
 
       if (store.selectedCards.length !== 2) {
@@ -154,7 +159,6 @@ export default {
         return
       }
 
-
       let canSort = true
       let finished = false
 
@@ -162,7 +166,7 @@ export default {
         store.selectedMode === 'Vorgegebenes Sortieren' &&
         store.selectedCategory !== 'Merge Sort'
       ) {
-        if (store.selectedCategory === 'Bubble Sort') {
+        if (store.selectedCategory === 'Bubble Sort') {        //kontrolliert für bubble Sort ob richtig sortiert wird
           if (store.numberOfSwaps < store.correctSortingOrderBubble.length) {
             canSort = !!(
               store.correctSortingOrderBubble[store.numberOfSwaps].includes(store.selectedCards[0]) &&
@@ -172,7 +176,7 @@ export default {
             canSort = false;
             finished = true;
           }
-        } else if (store.selectedCategory === 'Selection Sort') {
+        } else if (store.selectedCategory === 'Selection Sort') { //kontrolliert für selectionsort ob richtig sortiert wird
           if (store.numberOfSwaps < store.correctSortingOrderSelect.length) {
             canSort = !!(
               store.correctSortingOrderSelect[store.numberOfSwaps].includes(store.selectedCards[0]) &&
@@ -182,7 +186,7 @@ export default {
             canSort = false;
             finished = true;
           }
-        } else if (store.selectedCategory === 'Insertion Sort') {
+        } else if (store.selectedCategory === 'Insertion Sort') { //kontrolliert für insertiosort ob richtig sortiert wird
           if (store.numberOfSwaps < store.correctSortingOrderInsert.length) {
             canSort = !!(
               store.correctSortingOrderInsert[store.numberOfSwaps].includes(store.selectedCards[0]) &&
@@ -195,6 +199,7 @@ export default {
 
         }
       }
+      //vertauscht die Karten
       if (store.selectedCards.length === 2 && canSort) {
         const [firstIndex, secondIndex] = store.selectedCards
         const temp = store.cards[firstIndex]
@@ -265,7 +270,6 @@ export default {
           store.cards = store.cards.sort(() => Math.random() - 0.5)
           store.startingCards = store.cards.slice()
         }
-        console.log("sucess")
         this.calculateScore();
         this.visibleEndScreen = false
         this.toast.add({ severity: 'success', summary: messages["shuffleCards"], life: 3000 })

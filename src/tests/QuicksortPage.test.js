@@ -94,10 +94,6 @@ let wrapper
 
   it('all cards checked in selectPivot()', async () => {
 
-    console.log("this is a test")
-    console.log(wrapper); // Falls null oder undefined → Mounting schlägt fehl
-    console.log(wrapper.vm); // Falls null → Problem mit Mounting oder Setup()
-    console.log("this is a test")
     expect(wrapper.exists()).toBe(true);
 
 
@@ -108,10 +104,6 @@ let wrapper
     await wrapper.vm.selectPivot()
 
 
-
-    console.log("test test test")
-    console.log(wrapper.vm.firsttime);
-    console.log(wrapper.vm.selectPivot());
 
     expect(toastMock.add).toHaveBeenCalledWith({ severity: 'success', summary: messages['quicksortSuccess'], life: 3000 });
   })
