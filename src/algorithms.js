@@ -99,11 +99,11 @@ export function quickSortWithScore(cards, returnSorted = false) {
     }
 
     scoreLook++
-    const pivot = array[array.length - 1]
+    const pivot = array[0]
     const left = []
     const right = []
 
-    for (let i = 0; i < array.length - 1; i++) {
+    for (let i = 1; i < array.length; i++) {
 
       scoreLook++ // Ein Element wird betrachtet
       if (array[i].id < pivot.id) {

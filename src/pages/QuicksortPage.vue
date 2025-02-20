@@ -26,7 +26,7 @@
             <svg class="line" width="10" height="300">
               <!-- Linie -->
               <line
-                v-show="index === store.numberOfSwaps"
+                v-show="index === this.lineposition"
                 x1="6"
                 y1="0"
                 x2="6"
@@ -62,7 +62,8 @@ export default {
   },
   data() {
     return {
-      numberOfSwaps: 0,
+      lineposition: 0,
+      newPivotFound: false,
       store,
       selectedCard: null,
       pivotElement: null,
@@ -90,6 +91,7 @@ export default {
         store.lookingIndex = 1
         store.pivotElementIndex = 0
         store.numberOfSwaps = 0
+        this.lineposition = 0
         //in der ersten Aktion wird trueCardRef aufgesetzt. Dieser ist nötig damit karten korrekt umrandet werder können,
         //da sich bei vertauschen die Position der Karten verändern, aber die Id gleich bleibt
         this.trueCardRef.splice(0)
@@ -175,6 +177,7 @@ export default {
             }
             if (!store.pivotIndices.includes(store.lookingIndex)) {
               store.pivotElementIndex = store.lookingIndex
+              this.newPivotFound = true;
 
               //neues Pivot wird makiert
               this.startigCardIds[this.trueCardRef[store.pivotElementIndex]].toggleFlip()
@@ -183,20 +186,28 @@ export default {
               ].firstChild.firstChild.style.border = '2px solid green'
               store.selectedCards.push(store.pivotElementIndex)
 
-              store.numberOfSwaps = store.lookingIndex
+              this.lineposition = store.lookingIndex
               this.biggerCards = 0
               this.smallerCards = 0
               checked = store.cards.length
             }
             store.lookingIndex++
             checked++
-          }console.log("asd6")
+
+          }
+          if (this.newPivotFound === false){
+            store.score--
+          } else {
+            this.newPivotFound = false
+          }
+
         } else {
           //die Fälle das Pivotelementgedrückt wurde wenn entweder der Teilarray noch nicht soritert wurde oder jetzt alle Karten einsortiert sind
           if (checked < store.cards.length){
             this.toast.add({ severity: 'error', summary: messages['finshThePart'], life: 3000 })
           } else {
             this.toast.add({ severity: 'success', summary: messages['quicksortSuccess'], life: 3000 })
+            store.score--
           }
         }
         store.score++
@@ -231,12 +242,17 @@ export default {
       } else {
         //ist geklickte Karte Pivotelement oder schon fest?
         if (store.pivotIndices.includes(index) || store.pivotElementIndex === index) {
-          this.toast.add({ severity: 'error', summary: messages['pivotelement'], life: 3000 })
+          if (store.pivotIndices.includes(index)) {
+            this.toast.add({ severity: 'info', summary: messages['unselectableBecauseFixed'], life: 3000 })
+          } else if (store.pivotElementIndex === index) {
+            this.toast.add({ severity: 'error', summary: messages['pivotelement'], life: 3000 })
+          }
           this.startigCardIds[this.trueCardRef[index]].toggleFlip();
         } else {
           //ist die geklickte Karte schon ausgewählt?
           if (store.selectedCards.includes(index)) {
             store.selectedCards = store.selectedCards.filter((card) => card !== index);
+            store.score--
             //Karte ist noch nicht ausgewählt
           } else if (store.selectedCards.length < 2) {
             //Ist das die richtige nächste Karte?
@@ -262,47 +278,52 @@ export default {
         this.toast.add({ severity: 'info', summary: messages['clickPivotToStart'], life: 3000 })
       } else {
         if (store.selectedCards.length === 2) {
-          //tausch von Pivotelement und kleinerem Element
-          let swapid = store.lookingIndex
-          const temp = store.cards[swapid]
-          store.cards[swapid] = store.cards[store.pivotElementIndex]
-          store.cards[store.pivotElementIndex] = temp
-          //updaten der trueCardRef nach vertauschen von elementen
-          let tempref = this.trueCardRef[swapid]
-          this.trueCardRef[swapid] = this.trueCardRef[store.pivotElementIndex]
-          this.trueCardRef[store.pivotElementIndex] = tempref
+          if (this.startigCardIds[this.trueCardRef[store.lookingIndex]].checkId() < this.startigCardIds[this.trueCardRef[store.pivotElementIndex]].checkId()) {
+            //tausch von Pivotelement und kleinerem Element
+            let swapid = store.lookingIndex
+            const temp = store.cards[swapid]
+            store.cards[swapid] = store.cards[store.pivotElementIndex]
+            store.cards[store.pivotElementIndex] = temp
+            //updaten der trueCardRef nach vertauschen von elementen
+            let tempref = this.trueCardRef[swapid]
+            this.trueCardRef[swapid] = this.trueCardRef[store.pivotElementIndex]
+            this.trueCardRef[store.pivotElementIndex] = tempref
 
-          //automatisches Zudecken der Karte
-          let willBeFlipped = null;
-          willBeFlipped = this.startigCardIds[this.trueCardRef[store.pivotElementIndex]];
-          setTimeout(() => {willBeFlipped.toggleFlip();}, 30);
-          store.selectedCards = store.selectedCards.filter(
-            (card) => card !== store.pivotElementIndex,
-          )
+            //automatisches Zudecken der Karte
+            let willBeFlipped = null;
+            willBeFlipped = this.startigCardIds[this.trueCardRef[store.pivotElementIndex]];
+            setTimeout(() => {willBeFlipped.toggleFlip();}, 30);
+            store.selectedCards = store.selectedCards.filter(
+              (card) => card !== store.pivotElementIndex,
+            )
 
-          store.pivotElementIndex = swapid
-          //alle Karten die größer als das Pivot gemerkt sind müssen wieder nach rechts getauscht werden
-          if (this.biggerCards > 0) {
-            for (let i = 0; i < this.biggerCards; i++) {
-              const temp = store.cards[swapid]
-              store.cards[swapid] = store.cards[swapid - 1]
-              store.cards[swapid - 1] = temp
+            store.pivotElementIndex = swapid
+            //alle Karten die größer als das Pivot gemerkt sind müssen wieder nach rechts getauscht werden
+            if (this.biggerCards > 0) {
+              for (let i = 0; i < this.biggerCards; i++) {
+                const temp = store.cards[swapid]
+                store.cards[swapid] = store.cards[swapid - 1]
+                store.cards[swapid - 1] = temp
 
-              //updaten der trueCardRef nach vertauschen von elementen
-              let tempref = this.trueCardRef[swapid]
-              this.trueCardRef[swapid] = this.trueCardRef[swapid - 1]
-              this.trueCardRef[swapid - 1] = tempref
+                //updaten der trueCardRef nach vertauschen von elementen
+                let tempref = this.trueCardRef[swapid]
+                this.trueCardRef[swapid] = this.trueCardRef[swapid - 1]
+                this.trueCardRef[swapid - 1] = tempref
 
-              store.pivotElementIndex = swapid - 1
-              swapid--
+                store.pivotElementIndex = swapid - 1
+                swapid--
+              }
+              //damit die korrekten Karten als aufgedeckt gespeichert sind
+              store.selectedCards = store.selectedCards.filter((card) => card !== store.lookingIndex)
+              store.selectedCards.push(swapid)
             }
-            //damit die korrekten Karten als aufgedeckt gespeichert sind
-            store.selectedCards = store.selectedCards.filter((card) => card !== store.lookingIndex)
-            store.selectedCards.push(swapid)
+            this.smallerCards++
+            store.lookingIndex++
+            store.numberOfSwaps++
+            this.lineposition++
+          } else {
+            this.toast.add({ severity: 'error', summary: messages['wrongSide'], life: 3000 })
           }
-          this.smallerCards++
-          store.lookingIndex++
-          store.numberOfSwaps++
         } else {
           this.toast.add({ severity: 'error', summary: messages['missingNonPivot'], life: 3000 })
         }
@@ -319,13 +340,18 @@ export default {
         this.toast.add({ severity: 'info', summary: messages['clickPivotToStart'], life: 3000 })
       } else {
         if (store.selectedCards.length === 2) {
-          this.biggerCards++
-          //automatisches Zudecken der Karte
-          this.startigCardIds[this.trueCardRef[store.lookingIndex]].toggleFlip()
-          store.selectedCards = store.selectedCards.filter((card) => card !== store.lookingIndex)
+          if (this.startigCardIds[this.trueCardRef[store.lookingIndex]].checkId() > this.startigCardIds[this.trueCardRef[store.pivotElementIndex]].checkId()) {
+            this.biggerCards++
+            //automatisches Zudecken der Karte
+            this.startigCardIds[this.trueCardRef[store.lookingIndex]].toggleFlip()
+            store.selectedCards = store.selectedCards.filter((card) => card !== store.lookingIndex)
 
-          store.lookingIndex++
-          store.numberOfSwaps++
+            store.lookingIndex++
+            store.numberOfSwaps++
+            this.lineposition++
+          } else {
+            this.toast.add({ severity: 'error', summary: messages['wrongSide'], life: 3000 })
+          }
         } else {
           this.toast.add({ severity: 'error', summary: messages['missingNonPivot'], life: 3000 })
         }
@@ -356,6 +382,7 @@ export default {
       this.smallerCards = 0
       this.trueCardRef.splice(0)
       this.startigCardIds.splice(0)
+      this.lineposition = 0;
     },
   },
 }

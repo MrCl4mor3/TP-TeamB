@@ -14,7 +14,7 @@
         <!-- Hier wird der Inhalt der Rückseite der Karte angezeigt -->
       </div>
     </div>
-    <div v-if="showTooltip" class="tooltip">Maximal 2 Karten gleichzeitig!</div>
+    <div v-if="showTooltip" class="tooltip">Maximal 2 Karten</div>
   </div>
 
 </template>
@@ -67,6 +67,10 @@ export default {
       if (store.numberOfFlippedCards === 2 && !this.isFlipped) {
         this.showTooltip = true
       }
+    },
+
+    checkId() {
+      return this.cardId
     },
 
     hideTooltip() {

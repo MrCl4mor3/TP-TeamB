@@ -97,8 +97,8 @@ export default {
   data() {
     return {
       store,
-      linePositionContainer: null,
-      linePositionCard: null,
+      linePositionContainer: -1,
+      linePositionCard: -1,
       selectedContainerIndex: null,
       selectedCards: [],
       draggedContainersize: 0,
@@ -203,23 +203,33 @@ export default {
         store.reloadPage = false
       }
       if (store.selectedLines !== 0) {
-        this.linePositionContainer = containerIndex
-        this.linePositionCard = index
+        if (this.linePositionCard === -1 && this.linePositionContainer === -1) {
+          this.linePositionContainer = containerIndex
+          this.linePositionCard = index
+        } else {
+          this.toasty.add({ severity: 'info', summary: messages["doubleLine"], life: 3000 })
+        }
       } else {
-        this.linePositionContainer = null
-        this.linePositionCard = null
+        this.linePositionContainer = -1
+        this.linePositionCard = -1
       }
     },
     //Splittet den Container an der gemerkten Position
     splitContainer() {
-      const containerToSplit = store.containers[this.linePositionContainer]
+      if (this.linePositionContainer === -1 || this.linePositionCard === -1) {
+        this.toasty.add({ severity: 'error', summary: messages["noLine"], life: 3000 })
+      } else {
+        const containerToSplit = store.containers[this.linePositionContainer]
 
-      const firstHalf = containerToSplit.slice(0, this.linePositionCard + 1)
-      const secondHalf = containerToSplit.slice(this.linePositionCard + 1)
+        const firstHalf = containerToSplit.slice(0, this.linePositionCard + 1)
+        const secondHalf = containerToSplit.slice(this.linePositionCard + 1)
 
-      store.containers.splice(this.linePositionContainer, 1, firstHalf, secondHalf)
-      store.selectedLines = 0
-      this.flipAllCards()
+        store.containers.splice(this.linePositionContainer, 1, firstHalf, secondHalf)
+        store.selectedLines = 0
+        this.linePositionContainer = -1
+        this.linePositionCard = -1
+        this.flipAllCards()
+      }
     },
     //dreht alle Karten um
     flipAllCards() {
@@ -247,8 +257,8 @@ export default {
       store.dividingContainerPosition = -1
       store.selectedCards.splice(0);
       //reset lokale Variablen
-      this.linePositionContainer = null
-      this.linePositionCard = null
+      this.linePositionContainer = -1
+      this.linePositionCard = -1
       this.selectedContainerIndex = null
       this.selectedCards.splice(0)
       this.draggedContainersize = 0

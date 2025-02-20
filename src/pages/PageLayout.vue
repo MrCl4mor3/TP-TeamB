@@ -8,7 +8,9 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
 
 <template>
   <header>
-    <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage" />
+    <div class="button-container">
+      <ButtonPress icon="pi pi-home" aria-label="Save" @click="goToHomePage" />
+    </div>
     <h2>
       <span v-if="noAlgorithmNeeded">{{ store.selectedMode }}</span>
       <span v-else>{{ store.selectedCategory }}</span>
@@ -34,7 +36,7 @@ const noAlgorithmNeeded = ref(store.selectedMode === 'Freies Sortieren')
     :header="'Bravo - Die Karten sind richtig sortiert!'"
     class="dialog"
     :modal = "true"
-    @update:visible="prepareReset">
+    @update:visible="startOver">
     <div class="dialog-content">
       <p>Du hast {{ store.score }} Karten angeschaut und {{ store.numberOfSwaps }} Karten vertauscht.</p>
       <p>Ein Computer würde mit den folgenden Algorithmen so viele Operationen benötigen:</p>
@@ -291,16 +293,31 @@ export default {
     },
 
     calculateScore() {
-      this.algorithms = [
-        { name: 'Bubble Sort', result: bubbleSortWithScore(this.store.startingCards) },
-        { name: 'Selection Sort', result: selectionSortWithScore(this.store.startingCards) },
-        { name: 'Insertion Sort', result: insertionSortWithScore(this.store.startingCards) },
-        { name: 'Quick Sort', result: quickSortWithScore(this.store.startingCards) },
-        { name: 'Merge Sort', result: mergeSortWithScore(this.store.startingCards) }
-      ];
+      if (store.selectedCategory === 'Quick Sort') {
+        this.algorithms = [
+          { name: 'Bubble Sort', result: bubbleSortWithScore(this.store.startingCards) },
+          { name: 'Selection Sort', result: selectionSortWithScore(this.store.startingCards) },
+          { name: 'Insertion Sort', result: insertionSortWithScore(this.store.startingCards) },
+          { name: 'Quick Sort', result: this.quickScoreForQuickSort()},
+          { name: 'Merge Sort', result: mergeSortWithScore(this.store.startingCards) }
+        ];
+      } else {
+        this.algorithms = [
+          { name: 'Bubble Sort', result: bubbleSortWithScore(this.store.startingCards) },
+          { name: 'Selection Sort', result: selectionSortWithScore(this.store.startingCards) },
+          { name: 'Insertion Sort', result: insertionSortWithScore(this.store.startingCards) },
+          { name: 'Quick Sort', result: quickSortWithScore(this.store.startingCards) },
+          { name: 'Merge Sort', result: mergeSortWithScore(this.store.startingCards) }
+        ];
+      }
       this.isScoreCalculated = true
     },
 
+    quickScoreForQuickSort() {
+      let scoreSwap = store.numberOfSwaps
+      let scoreLook = store.score
+      return {scoreSwap , scoreLook}
+    },
 
     //Alle Karten werden aufgedeckt
     openAllCards() {
