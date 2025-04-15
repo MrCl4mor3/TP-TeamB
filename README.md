@@ -1,8 +1,13 @@
 # SortLab
 
-Das Produkt ist eine interaktive und verständliche Webanwendung, welche die gängigsten Sortieralgorithmen erklärt und Nutzern ermöglicht, deren Funktionsweise selbst auszuprobieren. Hierbei übernehmen die Nutzer die Rolle und Sichtweise des PCs beim Sortieren, und lernen so Computational Thinking und die Grundlagen des Sortierens.
+Das Produkt ist eine interaktive Webanwendung. Sie unterstützt den Benutzer beim Kennenlernen, 
+Üben, Ausführen und Vergleichen von Sortieralgorithmen.
+Die Algorithmen Bubblesort, Insertionsort, Selectionsort, Quicksort und Mergesort werden ermöglicht.
+So können die verschiedenen Algorithmen äquivalent zu einem Computer vom Benutzer ausgeführt werden.
+Dabei werden Angaben zu den angeschauten Objekten und die durchgeführten Tauschungen gezählt und anschließend in 
+Vergleich zu allen oben genannten Sortieralgorithmen ausgegeben.
 
-## License
+## Lizenz
 
 [GNU GLPv2](https://www.gnu.org/licenses/old-licenses/gpl-2.0)
 
@@ -10,11 +15,10 @@ Das Produkt ist eine interaktive und verständliche Webanwendung, welche die gä
 
 Dieses und weitere tolle didaktische Projekte für den Informatikunterricht findet ihr online gehostet beim [Lehr-Lern-Labor](https://lehr-lern-labor.info) des KIT und der PH Karlsruhe.
 
-## Customize configuration
+Dieses Projekt ist unter der Adresse [SortLab](https://files.lehr-lern-labor.info/SortLab/) gehostet. 
 
-See [Vite Configuration Reference](https://vite.dev/config/).
 
-## Project Setup
+## Projekt Setup
 
 ```sh
 npm install
@@ -32,8 +36,3 @@ npm run dev
 npm run build
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
